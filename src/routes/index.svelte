@@ -58,21 +58,35 @@
     </div>
 
     <ul class="guess-container">
-      {#each renderedGuesses as guess, row (guess)}
+      {#each previousGuesses as guess, row (guess)}
         <li 
           class="guess"
-          out:fly="{{duration: row === 4 ? 0 : 400, easing: quintOut, y: -80 }}"
-          animate:flip
+          out:fly|local="{{duration:400, easing: quintOut, y: -80 }}"
+          in:fly|local="{{duration: 400, easing: quintOut, y: 80 }}"
+          animate:flip={{duration: 400}}
         >
           {#each {length: 5} as _, col}
             <div class="guess-box">
               {guess[col]
-                ? renderedGuesses[row][col]
+                ? previousGuesses[row][col]
                 : ''}
             </div>
           {/each}
         </li>
       {/each}
+      <li 
+      class="guess"
+        out:fly|local="{{duration: row === 4 ? 0 : 400, easing: quintOut, y: -80 }}"
+        in:fly|local="{{duration: row === 4 ? 400 : 0, easing: quintOut, y: 80 }}"
+      >
+        {#each {length: 5} as _, col}
+          <div class="guess-box">
+            {currentGuess[col]
+              ? currentGuess[col]
+              : ''}
+          </div>
+        {/each}
+      </li>
       <!-- {#each {length: 5 - renderedGuesses.length } as emptyGuess, row (row)}
         <div 
           class="guess"
