@@ -7,7 +7,7 @@
   
   import GuessContent from '$lib/components/game/GuessContent.svelte'
 
-  const possibleCodeWords = ['charm', 'leapt', 'ivory', 'leaky', 'rapid', 'learn', 'stole', 'quote', 'stole', 'kinds', 'happy', 'fruit', 'bored', 'floss', 'bread', 'opens', 'filed', 'porch', 'rapid', 'steal', 'whale', 'whole', 'hoops', 'chose']
+  const possibleCodeWords = ['charm', 'leapt', 'ivory', 'leaky', 'rapid', 'learn', 'stole', 'quote', 'stole', 'kinds', 'happy', 'fruit', 'bored', 'floss', 'bread', 'opens', 'filed', 'porch', 'rapid', 'steal', 'whale', 'whole', 'hoops', 'chose', 'style', 'maker', 'torch', 'trick', 'glaze', 'gaudy', 'space', 'chirp', 'vinyl', 'ogres', 'pluck', 'fluid', 'white', 'actor', 'minor', 'pouch', 'touch', 'truck', 'octet', 'timer', 'merit', 'title', 'built', 'belly']
   let points: number = 100
   let codeWord: string
 
@@ -26,7 +26,7 @@
 
   const chooseRandomCodeWord = (): void => {
     const newWord = possibleCodeWords[Math.floor(Math.random() * possibleCodeWords.length)]
-    if (newWord !== codeWord) {
+    if (newWord !== codeWord && !previousGuesses.includes(newWord)) {
       codeWord = newWord
       return
     }
