@@ -1,5 +1,8 @@
 <script lang="ts">
   import { isSingleLetter } from '$lib/helpers'
+  import { quintOut } from 'svelte/easing'
+  import { fly } from 'svelte/transition'
+  import { flip } from 'svelte/animate'
 
   let points: number = 80
 
@@ -10,9 +13,8 @@
   ]
 
   let currentGuess: string = ''
-  let previousGuesses: string[] = []
+  let previousGuesses: string[] = ['     ', '    ', '   ', '  ']
   $: renderedGuesses = [...previousGuesses, currentGuess]
-  $: console.log(renderedGuesses)
 
   const handlePress = (key: string) => {
     if (isSingleLetter(key)) {
@@ -22,7 +24,7 @@
     } else if (key === '⏎' && currentGuess.length === 5) {
       previousGuesses = [...previousGuesses, currentGuess]
       if (previousGuesses.length > 4) {
-        previousGuesses = previousGuesses.slice(1, previousGuesses.length)
+        previousGuesses = [...previousGuesses].slice(1, previousGuesses.length)
       }
       currentGuess = ''
     } else if (key === '⌫') {
@@ -42,14 +44,6 @@
       handlePress(e.key)
     }
   }
-
-  const renderLetter = (row: number, col: number): string => {
-    if (renderedGuesses[row] && renderedGuesses[row][col]) {
-      return renderedGuesses[row][col]
-    }
-
-    return ''
-  }
 </script>
 
 <svelte:window on:keyup={handleKeyUp} />
@@ -63,20 +57,37 @@
       ></div>
     </div>
 
-    <div class="guess-container">
-      {#each {length: 5} as _, row}
-        <div class="guess">
+    <ul class="guess-container">
+      {#each renderedGuesses as guess, row (guess)}
+        <li 
+          class="guess"
+          out:fly="{{duration: row === 4 ? 0 : 400, easing: quintOut, y: -80 }}"
+          animate:flip
+        >
           {#each {length: 5} as _, col}
             <div class="guess-box">
-              <!-- {renderLetter(row, col)} -->
-              {renderedGuesses[row] && renderedGuesses[row][col]
+              {guess[col]
                 ? renderedGuesses[row][col]
                 : ''}
             </div>
           {/each}
-        </div>
+        </li>
       {/each}
-    </div>
+      <!-- {#each {length: 5 - renderedGuesses.length } as emptyGuess, row (row)}
+        <div 
+          class="guess"
+          in:fly="{{key: emptyGuess, duration: 300, easing: quintOut, y: 80 }}"
+          out:fly="{{key: emptyGuess, duration: 300, easing: quintOut, y: -80 }}"
+          animate:flip
+        >
+          {#each {length: 5} as _, col}
+            <div class="guess-box">
+              {''}
+            </div>
+          {/each}
+        </div>
+      {/each} -->
+    </ul>
 
     <div class="keyboard">
       {#each keys as row}
@@ -126,6 +137,8 @@
 .guess-container {
   display: grid;
   gap: 0.5rem 0;
+  list-style-type: none;
+  padding: 0;
 
   .guess {
     display: grid;
@@ -136,7 +149,7 @@
       width: 0;
       height: 0;
       padding: 50%;
-      border: 1px solid;
+      border: 2px solid #999;
       font-size: 2rem;
       text-transform: uppercase;
       display: flex;
