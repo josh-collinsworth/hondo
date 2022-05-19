@@ -1,11 +1,15 @@
 <script lang="ts">
-  import { isSingleLetter, stringContainsLetter,  } from '$lib/helpers'
+  import { isSingleLetter } from '$lib/helpers'
   import { quintOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
   import { flip } from 'svelte/animate'
+  import { onMount } from 'svelte'
+  
+  import GuessContent from '$lib/components/game/GuessContent.svelte'
 
+  const possibleCodeWords = ['charm', 'leapt', 'ivory', 'leaky', 'rapid', 'learn', 'stole', 'quote', 'stole', 'kinds', 'happy', 'fruit', 'bored', 'floss', 'bread', 'opens', 'filed', 'porch', 'rapid', 'steal', 'whale', 'whole', 'hoops', 'chose']
   let points: number = 100
-  let codeWord: string = 'charm'
+  let codeWord: string
 
   const keys = [
     ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -15,6 +19,19 @@
 
   let currentGuess: string = ''
   let previousGuesses: string[] = ['',' ','  ','   ','    ']
+
+  onMount(() => {
+    chooseRandomCodeWord()
+  })
+
+  const chooseRandomCodeWord = (): void => {
+    const newWord = possibleCodeWords[Math.floor(Math.random() * possibleCodeWords.length)]
+    if (newWord !== codeWord) {
+      codeWord = newWord
+      return
+    }
+    chooseRandomCodeWord()
+  }
 
   const evaluateGuess = (guess: string): number[] => {
     const guessArray = [...guess]
@@ -45,6 +62,10 @@
         const addedPoints = partial + full + full
         currentGuess = ''
         points = points - 10 + addedPoints
+
+        if (partial + full === 10) {
+          chooseRandomCodeWord()
+        }
       }
       if (previousGuesses.length > 5) {
         previousGuesses = [...previousGuesses].slice(1, previousGuesses.length)
@@ -88,27 +109,7 @@
           in:fly|local="{{duration: 500, easing: quintOut, y: 80 }}"
           animate:flip|local={{duration: 400}}
         >
-          {#each {length: 5} as _, col}
-            <div class="guess-box" in:fly="{{duration: 500, easing: quintOut, y: 40, delay: col * 40 }}">
-              <span>
-                {guess[col]
-                  ? previousGuesses[row][col]
-                  : ''}
-              </span>
-            </div>
-          {/each}
-        
-          {#if stringContainsLetter(guess)}
-            {#each evaluateGuess(guess) as hintNumber, i}
-              <div
-                class="guess-box hint {i ? 'full' : 'partial'}"
-                in:fly="{{duration: 500, easing: quintOut, y: 40, delay: 280 }}"
-              >
-                {hintNumber}
-              </div>
-            {/each}
-          {/if}
-       
+          <GuessContent {codeWord} {guess} {row} {previousGuesses} />
         </li>
       {/each}
       <li 
@@ -139,7 +140,7 @@
 </main>
 
 
-<style lang="scss">
+<style lang="scss" global>
 *, *::before, *::after {
   box-sizing: border-box;
   font-family: sans-serif;
@@ -191,38 +192,6 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: .5rem;
-
-    .guess-box {
-      width: 0;
-      height: 0;
-      padding: 50%;
-      border: 2px solid #999;
-      font-size: 2rem;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 1;
-      
-      &.hint {
-        font-weight: bold;
-        background: skyblue;
-        color: #fff;
-        border: 0;
-        border-radius: 5em;
-      }
-
-      &.full {
-        background: orange;
-      }
-    }
-
-    .current-guess-box {
-      @extend .guess-box;
-
-      border: 0;
-      border-bottom: 2px solid #999;
-    }
   }
 }
 
