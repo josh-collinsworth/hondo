@@ -1,10 +1,11 @@
 export const alphabetAsString = 'abcdefghijklmnopqrstuvwxyz'
 export const alphabetAsArray: string[] = [...alphabetAsString]
 
-export const isSingleLetter = (string: string): boolean => {
-  return alphabetAsArray.includes(string)
+export const isSingleLetter = (str: string): boolean => {
+  return alphabetAsArray.includes(str)
 }
 
-export const arrayContainsLetter = (arr: string[]): boolean => {
-  return arr.some(el => alphabetAsArray.includes(el.toLowerCase()))
+export const stringContainsLetter = (str: string): boolean => {
+  str = str.toLowerCase()
+  return Boolean(str.match(/[abcdefghijklmnopqrstuvwxyz]/))
 }
