@@ -2,7 +2,6 @@
   import { stringContainsLetter } from '$lib/helpers'
   import { quintOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
-  import { flip } from 'svelte/animate'
 
   export let guess: string
   export let codeWord: string = '     '
@@ -24,28 +23,34 @@
 {/each}
 
 {#if stringContainsLetter(guess)}
-  {#key codeWord}  
-    <div
-      class="guess-box hint partial"
-      in:fly="{{duration: 200, easing: quintOut, y: 40, delay: 300 }}"
-      out:fly="{{duration: 200, easing: quintOut, y: 40 }}"
-    >
-      <span>
+  <div
+    class="guess-box hint partial"
+    in:fly="{{duration: 240, easing: quintOut, y: 40, delay: 300 }}"
+    out:fly="{{duration: 240, easing: quintOut, y: 40 }}"
+  >
+    {#key codeWord}  
+      <span
+        in:fly="{{duration: 340, easing: quintOut, y: 40, delay: (row + 1) * 120 }}"
+        out:fly="{{duration: 340, easing: quintOut, y: -40 }}"
+      >
         {partiallyCorrect}
       </span>
-    </div>
-  {/key}
-  {#key codeWord}
-    <div
-      class="guess-box hint full"
-      in:fly="{{duration: 200, easing: quintOut, y: 40, delay: 340 }}"
-      out:fly="{{duration: 200, easing: quintOut, y: 40 }}"
-    >
-      <span>
+    {/key}
+  </div>
+  <div
+    class="guess-box hint full"
+    in:fly="{{duration: 240, easing: quintOut, y: 40, delay: 340 }}"
+    out:fly="{{duration: 240, easing: quintOut, y: 40 }}"
+  >
+    {#key codeWord}
+      <span
+        in:fly="{{duration: 340, easing: quintOut, y: 40, delay: (row + 1) * 120 + 60 }}"
+        out:fly="{{duration: 340, easing: quintOut, y: -40}}"
+      >
         {fullyCorrect}
       </span>
-    </div>
-  {/key}
+    {/key}
+  </div>
 {/if}
 
 

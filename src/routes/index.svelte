@@ -10,6 +10,7 @@
   const possibleCodeWords = ['charm', 'leapt', 'ivory', 'leaky', 'rapid', 'learn', 'stole', 'quote', 'stole', 'kinds', 'happy', 'fruit', 'bored', 'floss', 'bread', 'opens', 'filed', 'porch', 'rapid', 'steal', 'whale', 'whole', 'hoops', 'chose', 'style', 'maker', 'torch', 'trick', 'glaze', 'gaudy', 'space', 'chirp', 'vinyl', 'ogres', 'pluck', 'fluid', 'white', 'actor', 'minor', 'pouch', 'touch', 'truck', 'octet', 'timer', 'merit', 'title', 'built', 'belly']
   let points: number = 100
   let codeWord: string
+  let discoveredCodeWord: string = ''
 
   const keys = [
     ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -61,9 +62,16 @@
         const [partial, full] = evaluateGuess(currentGuess)
         const addedPoints = partial + full + full
         currentGuess = ''
-        points = points - 10 + addedPoints
+
+        const adjustedPoints = points - 10 + addedPoints
+        if (adjustedPoints > 100) {
+          points = 100
+        } else {
+          points = adjustedPoints
+        }
 
         if (partial + full === 10) {
+          discoveredCodeWord = codeWord
           chooseRandomCodeWord()
         }
       }
@@ -94,6 +102,12 @@
 <main>
   <input type="text" bind:value={codeWord} />
   <div class="container">
+    {#key discoveredCodeWord}
+      <div class="correct-word">
+        {discoveredCodeWord}
+      </div>
+    {/key}
+
     <div class="power-bar">
       <div
         class="power-bar__fill"
@@ -162,6 +176,38 @@
 
   @media (min-width: 32rem) {
     font-size: 1rem;
+  }
+}
+
+.correct-word {
+  position: fixed;
+  pointer-events: none;
+  height: 150vh;
+  width: 150vw;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.5));
+  left: -25vw;
+  top: -25vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  animation: reveal 2s cubic-bezier(0, 0, 0, 1);
+  opacity: 0;
+  z-index: 10;
+}
+
+@keyframes reveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(4);
   }
 }
 
