@@ -3,7 +3,7 @@
   import { quintOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
   import { flip } from 'svelte/animate'
-  import { onMount } from 'svelte'
+  import { onMount, tick } from 'svelte'
   
   import GuessContent from '$lib/components/game/GuessContent.svelte'
 
@@ -21,7 +21,8 @@
   let currentGuess: string = ''
   let previousGuesses: string[] = ['',' ','  ','   ','    ']
 
-  onMount(() => {
+  onMount(async () => {
+    await tick()
     chooseRandomCodeWord()
   })
 
@@ -51,7 +52,7 @@
     return [partial, full]
   }
 
-  const handlePress = (key: string) => {
+  const handlePress = async (key: string) => {
     if (isSingleLetter(key)) {
       if (currentGuess.length < 5) {
         currentGuess += key
@@ -72,7 +73,10 @@
 
         if (partial + full === 10) {
           discoveredCodeWord = codeWord
-          chooseRandomCodeWord()
+          setTimeout(
+            chooseRandomCodeWord, 
+            1500
+          )
         }
       }
       if (previousGuesses.length > 5) {
@@ -115,13 +119,14 @@
       ></div>
     </div>
 
-    <ul class="guess-container">
+    <ul class="guess-container" style="padding: 0; margin: 0;">
       {#each previousGuesses as guess, row (guess)}
         <li 
+          style="height: 5.6em; margin: 0;"
           class="guess"
-          out:fly|local="{{duration: 500, easing: quintOut, y: -80 }}"
-          in:fly|local="{{duration: 500, easing: quintOut, y: 80 }}"
-          animate:flip|local={{duration: 400}}
+          out:fly|local="{{ duration: 500, easing: quintOut, y: -80 }}"
+          in:fly|local="{{ duration: 500, easing: quintOut, y: 80 }}"
+          animate:flip|local={{ duration: 400 }}
         >
           <GuessContent {codeWord} {guess} {row} {previousGuesses} />
         </li>
@@ -233,10 +238,11 @@
   gap: 0.5rem 0;
   list-style-type: none;
   padding: 0;
+  grid-template-rows: repeat(6, 1fr);
 
   .guess {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: .5rem;
   }
 }
