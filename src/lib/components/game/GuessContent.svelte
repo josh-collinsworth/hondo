@@ -41,10 +41,7 @@
 
 <style lang="scss" global>
   .guess-box {
-    width: 0;
-    height: 0;
     border: 2px solid #999;
-    font-size: 2rem;
     text-transform: uppercase;
     display: flex;
     align-items: center;
@@ -52,7 +49,12 @@
     line-height: 1;
     position: relative;
     transform: rotateY(0);
-    padding: calc(50% - 2px);
+    
+    
+    @media (min-width: 32rem) {
+      font-size: 2em;
+      min-height: 2.6em;
+    }
 
     .background {
       content: '';

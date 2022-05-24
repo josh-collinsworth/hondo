@@ -6,6 +6,7 @@
   import { onMount, tick } from 'svelte'
   
   import GuessContent from '$lib/components/game/GuessContent.svelte'
+  import FlashModal from '$lib/components/game/FlashModal.svelte';
 
   const possibleCodeWords = ['charm', 'leapt', 'ivory', 'leaky', 'rapid', 'learn', 'stole', 'quote', 'stole', 'kinds', 'happy', 'fruit', 'bored', 'floss', 'bread', 'opens', 'filed', 'porch', 'rapid', 'steal', 'whale', 'whole', 'hoops', 'chose', 'style', 'maker', 'torch', 'trick', 'glaze', 'gaudy', 'space', 'chirp', 'vinyl', 'ogres', 'pluck', 'fluid', 'white', 'actor', 'minor', 'pouch', 'touch', 'truck', 'octet', 'timer', 'merit', 'title', 'built', 'belly']
   let points: number = 100
@@ -78,7 +79,7 @@
             chooseRandomCodeWord()
             await tick()
             isLoadingNewWord = false
-          }, 1500
+          }, 1000
           )
         }
       }
@@ -109,11 +110,8 @@
 <main>
   <input type="text" bind:value={codeWord} />
   <div class="container">
-    {#key discoveredCodeWord}
-      <div class="correct-word">
-        {discoveredCodeWord}
-      </div>
-    {/key}
+
+    <FlashModal {discoveredCodeWord} />
 
     <div class="power-bar">
       <div
@@ -167,11 +165,15 @@
   font-family: sans-serif;
 }
 
+body {
+  margin: 0;
+}
+
 .container {
   width: 100%;
   max-width: 32rem;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 1rem 1rem 3px;
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
@@ -179,42 +181,10 @@
   align-content: space-between;
   align-items: space-between;
   justify-content: space-between;
-  font-size: 5vw;
+  font-size: 10vw;
 
   @media (min-width: 32rem) {
     font-size: 1rem;
-  }
-}
-
-.correct-word {
-  position: fixed;
-  pointer-events: none;
-  height: 150vh;
-  width: 150vw;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.5));
-  left: -25vw;
-  top: -25vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 3rem;
-  animation: reveal 2s cubic-bezier(0, 0, 0, 1);
-  opacity: 0;
-  z-index: 10;
-}
-
-@keyframes reveal {
-  0% {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-  70% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(4);
   }
 }
 
@@ -246,13 +216,18 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: .5rem;
-    height: 100%;
+    height: 1.6em;
+
+    @media (min-width: 32rem) {
+      height: 5.6em;
+    }
   }
 }
 
 .keyboard {
   display: grid;
   grid-template-rows: repeat(3, 4rem);
+  margin: 0 calc(-1rem + 3px);
 
   .row {
     display: flex;
