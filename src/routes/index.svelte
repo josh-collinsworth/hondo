@@ -116,7 +116,7 @@
     <div class="power-bar">
       <div
         class="power-bar__fill"
-        style="transform: scaleX({points})"
+        style="transform: scaleX({points / 100})"
       ></div>
     </div>
 
@@ -200,7 +200,7 @@ body {
   .power-bar__fill {
     transform-origin: left;
     background: orange;
-    width: 1%;
+    width: 100%;
     transition: transform .3s cubic-bezier(0.23, 1, 0.320, 1);
   }
 }

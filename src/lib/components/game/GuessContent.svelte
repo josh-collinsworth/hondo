@@ -9,6 +9,19 @@
   export let previousGuesses: string[]
   export let isLoadingNewWord: boolean
 
+  let remainingLetters = [...codeWord]
+
+  $: highlightArray = [...guess].map((letter, i) => {
+    if ([...codeWord][i] === letter) {
+      remainingLetters.splice(remainingLetters.findIndex(i => i === letter), 1)
+      return 'exact'
+    } else if (remainingLetters.includes(letter)) {
+      remainingLetters.splice(remainingLetters.findIndex(i => i === letter), 1)
+      return 'partial'
+    }
+    return ''
+  })
+
   const defaultTransition = {
     duration: 500,
     easing: quintOut,
@@ -19,16 +32,21 @@
 
 {#key codeWord}
   {#each {length: 5} as _, i (i)}
-    <!-- TODO: the delay is way too high when a guess is just coming in. Find a way to alter it dynamically. -->
     <div
-      class="guess-box"
-      class:partial={codeWord.includes(guess[i])}
-      class:full={[...guess][i] === [...codeWord][i]}
+      class:loading={isLoadingNewWord}
+      class="guess-box {highlightArray[i]}"
       in:fly="{{ ...defaultTransition, delay: isLoadingNewWord ? (600 + ((row + 1) * (i * 1) * 16)) : (i + 1) * 40 }}"
       out:fly="{{ ...defaultTransition, y: -50, delay: isLoadingNewWord ?  0 : (i + 1) * 30 }}"
       animate:flip={{ duration: 500 }}
     >
       <div class="background"  />
+      <div class="ascender">
+        {#if [...guess][i] === [...codeWord][i]}
+          +2
+        {:else if codeWord.includes(guess[i])}
+          +1
+        {/if}
+      </div>
       <span>
         {guess[i]
           ? previousGuesses[row][i]
@@ -56,13 +74,27 @@
       min-height: 2.6em;
     }
 
-    .background {
+    .background,
+    .ascender {
       content: '';
       width: 100%;
       height: 100%;
       display: block;
       position: absolute;
       z-index: -1;
+      text-align: center;
+    }
+    
+    .ascender {
+      z-index: 2;
+      animation: ascend 0.6s ease-out forwards;
+      opacity: 0;
+    }
+
+    @for $i from 1 through 5 {
+      &:nth-of-type(#{$i}) .ascender {
+        animation-delay: 0.1s + ($i * 0.06s); 
+      }
     }
 
     span {
@@ -73,12 +105,16 @@
     }
   }
 
-  .partial .background {
-    background: lightblue;
-
+  .loading .ascender {
+    animation: none;
+    animation-duration: 0;
   }
 
-  .full .background {
+  .partial .background {
+    background: lightblue;
+  }
+
+  .exact .background {
     background: orange;
   }
 
@@ -87,5 +123,16 @@
 
     border: 0;
     border-bottom: 2px solid #999;
+  }
+
+  @keyframes ascend {
+    from {
+      transform: translateY(-1em);
+      opacity: 1;
+    }
+    to { 
+      transform: translateY(-2.5em); 
+      opacity: 0;
+    }
   }
 </style>
