@@ -11,6 +11,7 @@
   let points: number = 100
   let codeWord: string
   let discoveredCodeWord: string = ''
+  let isLoadingNewWord = false
 
   const keys = [
     ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -21,8 +22,7 @@
   let currentGuess: string = ''
   let previousGuesses: string[] = ['',' ','  ','   ','    ']
 
-  onMount(async () => {
-    await tick()
+  onMount(() => {
     chooseRandomCodeWord()
   })
 
@@ -73,9 +73,12 @@
 
         if (partial + full === 10) {
           discoveredCodeWord = codeWord
-          setTimeout(
-            chooseRandomCodeWord, 
-            1500
+          setTimeout(async () => {
+            isLoadingNewWord = true
+            chooseRandomCodeWord()
+            await tick()
+            isLoadingNewWord = false
+          }, 1500
           )
         }
       }
@@ -122,13 +125,12 @@
     <ul class="guess-container" style="padding: 0; margin: 0;">
       {#each previousGuesses as guess, row (guess)}
         <li 
-          style="height: 5.6em; margin: 0;"
           class="guess"
           out:fly|local="{{ duration: 500, easing: quintOut, y: -80 }}"
           in:fly|local="{{ duration: 500, easing: quintOut, y: 80 }}"
           animate:flip|local={{ duration: 400 }}
         >
-          <GuessContent {codeWord} {guess} {row} {previousGuesses} />
+          <GuessContent {codeWord} {guess} {row} {previousGuesses} {isLoadingNewWord} />
         </li>
       {/each}
       <li 
@@ -238,12 +240,13 @@
   gap: 0.5rem 0;
   list-style-type: none;
   padding: 0;
-  grid-template-rows: repeat(6, 1fr);
+  grid-template-rows: repeat(6, auto);
 
   .guess {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: .5rem;
+    height: 100%;
   }
 }
 

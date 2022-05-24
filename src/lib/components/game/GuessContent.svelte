@@ -7,17 +7,25 @@
   export let codeWord: string = '     '
   export let row: number
   export let previousGuesses: string[]
+  export let isLoadingNewWord: boolean
+
+  const defaultTransition = {
+    duration: 500,
+    easing: quintOut,
+    y: 50
+  }
 </script>
 
 
 {#key codeWord}
   {#each {length: 5} as _, i (i)}
+    <!-- TODO: the delay is way too high when a guess is just coming in. Find a way to alter it dynamically. -->
     <div
       class="guess-box"
       class:partial={codeWord.includes(guess[i])}
       class:full={[...guess][i] === [...codeWord][i]}
-      in:fly="{{ duration: 600, easing: quintOut, y: 50, delay: 600 + ((row + 1) * (i * 1) * 16) }}"
-      out:fly="{{ duration: 600, easing: quintOut, y: -50, delay: 0 }}"
+      in:fly="{{ ...defaultTransition, delay: isLoadingNewWord ? (600 + ((row + 1) * (i * 1) * 16)) : (i + 1) * 40 }}"
+      out:fly="{{ ...defaultTransition, y: -50, delay: isLoadingNewWord ?  0 : (i + 1) * 30 }}"
       animate:flip={{ duration: 500 }}
     >
       <div class="background"  />
