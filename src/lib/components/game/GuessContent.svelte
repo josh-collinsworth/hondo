@@ -15,6 +15,12 @@
     if ([...codeWord][i] === letter) {
       remainingLetters.splice(remainingLetters.findIndex(i => i === letter), 1)
       return 'exact'
+    } 
+    return letter
+  }).map((letter, i) => {
+    console.log(letter, i)
+    if (letter === 'exact') {
+      return letter
     } else if (remainingLetters.includes(letter)) {
       remainingLetters.splice(remainingLetters.findIndex(i => i === letter), 1)
       return 'partial'

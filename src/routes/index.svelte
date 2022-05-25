@@ -4,12 +4,13 @@
   import { fly } from 'svelte/transition'
   import { flip } from 'svelte/animate'
   import { onMount, tick } from 'svelte'
+  import { MAX_SCORE } from '$lib/helpers';
   
   import GuessContent from '$lib/components/game/GuessContent.svelte'
   import FlashModal from '$lib/components/game/FlashModal.svelte';
 
   const possibleCodeWords = ['charm', 'leapt', 'ivory', 'leaky', 'rapid', 'learn', 'stole', 'quote', 'stole', 'kinds', 'happy', 'fruit', 'bored', 'floss', 'bread', 'opens', 'filed', 'porch', 'rapid', 'steal', 'whale', 'whole', 'hoops', 'chose', 'style', 'maker', 'torch', 'trick', 'glaze', 'gaudy', 'space', 'chirp', 'vinyl', 'ogres', 'pluck', 'fluid', 'white', 'actor', 'minor', 'pouch', 'touch', 'truck', 'octet', 'timer', 'merit', 'title', 'built', 'belly']
-  let points: number = 100
+  let points: number = MAX_SCORE
   let codeWord: string
   let discoveredCodeWord: string = ''
   let isLoadingNewWord = false
@@ -66,8 +67,8 @@
         currentGuess = ''
 
         const adjustedPoints = points - 10 + addedPoints
-        if (adjustedPoints > 100) {
-          points = 100
+        if (adjustedPoints > MAX_SCORE) {
+          points = MAX_SCORE
         } else {
           points = adjustedPoints
         }
@@ -116,7 +117,7 @@
     <div class="power-bar">
       <div
         class="power-bar__fill"
-        style="transform: scaleX({points / 100})"
+        style="transform: scaleX({points / MAX_SCORE})"
       ></div>
     </div>
 

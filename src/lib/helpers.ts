@@ -9,3 +9,5 @@ export const stringContainsLetter = (str: string): boolean => {
   str = str.toLowerCase()
   return Boolean(str.match(/[abcdefghijklmnopqrstuvwxyz]/))
 }
+
+export const MAX_SCORE = 50
