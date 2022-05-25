@@ -1,10 +1,7 @@
 <script lang="ts">
-import { onMount } from "svelte";
+  import { discoveredCodeWord } from '$lib/js/state'
 
-
-  export let discoveredCodeWord: string
-
-  $: if (discoveredCodeWord) { confetti({
+  $: if ($discoveredCodeWord) { confetti({
       particleCount: 80 + Math.floor(Math.random() * 80),
       spread: 90,
       scalar: 0.8,
@@ -14,9 +11,9 @@ import { onMount } from "svelte";
 </script>
 
 
-<!-- {#key discoveredCodeWord}
+<!-- {#key $discoveredCodeWord}
   <div class="correct-word">
-    <p>{discoveredCodeWord}</p>
+    <p>{$discoveredCodeWord}</p>
     <br/>
     <p>New word incoming…</p>
   </div>

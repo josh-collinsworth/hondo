@@ -2,16 +2,17 @@
   import { quintOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
   import { flip } from 'svelte/animate'
+  import { previousGuesses, codeWord, isLoadingNewWord } from '$lib/js/state'
 
   export let guess: string
-  export let codeWord: string = '     '
   export let row: number
-  export let previousGuesses: string[]
-  export let isLoadingNewWord: boolean
+
+  let remainingLetters: string[] = []
+  $: if ($codeWord) remainingLetters = [...$codeWord]
 
   let highlightArray: string[]
   $: highlightArray = [...guess].map((letter, i) => {
-    if ([...codeWord][i] === letter) {
+    if ([...$codeWord][i] === letter) {
       remainingLetters.splice(remainingLetters.findIndex(i => i === letter), 1)
       return 'exact'
     } 
@@ -25,10 +26,6 @@
     }
     return ''
   })
-  
-  let remainingLetters: string[]
-
-  $: if (codeWord) remainingLetters = [...codeWord]
 
   const defaultTransition = {
     duration: 500,
@@ -38,26 +35,26 @@
 </script>
 
 
-{#key codeWord}
+{#key $codeWord}
   {#each {length: 5} as _, i (i)}
     <div
-      class:loading={isLoadingNewWord}
+      class:loading={$isLoadingNewWord}
       class="guess-box {highlightArray[i]}"
-      in:fly="{{ ...defaultTransition, delay: isLoadingNewWord ? (600 + ((row + 1) * (i * 1) * 16)) : (i + 1) * 40 }}"
-      out:fly="{{ ...defaultTransition, y: -50, delay: isLoadingNewWord ?  0 : (i + 1) * 30 }}"
+      in:fly="{{ ...defaultTransition, delay: $isLoadingNewWord ? (600 + ((row + 1) * (i * 1) * 16)) : (i + 1) * 40 }}"
+      out:fly="{{ ...defaultTransition, y: -50, delay: $isLoadingNewWord ?  0 : (i + 1) * 30 }}"
       animate:flip={{ duration: 500 }}
     >
       <div class="background"  />
       <div class="ascender">
-        {#if [...guess][i] === [...codeWord][i]}
+        {#if [...guess][i] === [...$codeWord][i]}
           +2
-        {:else if codeWord.includes(guess[i])}
+        {:else if $codeWord.includes(guess[i])}
           +1
         {/if}
       </div>
       <span>
         {guess[i]
-          ? previousGuesses[row][i]
+          ? $previousGuesses[row][i]
           : ''}
       </span>
     </div>
