@@ -18,10 +18,9 @@
     } 
     return letter
   }).map((letter, i) => {
-    console.log(letter, i)
     if (letter === 'exact') {
       return letter
-    } else if (remainingLetters.includes(letter)) {
+    } else if (remainingLetters.includes(letter) && letter) {
       remainingLetters.splice(remainingLetters.findIndex(i => i === letter), 1)
       return 'partial'
     }
@@ -37,6 +36,7 @@
 
 
 {#key codeWord}
+  <div class="debug" style="position: absolute; left: 0;">{highlightArray}</div>
   {#each {length: 5} as _, i (i)}
     <div
       class:loading={isLoadingNewWord}

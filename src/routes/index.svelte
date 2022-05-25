@@ -4,16 +4,19 @@
   import { fly } from 'svelte/transition'
   import { flip } from 'svelte/animate'
   import { onMount, tick } from 'svelte'
-  import { MAX_SCORE } from '$lib/helpers';
+  import { MAX_SCORE } from '$lib/helpers'
+  import legalGuesses from '$lib/js/legalGuesses'
+  import codeWords from '$lib/js/codeWords'
   
   import GuessContent from '$lib/components/game/GuessContent.svelte'
   import FlashModal from '$lib/components/game/FlashModal.svelte';
 
-  const possibleCodeWords = ['charm', 'leapt', 'ivory', 'leaky', 'rapid', 'learn', 'stole', 'quote', 'stole', 'kinds', 'happy', 'fruit', 'bored', 'floss', 'bread', 'opens', 'filed', 'porch', 'rapid', 'steal', 'whale', 'whole', 'hoops', 'chose', 'style', 'maker', 'torch', 'trick', 'glaze', 'gaudy', 'space', 'chirp', 'vinyl', 'ogres', 'pluck', 'fluid', 'white', 'actor', 'minor', 'pouch', 'touch', 'truck', 'octet', 'timer', 'merit', 'title', 'built', 'belly']
   let points: number = MAX_SCORE
   let codeWord: string
   let discoveredCodeWord: string = ''
   let isLoadingNewWord = false
+
+  $: lettersOnTheBoard = Array.from(new Set(previousGuesses.flatMap(word => [...word])))
 
   const keys = [
     ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -29,7 +32,7 @@
   })
 
   const chooseRandomCodeWord = (): void => {
-    const newWord = possibleCodeWords[Math.floor(Math.random() * possibleCodeWords.length)]
+    const newWord = codeWords[Math.floor(Math.random() * codeWords.length)]
     if (newWord !== codeWord && !previousGuesses.includes(newWord)) {
       codeWord = newWord
       return
@@ -54,12 +57,16 @@
     return [partial, full]
   }
 
+  const isValidGuess = (guess: string): boolean => {
+    return guess.length === 5 && legalGuesses.includes(guess.toLowerCase())
+  }
+
   const handlePress = async (key: string) => {
     if (isSingleLetter(key)) {
       if (currentGuess.length < 5) {
         currentGuess += key
       }
-    } else if (key === '⏎' && currentGuess.length === 5) {
+    } else if (key === '⏎' && isValidGuess(currentGuess)) {
       if (!previousGuesses.includes(currentGuess)) {
         previousGuesses = [...previousGuesses, currentGuess]
         const [partial, full] = evaluateGuess(currentGuess)
@@ -112,6 +119,7 @@
   <input type="text" bind:value={codeWord} />
   <div class="container">
 
+    <!-- TODO: should this be moved? It's just for fireworks -->
     <FlashModal {discoveredCodeWord} />
 
     <div class="power-bar">
@@ -151,7 +159,12 @@
       {#each keys as row}
       <div class="row">
         {#each row as key}
-          <button on:click={() => handlePress(key)}>{key}</button>
+          <button 
+            on:click={() => handlePress(key)}
+            class:used={lettersOnTheBoard.includes(key)}
+          >
+            {key}
+          </button>
         {/each}
       </div>
       {/each}
@@ -248,9 +261,16 @@ body {
     font-size: 1rem;
     flex: 1 1 3ch;
     text-transform: uppercase;
+    background: #eee;
+    border: 1px solid #666;
+    border-radius: 0.2rem;
 
     + button {
       margin-left: 2px;
+    }
+
+    &.used {
+      background: #ccc;
     }
   }
 }

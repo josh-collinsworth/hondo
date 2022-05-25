@@ -1,5 +1,4 @@
 export const fireConfetti = () => {
-  console.log('firing')
   var myCanvas = document.createElement('canvas');
   document.body.appendChild(myCanvas);
 
