@@ -106,6 +106,7 @@
       border-radius: 0.2rem;
       margin: 0;
       padding: 0;
+      touch-action: manipulation;
 
       &[data-key="⌫"],
       &[data-key="⏎"] {
