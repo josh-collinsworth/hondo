@@ -67,6 +67,7 @@
       {#each row as key}
         <button 
           on:click={() => handlePress(key)}
+          data-key={key}
           class:used={lettersOnTheBoard.includes(key)}
         >
           {key}
@@ -93,23 +94,30 @@
     }
 
     .row:nth-of-type(2) {
-      max-width: calc(100% - 2rem)
+      max-width: calc(100% - 2.5rem)
     }
 
     button {
       font-size: 1rem;
-      flex: 1 1 3ch;
+      flex: 1 0 3ch;
       text-transform: uppercase;
-      background: #eee;
+      background: var(--lighterGray);
       border: 1px solid #666;
       border-radius: 0.2rem;
+      margin: 0;
+      padding: 0;
+
+      &[data-key="⌫"],
+      &[data-key="⏎"] {
+        flex: 1 0 5ch;
+      }
 
       + button {
         margin-left: 2px;
       }
 
       &.used {
-        background: #ccc;
+        background: var(--lightGray);
       }
     }
   }

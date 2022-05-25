@@ -1,11 +1,15 @@
+<script lang="ts" context="module">
+  import { chooseRandomCodeWord } from '$lib/js/helpers'
+
+  chooseRandomCodeWord()
+</script>
+
 <script lang="ts">
   import { quintOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
   import { flip } from 'svelte/animate'
-  import { onMount } from 'svelte'
 
-  import { chooseRandomCodeWord } from '$lib/js/helpers'
-  import { codeWord, previousGuesses, currentGuess, gameIsOver } from '$lib/js/state'
+  import { previousGuesses, currentGuess, gameIsOver } from '$lib/js/state'
   
   import GuessContent from '$lib/components/game/GuessContent.svelte'
   import FlashModal from '$lib/components/game/FlashModal.svelte'
@@ -13,17 +17,12 @@
   import PowerBar from '$lib/components/game/PowerBar.svelte'
   import GameOverModal from '$lib/components/game/GameOverModal.svelte'
 
-
-  const defaultTransition = { duration: 500, easing: quintOut, y: -80 }
-
-  onMount(() => {
-    chooseRandomCodeWord()
-  })
+  const defaultTransition = { duration: 600, easing: quintOut, y: -80 }
 </script>
 
 
 <main>
-  <input type="text" bind:value={$codeWord} />
+  <!-- <input type="text" bind:value={$codeWord} /> -->
   <div class="container">
 
     <!-- TODO: should this be moved? It's just for fireworks -->
@@ -67,15 +66,6 @@
 
 
 <style lang="scss" global>
-*, *::before, *::after {
-  box-sizing: border-box;
-  font-family: sans-serif;
-}
-
-body {
-  margin: 0;
-}
-
 .container {
   width: 100%;
   max-width: 32rem;
@@ -92,37 +82,6 @@ body {
 
   @media (min-width: 32rem) {
     font-size: 1rem;
-  }
-}
-
-.power-bar {
-  width: 100%;
-  border: 1px solid;
-  border-radius: 2rem;
-  height: 1.5rem;
-  display: flex;
-  align-content: stretch;
-  overflow: hidden;
-  position: relative;
-
-  .power-bar__fill {
-    transform-origin: left;
-    background: orange;
-    width: 100%;
-    transition: transform .3s cubic-bezier(0.23, 1, 0.320, 1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: inherit;
-  }
-  .power-bar__score {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    text-align: center;
-    left: 0;
-    top: 0;
-    line-height: 1.5rem;
   }
 }
 

@@ -1,1 +1,1 @@
-export const MAX_SCORE = 50
+export const MAX_SCORE = 10

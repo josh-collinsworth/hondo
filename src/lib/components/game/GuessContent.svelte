@@ -28,9 +28,9 @@
   })
 
   const defaultTransition = {
-    duration: 500,
+    duration: 600,
     easing: quintOut,
-    y: 50
+    y: 70
   }
 </script>
 
@@ -40,18 +40,11 @@
     <div
       class:loading={$isLoadingNewWord}
       class="guess-box {highlightArray[i]}"
-      in:fly="{{ ...defaultTransition, delay: $isLoadingNewWord ? (600 + ((row + 1) * (i * 1) * 16)) : (i + 1) * 40 }}"
-      out:fly="{{ ...defaultTransition, y: -50, delay: $isLoadingNewWord ?  0 : (i + 1) * 30 }}"
+      in:fly="{{ ...defaultTransition, delay: $isLoadingNewWord ? (700 + ((row + 1) * (i * 1) * 16)) : (i + 1) * 40 }}"
+      out:fly="{{ ...defaultTransition, y: -70, delay: $isLoadingNewWord ?  0 : (i + 1) * 30 }}"
       animate:flip={{ duration: 500 }}
     >
       <div class="background"  />
-      <div class="ascender">
-        {#if [...guess][i] === [...$codeWord][i]}
-          +2
-        {:else if $codeWord.includes(guess[i])}
-          +1
-        {/if}
-      </div>
       <span>
         {guess[i]
           ? $previousGuesses[row][i]
@@ -72,6 +65,7 @@
     line-height: 1;
     position: relative;
     transform: rotateY(0);
+    min-height: 1.6em;
     
     
     @media (min-width: 32rem) {
@@ -79,8 +73,7 @@
       min-height: 2.6em;
     }
 
-    .background,
-    .ascender {
+    .background {
       content: '';
       width: 100%;
       height: 100%;
@@ -88,18 +81,6 @@
       position: absolute;
       z-index: -1;
       text-align: center;
-    }
-    
-    .ascender {
-      z-index: 2;
-      animation: ascend 0.6s ease-out forwards;
-      opacity: 0;
-    }
-
-    @for $i from 1 through 5 {
-      &:nth-of-type(#{$i}) .ascender {
-        animation-delay: 0.1s + ($i * 0.06s); 
-      }
     }
 
     span {
@@ -110,17 +91,12 @@
     }
   }
 
-  .loading .ascender {
-    animation: none;
-    animation-duration: 0;
-  }
-
   .partial .background {
-    background: lightblue;
+    background: var(--lightBlue);
   }
 
   .exact .background {
-    background: orange;
+    background: var(--orange);
   }
 
   .current-guess-box {
