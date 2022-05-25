@@ -126,7 +126,11 @@
       <div
         class="power-bar__fill"
         style="transform: scaleX({points / MAX_SCORE})"
-      ></div>
+      >
+      </div>
+      <div class="power-bar__score">
+        {points}/{MAX_SCORE}
+      </div>
     </div>
 
     <ul class="guess-container" style="padding: 0; margin: 0;">
@@ -206,16 +210,30 @@ body {
   width: 100%;
   border: 1px solid;
   border-radius: 2rem;
-  height: 1rem;
+  height: 1.5rem;
   display: flex;
   align-content: stretch;
   overflow: hidden;
+  position: relative;
 
   .power-bar__fill {
     transform-origin: left;
     background: orange;
     width: 100%;
     transition: transform .3s cubic-bezier(0.23, 1, 0.320, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: inherit;
+  }
+  .power-bar__score {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    left: 0;
+    top: 0;
+    line-height: 1.5rem;
   }
 }
 

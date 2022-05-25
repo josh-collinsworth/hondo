@@ -9,8 +9,7 @@
   export let previousGuesses: string[]
   export let isLoadingNewWord: boolean
 
-  let remainingLetters = [...codeWord]
-
+  let highlightArray: string[]
   $: highlightArray = [...guess].map((letter, i) => {
     if ([...codeWord][i] === letter) {
       remainingLetters.splice(remainingLetters.findIndex(i => i === letter), 1)
@@ -26,6 +25,10 @@
     }
     return ''
   })
+  
+  let remainingLetters: string[]
+
+  $: if (codeWord) remainingLetters = [...codeWord]
 
   const defaultTransition = {
     duration: 500,
@@ -36,7 +39,6 @@
 
 
 {#key codeWord}
-  <div class="debug" style="position: absolute; left: 0;">{highlightArray}</div>
   {#each {length: 5} as _, i (i)}
     <div
       class:loading={isLoadingNewWord}
