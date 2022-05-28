@@ -1,8 +1,8 @@
 import legalGuesses from './legalGuesses'
 import codeWords from './codeWords'
-import { MAX_SCORE } from './constants'
-import { previousGuesses, codeWord, runningScore, remainingAttempts, currentGuess, gameIsOver } from './state'
+import { previousGuesses, codeWord, runningScore, remainingAttempts, currentGuess, gameIsOver, maxScore } from './state'
 import { get } from 'svelte/store'
+import { STARTING_GUESSES } from './constants'
 
 export const alphabetAsString = 'abcdefghijklmnopqrstuvwxyz'
 export const alphabetAsArray: string[] = [...alphabetAsString]
@@ -21,7 +21,6 @@ export const isValidGuess = (guess: string): boolean => {
 }
 
 export const chooseRandomCodeWord = (): void => {
-  console.log('choosing')
   const newWord = codeWords[Math.floor(Math.random() * codeWords.length)]
   if (newWord !== get(codeWord) && !get(previousGuesses).includes(newWord)) {
     codeWord.set(newWord)
@@ -51,19 +50,12 @@ export const setNewScores = (): void => {
 
   if (full === 5) {
     runningScore.set(get(runningScore) + 1)
-    remainingAttempts.set(Math.min(MAX_SCORE, get(remainingAttempts) + 1))
+    remainingAttempts.set(Math.min(get(maxScore), get(remainingAttempts) + 1))
   } else {
     remainingAttempts.set(get(remainingAttempts) - 1)
   }
-  // const addedPoints = partial + full + full
-  // runningScore.set(get(runningScore) + addedPoints)
 
-  // const adjustedPoints = get(remainingAttempts) - 10 + addedPoints
-  // if (adjustedPoints > MAX_SCORE) {
-  //   remainingAttempts.set(MAX_SCORE)
-  // } else {
-  //   remainingAttempts.set(adjustedPoints)
-  // }
+  maxScore.set(STARTING_GUESSES - Math.floor(get(runningScore) / 10))
 
   currentGuess.set('')
 

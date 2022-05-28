@@ -1,0 +1,18 @@
+.display-flex {
+  display: flex;
+}
+
+.sr {
+  position: absolute;
+  left: -100vw;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  border: 0;
+}
+
+.center-content {
+  align-items: center;
+  justify-content: center;
+}

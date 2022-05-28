@@ -1,5 +1,6 @@
 <script lang="ts" context="module">
   import { chooseRandomCodeWord } from '$lib/js/helpers'
+  import { codeWord } from '$lib/js/state'
 
   chooseRandomCodeWord()
 </script>
@@ -12,9 +13,9 @@
   import { previousGuesses, currentGuess, gameIsOver } from '$lib/js/state'
   
   import GuessContent from '$lib/components/game/GuessContent.svelte'
-  import FlashModal from '$lib/components/game/FlashModal.svelte'
+  import Confetti from '$lib/components/game/Confetti.svelte'
   import Keyboard from '$lib/components/game/Keyboard.svelte'
-  import PowerBar from '$lib/components/game/PowerBar.svelte'
+  import InfoBar from '$lib/components/game/InfoBar.svelte'
   import GameOverModal from '$lib/components/game/GameOverModal.svelte'
 
   const defaultTransition = { duration: 600, easing: quintOut, y: -80 }
@@ -24,11 +25,11 @@
 <main>
   <!-- <input type="text" bind:value={$codeWord} /> -->
   <div class="container">
+    
+    <InfoBar />
 
     <!-- TODO: should this be moved? It's just for fireworks -->
-    <FlashModal />
-
-    <PowerBar />
+    <Confetti />
 
     <ul class="guess-container" style="padding: 0; margin: 0;">
       {#each $previousGuesses as guess, row (guess)}

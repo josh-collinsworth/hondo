@@ -1,1 +1,1 @@
-export const MAX_SCORE = 10
+export const STARTING_GUESSES = 10

@@ -1,12 +1,20 @@
-@import 'vars';
+@use 'vars';
+@use 'helpers';
+@use 'components';
+@use 'animation';
 
 *, *::before, *::after {
   box-sizing: border-box;
-  font-family: sans-serif;
 }
 
 body {
   margin: 0;
   background: var(--paper);
-  color: var(--inl);
+  color: var(--ink);
+
+  font-family: 'Rubik';
+}
+
+button, input {
+  font: inherit;
 }
