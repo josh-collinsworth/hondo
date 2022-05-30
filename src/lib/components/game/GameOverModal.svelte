@@ -1,6 +1,14 @@
 <script lang="ts">
-  import { runningScore, codeWord } from "$lib/js/state"
+import { GAME_DATA_STORAGE_KEY } from '$lib/js/constants';
+
+  import { save } from '$lib/js/helpers'
+  import { runningScore, codeWord } from '$lib/js/state'
   import { fly } from 'svelte/transition'
+
+  const startNewGame = (): void => {
+    save(GAME_DATA_STORAGE_KEY, null)
+    window.location.reload()
+  }
 </script>
 
 
@@ -15,7 +23,7 @@
 
   <p>Play again?</p>
 
-  <button on:click={() => window.location.reload()}>
+  <button on:click={startNewGame}>
     Play!
   </button>
 </div>

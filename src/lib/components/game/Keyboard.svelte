@@ -1,8 +1,9 @@
 <script lang="ts">
   import { isSingleLetter, isValidGuess, chooseRandomCodeWord, setNewScores, evaluateGuess, save, saveGameData } from '$lib/js/helpers'
   import { tick } from 'svelte'
-  import { currentGuess, previousGuesses, discoveredCodeWord, codeWord, isLoadingNewWord, runningScore, remainingAttempts, gameIsOver, maxScore } from '$lib/js/state'
+  import { currentGuess, previousGuesses, discoveredCodeWord, codeWord, isLoadingNewWord, runningScore, remainingAttempts, gameIsOver, maxRemainingAttempts } from '$lib/js/state'
   import { GAME_DATA_STORAGE_KEY } from '$lib/js/constants'
+import { get } from 'svelte/store';
 
   const keys = [
     ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -43,12 +44,10 @@
             chooseRandomCodeWord()
             await tick()
             isLoadingNewWord.set(false)
-            console.log('saving inside the timeout')
             saveGameData()
           }, 1000
           )
-        } else {
-          console.log('saving OUTSIDE it')
+        } else if (!get(gameIsOver)) {
           saveGameData()
         }
       }

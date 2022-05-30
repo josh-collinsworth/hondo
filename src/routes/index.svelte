@@ -10,7 +10,7 @@
   import { flip } from 'svelte/animate'
   import { onMount } from 'svelte'
 
-  import { previousGuesses, currentGuess, gameIsOver, remainingAttempts, codeWord, runningScore, maxScore } from '$lib/js/state'
+  import { previousGuesses, currentGuess, gameIsOver, remainingAttempts, codeWord, runningScore, maxRemainingAttempts } from '$lib/js/state'
   import { GAME_DATA_STORAGE_KEY } from '$lib/js/constants';
 
   import GuessContent from '$lib/components/game/GuessContent.svelte'
@@ -39,7 +39,7 @@
         remainingAttempts.set(gameData.remainingAttempts)
         runningScore.set(gameData.runningScore)
         gameIsOver.set(gameData.gameIsOver)
-        maxScore.set(gameData.maxScore)
+        maxRemainingAttempts.set(gameData.maxRemainingAttempts)
       }
     } 
     catch(e) {
@@ -134,7 +134,7 @@
     height: 1.6em;
 
     @media (min-width: 32rem) {
-      height: 5.6em;
+      min-height: 5.8rem;
     }
   }
 }

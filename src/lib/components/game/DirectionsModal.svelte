@@ -1,10 +1,11 @@
 <script lang="ts">
   import { STARTING_GUESSES } from '$lib/js/constants'
+  import { fade } from 'svelte/transition'
 
   export let close: VoidFunction
 </script>
 
-<div class="directions" on:click={close}>
+<div class="directions" on:click={close} transition:fade>
   <ul class="directions__top">
     <li><strong>The goal is to guess as many code words as possible.</strong></li>
     <ul>
@@ -30,7 +31,7 @@
       </li>
     </ul>
     <li>
-      <strong>This bar shows how many guesses you have left</strong>
+      <strong>This meter shows how many guesses you have left.</strong>
       <div class="power-bar power-bar-example">
         <div class="power-bar__fill" style="transform: scaleX(0.8); background-size: 125}%; width: 100%;" />
         <div class="power-bar__grid" style="grid-template-columns: repeat({ STARTING_GUESSES }, 1fr);">
@@ -42,11 +43,11 @@
       <ul>
         <li>You start with { STARTING_GUESSES } guesses</li>
         <li>For every code word you get, you get a guess back!</li>
-        <li>The game ends when you run out of guesses.</li>
+        <li>The game ends when your meter is empty.</li>
       </ul>
     </li>
     <li>
-      <strong>The longer you play, the shorter the bar gets!</strong>
+      <strong>The longer you play, the shorter the meter gets!</strong>
       <div class="power-bar power-bar-example">
         <div class="power-bar__fill" style="transform: scaleX(0.4); background-size: 200}%; width: 100%;" />
         <div class="power-bar__grid" style="grid-template-columns: repeat({ STARTING_GUESSES }, 1fr);">

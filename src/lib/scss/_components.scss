@@ -1,6 +1,6 @@
 .guess-box {
   border: 2px solid var(--lighterGray);
-  border-radius: 3rem;
+  border-radius: 0.5em;
   overflow: hidden;
   text-transform: uppercase;
   display: flex;
@@ -14,7 +14,7 @@
   
   @media (min-width: 32rem) {
     font-size: 2em;
-    min-height: 2.6em;
+    min-height: 2.9em;
   }
 
   .background {
@@ -70,6 +70,7 @@
   overflow: hidden;
   position: relative;
   background: var(--lighterGray);
+  transition: width 1s ease-in-out;
 
   .power-bar__grid {
     display: grid;
@@ -91,6 +92,11 @@
         transition: background 1.5s ease-out;
         background: var(--paper);
         border-color: var(--paper);
+      }
+
+      &:not(.blackout):last-of-type {
+        border-top-right-radius: 1rem;
+        border-bottom-right-radius: 1rem;
       }
     }
   }
