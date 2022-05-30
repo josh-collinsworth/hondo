@@ -1,5 +1,7 @@
 .guess-box {
-  border: 2px solid #999;
+  border: 2px solid var(--lighterGray);
+  border-radius: 3rem;
+  overflow: hidden;
   text-transform: uppercase;
   display: flex;
   align-items: center;
@@ -53,7 +55,8 @@
   @extend .guess-box;
 
   border: 0;
-  border-bottom: 2px solid #999;
+  border-radius: 0;
+  border-bottom: 2px solid var(--darkGray);
 }
 
 

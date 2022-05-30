@@ -2,7 +2,7 @@ import legalGuesses from './legalGuesses'
 import codeWords from './codeWords'
 import { previousGuesses, codeWord, runningScore, remainingAttempts, currentGuess, gameIsOver, maxScore } from './state'
 import { get } from 'svelte/store'
-import { STARTING_GUESSES } from './constants'
+import { GAME_DATA_STORAGE_KEY, PREVIOUS_HIGH_SCORES_STORAGE_KEY, STARTING_GUESSES } from './constants'
 
 export const alphabetAsString = 'abcdefghijklmnopqrstuvwxyz'
 export const alphabetAsArray: string[] = [...alphabetAsString]
@@ -14,6 +14,14 @@ export const isSingleLetter = (str: string): boolean => {
 export const stringContainsLetter = (str: string): boolean => {
   str = str.toLowerCase()
   return Boolean(str.match(/[abcdefghijklmnopqrstuvwxyz]/))
+}
+
+export const save = (key: string, data: number[]|object): void => {
+  localStorage.setItem(key, JSON.stringify(data))
+}
+
+export const load = (key: string): any => {
+  return JSON.parse(localStorage.getItem(key))
 }
 
 export const isValidGuess = (guess: string): boolean => {
@@ -56,10 +64,30 @@ export const setNewScores = (): void => {
   }
 
   maxScore.set(STARTING_GUESSES - Math.floor(get(runningScore) / 10))
-
+  if (get(maxScore) > get(runningScore)) runningScore.set(get(maxScore))
   currentGuess.set('')
+
 
   if (get(remainingAttempts) <= 0) {
     gameIsOver.set(true)
+
+    const previousHighScores = load(PREVIOUS_HIGH_SCORES_STORAGE_KEY) || []
+    save(PREVIOUS_HIGH_SCORES_STORAGE_KEY, [...previousHighScores, get(runningScore)])
+    localStorage.removeItem(GAME_DATA_STORAGE_KEY)
   }
+}
+
+export const saveGameData = (): void => {
+  // This prevents saving more guesses than it should, since there's a slight delay between entry of the word and updating of the game board
+  const guessesToSave = get(previousGuesses)
+  if (guessesToSave.length > 5) guessesToSave.slice(1, 6)
+
+  save(GAME_DATA_STORAGE_KEY, {
+    codeWord: get(codeWord),
+    previousGuesses: guessesToSave,
+    remainingAttempts: get(remainingAttempts),
+    runningScore: get(runningScore),
+    gameIsOver: get(gameIsOver),
+    maxScore: get(maxScore),
+  })
 }

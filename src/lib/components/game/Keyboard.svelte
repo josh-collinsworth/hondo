@@ -1,7 +1,8 @@
 <script lang="ts">
-  import { isSingleLetter, isValidGuess, chooseRandomCodeWord, setNewScores, evaluateGuess } from '$lib/js/helpers'
+  import { isSingleLetter, isValidGuess, chooseRandomCodeWord, setNewScores, evaluateGuess, save, saveGameData } from '$lib/js/helpers'
   import { tick } from 'svelte'
-  import { currentGuess, previousGuesses, discoveredCodeWord, codeWord, isLoadingNewWord, runningScore } from '$lib/js/state'
+  import { currentGuess, previousGuesses, discoveredCodeWord, codeWord, isLoadingNewWord, runningScore, remainingAttempts, gameIsOver, maxScore } from '$lib/js/state'
+  import { GAME_DATA_STORAGE_KEY } from '$lib/js/constants'
 
   const keys = [
     ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -42,8 +43,13 @@
             chooseRandomCodeWord()
             await tick()
             isLoadingNewWord.set(false)
+            console.log('saving inside the timeout')
+            saveGameData()
           }, 1000
           )
+        } else {
+          console.log('saving OUTSIDE it')
+          saveGameData()
         }
       }
       if ($previousGuesses.length > 5) {
@@ -69,6 +75,7 @@
           on:click={() => handlePress(key)}
           data-key={key}
           class:used={lettersOnTheBoard.includes(key)}
+          class:included={lettersOnTheBoard.includes(key) && $codeWord.includes(key)}
         >
           {key}
         </button>
@@ -102,7 +109,7 @@
       flex: 1 0 3ch;
       text-transform: uppercase;
       background: var(--lighterGray);
-      border: 1px solid #666;
+      border: 1px solid var(--lightGray);
       border-radius: 0.2rem;
       margin: 0;
       padding: 0;
@@ -119,6 +126,10 @@
 
       &.used {
         background: var(--lightGray);
+      }
+
+      &.included {
+        background: var(--lightBlue);
       }
     }
   }

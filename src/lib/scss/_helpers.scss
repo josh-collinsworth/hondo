@@ -13,6 +13,9 @@
 }
 
 .center-content {
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  align-content: center;
+  text-align: center;
 }

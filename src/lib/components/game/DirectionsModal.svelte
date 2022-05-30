@@ -75,6 +75,8 @@
     border: 2px solid currentColor;
     background: var(--lightestGray); 
     padding: 1rem;
+    font-size: 1rem;
+    overflow: auto;
     
     li {
       margin-top: 0.5rem;
