@@ -6,9 +6,9 @@
 </script>
 
 <div class="directions" on:click={close} transition:fade>
-  <ul class="directions__top">
+  <ul class="directions__top no-bullets">
     <li><strong>The goal is to guess as many code words as possible.</strong></li>
-    <ul>
+    <ul class="no-bullets">
       <li>
         <div class="example-guess">
           <div class="guess-box partial"><div class="background"></div>c</div>
@@ -31,8 +31,7 @@
       </li>
     </ul>
     <li>
-      <strong>This meter shows how many guesses you have left.</strong>
-      <div class="power-bar power-bar-example">
+      <div class="power-bar power-bar-example" style="width: 100%; max-width: 18rem;">
         <div class="power-bar__fill" style="transform: scaleX(0.8); background-size: 125}%; width: 100%;" />
         <div class="power-bar__grid" style="grid-template-columns: repeat({ STARTING_GUESSES }, 1fr);">
           {#each Array.from({ length: STARTING_GUESSES }) as _}
@@ -40,22 +39,23 @@
           {/each}
         </div>
       </div>
+      <strong>This meter shows how many attempts you have left.</strong>
       <ul>
-        <li>You start with { STARTING_GUESSES } guesses</li>
-        <li>For every code word you get, you get a guess back!</li>
+        <li>You start with { STARTING_GUESSES } attempts</li>
+        <li>For every code word you get, you get an attempt back!</li>
         <li>The game ends when your meter is empty.</li>
       </ul>
     </li>
     <li>
-      <strong>The longer you play, the shorter the meter gets!</strong>
-      <div class="power-bar power-bar-example">
-        <div class="power-bar__fill" style="transform: scaleX(0.4); background-size: 200}%; width: 100%;" />
-        <div class="power-bar__grid" style="grid-template-columns: repeat({ STARTING_GUESSES }, 1fr);">
+      <div class="power-bar power-bar-example" style="width: 60%; max-width: 10.8rem;">
+        <div class="power-bar__fill" style="transform: scaleX(0.67); background-size: 200%; width: 100%;" />
+        <div class="power-bar__grid" style="grid-template-columns: repeat({ STARTING_GUESSES }, 1fr); width: 166.66%;">
           {#each Array.from({ length: STARTING_GUESSES }) as _, i}
-            <div class="power-bar__grid-box" class:blackout={i + 1 > 6} />
+            <div class="power-bar__grid-box" />
           {/each}
         </div>
       </div>
+      <strong>The longer you play, the shorter the meter gets!</strong>
       <ul>
         <li>Keep playing as long as you can to get your score as high as possible!</li>
       </ul>
@@ -84,8 +84,10 @@
     }
   }
 
-  .directions__top > li:not(:first-child) {
-    margin-top: 2rem;
+  .directions__top {
+    > li:not(:first-child) {
+      margin-top: 2rem;
+    }
   }
 
   .example-guess {
@@ -109,11 +111,10 @@
   .power-bar-example {
     height: 1rem;
     max-width: 20rem;
-    margin: 0.5rem 0;
+    margin: 1rem 0 0.5rem;
   }
 
   ul {
-    list-style-type: none;
     padding-left: 1rem;
   }
 

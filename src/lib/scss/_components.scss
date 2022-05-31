@@ -45,6 +45,7 @@
 
 .exact {
   border-color: var(--orange);
+  text-decoration: underline;
 
   .background {
     background: var(--orange);
@@ -71,6 +72,7 @@
   position: relative;
   background: var(--lighterGray);
   transition: width 1s ease-in-out;
+  box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--lightGray);
 
   .power-bar__grid {
     display: grid;
@@ -80,23 +82,13 @@
     left: 0;
     top: 0;
     z-index: 2;
+    transition: inherit;
 
     &-box {
       border-left: 2px solid var(--paper);
 
       &:first-of-type {
         border: 0;
-      }
-
-      &.blackout {
-        transition: background 1.5s ease-out;
-        background: var(--paper);
-        border-color: var(--paper);
-      }
-
-      &:not(.blackout):last-of-type {
-        border-top-right-radius: 1rem;
-        border-bottom-right-radius: 1rem;
       }
     }
   }
