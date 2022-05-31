@@ -5,7 +5,7 @@
   import { previousGuesses, codeWord, isLoadingNewWord } from '$lib/js/state'
 
   export let guess: string
-  export let row: number
+  export let row: number = 0
 
   let remainingLetters: string[] = []
   $: if ($codeWord) remainingLetters = [...$codeWord]

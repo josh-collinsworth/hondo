@@ -1,26 +1,37 @@
 <script lang="ts">
-  import { STARTING_GUESSES } from '$lib/js/constants'
-import { runningScore, usedAttempts } from '$lib/js/state'
+import { STARTING_GUESSES } from '$lib/js/constants'
+import { runningScore } from '$lib/js/state'
 
-  import DirectionsModal from './DirectionsModal.svelte'
-  import PowerBar from './PowerBar.svelte'
+import DirectionsModal from './DirectionsModal.svelte'
+import PowerBar from './PowerBar.svelte'
 
-  let isShowingDirections = false
-  const toggleIsShowingDirections = (): void => {
-    isShowingDirections = !isShowingDirections
-  }
+let isShowingDirections = false
+const toggleIsShowingDirections = (): void => {
+  isShowingDirections = !isShowingDirections
+}
 
-  const CIRCLE_LENGTH = 289.0668
+const quartOutCSS = `cubic-bezier(0.165, 0.84, 0.44, 1)`
+const quintInOutCSS = `cubic-bezier(0.86, 0, 0.07, 1)`
 
-  $: piePercentage = $usedAttempts % 10
-  // $: getConicGradient = `background: conic-gradient(var(--lighterGray), var(--lighterGray) ${piePercentage}%, var(--darkGray) ${piePercentage}%, var(--darkGray));`
+const CIRCLE_LENGTH = 119.3970
+
+$: piePercentage = $runningScore % 10
 </script>
 
 
 <div class="info-bar" >
   <div class="info-button score">
-    <svg class="ring" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50" cy="50" r="46" style="stroke-dasharray: {CIRCLE_LENGTH}; stroke-dashoffset: {CIRCLE_LENGTH / STARTING_GUESSES * piePercentage}" />
+    <svg class="ring" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+      <circle
+        cx="20"
+        cy="20"
+        r="19"
+        style="
+          stroke-dasharray: {CIRCLE_LENGTH};
+          stroke-dashoffset: {CIRCLE_LENGTH / STARTING_GUESSES * piePercentage};
+          transition-timing-function: {piePercentage ? quartOutCSS : quintInOutCSS};
+          transition-duration: {piePercentage ? '1s' : '2s'};
+        " />
     </svg>
     
     <span class="score__counter">{$runningScore}</span>
@@ -34,7 +45,6 @@ import { runningScore, usedAttempts } from '$lib/js/state'
 {#if isShowingDirections}
   <DirectionsModal close={toggleIsShowingDirections} />
 {/if}
-
 
 <style lang="scss">
   .info-bar {
@@ -61,36 +71,26 @@ import { runningScore, usedAttempts } from '$lib/js/state'
     position: relative;
 
     &.score {
-      border: 0;
+      border-color: var(--lighterGray);
 
       .score__counter {
         position: relative;
         z-index: 2;
       }
 
-      // &::after {
-      //   content: '';
-      //   background: var(--paper);
-      //   width: calc(2.5rem - 4px);
-      //   height: calc(2.5rem - 4px);
-      //   border-radius: 2.5rem;
-      //   left: 2px;
-      //   top: 2px;
-      //   z-index: 0;
-      //   position: absolute;
-      // }
-
       .ring {
         position: absolute;
         fill: transparent;
         stroke: var(--darkGray);
-        stroke-width: 5px;
-        top: 0;
-        left: 0;
+        stroke-width: 2px;
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        top: -2px;
+        left: -2px;
         transform: rotate(270deg) rotateX(180deg);
         
         circle {
-          transition: stroke-dashoffset 1.5s cubic-bezier(0.23, 1, 0.320, 1);
+          transition-property: stroke-dashoffset;
         }
       }
     }

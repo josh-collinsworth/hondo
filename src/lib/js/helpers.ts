@@ -65,7 +65,6 @@ export const setNewScores = (): void => {
   }
   usedAttempts.set(get(usedAttempts) + 1)
 
-  maxRemainingAttempts.set(STARTING_GUESSES - Math.floor(get(usedAttempts) / 10))
   if (get(maxRemainingAttempts) < get(remainingAttempts)) {
     remainingAttempts.set(get(maxRemainingAttempts))
   }

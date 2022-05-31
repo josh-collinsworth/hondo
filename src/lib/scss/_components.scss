@@ -56,6 +56,15 @@
   border-bottom: 2px solid var(--darkGray);
 }
 
+.power-bar-container {
+  --dotWidth: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  width: 100%;
+  position: relative;
+}
 
 .power-bar {
   width: 100%;
@@ -67,8 +76,8 @@
   overflow: hidden;
   position: relative;
   background: var(--lighterGray);
-  transition: width 1s ease-in-out;
-  box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--lightGray);
+  transition: width 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--lightBlue);
 
   .power-bar__grid {
     display: grid;
@@ -91,7 +100,7 @@
 
   .power-bar__fill {
     transform-origin: left;
-    background: linear-gradient(90deg, #e4002b, #e82028, #f1461d, #fb6c07, #ff9100, #ffb100, #ffc800, #ffd100);
+    background: var(--lightBlue);
     transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
     display: flex;
     justify-content: center;
@@ -99,4 +108,25 @@
     height: inherit;
     overflow: hidden;
   }
+}
+
+.power-bar__dots {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: repeat(10, 1fr);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  
+  .power-bar__dot{
+   width: 0.75rem;
+   height: 0.75rem;
+   background: var(--lighterGray);
+   border-radius: 0.75rem;
+   margin: 0 auto 0 40%;
+ }
 }
