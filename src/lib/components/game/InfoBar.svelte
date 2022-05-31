@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { runningScore, usedAttempts } from '$lib/js/state'
+  import { STARTING_GUESSES } from '$lib/js/constants'
+import { runningScore, usedAttempts } from '$lib/js/state'
 
   import DirectionsModal from './DirectionsModal.svelte'
   import PowerBar from './PowerBar.svelte'
@@ -9,13 +10,19 @@
     isShowingDirections = !isShowingDirections
   }
 
-  $: piePercentage = $usedAttempts % 10 * 10
-  $: getConicGradient = `background: conic-gradient(var(--lighterGray), var(--lighterGray) ${piePercentage}%, var(--darkGray) ${piePercentage}%, var(--darkGray));`
+  const CIRCLE_LENGTH = 289.0668
+
+  $: piePercentage = $usedAttempts % 10
+  // $: getConicGradient = `background: conic-gradient(var(--lighterGray), var(--lighterGray) ${piePercentage}%, var(--darkGray) ${piePercentage}%, var(--darkGray));`
 </script>
 
 
 <div class="info-bar" >
-  <div class="info-button score" style={getConicGradient} data-used={$usedAttempts}>
+  <div class="info-button score">
+    <svg class="ring" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="46" style="stroke-dasharray: {CIRCLE_LENGTH}; stroke-dashoffset: {CIRCLE_LENGTH / STARTING_GUESSES * piePercentage}" />
+    </svg>
+    
     <span class="score__counter">{$runningScore}</span>
   </div>
   <PowerBar />
@@ -61,16 +68,30 @@
         z-index: 2;
       }
 
-      &::after {
-        content: '';
-        background: var(--paper);
-        width: calc(2.5rem - 4px);
-        height: calc(2.5rem - 4px);
-        border-radius: 2.5rem;
-        left: 2px;
-        top: 2px;
-        z-index: 0;
+      // &::after {
+      //   content: '';
+      //   background: var(--paper);
+      //   width: calc(2.5rem - 4px);
+      //   height: calc(2.5rem - 4px);
+      //   border-radius: 2.5rem;
+      //   left: 2px;
+      //   top: 2px;
+      //   z-index: 0;
+      //   position: absolute;
+      // }
+
+      .ring {
         position: absolute;
+        fill: transparent;
+        stroke: var(--darkGray);
+        stroke-width: 5px;
+        top: 0;
+        left: 0;
+        transform: rotate(270deg) rotateX(180deg);
+        
+        circle {
+          transition: stroke-dashoffset 1.5s cubic-bezier(0.23, 1, 0.320, 1);
+        }
       }
     }
   }

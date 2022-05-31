@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { isSingleLetter, isValidGuess, chooseRandomCodeWord, setNewScores, evaluateGuess, saveGameData } from '$lib/js/helpers'
-  import { currentGuess, previousGuesses, discoveredCodeWord, codeWord, isLoadingNewWord, gameIsOver, message, usedAttempts } from '$lib/js/state'
+  import { isSingleLetter, isValidGuess, chooseRandomCodeWord, setNewScores, evaluateGuess, saveGameData, setToastMessage } from '$lib/js/helpers'
+  import { currentGuess, previousGuesses, discoveredCodeWord, codeWord, isLoadingNewWord, gameIsOver } from '$lib/js/state'
   import { tick } from 'svelte'
   import { get } from 'svelte/store';
 
@@ -58,14 +58,14 @@
           } else if (!get(gameIsOver)) {
             saveGameData()
           }
+        } else {
+          setToastMessage('Already guessed that word')
         }
         if ($previousGuesses.length > 5) {
           $previousGuesses = [...$previousGuesses].slice(1, $previousGuesses.length)
         }
       } else if ($currentGuess.length === 5) {
-        message.set('')
-        await tick()
-        message.set('Sorry, not in word list')
+        setToastMessage('Sorry, not in word list')
       }
     }
   }
@@ -123,6 +123,7 @@
       margin: 0;
       padding: 0;
       touch-action: manipulation;
+      transition: background .6s ease-in-out;
 
       @media (min-width: 26rem) {
         font-size: 1.2rem;

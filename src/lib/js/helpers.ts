@@ -1,8 +1,9 @@
 import legalGuesses from './legalGuesses'
 import codeWords from './codeWords'
-import { previousGuesses, codeWord, runningScore, remainingAttempts, currentGuess, gameIsOver, maxRemainingAttempts, usedAttempts } from './state'
-import { get } from 'svelte/store'
+import { previousGuesses, codeWord, runningScore, remainingAttempts, currentGuess, gameIsOver, maxRemainingAttempts, usedAttempts, message } from './state'
 import { GAME_DATA_STORAGE_KEY, PREVIOUS_HIGH_SCORES_STORAGE_KEY, STARTING_GUESSES } from './constants'
+import { get } from 'svelte/store'
+import { tick } from 'svelte'
 
 export const alphabetAsString = 'abcdefghijklmnopqrstuvwxyz'
 export const alphabetAsArray: string[] = [...alphabetAsString]
@@ -93,4 +94,10 @@ export const saveGameData = (): void => {
     maxRemainingAttempts: get(maxRemainingAttempts),
     usedAttempts: get(usedAttempts),
   })
+}
+
+export const setToastMessage = async (msg: string): Promise<void> => {
+  message.set('')
+  await tick()
+  message.set(msg)
 }

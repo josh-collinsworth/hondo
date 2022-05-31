@@ -32,6 +32,7 @@
       height: 2rem;
       background: var(--darkBlue);
       animation: loader_bounce 0.9s ease-in-out infinite;
+      border-radius: 0.5rem;
       
       + .dot {
         margin-left: 0.25rem;
