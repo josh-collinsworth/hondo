@@ -5,7 +5,7 @@
   $: if ($discoveredCodeWord) {
     const duration = 500;
     const animationEnd = Date.now() + duration;
-    const defaults = { startVelocity: 20, spread: 360, ticks: 40, zIndex: 10, gravity: 0.2 };
+    const defaults = { startVelocity: 18, spread: 280, ticks: 30, zIndex: 10, gravity: 0.2 };
 
     function randomInRange(min, max) {
       return Math.random() * (max - min) + min;

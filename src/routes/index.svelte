@@ -40,7 +40,6 @@
         remainingAttempts.set(gameData.remainingAttempts)
         runningScore.set(gameData.runningScore)
         gameIsOver.set(gameData.gameIsOver)
-        maxRemainingAttempts.set(gameData.maxRemainingAttempts)
         usedAttempts.set(gameData.usedAttempts)
       }
     } 

@@ -1,7 +1,7 @@
 import legalGuesses from './legalGuesses'
 import codeWords from './codeWords'
 import { previousGuesses, codeWord, runningScore, remainingAttempts, currentGuess, gameIsOver, maxRemainingAttempts, usedAttempts, message } from './state'
-import { GAME_DATA_STORAGE_KEY, PREVIOUS_HIGH_SCORES_STORAGE_KEY, STARTING_GUESSES } from './constants'
+import { GAME_DATA_STORAGE_KEY, PREVIOUS_HIGH_SCORES_STORAGE_KEY } from './constants'
 import { get } from 'svelte/store'
 import { tick } from 'svelte'
 
@@ -55,6 +55,7 @@ export const evaluateGuess = (guess: string): number[] => {
 }
 
 export const setNewScores = (): void => {
+  //TODO: partial is never used.
   const [partial, full] = evaluateGuess(get(currentGuess))
   
   if (full === 5) {
