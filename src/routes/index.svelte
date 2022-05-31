@@ -131,7 +131,7 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 0.25rem;
-    height: 1.6em;
+    height: 1.7em;
 
     @media (min-width: 32rem) {
       min-height: 5.8rem;
