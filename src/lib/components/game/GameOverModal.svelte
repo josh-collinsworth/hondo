@@ -2,7 +2,7 @@
 import { GAME_DATA_STORAGE_KEY } from '$lib/js/constants';
 
   import { save } from '$lib/js/helpers'
-  import { runningScore, codeWord } from '$lib/js/state'
+  import { runningScore, codeWord, usedAttempts } from '$lib/js/state'
   import { fly } from 'svelte/transition'
 
   const startNewGame = (): void => {
@@ -16,7 +16,7 @@ import { GAME_DATA_STORAGE_KEY } from '$lib/js/constants';
   <h2>Game Over</h2>
 
   <p>
-    <strong>You guessed { $runningScore } word{$runningScore === 1 ? '' : 's'}!</strong>
+    <strong>You got { $runningScore } word{$runningScore === 1 ? '' : 's'} in {$usedAttempts} attempts!</strong>
   </p>
 
   <p>You lost on {$codeWord.toUpperCase()}</p>

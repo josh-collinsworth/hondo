@@ -44,7 +44,6 @@
       out:fly="{{ ...defaultTransition, y: -70, delay: $isLoadingNewWord ?  0 : (i + 1) * 30 }}"
       animate:flip={{ duration: 500 }}
     >
-      <div class="background"  />
       <span>
         {guess[i]
           ? $previousGuesses[row][i]

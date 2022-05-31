@@ -10,7 +10,7 @@
   import { flip } from 'svelte/animate'
   import { onMount } from 'svelte'
 
-  import { previousGuesses, currentGuess, gameIsOver, remainingAttempts, codeWord, runningScore, maxRemainingAttempts } from '$lib/js/state'
+  import { previousGuesses, currentGuess, gameIsOver, remainingAttempts, codeWord, runningScore, maxRemainingAttempts, usedAttempts } from '$lib/js/state'
   import { GAME_DATA_STORAGE_KEY } from '$lib/js/constants';
 
   import GuessContent from '$lib/components/game/GuessContent.svelte'
@@ -19,6 +19,7 @@
   import InfoBar from '$lib/components/game/InfoBar.svelte'
   import GameOverModal from '$lib/components/game/GameOverModal.svelte'
   import Loader from '$lib/components/game/Loader.svelte'
+  import Toast from '$lib/components/game/Toast.svelte'
 
   let isLoading = true
   const defaultTransition = { duration: 600, easing: quintOut, y: -80 }
@@ -40,6 +41,7 @@
         runningScore.set(gameData.runningScore)
         gameIsOver.set(gameData.gameIsOver)
         maxRemainingAttempts.set(gameData.maxRemainingAttempts)
+        usedAttempts.set(gameData.usedAttempts)
       }
     } 
     catch(e) {
@@ -91,11 +93,14 @@
       </ul>
     {/if}
 
-    {#if $gameIsOver}
-      <GameOverModal />
-    {:else}
-      <Keyboard />
-    {/if}
+    <div class="bottom-container">
+      <Toast />
+      {#if $gameIsOver}
+        <GameOverModal />
+      {:else}
+        <Keyboard />
+      {/if}
+    </div>
   </div>
 </main>
 
@@ -137,5 +142,10 @@
       min-height: 5.8rem;
     }
   }
+}
+
+.bottom-container {
+  min-height: 12.6rem;
+  position: relative;
 }
 </style>

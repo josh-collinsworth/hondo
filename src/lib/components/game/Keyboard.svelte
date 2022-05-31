@@ -1,9 +1,8 @@
 <script lang="ts">
-  import { isSingleLetter, isValidGuess, chooseRandomCodeWord, setNewScores, evaluateGuess, save, saveGameData } from '$lib/js/helpers'
+  import { isSingleLetter, isValidGuess, chooseRandomCodeWord, setNewScores, evaluateGuess, saveGameData } from '$lib/js/helpers'
+  import { currentGuess, previousGuesses, discoveredCodeWord, codeWord, isLoadingNewWord, gameIsOver, message, usedAttempts } from '$lib/js/state'
   import { tick } from 'svelte'
-  import { currentGuess, previousGuesses, discoveredCodeWord, codeWord, isLoadingNewWord, runningScore, remainingAttempts, gameIsOver, maxRemainingAttempts } from '$lib/js/state'
-  import { GAME_DATA_STORAGE_KEY } from '$lib/js/constants'
-import { get } from 'svelte/store';
+  import { get } from 'svelte/store';
 
   const keys = [
     ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -12,7 +11,8 @@ import { get } from 'svelte/store';
   ]
 
   $: lettersOnTheBoard = Array.from(new Set($previousGuesses.flatMap(word => [...word])))
-
+  $: disableEnterKey = $currentGuess.length < 5
+  $: disableDeleteKey = !$currentGuess.length
 
   const handleKeyUp = (e) => {
     if (!e.key) return
@@ -25,38 +25,47 @@ import { get } from 'svelte/store';
     }
   }
 
+  const isEnterKey = (key: string): boolean => key === '⏎'
+  const isDeleteKey = (key: string): boolean => key === '⌫'
+
   const handlePress = async (key: string): Promise<void> => {
     if (isSingleLetter(key)) {
       if ($currentGuess.length < 5) {
         currentGuess.set($currentGuess + key)
       }
-    } else if (key === '⏎' && isValidGuess($currentGuess)) {
-      if (!$previousGuesses.includes($currentGuess)) {
-        $previousGuesses = [...$previousGuesses, $currentGuess]
-        const [partial, full] = evaluateGuess($currentGuess)
-
-        setNewScores()
-
-        if (full === 5) {
-          discoveredCodeWord.set($codeWord)
-          setTimeout(async () => {
-            isLoadingNewWord.set(true)
-            chooseRandomCodeWord()
-            await tick()
-            isLoadingNewWord.set(false)
-            saveGameData()
-          }, 1000
-          )
-        } else if (!get(gameIsOver)) {
-          saveGameData()
-        }
-      }
-      if ($previousGuesses.length > 5) {
-        $previousGuesses = [...$previousGuesses].slice(1, $previousGuesses.length)
-      }
-    } else if (key === '⌫') {
+    } else if (isDeleteKey(key)) {
       if ($currentGuess.length) {
         $currentGuess = $currentGuess.slice(0, $currentGuess.length - 1)
+      }
+    } else if (isEnterKey(key)) {
+      if (isValidGuess($currentGuess)) {
+        if (!$previousGuesses.includes($currentGuess)) {
+          $previousGuesses = [...$previousGuesses, $currentGuess]
+          const [partial, full] = evaluateGuess($currentGuess)
+
+          setNewScores()
+
+          if (full === 5) {
+            discoveredCodeWord.set($codeWord)
+            setTimeout(async () => {
+              isLoadingNewWord.set(true)
+              chooseRandomCodeWord()
+              await tick()
+              isLoadingNewWord.set(false)
+              saveGameData()
+            }, 1000
+            )
+          } else if (!get(gameIsOver)) {
+            saveGameData()
+          }
+        }
+        if ($previousGuesses.length > 5) {
+          $previousGuesses = [...$previousGuesses].slice(1, $previousGuesses.length)
+        }
+      } else if ($currentGuess.length === 5) {
+        message.set('')
+        await tick()
+        message.set('Sorry, not in word list')
       }
     }
   }
@@ -75,6 +84,7 @@ import { get } from 'svelte/store';
           data-key={key}
           class:used={lettersOnTheBoard.includes(key)}
           class:included={lettersOnTheBoard.includes(key) && $codeWord.includes(key)}
+          disabled={(isEnterKey(key) && disableEnterKey) || (isDeleteKey(key) && disableDeleteKey)}
         >
           {key}
         </button>
@@ -104,19 +114,27 @@ import { get } from 'svelte/store';
     }
 
     button {
-      font-size: 1.2rem;
+      font-size: 1rem;
       flex: 1 0 3ch;
       text-transform: uppercase;
       background: var(--lightestGray);
-      border: 1px solid var(--lightGray);
+      border: 1px solid var(--lighterGray);
       border-radius: 0.2rem;
       margin: 0;
       padding: 0;
       touch-action: manipulation;
 
+      @media (min-width: 26rem) {
+        font-size: 1.2rem;
+      }
+
       &[data-key="⌫"],
       &[data-key="⏎"] {
         flex: 1 0 5ch;
+      }
+
+      &[disabled] {
+        color: var(--lighterGray);
       }
 
       + button {

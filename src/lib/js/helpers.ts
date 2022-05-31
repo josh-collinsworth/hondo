@@ -1,6 +1,6 @@
 import legalGuesses from './legalGuesses'
 import codeWords from './codeWords'
-import { previousGuesses, codeWord, runningScore, remainingAttempts, currentGuess, gameIsOver, maxRemainingAttempts } from './state'
+import { previousGuesses, codeWord, runningScore, remainingAttempts, currentGuess, gameIsOver, maxRemainingAttempts, usedAttempts } from './state'
 import { get } from 'svelte/store'
 import { GAME_DATA_STORAGE_KEY, PREVIOUS_HIGH_SCORES_STORAGE_KEY, STARTING_GUESSES } from './constants'
 
@@ -55,20 +55,20 @@ export const evaluateGuess = (guess: string): number[] => {
 
 export const setNewScores = (): void => {
   const [partial, full] = evaluateGuess(get(currentGuess))
-
+  
   if (full === 5) {
     runningScore.set(get(runningScore) + 1)
     remainingAttempts.set(Math.min(get(maxRemainingAttempts), get(remainingAttempts) + 1))
   } else {
     remainingAttempts.set(get(remainingAttempts) - 1)
   }
+  usedAttempts.set(get(usedAttempts) + 1)
 
-  maxRemainingAttempts.set(STARTING_GUESSES - Math.floor(get(runningScore) / 10))
+  maxRemainingAttempts.set(STARTING_GUESSES - Math.floor(get(usedAttempts) / 10))
   if (get(maxRemainingAttempts) < get(remainingAttempts)) {
     remainingAttempts.set(get(maxRemainingAttempts))
   }
   currentGuess.set('')
-
 
   if (get(remainingAttempts) <= 0) {
     gameIsOver.set(true)
@@ -91,5 +91,6 @@ export const saveGameData = (): void => {
     runningScore: get(runningScore),
     gameIsOver: get(gameIsOver),
     maxRemainingAttempts: get(maxRemainingAttempts),
+    usedAttempts: get(usedAttempts),
   })
 }
