@@ -1,6 +1,7 @@
 :root { 
-  --lightestGray: #f4f5f7;
-  --lighterGray: #dadbdd;
+  --offwhite: #f7f8fa;
+  --lightestGray: #f0f1f3;
+  --lighterGray: #cacbcd;
   --lightGray: #a7a8aa;
   --mediumGray: #888b8d;
   --darkGray: #53565a;
@@ -12,6 +13,6 @@
   --lightBlue: #7ba7bc;
   --darkBlue: #34657f;
 
-  --paper: var(--lightestGray);
+  --paper: var(--offwhite);
   --ink: var(--black);
 }

@@ -107,7 +107,7 @@ import { get } from 'svelte/store';
       font-size: 1.2rem;
       flex: 1 0 3ch;
       text-transform: uppercase;
-      background: var(--lighterGray);
+      background: var(--lightestGray);
       border: 1px solid var(--lightGray);
       border-radius: 0.2rem;
       margin: 0;
@@ -124,7 +124,7 @@ import { get } from 'svelte/store';
       }
 
       &.used {
-        background: var(--lightGray);
+        background: var(--lighterGray);
       }
 
       &.included {

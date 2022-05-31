@@ -9,7 +9,7 @@
   line-height: 1;
   position: relative;
   transform: rotateY(0);
-  min-height: 1.6em;
+  min-height: 1.7em;
   
   
   @media (min-width: 32rem) {
@@ -29,26 +29,37 @@
 
   span {
     display: block;
-    line-height: 1;
+    line-height: 0.9;
     height: 0.85em;
     overflow: visible;
   }
 }
 
 .partial {
-  border-color: var(--lightBlue);
-  
+  border: 0;
+
   .background {
     background: var(--lightBlue);
   }
 }
 
 .exact {
-  border-color: var(--orange);
-  text-decoration: underline;
+  border: 0;
 
   .background {
     background: var(--orange);
+
+  }
+  span {
+    display: block;
+    &::after {
+      content: '';
+      width: 1ch;
+      position: absolute;
+      bottom: 15%;
+      border-bottom: 1px solid currentColor;
+      left: calc(50% - 0.5ch);
+    }
   }
 }
 

@@ -21,7 +21,7 @@
       </li>
       <li>
         <div class="example-guess">
-          <div class="guess-box exact"><div class="background"></div>v</div>
+          <div class="guess-box exact"><div class="background"></div><span>v</span></div>
           <div class="guess-box">i</div>
           <div class="guess-box">t</div>
           <div class="guess-box">a</div>
