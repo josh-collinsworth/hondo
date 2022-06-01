@@ -96,7 +96,7 @@
 <style lang="scss">
   .keyboard {
     display: grid;
-    grid-template-rows: repeat(3, 4.2rem);
+    grid-template-rows: repeat(3, 2em);
     margin: 0 calc(-1rem + 3px);
 
     .row {
@@ -114,8 +114,8 @@
     }
 
     button {
-      font-size: 1rem;
-      flex: 1 0 3ch;
+      font-size: 1.1rem;
+      flex: 1 1 3ch;
       text-transform: uppercase;
       background: var(--lightestGray);
       border: 1px solid var(--lighterGray);
@@ -131,7 +131,7 @@
 
       &[data-key="⌫"],
       &[data-key="⏎"] {
-        flex: 1 0 5ch;
+        flex: 1 1 5ch;
       }
 
       &[disabled] {

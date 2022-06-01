@@ -10,7 +10,7 @@
   align-content: space-between;
   align-items: space-between;
   justify-content: space-between;
-  font-size: 10vw;
+  font-size: calc(2.5vw + 3.5vh);
 
   @media (min-width: 32rem) {
     font-size: 2.4rem;
@@ -41,7 +41,7 @@
 }
 
 .bottom-container {
-  min-height: 12.6rem;
+  min-height: 6em;
   position: relative;
 }
 
@@ -102,7 +102,7 @@
 }
 
 .power-bar-container {
-  font-size: 6vw;
+  font-size: 5vw;
   width: 10em;
   display: flex;
   align-items: center;
@@ -110,7 +110,7 @@
   position: relative;
   height: 2rem;
 
-  @media (min-width: 24rem) {
+  @media (min-width: 26rem) {
     font-size: 7vw;
   }
 

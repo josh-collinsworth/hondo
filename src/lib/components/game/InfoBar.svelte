@@ -50,6 +50,7 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
     align-items: center;
     justify-items: center;
     gap: 10px;
+    margin-bottom: 1rem;
   }
 
   .info-button {

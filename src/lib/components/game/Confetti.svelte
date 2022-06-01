@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { randomIntegerInRange } from '$lib/js/helpers'
   import { discoveredCodeWord } from '$lib/js/state'
   
   $: if ($discoveredCodeWord) {
@@ -18,9 +19,7 @@
 
       console.log(origins)
 
-      const defaults = { 
-        startVelocity: 32,
-        spread: 30,
+      const defaults = {         
         ticks: 60,
         gravity: 0.5,
         scalar: 0.8,
@@ -30,7 +29,15 @@
       }
       for (let i = 0; i < 5; i++) {
         setTimeout(() => {
-          confetti(Object.assign({}, defaults, { origin: origins[i] }))
+          confetti(Object.assign(
+            {},
+            {
+              ...defaults,
+              startVelocity: randomIntegerInRange(30, 50),
+              spread: randomIntegerInRange(10, 26),
+            },
+            { origin: origins[i] }
+          ))
         }, 60 + i * 40)
       }
     }
