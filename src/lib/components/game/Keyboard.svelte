@@ -47,7 +47,7 @@
 
           if (full === 5) {
             discoveredCodeWord.set($codeWord)
-            setTimeout(async () => {
+          setTimeout(async () => {
               isLoadingNewWord.set(true)
               chooseRandomCodeWord()
               await tick()
@@ -135,7 +135,7 @@
       }
 
       &[disabled] {
-        color: var(--lighterGray);
+        color: var(--lightGray);
       }
 
       + button {

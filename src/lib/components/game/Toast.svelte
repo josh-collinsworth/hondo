@@ -27,12 +27,12 @@
     position: absolute;
     font-size: 1rem;
     text-align: center;
-    padding: 1rem;
+    padding: 0.5rem 1rem;
     background: var(--red);
     z-index: 3;
     color: var(--paper);
     border-radius: 0.2rem;
-    top: -4em;
+    top: -3.5rem;
     left: 1rem;
     width: calc(100% - 2rem);
   }

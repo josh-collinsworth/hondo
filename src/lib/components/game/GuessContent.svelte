@@ -40,8 +40,18 @@
     <div
       class:loading={$isLoadingNewWord}
       class="guess-box {highlightArray[i]}"
-      in:fly="{{ ...defaultTransition, delay: $isLoadingNewWord ? (700 + ((row + 1) * i * (i * row))) : (i + 1) * 40 }}"
-      out:fly="{{ ...defaultTransition, y: -70, delay: $isLoadingNewWord ?  0 : (i + 1) * 30 }}"
+      in:fly="{{ 
+        ...defaultTransition, 
+        delay: $isLoadingNewWord 
+          ? (700 + (row * 50) + ((i +1) * 40))
+          : (i + 1) * 40
+      }}"
+      out:fly="{{
+        ...defaultTransition, y: -70,
+        delay: $isLoadingNewWord
+          ?  0
+          : (i + 1) * 30
+      }}"
       animate:flip={{ duration: 500 }}
     >
       <span>

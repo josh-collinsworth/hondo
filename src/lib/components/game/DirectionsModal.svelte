@@ -11,15 +11,45 @@
   <div class="directions__container">
     <h2>The goal is to guess as many code words as possible.</h2>
 
-    <ExampleGuess codeWord="vital" guess="angel" />
+    <ExampleGuess codeWord="xrxxx" guess="ready" />
     <p>
-      The code word ends with “L.”
+      The code word includes <strong>R</strong>, but it's not the&nbsp;first&nbsp;letter.
     </p>
-    <p>
-      The code word also has an “A,” but it's not the&nbsp;first&nbsp;letter.
-    </p>
-
     
+    <br />
+    
+    <ExampleGuess codeWord="xxxxt" guess="smart" />
+    <p>
+      The code word ends with <strong>T</strong>.
+    </p>
+    
+
+    <h2>When you guess a code word, it's replaced with a new one.</h2>
+    
+    <p>Your last five guesses stay on the board.</p>
+          
+    <div class="example-guess-holder">
+      <div>
+        <ExampleGuess codeWord="proof" guess="knife" />
+        <ExampleGuess codeWord="proof" guess="foggy" />
+        <ExampleGuess codeWord="proof" guess="aloof" />
+        <ExampleGuess codeWord="proof" guess="spoof" />
+        <ExampleGuess codeWord="proof" guess="proof" />
+        <p class="small-print">Got the word <strong>proof</strong>…</p>
+      </div>
+      <div class="arrow right">➡️</div>
+      <div class="arrow down">⬇️</div>
+      <div>
+        <ExampleGuess codeWord="along" guess="knife" />
+        <ExampleGuess codeWord="along" guess="foggy" />
+        <ExampleGuess codeWord="along" guess="aloof" />
+        <ExampleGuess codeWord="along" guess="spoof" />
+        <ExampleGuess codeWord="along" guess="proof" />
+        <p class="small-print">…same guesses, new code&nbsp;word</p>
+      </div>
+    </div>
+
+
     <h2>This meter shows how many attempts you have left.</h2>
 
     <div class="power-bar- power-bar-example">
@@ -35,37 +65,11 @@
 
     <ul>
       <li>You start with { STARTING_GUESSES } attempts.</li>
-      <li>When you guess a code word, you get one back!</li>
+      <li><strong>Successfully guessing a code word replenishes one attempt!</strong></li>
     </ul>
 
-    <h2>When you guess a code word, it's replaced with a new one.</h2>
-    
-    <p>Your last five guesses stay on the board, to hint at the new code word:</p>
-          
-    <div class="example-guess-holder">
-      <div>
-        <ExampleGuess codeWord="proof" guess="softy" />
-        <ExampleGuess codeWord="proof" guess="frown" />
-        <ExampleGuess codeWord="proof" guess="aloof" />
-        <ExampleGuess codeWord="proof" guess="spoof" />
-        <ExampleGuess codeWord="proof" guess="proof" />
-        <p class="small-print">The word was “proof”</p>
-      </div>
-      <div class="arrow right">➡️</div>
-      <div class="arrow down">⬇️</div>
-      <div>
-        <ExampleGuess codeWord="along" guess="softy" />
-        <ExampleGuess codeWord="along" guess="frown" />
-        <ExampleGuess codeWord="along" guess="aloof" />
-        <ExampleGuess codeWord="along" guess="spoof" />
-        <ExampleGuess codeWord="along" guess="proof" />
-        <p class="small-print">Can you guess the new word?</p>
-      </div>
-    </div>
 
-        
-
-    <h2>The longer you play, the shorter the meter gets!</h2>
+    <h2>The longer you play, the shorter the meter gets.</h2>
     <div class="power-bar-container power-bar-example">
       <div class="power-bar" style="width: 60%; max-width: 10.8rem;">
         <div class="power-bar__fill" style="transform: scaleX(0.67); background-size: 200%; width: 100%;" />
@@ -83,8 +87,8 @@
     </div>
     <ul>
       <li><strong>The game ends when your meter is empty!</strong></li>
-      <li>Keep playing as long as you can to get your score as high as possible!</li>
-      <li>(The maximum possible score is 100!)</li>
+      <li>Keep playing as long as you can!</li>
+      <li>The maximum possible score is 100. How close can you get?</li>
     </ul>
   </div>
 </div>
@@ -99,8 +103,8 @@
     height: calc(100dvh - 2rem);
     top: 1rem;
     left: 1rem;
-    border: 2px solid currentColor;
-    background: var(--lightestGray); 
+    border: 2px solid var(--lightGray);
+    background: var(--paper); 
     padding: 1rem;
     font-size: 1rem;
     overflow: auto;
@@ -114,6 +118,11 @@
 
   li {
     margin-top: 0.5rem;
+    list-style-type: square;
+    
+    &::marker {
+      color: var(--lightBlue);
+    }
   }
 
   p {
@@ -142,9 +151,10 @@
 
   h2 {
     font-size: 1.4rem;
+    margin-top: 3rem;
 
-    &:not(:first-child) {
-      margin-top: 3rem;
+    &:first-child {
+      margin-top: 0;
     }
   }
 
