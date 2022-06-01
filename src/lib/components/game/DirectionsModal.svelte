@@ -11,11 +11,13 @@
   <div class="directions__container">
     <h2>The goal is to guess as many code words as possible.</h2>
 
-    <ExampleGuess codeWord="flick" guess="chore" />
-    <p>“C” is in the code word, but it's not the first letter.</p>
-
-    <ExampleGuess codeWord="venom" guess="vital" />
-    <p>The code word starts with “V.”</p>
+    <ExampleGuess codeWord="vital" guess="angel" />
+    <p>
+      The code word ends with “L.”
+    </p>
+    <p>
+      The code word also has an “A,” but it's not the&nbsp;first&nbsp;letter.
+    </p>
 
     
     <h2>This meter shows how many attempts you have left.</h2>
@@ -38,7 +40,7 @@
 
     <h2>When you guess a code word, it's replaced with a new one.</h2>
     
-    <p>Your last five guesses stay on the board to hint at the new code word:</p>
+    <p>Your last five guesses stay on the board, to hint at the new code word:</p>
           
     <div class="example-guess-holder">
       <div>
@@ -80,7 +82,7 @@
       </div>
     </div>
     <ul>
-      <li>The game ends when your meter is empty.</li>
+      <li><strong>The game ends when your meter is empty!</strong></li>
       <li>Keep playing as long as you can to get your score as high as possible!</li>
       <li>(The maximum possible score is 100!)</li>
     </ul>
@@ -116,6 +118,7 @@
 
   p {
     margin-top: 0.5rem;
+    margin-bottom: 0;
 
     &.small-print {
       margin-bottom: 0;

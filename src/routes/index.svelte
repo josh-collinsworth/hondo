@@ -77,7 +77,7 @@
           </li>
         {/each}
         <li 
-        class="guess"
+        class="guess current-guess"
           out:fly|local="{defaultTransition}"
           in:fly|local="{{ ...defaultTransition, y: 80 }}"
         >
@@ -120,7 +120,7 @@
   font-size: 10vw;
 
   @media (min-width: 32rem) {
-    font-size: 1rem;
+    font-size: 2.4rem;
   }
 }
 
@@ -140,6 +140,10 @@
     @media (min-width: 32rem) {
       min-height: 5.8rem;
     }
+  }
+
+  .current-guess {
+    gap: 8px;
   }
 }
 
