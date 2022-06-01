@@ -52,8 +52,8 @@
 
     <h2>This meter shows how many attempts you have left.</h2>
 
-    <div class="power-bar- power-bar-example">
-      <div class="power-bar" style="width: 100%; max-width: 18rem;">
+    <div class="power-bar-container power-bar-example">
+      <div class="power-bar">
         <div class="power-bar__fill" style="transform: scaleX(0.8); background-size: 125}%; width: 100%;" />
         <div class="power-bar__grid" style="grid-template-columns: repeat({ STARTING_GUESSES }, 1fr);">
           {#each Array.from({ length: STARTING_GUESSES }) as _}
@@ -71,9 +71,9 @@
 
     <h2>The longer you play, the shorter the meter gets.</h2>
     <div class="power-bar-container power-bar-example">
-      <div class="power-bar" style="width: 60%; max-width: 10.8rem;">
-        <div class="power-bar__fill" style="transform: scaleX(0.67); background-size: 200%; width: 100%;" />
-        <div class="power-bar__grid" style="grid-template-columns: repeat({ STARTING_GUESSES }, 1fr); width: 166.66%;">
+      <div class="power-bar" style="width: 7em;">
+        <div class="power-bar__fill" style="transform: scaleX(0.3);" />
+        <div class="power-bar__grid" style="grid-template-columns: repeat({ STARTING_GUESSES }, 1fr);">
           {#each Array.from({ length: STARTING_GUESSES }) as _, i}
           <div class="power-bar__grid-box" />
           {/each}
@@ -136,11 +136,10 @@
   }
 
   .power-bar-example {
-    max-width: 16rem;
     margin: 0 0 1rem;
+    width: 10em;
 
     .power-bar {
-      max-width: unset;
       height: 1rem;
     }
   }

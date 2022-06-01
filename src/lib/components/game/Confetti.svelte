@@ -4,6 +4,20 @@
   $: if ($discoveredCodeWord) {
     // confetti is loaded via CDN
     if (typeof confetti !== 'undefined') {
+      const currentGuessBoxes = document.querySelectorAll('.current-guess-box')
+      const windowHeight = window.innerHeight
+      const windowWidth = window.innerWidth
+
+      const origins = [...currentGuessBoxes].map(box => {
+        const rect = box.getBoundingClientRect()
+        return {
+          x: 1 / windowWidth * (rect.left + (rect.width / 2)),
+          y: 1 / windowHeight * rect.top,
+        }
+      })
+
+      console.log(origins)
+
       const defaults = { 
         startVelocity: 32,
         spread: 30,
@@ -16,7 +30,7 @@
       }
       for (let i = 0; i < 5; i++) {
         setTimeout(() => {
-          confetti(Object.assign({}, defaults, { origin: { x: i / 5 + 0.1, y: 0.55 } }))
+          confetti(Object.assign({}, defaults, { origin: origins[i] }))
         }, 60 + i * 40)
       }
     }

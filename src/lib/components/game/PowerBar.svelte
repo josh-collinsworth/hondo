@@ -1,28 +1,22 @@
 <script lang="ts">
   import { STARTING_GUESSES } from '$lib/js/constants'
-  import { remainingAttempts, maxRemainingAttempts} from '$lib/js/state'
+  import { remainingAttempts, maxRemainingAttempts, runningScore} from '$lib/js/state'
 </script>
 
 <div class="power-bar-container">
-  <div class="power-bar" style="width: {$maxRemainingAttempts * STARTING_GUESSES}%;">
+  <div class="power-bar" style="width: {(($maxRemainingAttempts * STARTING_GUESSES) - ($runningScore % 10)) / STARTING_GUESSES}em;">
     <div
       class="power-bar__fill"
       style="
-        width: 100%;
-        transform: scaleX({ $remainingAttempts / $maxRemainingAttempts });
+        transform: scaleX({ $remainingAttempts / STARTING_GUESSES });
       "
     />
     <div 
       class="power-bar__grid"
-      style="
-        grid-template-columns: repeat({STARTING_GUESSES}, 1fr);
-        width: {( STARTING_GUESSES / $maxRemainingAttempts ) * 100}%;
-      "
+      style="grid-template-columns: repeat({STARTING_GUESSES}, 1fr);"
     >
       {#each Array.from({ length: STARTING_GUESSES }) as _, i}
-        <div 
-          class="power-bar__grid-box"
-        />
+        <div class="power-bar__grid-box" />
       {/each}
     </div>
   </div>
