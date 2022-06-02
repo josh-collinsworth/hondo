@@ -10,7 +10,7 @@
   align-content: space-between;
   align-items: space-between;
   justify-content: space-between;
-  font-size: calc(2.5vw + 3.5vh);
+  font-size: 5vmax;
 
   @media (min-width: 32rem) {
     font-size: 2.4rem;
@@ -26,13 +26,15 @@
 }
 
 .guess {
+  --guessHeight: 1.8em;
+
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 0.25rem;
-  height: 1.7em;
+  height: var(--guessHeight);
 
   @media (min-width: 32rem) {
-    min-height: 5.8rem;
+    --guessHeight: 5.8rem;
   }
 }
 
@@ -56,10 +58,10 @@
   line-height: 1;
   position: relative;
   transform: rotateY(0);
-  min-height: 1.7em;
+  min-height: var(--guessHeight);
   
   @media (min-width: 32rem) {
-    min-height: 2.4em;
+    min-height: var(--guessHeight);
   }
 
   span {
@@ -109,6 +111,10 @@
   justify-content: start;
   position: relative;
   height: 2rem;
+
+  @media (min-width: 22rem) {
+    font-size: 6vw;
+  }
 
   @media (min-width: 26rem) {
     font-size: 7vw;
@@ -185,11 +191,18 @@
   top: 0;
   left: 0;
   
-  .power-bar__dot{
+  .power-bar__dot {
     width: 0.75rem;
     height: 0.75rem;
-    background: var(--lighterGray);
+    background: transparent;
     border-radius: 0.75rem;
     margin: 0 auto 0 40%;
+    transform: scale(5);
+    transition: all 2s cubic-bezier(.86,0,.07,1);
+
+    &.filled {
+      background: var(--lighterGray);
+      transform: scale(1);
+    }
   }
 }

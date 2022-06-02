@@ -21,8 +21,11 @@
     </div>
   </div>
   <div class="power-bar__dots">
-    {#each Array.from({length: STARTING_GUESSES }) as _}
-      <div class="power-bar__dot"></div>
+    {#each Array.from({length: STARTING_GUESSES }) as _, i}
+      <div
+        class="power-bar__dot"
+        class:filled={i + 1 > $maxRemainingAttempts}
+      />
     {/each}
   </div>
 </div>

@@ -1,5 +1,6 @@
 <script lang="ts">
   import { STARTING_GUESSES } from '$lib/js/constants'
+import { maxRemainingAttempts } from '$lib/js/state';
 
   import { fade } from 'svelte/transition'
   import ExampleGuess from './examples/ExampleGuess.svelte'
@@ -80,8 +81,11 @@
         </div>
       </div>
       <div class="power-bar__dots">
-        {#each Array.from({ length: 10}) as _}
-        <div class="power-bar__dot"></div>
+        {#each Array.from({ length: 10}) as _, i}
+          <div
+            class="power-bar__dot"
+            class:filled={i + 1 > $maxRemainingAttempts}
+          />
         {/each}
       </div>
     </div>
