@@ -54,8 +54,9 @@
 
 
 <main>
+  <!-- For debugging -->
   <!-- <input type="text" bind:value={$codeWord} /> -->
-  <div class="container">
+  <div class="game-container">
     
     <InfoBar />
 

@@ -1,4 +1,4 @@
-.container {
+.game-container {
   width: 100%;
   max-width: 32rem;
   margin: 0 auto;
@@ -40,6 +40,10 @@
 
 .current-guess {
   gap: 8px;
+
+  @media (min-height: 42rem) {
+    margin-bottom: 1rem;
+  }
 }
 
 .bottom-container {

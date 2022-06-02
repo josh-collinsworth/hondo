@@ -1,37 +1,77 @@
 <script lang="ts">
-import { GAME_DATA_STORAGE_KEY } from '$lib/js/constants';
+  import { GAME_DATA_STORAGE_KEY, PREVIOUS_HIGH_SCORES_STORAGE_KEY } from '$lib/js/constants';
 
-  import { save } from '$lib/js/helpers'
+  import { save, load, numberFormatter } from '$lib/js/helpers'
   import { runningScore, codeWord, usedAttempts } from '$lib/js/state'
+  
   import { fly } from 'svelte/transition'
+  import { onMount } from 'svelte'
 
   const startNewGame = (): void => {
     save(GAME_DATA_STORAGE_KEY, null)
     window.location.reload()
   }
+
+  const endgameMessages: string[] = [
+    `Better luck next time!`,
+    `Good try!`,
+    `Decent run!`,
+    `Solid attempt!`,
+    `Good game!`,
+    `Great score!`,
+    `Nice work!`,
+    `Fantastic job!`,
+    `WOW! Awesome score!`,
+    `AMAZING! That was elite!`,
+    `Are you SURE you didn't cheat!?`,
+  ]
+
+  let endgameMessage: string
+  $: endgameMessage = endgameMessages[Math.floor($runningScore / 10)]
+
+  let highScore: number
+  let averageScore: number|string
+
+  onMount(() => {
+    const previousHighScores = load(PREVIOUS_HIGH_SCORES_STORAGE_KEY) || [0]
+    highScore = Math.max(...previousHighScores)
+    averageScore = numberFormatter.format(
+      previousHighScores.reduce((p, c) => p + c, 0) / previousHighScores.length
+    )
+  })
 </script>
 
 
 <div class="modal" in:fly={{ delay: 1500, duration: 1000 }}>
-  <h2>Game Over</h2>
+  <h2>Final score: <span class="sr">{$runningScore}</span></h2>
 
-  <p>
-    <strong>You got { $runningScore } word{$runningScore === 1 ? '' : 's'} in {$usedAttempts} attempts!</strong>
-  </p>
+  <div aria-hidden="true" class="final-score display-flex center-content">
+    {$runningScore}
+  </div>
 
-  <p>You lost on {$codeWord.toUpperCase()}</p>
-
-  <p>Play again?</p>
+  <p>{endgameMessage}</p>
+  
+  <h3>Stats:</h3>
+  <ul>
+    <li>You lost on <b>{$codeWord.toUpperCase()}</b></li>
+    <li>You used <b>{$usedAttempts} attempts</b></li>
+    <li class="space-above"><b>Best score:</b> {highScore}</li>
+    <li><b>Average score:</b> {averageScore}</li>
+  </ul>
 
   <button on:click={startNewGame}>
-    Play!
+    Play again!
   </button>
+
+  <footer>
+    <a href="https://ko-fi.com/collinsworth">Buy me a coffee if you're enjoying this game</a>
+  </footer>
 </div>
 
 
 <style lang="scss">
   .modal {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     position: fixed;
     width: calc(100vw - 2rem);
     height: calc(100vh - 2rem);
@@ -39,22 +79,59 @@ import { GAME_DATA_STORAGE_KEY } from '$lib/js/constants';
     top: 1rem;
     left: 1rem;
     border: 1px solid currentColor;
-    background: var(--lightBlue);
+    background: lighten(#7ba7bc, 15%);
     display: flex;
     justify-content: center;
     align-content: center;
     text-align: center;
     flex-wrap: wrap;
     z-index: 10;
+    overflow: auto;
 
     > * {
       width: 100%;
+    }
+
+    .final-score {
+      font-size: 3rem;
+      font-weight: bold;
+      width: 2em;
+      height: 2em;
+      line-height: 2em;
+      border: .1em solid currentColor;
+      border-radius: 2em;
+      background: var(--lightBlue);
     }
 
     button {
       font: inherit;
       padding: 0.5em 1em;
       width: max-content;
+      border: 2px solid var(--darkGray);
+      border-radius: 0.25rem;
+      margin: 2rem 0;
+    }
+
+    h3 {
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      margin-top: 0;
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .space-above {
+      margin-top: 1rem;
+    }
+
+    footer {
+      font-size: 0.9rem;
+
+      a {
+        color: var(--darkBlue);
+      }
     }
   }
 </style>
