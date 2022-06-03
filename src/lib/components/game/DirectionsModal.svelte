@@ -9,7 +9,8 @@
 
 <div class="directions" on:click={close} transition:fade>
   <div class="directions__container">
-    <h2>Guess as many code words as possible.</h2>
+    <h1>How to play</h1>
+    <h2>Guess the code word</h2>
 
     <ExampleGuess codeWord="xrxxx" guess="ready" />
     <p>
@@ -50,7 +51,7 @@
     </div>
 
 
-    <h2>This meter shows how many attempts you have left.</h2>
+    <h2>Keep an eye on your remaining attempts:</h2>
 
     <div class="power-bar-container power-bar-example">
       <div class="power-bar">
@@ -69,11 +70,11 @@
     </div>
 
     <ul>
-      <li>Successfully guessing a code word replenishes one attempt!</li>
+      <li>Every guess costs one; a correct guess replenishes one!</li>
     </ul>
 
 
-    <h2>The longer you play, the fewer attempts you can recover.</h2>
+    <h2>The longer you play, the harder it&nbsp;gets!</h2>
     <div class="power-bar-container power-bar-example">
       <div class="power-bar__divider" style="transform: translateX(5.3em)"></div>
       <div class="power-bar">
@@ -88,8 +89,7 @@
       </div>
     </div>
     <ul>
-      <li>Keep playing as long as you can!</li>
-      <li>The game ends when you've run out of attempts, or after 100 total guesses (if you can survive that long)!</li>
+      <li>Keep playing as long as you can to get your score as high as possible!</li>
     </ul>
 
     <hr>
@@ -101,7 +101,8 @@
         Try to keep every vowel on the board at all times, especially <b>E</b> and <b>A</b>.
       </li>
       <li>As you might expect, <b>R</b>, <b>S</b>, <b>T</b>, <b>L</b>, and <b>N</b> are the most common consonants.</li>
-      <li>If you get a new code word and don't have a good guess, try a word with as many letters that as possible that are <strong>not</strong> currently on the board.</li>
+      <li>If you don't have a good guess, try one that will add as many new letters to the board as possible.</li>
+      <li>Watch the keyboard! It will remind you what letters are in the code word, and which aren't currently on the board.</li>
     </ul>
   </div>
 </div>
@@ -157,8 +158,8 @@
   }
 
   h2 {
-    font-size: 1.4rem;
-    margin-top: 3rem;
+    font-size: 1.5rem;
+    margin-top: 3.5rem;
 
     &:first-child {
       margin-top: 0;
@@ -171,7 +172,7 @@
     justify-content: start;
     align-items: center;
     width: min-content;
-    margin-top: 1rem;
+    margin-top: 2rem;
 
     .arrow {
       padding: 1rem;

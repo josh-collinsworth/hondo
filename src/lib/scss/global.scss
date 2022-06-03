@@ -3,6 +3,20 @@
 @use 'components';
 @use 'animation';
 
+@font-face {
+  font-family: 'Ridley Grotesk';
+  src: url('fonts/ridleygrotesk-medium-webfont.woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Ridley Grotesk';
+  src: url('fonts/ridleygrotesk-semibold-webfont.woff2');
+  font-weight: bold;
+  font-style: normal;
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -12,7 +26,7 @@ body {
   background: var(--paper);
   color: var(--ink);
   line-height: 1.4;
-  font-family: 'Rubik', sans-serif;
+  font-family: 'Ridley Grotesk', sans-serif;
 }
 
 button, input {

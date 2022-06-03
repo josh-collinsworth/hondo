@@ -2,7 +2,7 @@
   import { chooseRandomCodeWord, load } from '$lib/js/helpers'
   import { dev } from '$app/env'
 
-  chooseRandomCodeWord()
+  chooseRandomCodeWord(dev)
 </script>
 
 <script lang="ts">

@@ -13,17 +13,16 @@
   }
 
   const endgameMessages: string[] = [
-    `Better luck next time!`,
     `Good try!`,
-    `Decent run!`,
-    `Solid attempt!`,
-    `Good game!`,
-    `Great score!`,
-    `Nice work!`,
-    `Fantastic job!`,
-    `WOW! Awesome score!`,
+    `Solid run!`,
+    `Nice attempt!`,
+    `Great game!`,
+    `Impressive score!`,
+    `WOW! Great playing!`,
+    `EXCELLENT job!`,
+    `AWESOME score!`,
     `AMAZING! That was elite!`,
-    `Are you SURE you didn't cheat!?`,
+    `…Are you SURE you didn't cheat!?`,
   ]
 
   let endgameMessage: string

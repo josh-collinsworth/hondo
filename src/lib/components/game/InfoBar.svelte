@@ -67,7 +67,7 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
     line-height: 2;
     font-size: 1.2rem;
     font-weight: bold;
-    font-family: 'Rubik', sans-serif;
+    font-family: 'Ridley Grotesk', sans-serif;
     background: transparent;
     position: relative;
     z-index: 4;
