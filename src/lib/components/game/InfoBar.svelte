@@ -51,14 +51,16 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
     justify-items: center;
     gap: 10px;
     margin-bottom: 1rem;
+    position: relative;
+    z-index: 2;
   }
 
   .info-button {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 2px solid var(--darkGray);
-    color: var(--darkGray);
+    border: 2px solid var(--darkBlue);
+    color: var(--darkBlue);
     border-radius: 2.5rem;
     width: 2.5rem;
     height: 2.5rem;
@@ -68,6 +70,7 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
     font-family: 'Rubik', sans-serif;
     background: transparent;
     position: relative;
+    z-index: 4;
   }
 
   .score {

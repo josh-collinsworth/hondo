@@ -17,8 +17,6 @@
         }
       })
 
-      console.log(origins)
-
       const defaults = {         
         ticks: 60,
         gravity: 0.5,

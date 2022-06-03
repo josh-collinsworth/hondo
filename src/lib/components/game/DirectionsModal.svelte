@@ -1,6 +1,5 @@
 <script lang="ts">
   import { STARTING_GUESSES } from '$lib/js/constants'
-import { maxRemainingAttempts } from '$lib/js/state';
 
   import { fade } from 'svelte/transition'
   import ExampleGuess from './examples/ExampleGuess.svelte'
@@ -10,7 +9,7 @@ import { maxRemainingAttempts } from '$lib/js/state';
 
 <div class="directions" on:click={close} transition:fade>
   <div class="directions__container">
-    <h2>The goal is to guess as many code words as possible.</h2>
+    <h2>Guess as many code words as possible.</h2>
 
     <ExampleGuess codeWord="xrxxx" guess="ready" />
     <p>
@@ -27,7 +26,7 @@ import { maxRemainingAttempts } from '$lib/js/state';
 
     <h2>When you guess a code word, it's replaced with a new one.</h2>
     
-    <p>Your last five guesses stay on the board.</p>
+    <p>However, your last five guesses stay on the board.</p>
           
     <div class="example-guess-holder">
       <div>
@@ -46,7 +45,7 @@ import { maxRemainingAttempts } from '$lib/js/state';
         <ExampleGuess codeWord="along" guess="aloof" />
         <ExampleGuess codeWord="along" guess="spoof" />
         <ExampleGuess codeWord="along" guess="proof" />
-        <p class="small-print">…same guesses, new code&nbsp;word</p>
+        <p class="small-print">…now guess a new code word.</p>
       </div>
     </div>
 
@@ -55,44 +54,53 @@ import { maxRemainingAttempts } from '$lib/js/state';
 
     <div class="power-bar-container power-bar-example">
       <div class="power-bar">
-        <div class="power-bar__fill" style="transform: scaleX(0.8); background-size: 125}%; width: 100%;" />
+        <div class="power-bar__fill" style="transform: scaleX(0.9)"></div>
         <div class="power-bar__grid" style="grid-template-columns: repeat({ STARTING_GUESSES }, 1fr);">
-          {#each Array.from({ length: STARTING_GUESSES }) as _}
-            <div class="power-bar__grid-box" />
+          {#each Array.from({ length: STARTING_GUESSES }) as _, i}
+            <div 
+              class="power-bar__grid-box"
+              class:filled={i < 9}
+            >
+              <div class="power-bar__grid-box-fill" />
+            </div>
           {/each}
         </div>
       </div>
     </div>
 
     <ul>
-      <li>You start with { STARTING_GUESSES } attempts.</li>
-      <li><strong>Successfully guessing a code word replenishes one attempt!</strong></li>
+      <li>Successfully guessing a code word replenishes one attempt!</li>
     </ul>
 
 
-    <h2>The longer you play, the shorter the meter gets.</h2>
+    <h2>The longer you play, the fewer attempts you can recover.</h2>
     <div class="power-bar-container power-bar-example">
-      <div class="power-bar" style="width: 7em;">
-        <div class="power-bar__fill" style="transform: scaleX(0.3);" />
+      <div class="power-bar__divider" style="transform: translateX(5.3em)"></div>
+      <div class="power-bar">
+        <div class="power-bar__fill" style="transform: scaleX(0.4)"></div>
         <div class="power-bar__grid" style="grid-template-columns: repeat({ STARTING_GUESSES }, 1fr);">
           {#each Array.from({ length: STARTING_GUESSES }) as _, i}
-          <div class="power-bar__grid-box" />
+            <div class="power-bar__grid-box" class:filled={i < 3}>
+              <div class="power-bar__grid-box-fill" />
+            </div>
           {/each}
         </div>
       </div>
-      <div class="power-bar__dots">
-        {#each Array.from({ length: 10}) as _, i}
-          <div
-            class="power-bar__dot"
-            class:filled={i + 1 > $maxRemainingAttempts}
-          />
-        {/each}
-      </div>
     </div>
     <ul>
-      <li><strong>The game ends when your meter is empty!</strong></li>
       <li>Keep playing as long as you can!</li>
-      <li>The maximum possible score is 100. How close can you get?</li>
+    </ul>
+
+    <hr>
+
+    <h2>Hints and tips</h2>
+  
+    <ul>
+      <li>
+        Try to keep every vowel on the board at all times, especially <b>E</b> and <b>A</b>.
+      </li>
+      <li>As you might expect, <b>R</b>, <b>S</b>, <b>T</b>, <b>L</b>, and <b>N</b> are the most common consonants.</li>
+      <li>If you get a new code word and don't have a good guess, try a word with as many letters that as possible that are <strong>not</strong> currently on the board.</li>
     </ul>
   </div>
 </div>
@@ -186,5 +194,11 @@ import { maxRemainingAttempts } from '$lib/js/state';
       .arrow.right { display: block; }
       .arrow.down { display: none; }
     }
+  }
+
+  hr {
+    margin: 2rem 0;
+    border: 0;
+    border-bottom: 1px solid var(--lightBlue);
   }
 </style>

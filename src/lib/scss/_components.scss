@@ -109,12 +109,14 @@
 
 .power-bar-container {
   font-size: 5vw;
-  width: 10em;
+  width: calc(10em + 8px);
   display: flex;
   align-items: center;
   justify-content: start;
   position: relative;
   height: 2rem;
+  overflow: hidden;
+  padding: 0 4px;
 
   @media (min-width: 22rem) {
     font-size: 6vw;
@@ -139,8 +141,7 @@
   overflow: hidden;
   position: relative;
   background: var(--lighterGray);
-  transition: width 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-  box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--lightBlue);
+  box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--darkBlue);
 
   .power-bar__grid {
     display: flex;
@@ -168,7 +169,7 @@
 
   .power-bar__fill {
     transform-origin: left;
-    background: var(--lightBlue);
+    background: var(--orange);
     transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
     display: flex;
     justify-content: center;
@@ -181,6 +182,20 @@
     min-width: 10em;
     max-width: 10em;
   }
+}
+
+.power-bar__divider {
+  width: 100%;
+  height: 100%;
+  background: rgba(var(--paperRGB), 0.8);
+  position: absolute;
+  left: 2px;
+  top: 0;
+  z-index: 3;
+  border-left: 2px solid var(--darkBlue);
+  transition: transform 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  pointer-events: none;
+  transform: skew(6deg);
 }
 
 .power-bar__dots {

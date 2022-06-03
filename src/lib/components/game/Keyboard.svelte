@@ -2,7 +2,8 @@
   import { isSingleLetter, isValidGuess, chooseRandomCodeWord, setNewScores, evaluateGuess, saveGameData, setToastMessage } from '$lib/js/helpers'
   import { currentGuess, previousGuesses, discoveredCodeWord, codeWord, isLoadingNewWord, gameIsOver } from '$lib/js/state'
   import { tick } from 'svelte'
-  import { get } from 'svelte/store';
+  import { get } from 'svelte/store'
+  import { dev } from '$app/env'
 
   const keys = [
     ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -49,7 +50,7 @@
             discoveredCodeWord.set($codeWord)
           setTimeout(async () => {
               isLoadingNewWord.set(true)
-              chooseRandomCodeWord()
+              chooseRandomCodeWord(dev)
               await tick()
               isLoadingNewWord.set(false)
               saveGameData()

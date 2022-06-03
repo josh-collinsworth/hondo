@@ -1,5 +1,6 @@
 <script lang="ts" context="module">
   import { chooseRandomCodeWord, load } from '$lib/js/helpers'
+  import { dev } from '$app/env'
 
   chooseRandomCodeWord()
 </script>
@@ -36,7 +37,7 @@
         }
         
         previousGuesses.set(previousGuessesToSet)
-        codeWord.set(gameData.codeWord)
+        codeWord.set(window.atob(gameData.codeWord))
         remainingAttempts.set(gameData.remainingAttempts)
         runningScore.set(gameData.runningScore)
         gameIsOver.set(gameData.gameIsOver)
@@ -59,7 +60,7 @@
   <div class="game-container">
     
     <InfoBar />
-
+    
     <!-- TODO: should this be moved? It's just for fireworks -->
     <Confetti />
 

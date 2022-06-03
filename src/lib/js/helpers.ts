@@ -29,13 +29,16 @@ export const isValidGuess = (guess: string): boolean => {
   return guess.length === 5 && legalGuesses.includes(guess.toLowerCase())
 }
 
-export const chooseRandomCodeWord = (): void => {
+export const chooseRandomCodeWord = (log = false): void => {
   const newWord = codeWords[Math.floor(Math.random() * codeWords.length)]
   if (newWord !== get(codeWord) && !get(previousGuesses).includes(newWord)) {
     codeWord.set(newWord)
+    if (log) {
+      console.log(newWord)
+    }
     return
   }
-  chooseRandomCodeWord()
+  chooseRandomCodeWord(log)
 }
 
 export const evaluateGuess = (guess: string): number[] => {
@@ -86,7 +89,7 @@ export const saveGameData = (): void => {
   if (guessesToSave.length > 5) guessesToSave.slice(1, 6)
 
   save(GAME_DATA_STORAGE_KEY, {
-    codeWord: get(codeWord),
+    codeWord: window.btoa(get(codeWord)),
     previousGuesses: guessesToSave,
     remainingAttempts: get(remainingAttempts),
     runningScore: get(runningScore),
