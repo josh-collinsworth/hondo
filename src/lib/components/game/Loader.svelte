@@ -45,16 +45,16 @@
       
       &:nth-of-type(3) {
         animation-delay: 0.16s;
-        background: var(--orange);
+        background: var(--primary);
       }
       
       &:nth-of-type(4) {
-        background: var(--lightBlue);
+        background: var(--secondary);
         animation-delay: 0.24s;
       }
 
       &:nth-of-type(5) {
-        background: var(--darkGray);
+        background: var(--darkAccent);
         animation-delay: 0.32s;
       }
     }

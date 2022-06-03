@@ -89,6 +89,7 @@
     </div>
     <ul>
       <li>Keep playing as long as you can!</li>
+      <li>The game ends when you've run out of attempts, or after 100 total guesses (if you can survive that long)!</li>
     </ul>
 
     <hr>
@@ -115,7 +116,7 @@
     height: calc(100dvh - 2rem);
     top: 1rem;
     left: 1rem;
-    border: 2px solid var(--lightGray);
+    border: 2px solid var(--lightAccent);
     background: var(--paper); 
     padding: 1rem;
     font-size: 1rem;
@@ -125,7 +126,7 @@
   .directions__container {
     width: 26rem;
     max-width: 100%;
-    margin: 0 auto;
+    margin: 1rem auto;
   }
 
   li {
@@ -133,7 +134,7 @@
     list-style-type: square;
     
     &::marker {
-      color: var(--lightBlue);
+      color: var(--secondary);
     }
   }
 
@@ -148,12 +149,7 @@
   }
 
   .power-bar-example {
-    margin: 0 0 1rem;
     width: 10em;
-
-    .power-bar {
-      height: 1rem;
-    }
   }
 
   ul {
@@ -199,6 +195,6 @@
   hr {
     margin: 2rem 0;
     border: 0;
-    border-bottom: 1px solid var(--lightBlue);
+    border-bottom: 1px solid var(--secondary);
   }
 </style>

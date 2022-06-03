@@ -3,7 +3,12 @@
   import { remainingAttempts, maxRemainingAttempts, runningScore, usedAttempts} from '$lib/js/state'
 
   $: baseDividerOffset = (($maxRemainingAttempts * STARTING_GUESSES) - ($usedAttempts % 10)) / STARTING_GUESSES
-  $: pixelDividerOffset = $usedAttempts < 10 ? 10 - $usedAttempts : $usedAttempts > 90 ? -4 : 0
+  $: pixelDividerOffset = 
+    $usedAttempts > 90 
+      ? $usedAttempts % 10 * -1
+      : !$usedAttempts
+        ? 4
+        : 0
   $: calculatedDividerOffset = `calc(${baseDividerOffset}em + ${pixelDividerOffset}px)`
 </script>
 

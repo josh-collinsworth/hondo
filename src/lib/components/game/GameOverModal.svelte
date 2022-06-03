@@ -100,14 +100,14 @@
       line-height: 2em;
       border: .1em solid currentColor;
       border-radius: 2em;
-      background: var(--lightBlue);
+      background: var(--secondary);
     }
 
     button {
       font: inherit;
       padding: 0.5em 1em;
       width: max-content;
-      border: 2px solid var(--darkGray);
+      border: 2px solid var(--darkAccent);
       border-radius: 0.25rem;
       margin: 2rem 0;
     }

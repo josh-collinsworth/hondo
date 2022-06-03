@@ -5,6 +5,7 @@
   --lightGray: #a7a8aa;
   --mediumGray: #888b8d;
   --darkGray: #53565a;
+  --darkerGray: #282a2f;
   --black: #101820;
   --white: #fff;
   --yellow: #ffd100;
@@ -15,6 +16,30 @@
 
   --paper: var(--offwhite);
   --ink: var(--black);
-
   --paperRGB: 247, 248, 250; // #f7f8fa
+
+  --primary: var(--orange);
+  --secondary: var(--lightBlue);
+
+  --lightestAccent: var(--lightestGray);
+  --lighterAccent: var(--lighterGray);
+  --lightAccent: var(--lightGray);
+  --mediumAccent: var(--mediumGray);
+  --darkAccent: var(--darkGray);
+
+
+  &.dark {
+    --ink: var(--offwhite);
+    --paper: var(--black);
+
+    --secondary: var(--darkBlue);
+
+    --lightestAccent: var(--black);
+    --lighterAccent: var(--darkerGray);
+    --lightAccent: var(--mediumGray);
+    --mediumAccent: var(--lightGray);
+    --darkAccent: var(--lighterGray);
+  
+    --paperRGB: 16, 24, 26; // #f7f8fa
+  }
 }

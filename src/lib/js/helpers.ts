@@ -34,6 +34,7 @@ export const chooseRandomCodeWord = (log = false): void => {
   if (newWord !== get(codeWord) && !get(previousGuesses).includes(newWord)) {
     codeWord.set(newWord)
     if (log) {
+      // eslint-disable-next-line no-console
       console.log(newWord)
     }
     return

@@ -52,7 +52,7 @@
 }
 
 .guess-box {
-  border: 2px solid var(--lighterGray);
+  border: 2px solid var(--lighterAccent);
   border-radius: 0.5em;
   overflow: hidden;
   text-transform: uppercase;
@@ -78,12 +78,12 @@
 
 .partial {
   border: 0;
-  background: var(--lightBlue);
+  background: var(--secondary);
 }
 
 .exact {
   border: 0;
-  background: var(--orange);
+  background: var(--primary);
 
   span {
     display: block;
@@ -104,7 +104,7 @@
 
   border: 0;
   border-radius: 0;
-  border-bottom: 2px solid var(--darkGray);
+  border-bottom: 2px solid var(--darkAccent);
 }
 
 .power-bar-container {
@@ -140,7 +140,7 @@
   align-content: stretch;
   overflow: hidden;
   position: relative;
-  background: var(--lighterGray);
+  background: var(--lighterAccent);
   box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--darkBlue);
 
   .power-bar__grid {
@@ -169,7 +169,7 @@
 
   .power-bar__fill {
     transform-origin: left;
-    background: var(--orange);
+    background: var(--primary);
     transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
     display: flex;
     justify-content: center;
@@ -189,13 +189,12 @@
   height: 100%;
   background: rgba(var(--paperRGB), 0.8);
   position: absolute;
-  left: 2px;
+  left: 6px;
   top: 0;
-  z-index: 3;
+  z-index: 4;
   border-left: 2px solid var(--darkBlue);
   transition: transform 1s cubic-bezier(0.165, 0.84, 0.44, 1);
   pointer-events: none;
-  transform: skew(6deg);
 }
 
 .power-bar__dots {
@@ -220,7 +219,7 @@
     transition: all 2s cubic-bezier(.86,0,.07,1);
 
     &.filled {
-      background: var(--lighterGray);
+      background: var(--lighterAccent);
       transform: scale(1);
     }
   }

@@ -8,7 +8,7 @@
   const keys = [
     ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
     ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
-    ['⏎', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '⌫'],
+    ['×', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '+'],
   ]
 
   $: lettersOnTheBoard = Array.from(new Set($previousGuesses.flatMap(word => [...word])))
@@ -18,16 +18,16 @@
   const handleKeyUp = (e) => {
     if (!e.key) return
     if (e.key === 'Backspace') {
-      handlePress('⌫')
+      handlePress('×')
     } else if (e.key === 'Enter') {
-      handlePress('⏎')
+      handlePress('+')
     } else if (isSingleLetter(e.key.toLowerCase())) {
       handlePress(e.key)
     }
   }
 
-  const isEnterKey = (key: string): boolean => key === '⏎'
-  const isDeleteKey = (key: string): boolean => key === '⌫'
+  const isEnterKey = (key: string): boolean => key === '+'
+  const isDeleteKey = (key: string): boolean => key === '×'
 
   const handlePress = async (key: string): Promise<void> => {
     if (isSingleLetter(key)) {
@@ -87,7 +87,13 @@
           class:included={lettersOnTheBoard.includes(key) && $codeWord.includes(key)}
           disabled={(isEnterKey(key) && disableEnterKey) || (isDeleteKey(key) && disableDeleteKey)}
         >
-          {key}
+          {#if isSingleLetter(key)}
+            {key}
+          {:else if isDeleteKey(key)}
+            Back
+          {:else if isEnterKey(key)}
+            Enter
+          {/if}
         </button>
       {/each}
     </div>
@@ -118,25 +124,37 @@
       font-size: 1.1rem;
       flex: 1 1 3ch;
       text-transform: uppercase;
-      background: var(--lightestGray);
-      border: 1px solid var(--lighterGray);
+      background: var(--lightestAccent);
+      border: 1px solid var(--lighterAccent);
       border-radius: 0.2rem;
       margin: 0;
       padding: 0;
       touch-action: manipulation;
       transition: background .6s ease-in-out;
+      color: var(--ink);
 
       @media (min-width: 26rem) {
         font-size: 1.2rem;
       }
 
-      &[data-key="⌫"],
-      &[data-key="⏎"] {
+      svg {
+        width: auto;
+        height: 1rem;
+      }
+
+      &[data-key="×"],
+      &[data-key="+"] {
         flex: 1 1 5ch;
+        font-size: 0.9rem;
+        padding: 0 0.5ch;
+
+        @media (min-width: 26rem) {
+          font-size: 1.1rem;
+        }
       }
 
       &[disabled] {
-        color: var(--lightGray);
+        color: var(--lightAccent);
       }
 
       + button {
@@ -144,11 +162,11 @@
       }
 
       &.used {
-        background: var(--lighterGray);
+        background: var(--lighterAccent);
       }
 
       &.included {
-        background: var(--lightBlue);
+        background: var(--secondary);
       }
     }
   }
