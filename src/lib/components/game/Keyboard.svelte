@@ -107,7 +107,7 @@
 <style lang="scss">
   .keyboard {
     display: grid;
-    grid-template-rows: repeat(3, 2em);
+    grid-template-rows: repeat(3, 2.2em);
     margin: 0 calc(-1rem + 3px);
 
     .row {
@@ -116,7 +116,7 @@
       width: 100%;
 
       + .row {
-        margin-top: 1px;
+        margin-top: 2px;
       }
     }
 
@@ -126,7 +126,6 @@
 
     button {
       font-size: 1.1rem;
-      font-weight: bold;
       flex: 1 1 3ch;
       text-transform: uppercase;
       background: var(--lightestAccent);
@@ -159,7 +158,7 @@
       }
 
       + button {
-        margin-left: 1px;
+        margin-left: 2px;
       }
 
       &.used {
