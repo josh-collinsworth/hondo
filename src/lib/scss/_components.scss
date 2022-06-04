@@ -85,11 +85,11 @@
 
     &::after {
       content: '';
-      width: 1ch;
+      width: 0.75ch;
       position: absolute;
       bottom: 15%;
       border-bottom: 2px solid currentColor;
-      left: calc(50% - 0.5ch);
+      left: calc(50% - 0.375ch);
     }
   }
 }
