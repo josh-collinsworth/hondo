@@ -116,7 +116,7 @@
       width: 100%;
 
       + .row {
-        margin-top: 2px;
+        margin-top: 1px;
       }
     }
 
@@ -126,6 +126,7 @@
 
     button {
       font-size: 1.1rem;
+      font-weight: bold;
       flex: 1 1 3ch;
       text-transform: uppercase;
       background: var(--lightestAccent);
@@ -158,7 +159,7 @@
       }
 
       + button {
-        margin-left: 2px;
+        margin-left: 1px;
       }
 
       &.used {

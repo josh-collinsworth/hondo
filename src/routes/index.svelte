@@ -67,7 +67,7 @@
     {#if isLoading}
       <Loader />
     {:else}
-      <ul class="guess-container" style="padding: 0; margin: 0;">
+      <ul class="guess-container">
         {#each $previousGuesses as guess, row (guess)}
           <li 
             class="guess"
