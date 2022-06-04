@@ -1,6 +1,10 @@
 <script lang="ts">
   import { isSingleLetter, isValidGuess, chooseRandomCodeWord, setNewScores, evaluateGuess, saveGameData, setToastMessage } from '$lib/js/helpers'
   import { currentGuess, previousGuesses, discoveredCodeWord, codeWord, isLoadingNewWord, gameIsOver } from '$lib/js/state'
+
+  import Arrow from '../icon/Arrow.svelte'
+  import Checkmark from '../icon/Checkmark.svelte'
+
   import { tick } from 'svelte'
   import { get } from 'svelte/store'
   import { dev } from '$app/env'
@@ -90,9 +94,9 @@
           {#if isSingleLetter(key)}
             {key}
           {:else if isDeleteKey(key)}
-            Back
+            <Arrow />
           {:else if isEnterKey(key)}
-            Enter
+            <Checkmark />
           {/if}
         </button>
       {/each}
@@ -132,14 +136,10 @@
       touch-action: manipulation;
       transition: background .6s ease-in-out;
       color: var(--ink);
+      line-height: 1;
 
       @media (min-width: 26rem) {
         font-size: 1.2rem;
-      }
-
-      svg {
-        width: auto;
-        height: 1rem;
       }
 
       &[data-key="×"],
