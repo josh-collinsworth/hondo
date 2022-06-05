@@ -10,8 +10,5 @@ export const isLoadingNewWord = writable(false)
 export const runningScore = writable(0)
 export const usedAttempts = writable(0)
 export const gameIsOver = writable(false)
-export const maxRemainingAttempts = derived(
-  usedAttempts, 
-  $usedAttempts => STARTING_GUESSES - Math.floor($usedAttempts / 10)
-)
+export const maxRemainingAttempts = writable(STARTING_GUESSES)
 export const message = writable('')

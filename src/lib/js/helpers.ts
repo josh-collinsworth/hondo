@@ -1,8 +1,21 @@
 import legalGuesses from './legalGuesses'
 import codeWords from './codeWords'
-import { previousGuesses, codeWord, runningScore, remainingAttempts, currentGuess, gameIsOver, maxRemainingAttempts, usedAttempts, message } from './state'
+import {
+  previousGuesses,
+  codeWord,
+  runningScore,
+  remainingAttempts,
+  currentGuess,
+  gameIsOver,
+  maxRemainingAttempts,
+  usedAttempts,
+  message,
+  discoveredCodeWord,
+  isLoadingNewWord
+} from './state'
 import { GAME_DATA_STORAGE_KEY, PREVIOUS_HIGH_SCORES_STORAGE_KEY } from './constants'
 import { get } from 'svelte/store'
+import { dev } from '$app/env'
 import { tick } from 'svelte'
 
 export const alphabetAsString = 'abcdefghijklmnopqrstuvwxyz'
@@ -42,29 +55,11 @@ export const chooseRandomCodeWord = (log = false): void => {
   chooseRandomCodeWord(log)
 }
 
-export const evaluateGuess = (guess: string): number[] => {
-  const guessArray = [...guess]
-  const codeWordArray = [...get(codeWord)]
-  let partial = 0
-  let full = 0
-
-  for (let i = 0; i < 5; i++) {
-    if (codeWordArray[i] === guessArray[i]) {
-      full++
-    } else if (codeWordArray.includes(guessArray[i])) {
-      partial++
-    }
-  }
-  return [partial, full]
-}
-
 export const setNewScores = (): void => {
-  //TODO: partial is never used.
-  const [partial, full] = evaluateGuess(get(currentGuess))
-  
-  if (full === 5) {
+  if (get(currentGuess) === get(codeWord)) {
     runningScore.set(get(runningScore) + 1)
     remainingAttempts.set(Math.min(get(maxRemainingAttempts), get(remainingAttempts) + 1))
+    handleCorrectGuess()
   } else {
     remainingAttempts.set(get(remainingAttempts) - 1)
   }
@@ -82,6 +77,20 @@ export const setNewScores = (): void => {
     save(PREVIOUS_HIGH_SCORES_STORAGE_KEY, [...previousHighScores, get(runningScore)])
     localStorage.removeItem(GAME_DATA_STORAGE_KEY)
   }
+}
+
+export const handleCorrectGuess = (): void => {
+  discoveredCodeWord.set(get(codeWord))
+  setTimeout(async () => {
+    isLoadingNewWord.set(true)
+    chooseRandomCodeWord(dev)
+    await tick()
+    isLoadingNewWord.set(false)
+    saveGameData()
+    if (get(runningScore) === 100) {
+      alert('CONGRATULATIONS! You scored a Hundo!\n\nYou won, but you can keep playing to set a new high score!')
+    }
+  }, 1000)
 }
 
 export const saveGameData = (): void => {

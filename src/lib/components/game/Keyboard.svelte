@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { isSingleLetter, isValidGuess, chooseRandomCodeWord, setNewScores, evaluateGuess, saveGameData, setToastMessage } from '$lib/js/helpers'
+  import { isSingleLetter, isValidGuess, chooseRandomCodeWord, setNewScores, saveGameData, setToastMessage } from '$lib/js/helpers'
   import { currentGuess, previousGuesses, discoveredCodeWord, codeWord, isLoadingNewWord, gameIsOver } from '$lib/js/state'
 
   import Arrow from '../icon/Arrow.svelte'
@@ -12,17 +12,17 @@
   const keys = [
     ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
     ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
-    ['×', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '+'],
+    ['-', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '+'],
   ]
 
   $: lettersOnTheBoard = Array.from(new Set($previousGuesses.flatMap(word => [...word])))
   $: disableEnterKey = $currentGuess.length < 5
   $: disableDeleteKey = !$currentGuess.length
 
-  const handleKeyUp = (e) => {
+  const handleKeyUp = (e: KeyboardEvent): void => {
     if (!e.key) return
     if (e.key === 'Backspace') {
-      handlePress('×')
+      handlePress('-')
     } else if (e.key === 'Enter') {
       handlePress('+')
     } else if (isSingleLetter(e.key.toLowerCase())) {
@@ -31,7 +31,7 @@
   }
 
   const isEnterKey = (key: string): boolean => key === '+'
-  const isDeleteKey = (key: string): boolean => key === '×'
+  const isDeleteKey = (key: string): boolean => key === '-'
 
   const handlePress = async (key: string): Promise<void> => {
     if (isSingleLetter(key)) {
@@ -46,26 +46,15 @@
       if (isValidGuess($currentGuess)) {
         if (!$previousGuesses.includes($currentGuess)) {
           $previousGuesses = [...$previousGuesses, $currentGuess]
-          const [partial, full] = evaluateGuess($currentGuess)
 
           setNewScores()
-
-          if (full === 5) {
-            discoveredCodeWord.set($codeWord)
-          setTimeout(async () => {
-              isLoadingNewWord.set(true)
-              chooseRandomCodeWord(dev)
-              await tick()
-              isLoadingNewWord.set(false)
-              saveGameData()
-            }, 1000
-            )
-          } else if (!get(gameIsOver)) {
+          if (!get(gameIsOver)) {
             saveGameData()
           }
         } else {
           setToastMessage('Already guessed that word')
         }
+        //Prevents some buggy stuff from happening when loading the game
         if ($previousGuesses.length > 5) {
           $previousGuesses = [...$previousGuesses].slice(1, $previousGuesses.length)
         }
@@ -142,7 +131,7 @@
         font-size: 1.2rem;
       }
 
-      &[data-key="×"],
+      &[data-key="-"],
       &[data-key="+"] {
         flex: 1 1 5ch;
         font-size: 0.9rem;

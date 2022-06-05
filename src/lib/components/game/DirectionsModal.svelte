@@ -1,11 +1,19 @@
-<script lang="ts">
-  import { STARTING_GUESSES } from '$lib/js/constants'
+<script lang="ts">  
+  import ExampleGuess from './examples/ExampleGuess.svelte'
+  import ExamplePowerBar from './examples/ExamplePowerBar.svelte'
+  import Arrow from '../icon/Arrow.svelte'
 
   import { fade } from 'svelte/transition'
-  import ExampleGuess from './examples/ExampleGuess.svelte'
 
   export let close: VoidFunction
+
+  const listenForEscape = (e: KeyboardEvent): void => {
+    if (e.key === 'Escape') close()
+  }
 </script>
+
+
+<svelte:window on:keyup={listenForEscape} />
 
 <div class="directions" on:click={close} transition:fade>
   <div class="directions__container">
@@ -38,58 +46,44 @@
         <ExampleGuess codeWord="proof" guess="proof" />
         <p class="small-print">Got the word <strong>proof</strong>…</p>
       </div>
-      <div class="arrow right">➡️</div>
-      <div class="arrow down">⬇️</div>
+      <div class="arrow">
+        <Arrow />
+      </div>
       <div>
         <ExampleGuess codeWord="along" guess="knife" />
         <ExampleGuess codeWord="along" guess="foggy" />
         <ExampleGuess codeWord="along" guess="aloof" />
         <ExampleGuess codeWord="along" guess="spoof" />
         <ExampleGuess codeWord="along" guess="proof" />
-        <p class="small-print">…now guess a new code word.</p>
+        <p class="small-print">…now guess a new code word!</p>
       </div>
     </div>
 
 
-    <h2>Keep an eye on your remaining attempts:</h2>
+    <h2>You start with 10 attempts</h2>
+    <p>Every guess costs one…</p>
 
-    <div class="power-bar-container power-bar-example">
-      <div class="power-bar">
-        <div class="power-bar__fill" style="transform: scaleX(0.9)"></div>
-        <div class="power-bar__grid" style="grid-template-columns: repeat({ STARTING_GUESSES }, 1fr);">
-          {#each Array.from({ length: STARTING_GUESSES }) as _, i}
-            <div 
-              class="power-bar__grid-box"
-              class:filled={i < 9}
-            >
-              <div class="power-bar__grid-box-fill" />
-            </div>
-          {/each}
-        </div>
-      </div>
+    <div class="example-meter-holder">
+      <ExampleGuess codeWord="chore" guess="wrong" />
+      <ExamplePowerBar remainingAttempts={10} />
+      <Arrow direction="down" />
+      <ExamplePowerBar remainingAttempts={9} />
     </div>
+      
+    <p>…but every correct guess <strong>replenishes</strong> one instead!</p>
+    
+    <div class="example-meter-holder">
+      <ExampleGuess codeWord="right" guess="right" />
+      <ExamplePowerBar remainingAttempts={8} />
+      <Arrow direction="down" />
+      <ExamplePowerBar remainingAttempts={9} />
+    </div>
+    
 
+    <h2>Stay alive as long as possible</h2>
     <ul>
-      <li>Every guess costs one; a correct guess replenishes one!</li>
-    </ul>
-
-
-    <h2>The longer you play, the harder it&nbsp;gets!</h2>
-    <div class="power-bar-container power-bar-example">
-      <div class="power-bar__divider" style="transform: translateX(5.3em)"></div>
-      <div class="power-bar">
-        <div class="power-bar__fill" style="transform: scaleX(0.4)"></div>
-        <div class="power-bar__grid" style="grid-template-columns: repeat({ STARTING_GUESSES }, 1fr);">
-          {#each Array.from({ length: STARTING_GUESSES }) as _, i}
-            <div class="power-bar__grid-box" class:filled={i < 3}>
-              <div class="power-bar__grid-box-fill" />
-            </div>
-          {/each}
-        </div>
-      </div>
-    </div>
-    <ul>
-      <li>Keep playing as long as you can to get your score as high as possible!</li>
+      <li>The main goal of Hondo is to score 100!</li>
+      <li>The secondary goal is to get your score as high as possible</li>
     </ul>
 
     <hr>
@@ -97,12 +91,10 @@
     <h2>Hints and tips</h2>
   
     <ul>
-      <li>
-        Try to keep every vowel on the board at all times, especially <b>E</b> and <b>A</b>.
-      </li>
-      <li>As you might expect, <b>R</b>, <b>S</b>, <b>T</b>, <b>L</b>, and <b>N</b> are the most common consonants.</li>
+      <li><strong>Watch the keyboard.</strong> It will remind you which letters aren't currently on the board.</li>
       <li>If you don't have a good guess, try one that will add as many new letters to the board as possible.</li>
-      <li>Watch the keyboard! It will remind you what letters are in the code word, and which aren't currently on the board.</li>
+      <li>If you can, try to keep every vowel on the board at all times.</li>
+      <li><strong>Be patient</strong>; haste is costly. Getting a high score requires careful thought, and a bit of luck.</li>
     </ul>
   </div>
 </div>
@@ -140,17 +132,12 @@
   }
 
   p {
-    margin-top: 0.5rem;
-    margin-bottom: 0;
+    margin: 0;
 
     &.small-print {
       margin-bottom: 0;
       font-size: 0.8rem;
     }
-  }
-
-  .power-bar-example {
-    width: 10em;
   }
 
   ul {
@@ -178,18 +165,30 @@
       padding: 1rem;
       text-align: center;
       width: 100%;
-
-      &.right {
-        display: none;
-      }
+      transform: rotate(-90deg);
     }
 
     @media (min-width: 32rem) {
       width: auto;
 
-      .arrow { width: auto; }
-      .arrow.right { display: block; }
-      .arrow.down { display: none; }
+      .arrow { 
+        width: auto;
+        margin-top: -2rem;
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .example-meter-holder {
+    display: grid;
+    width: max-content;
+    max-width: 100%;
+    grid-template-columns: 100%;
+    gap: 0.5rem;
+    margin-top: 1rem;
+
+    + p {
+      margin-top: 2rem;
     }
   }
 

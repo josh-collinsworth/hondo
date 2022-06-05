@@ -41,7 +41,7 @@
     display: grid;
     grid-template-columns: repeat(5, 2rem);
     gap: 2px;
-    margin: 0 0 1px;
+    margin: 0 0 2px;
 
     + p {
       margin-top: 0.5em;

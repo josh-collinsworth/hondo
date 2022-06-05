@@ -15,8 +15,8 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
 
 
 <div class="info-bar">
-  <div class="info-button score">
-    <div class="score-container" >
+  <div class="info-button score" role="status" aria-live="polite" aria-label={`Score: ` + scoreDigits}>
+    <div class="score-container" aria-hidden="true">
       {#each scoreDigits as digit, i}
         {#key digit}
           <div
@@ -56,22 +56,24 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
   }
 
   .info-button {
+    --buttonSize: 2.5rem;
+
     display: flex;
     justify-content: center;
     align-items: center;
     border: 2px solid var(--darkBlue);
     color: var(--darkBlue);
-    border-radius: 2.5rem;
-    width: 2.5rem;
-    height: 2.5rem;
+    border-radius: var(--buttonSize);
+    width: var(--buttonSize);
+    height: var(--buttonSize);
     line-height: 2;
-    font-size: 1.2rem;
     font-weight: bold;
     font-family: 'Ridley Grotesk', sans-serif;
     background: var(--paper);
     position: relative;
     z-index: 4;
     padding-top: 0.05ch;
+    font-size: 1rem;
   }
 
   .score {

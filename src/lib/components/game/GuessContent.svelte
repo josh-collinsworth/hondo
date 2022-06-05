@@ -34,14 +34,13 @@
   }
 </script>
 
-
 {#key $codeWord}
   {#each {length: 5} as _, i (i)}
     <div
       class:loading={$isLoadingNewWord}
       class="guess-box {highlightArray[i]}"
       in:fly="{{ 
-        ...defaultTransition, 
+        ...defaultTransition,
         delay: $isLoadingNewWord 
           ? (700 + (row * 50) + ((i +1) * 40))
           : (i + 1) * 40
@@ -54,10 +53,23 @@
       }}"
       animate:flip={{ duration: 500 }}
     >
-      <span>
+      <!-- The letter is repeated twice because VoiceOver doesn't read the letter and the status together otherwise -->
+      <span aria-hidden="true">
         {guess[i]
           ? $previousGuesses[row][i]
           : ''}
+      </span>
+      <span class="sr">
+        {guess[i]
+          ? $previousGuesses[row][i]
+          : ''}
+        {#if highlightArray[i] === 'exact'}
+          In position
+        {:else if highlightArray[i] === 'partial'}
+          Out of position
+        {:else}
+          Not in word
+        {/if}
       </span>
     </div>
   {/each}

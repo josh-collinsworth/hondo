@@ -21,6 +21,7 @@
   import GameOverModal from '$lib/components/game/GameOverModal.svelte'
   import Loader from '$lib/components/game/Loader.svelte'
   import Toast from '$lib/components/game/Toast.svelte'
+import AccessibleStatus from '$lib/components/game/AccessibleStatus.svelte'
 
   let isLoading = true
   const defaultTransition = { duration: 600, easing: quintOut, y: -80 }
@@ -45,7 +46,7 @@
       }
     } 
     catch(e) {
-      alert(`Sorry, something went wrong loading your previous game data. Please try again, or clear your browser's local storage.`)
+      alert(`Sorry, something went wrong loading your previous game data. Please try again, or clear your browser's local storage. If possible, finishing your current game may also resolve the issue.`)
     } 
     finally {
       isLoading = false
@@ -69,17 +70,18 @@
     {:else}
       <ul class="guess-container">
         {#each $previousGuesses as guess, row (guess)}
-          <li 
+          <li
             class="guess"
             out:fly|local="{defaultTransition}"
             in:fly|local="{{  ...defaultTransition, y: 80 }}"
             animate:flip|local={{ duration: 400 }}
+            aria-label={guess}
           >
             <GuessContent {guess} {row} />
           </li>
         {/each}
         <li 
-        class="guess current-guess"
+          class="guess current-guess"
           out:fly|local="{defaultTransition}"
           in:fly|local="{{ ...defaultTransition, y: 80 }}"
         >
@@ -93,6 +95,8 @@
         </li>
       </ul>
     {/if}
+
+    <AccessibleStatus />
 
     <div class="bottom-container">
       <Toast />
