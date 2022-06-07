@@ -2,8 +2,7 @@
   import { STARTING_GUESSES } from '$lib/js/constants'
   import { remainingAttempts, maxRemainingAttempts, usedAttempts} from '$lib/js/state'
 
-  $: pixelOffset = ($maxRemainingAttempts) * -2
-  $: calculatedDividerOffset = `calc(${($maxRemainingAttempts * 10) +  (($maxRemainingAttempts) * 1.5)}%)`
+  $: calculatedDividerOffset = `${$maxRemainingAttempts}em`
 </script>
 
 <div
@@ -26,13 +25,13 @@
         background-size: {( STARTING_GUESSES / $remainingAttempts) * 100}%;
       "
     />
-    <!-- <div 
+    <div 
       class="power-bar__grid"
       style="grid-template-columns: repeat({STARTING_GUESSES}, 1fr);"
     >
       {#each Array.from({ length: STARTING_GUESSES }) as _, i}
         <div class="power-bar__grid-box" />
       {/each}
-    </div> -->
+    </div>
   </div>
 </div>

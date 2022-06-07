@@ -1,4 +1,4 @@
-import { writable, derived } from 'svelte/store'
+import { writable } from 'svelte/store'
 import { STARTING_GUESSES } from './constants'
 
 export const currentGuess = writable('')

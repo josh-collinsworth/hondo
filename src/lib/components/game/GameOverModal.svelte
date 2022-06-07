@@ -23,7 +23,7 @@
     `AWESOME score!`,
     `OUTSTANDING! That was elite!`,
     `SO CLOSE! Keep trying!`,
-    `AMAZING! You scored a HUNDO!`,
+    `AMAZING! You scored a HONDO!`,
   ]
 
   let endgameMessage: string

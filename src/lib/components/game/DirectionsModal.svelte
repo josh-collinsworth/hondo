@@ -4,6 +4,7 @@
   import Arrow from '../icon/Arrow.svelte'
 
   import { fade } from 'svelte/transition'
+import Lifeline from '../icon/Lifeline.svelte'
 
   export let close: VoidFunction
 
@@ -60,8 +61,8 @@
     </div>
 
 
-    <h2>You start with 10 attempts</h2>
-    <p>Every guess costs one…</p>
+    <h2>Watch your life meter</h2>
+    <p>Every guess drains one bar…</p>
 
     <div class="example-meter-holder">
       <ExampleGuess codeWord="chore" guess="wrong" />
@@ -70,7 +71,7 @@
       <ExamplePowerBar remainingAttempts={9} />
     </div>
       
-    <p>…but every correct guess <strong>replenishes</strong> one instead!</p>
+    <p>…but a correct guess <strong>replenishes</strong> one bar instead!</p>
     
     <div class="example-meter-holder">
       <ExampleGuess codeWord="right" guess="right" />
@@ -78,12 +79,35 @@
       <Arrow direction="down" />
       <ExamplePowerBar remainingAttempts={9} />
     </div>
+
+
+    <h2 class="display-flex" style="align-items: center;">
+      Stuck? Use a lifeline
+      <span aria-hidden="true" class="info-button lifeline" style="margin-left: 0.5em;">
+        <Lifeline />
+      </span>
+    </h2>
+
+   
+
+    <p>
+   
+      A lifeline solves the current code word&mdash;but at the cost of <strong>permanently</strong> shrinking your life meter!
+    </p>
+
+    <div class="example-meter-holder">
+      <ExamplePowerBar remainingAttempts={4} />
+      <Arrow direction="down" />
+      <ExamplePowerBar remainingAttempts={5} maxRemainingAttempts={9} />
+    </div>
+      
     
 
-    <h2>Stay alive as long as possible</h2>
+    <h2>Try to score a Hondo</h2>
     <ul>
-      <li>The main goal of Hondo is to score 100!</li>
-      <li>The secondary goal is to get your score as high as possible</li>
+      <li>The primary goal of Hondo is: stay alive as long as possible, to get your score as high as possible!</li>
+      <li>The secondary goal: try score a Hondo! The game ends when you get to 100.</li>
+      <li>The final goal: score a Hondo in as few guesses as possible!</li>
     </ul>
 
     <hr>
@@ -92,7 +116,8 @@
   
     <ul>
       <li><strong>Watch the keyboard.</strong> It will remind you which letters aren't currently on the board.</li>
-      <li>If you don't have a good guess, try one that will add as many new letters to the board as possible.</li>
+      <li><strong>Use lifelines wisely!</strong> Try to deploy them when they might save you the most guesses.</li>
+      <li>If you don't have a good guess (and don't want to use a lifeline), try a word that will add as many new letters to the board as possible.</li>
       <li>If you can, try to keep every vowel on the board at all times.</li>
       <li><strong>Be patient</strong>; haste is costly. Getting a high score requires careful thought, and a bit of luck.</li>
     </ul>

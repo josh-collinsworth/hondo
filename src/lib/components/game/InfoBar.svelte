@@ -37,7 +37,13 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
 
 
 <div class="info-bar">
-  <div class="info-button score" role="status" aria-live="polite" aria-label={`Score: ` + scoreDigits}>
+  <div
+    class="info-button score"
+    role="status"
+    aria-live="polite"
+    aria-label={`Score: ` + scoreDigits}
+    style="overflow: {$runningScore < 100 ? 'hidden' : 'visible'};"
+  >
     <div class="score-container" aria-hidden="true">
       {#each scoreDigits as digit, i}
         {#key digit}
@@ -52,7 +58,7 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
       {/each}
     </div>
   </div>
-  <button class="info-button lifeline" on:click={useLifeline}>
+  <button class="info-button lifeline" on:click={useLifeline} disabled={$maxRemainingAttempts <= 1}>
     <Lifeline />
     <span class="sr">Use a lifeline</span>
   </button>
@@ -82,36 +88,11 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
     z-index: 2;
   }
 
-  .info-button {
-    --buttonSize: 2.5rem;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid var(--darkBlue);
-    color: var(--darkBlue);
-    border-radius: var(--buttonSize);
-    width: var(--buttonSize);
-    height: var(--buttonSize);
-    line-height: 2;
-    font-weight: bold;
-    font-family: 'Ridley Grotesk', sans-serif;
-    background: var(--paper);
-    position: relative;
-    z-index: 4;
-    padding-top: 0.05ch;
-    font-size: 1rem;
-  }
-
-  .lifeline {
-    border: 0;
-    padding: 0;
-    fill: var(--red);
-    overflow: hidden;
-  }
-
   .score {
     overflow: hidden;
+    border-radius: 0;
+    font-size: 1.7rem;
+    border: 0;
 
     .score-container {
       display: grid;

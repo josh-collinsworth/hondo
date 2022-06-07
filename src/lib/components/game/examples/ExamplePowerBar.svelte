@@ -1,9 +1,16 @@
 <script lang="ts">
   export let remainingAttempts: number = 10
   export let startingGuesses: number = 10
+  export let maxRemainingAttempts = 10
 </script>
 
 <div class="power-bar-container example-power-bar">
+  <div
+    class="power-bar__divider"
+    style="
+      transform: translateX({maxRemainingAttempts}em);
+    "
+  />
   <div class="power-bar">
     <div
       class="power-bar__fill"
@@ -27,6 +34,5 @@
 <style>
   .example-power-bar {
     font-size: 1.1rem;
-    height: 1rem;
   }
 </style>
