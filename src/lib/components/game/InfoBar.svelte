@@ -1,5 +1,5 @@
 <script lang="ts">
-import { codeWord, currentGuess, maxRemainingAttempts, runningScore } from '$lib/js/state'
+import { codeWord, currentGuess, maxRemainingAttempts, runningScore, darkMode } from '$lib/js/state'
 import { fly } from 'svelte/transition'
 
 import { handleNewGuess, load, save } from '$lib/js/helpers'
@@ -11,6 +11,16 @@ import Lifeline from '../icon/Lifeline.svelte'
 let isShowingDirections = false
 const toggleIsShowingDirections = (): void => {
   isShowingDirections = !isShowingDirections
+}
+
+const toggleDarkMode = (): void => {
+  darkMode.set(!$darkMode)
+
+  if ($darkMode) {
+    document.querySelector('html').classList.add('dark')
+  } else {
+    document.querySelector('html').classList.remove('dark')
+  }
 }
 
 const useLifeline = (): void => {
@@ -41,7 +51,7 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
     class="info-button score"
     role="status"
     aria-live="polite"
-    aria-label={`Score: ` + scoreDigits}
+    aria-label={`Score: ` + $runningScore}
     style="overflow: {$runningScore < 100 ? 'hidden' : 'visible'};"
   >
     <div class="score-container" aria-hidden="true">
@@ -63,7 +73,10 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
     <span class="sr">Use a lifeline</span>
   </button>
   <PowerBar />
-  <div></div>
+  <button class="info-button dark-mode-toggle" on:click={toggleDarkMode}>
+    <div class="crescent inner"></div>
+    <div class="crescent outer"></div>
+  </button>
   <button class="info-button instructions" on:click={toggleIsShowingDirections}>
     ?
   </button>
@@ -88,6 +101,28 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
     z-index: 2;
   }
 
+  .dark-mode-toggle {
+    .crescent {
+      width: 1.5em;
+      height: 1.5em;
+      border-radius: 1.5em;
+      background: var(--secondary);
+      position: absolute;
+      left: 0.35em;
+      top: 0.35em;
+      z-index: 1;
+
+      &.inner {
+        background: var(--paper);
+        width: 1.4em;
+        height: 1.4em;
+        left: 0.1em;
+        top: 0.2em;
+        z-index: 2;
+      }
+    }
+  }
+
   .score {
     overflow: hidden;
     border-radius: 0;
@@ -101,7 +136,7 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
       position: relative;
       z-index: 2;        
       width: min-content;
-      padding: 1ch;
+      padding: 0;
       text-align: center;
     }
 

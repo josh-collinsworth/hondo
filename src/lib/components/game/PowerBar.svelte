@@ -17,7 +17,6 @@
     "
   />
   <div class="power-bar">
-    <div class="power-bar__grid-lines" />
     <div
       class="power-bar__fill"
       style="
