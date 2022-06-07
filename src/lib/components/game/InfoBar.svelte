@@ -101,12 +101,16 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
     z-index: 2;
   }
 
+  .instructions {
+    font-size: 1.5rem;
+  }
+
   .dark-mode-toggle {
     .crescent {
       width: 1.5em;
       height: 1.5em;
       border-radius: 1.5em;
-      background: var(--secondary);
+      background: var(--darkBlue);
       position: absolute;
       left: 0.35em;
       top: 0.35em;
@@ -114,8 +118,8 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
 
       &.inner {
         background: var(--paper);
-        width: 1.4em;
-        height: 1.4em;
+        width: 1.3em;
+        height: 1.3em;
         left: 0.1em;
         top: 0.2em;
         z-index: 2;
@@ -126,8 +130,12 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
   .score {
     overflow: hidden;
     border-radius: 0;
-    font-size: 1.7rem;
+    font-size: 1.6rem;
     border: 0;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     .score-container {
       display: grid;
@@ -145,7 +153,8 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
       flex: 1 1 auto;
       text-align: center;
       grid-row: 1 / 2;
-      
+      height: 100%;
+    
       &.digit-1 {
         grid-column: 1 / 2;
       }

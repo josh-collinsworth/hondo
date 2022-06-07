@@ -173,9 +173,13 @@
     }
   
     .power-bar__grid-box {
-      border-left: 2px solid var(--paper);
+      border-left: 1px solid var(--paper);
       width: 1em;
       flex: 0 0 1em;
+
+      @media (min-width: 22rem) {
+        border-width: 2px;
+      }
   
       &:first-of-type {
         border: 0;
