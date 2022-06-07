@@ -55,6 +55,27 @@ export const chooseRandomCodeWord = (log = false): void => {
   chooseRandomCodeWord(log)
 }
 
+export const handleNewGuess = (): void => {
+  if (isValidGuess(get(currentGuess))) {
+    if (!get(previousGuesses).includes(get(currentGuess))) {
+      previousGuesses.set([...get(previousGuesses), get(currentGuess)])
+
+      setNewScores()
+      if (!get(gameIsOver)) {
+        saveGameData()
+      }
+    } else {
+      setToastMessage('Already guessed that word')
+    }
+    //Prevents some buggy stuff from happening when loading the game
+    if (get(previousGuesses).length > 5) {
+      previousGuesses.set([...get(previousGuesses)].slice(1, get(previousGuesses).length))
+    }
+  } else if (get(currentGuess).length === 5) {
+    setToastMessage('Sorry, not in word list')
+  }
+}
+
 export const setNewScores = (): void => {
   if (get(currentGuess) === get(codeWord)) {
     runningScore.set(get(runningScore) + 1)
@@ -70,13 +91,23 @@ export const setNewScores = (): void => {
   }
   currentGuess.set('')
 
-  if (get(remainingAttempts) <= 0) {
+  if (get(remainingAttempts) <= 0 || get(runningScore) >= 100) {
     gameIsOver.set(true)
-
-    const previousHighScores = load(PREVIOUS_HIGH_SCORES_STORAGE_KEY) || []
-    save(PREVIOUS_HIGH_SCORES_STORAGE_KEY, [...previousHighScores, get(runningScore)])
+    registerHighScore()
     localStorage.removeItem(GAME_DATA_STORAGE_KEY)
   }
+}
+
+export const registerHighScore = (): void => {
+  let previousHighScores = load(PREVIOUS_HIGH_SCORES_STORAGE_KEY) || []
+
+  // Just some cleanup from prerelease data saving. Can be removed later.
+  previousHighScores = previousHighScores.filter(item => typeof item !== 'number')
+
+  save(
+    PREVIOUS_HIGH_SCORES_STORAGE_KEY, 
+    [...previousHighScores, [get(runningScore), get(usedAttempts)]]
+  )
 }
 
 export const handleCorrectGuess = (): void => {
@@ -87,9 +118,6 @@ export const handleCorrectGuess = (): void => {
     await tick()
     isLoadingNewWord.set(false)
     saveGameData()
-    if (get(runningScore) === 100) {
-      alert('CONGRATULATIONS! You scored a Hundo!\n\nYou won, but you can keep playing to set a new high score!')
-    }
   }, 1000)
 }
 

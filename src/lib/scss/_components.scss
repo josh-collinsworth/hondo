@@ -103,8 +103,8 @@
 }
 
 .power-bar-container {
-  font-size: 5vw;
-  width: 10em;
+  // margin: 0 4px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: start;
@@ -112,25 +112,39 @@
   height: 2rem;
   overflow: hidden;
   padding: 0;
-  box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--darkBlue);
+  margin: 0;
   border-radius: 2rem;
-  height: 1.5rem;
   will-change: transform;
 
-  @media (min-width: 22rem) {
-    font-size: 6vw;
+  .power-bar__divider {
+    width: 100%;
+    height: 100%;
+    background: rgba(var(--paperRGB), 0.8);
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 4;
+    border-left: 2px solid var(--darkBlue);
+    transition: transform 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+    pointer-events: none;
   }
 
-  @media (min-width: 26rem) {
-    font-size: 6.5vw;
-  }
+  .power-bar__grid-lines {
+    --transparent: rgba(255, 255, 255, 0);
 
-  @media (min-width: 32rem) {
-    font-size: 2.3rem;
+    width: 100%;
+    height: 100%;
+    background-image: repeating-linear-gradient(to right, var(--transparent) 0%, var(--transparent) calc(100% - 2px), var(--paper) calc(100% - 2px), var(--paper));
+    background-size: calc(10% - 2px);
+    background-repeat: repeat;
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
   }
 
   .power-bar {
-    width: 10em;
+    width: 100%;
     border: 0;
     border-radius: 2rem;
     display: flex;
@@ -138,28 +152,36 @@
     overflow: hidden;
     position: relative;
     background: var(--lighterAccent);
+    box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--darkBlue);
+    // border: 2px solid var(--paper);
+    // outline: 2px solid var(--darkBlue);
+    margin: 0 4px;
   
     .power-bar__grid {
-      display: flex;
-      width: 10em;
+      // display: grid;
+      display: none;
+      grid-template-columns: repeat(10, calc(10% - 2px));
+      width: 100%;
       position: absolute;
       height: 1.5rem;
       left: 0;
       top: 0;
       z-index: 2;
       transition: inherit;
-      width: 10em;
-      min-width: 10em;
-      max-width: 10em;
+      width: 100%;
     }
   
     .power-bar__grid-box {
-      border-left: 2px solid var(--paper);
-      width: 1em;
+      // border-left: 1px solid var(--paper);
+      width: 10%;
       flex: 0 0 1em;
+
+      @media (min-width: 24rem) {
+        // border-width: 2px;
+      }
   
       &:first-of-type {
-        border: 0;
+        border-color: var(--red);
       }
     }
   
@@ -176,9 +198,7 @@
       overflow: hidden;
       position: relative;
       z-index: 0;
-      width: 10em;
-      min-width: 10em;
-      max-width: 10em;
+      width: 100%;
     }
   }
 }

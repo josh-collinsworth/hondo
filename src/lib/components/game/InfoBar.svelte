@@ -1,13 +1,35 @@
 <script lang="ts">
-import { runningScore } from '$lib/js/state'
+import { codeWord, currentGuess, maxRemainingAttempts, runningScore } from '$lib/js/state'
 import { fly } from 'svelte/transition'
+
+import { handleNewGuess, load, save } from '$lib/js/helpers'
 
 import DirectionsModal from './DirectionsModal.svelte'
 import PowerBar from './PowerBar.svelte'
+import Lifeline from '../icon/Lifeline.svelte'
 
 let isShowingDirections = false
 const toggleIsShowingDirections = (): void => {
   isShowingDirections = !isShowingDirections
+}
+
+const useLifeline = (): void => {
+  const hasAcknowledgedLifeline = load('acknowledgedLifeline')
+  let confirmation = false
+
+  if (!hasAcknowledgedLifeline) {
+    confirmation = confirm(`Permanently reduces your maximum attempts to solve the current code word. Use a lifeline?\n\n(This warning won't show again once used.)`)
+
+    if (confirmation) {
+      save('acknowledgedLifeline', true)
+    }
+  }
+
+  if (hasAcknowledgedLifeline || confirmation) {
+    currentGuess.set($codeWord)
+    maxRemainingAttempts.set($maxRemainingAttempts - 1)
+    handleNewGuess()
+  }
 }
 
 $: scoreDigits = String($runningScore).padStart(3).split('')
@@ -30,7 +52,12 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
       {/each}
     </div>
   </div>
+  <button class="info-button lifeline" on:click={useLifeline}>
+    <Lifeline />
+    <span class="sr">Use a lifeline</span>
+  </button>
   <PowerBar />
+  <div></div>
   <button class="info-button instructions" on:click={toggleIsShowingDirections}>
     ?
   </button>
@@ -46,7 +73,7 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
 <style lang="scss">
   .info-bar {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto auto 1fr  2.5rem auto;
     align-items: center;
     justify-items: center;
     gap: 10px;
@@ -74,6 +101,13 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
     z-index: 4;
     padding-top: 0.05ch;
     font-size: 1rem;
+  }
+
+  .lifeline {
+    border: 0;
+    padding: 0;
+    fill: var(--red);
+    overflow: hidden;
   }
 
   .score {

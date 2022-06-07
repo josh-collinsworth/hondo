@@ -12,7 +12,7 @@
   import { onMount } from 'svelte'
 
   import { previousGuesses, currentGuess, gameIsOver, remainingAttempts, codeWord, runningScore, maxRemainingAttempts, usedAttempts } from '$lib/js/state'
-  import { GAME_DATA_STORAGE_KEY } from '$lib/js/constants';
+  import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES } from '$lib/js/constants';
 
   import GuessContent from '$lib/components/game/GuessContent.svelte'
   import Confetti from '$lib/components/game/Confetti.svelte'
@@ -36,7 +36,11 @@ import AccessibleStatus from '$lib/components/game/AccessibleStatus.svelte'
         if (previousGuessesToSet.length > 5) {
           previousGuessesToSet = previousGuessesToSet.slice(1, 6)
         }
+
+        // Avoids a loading error with states that didn't save this. Can be removed later.
+        let attemptsCap = gameData.maxRemainingAttempts ? gameData.maxRemainingAttempts : STARTING_GUESSES
         
+        maxRemainingAttempts.set(attemptsCap)
         previousGuesses.set(previousGuessesToSet)
         codeWord.set(window.atob(gameData.codeWord))
         remainingAttempts.set(gameData.remainingAttempts)

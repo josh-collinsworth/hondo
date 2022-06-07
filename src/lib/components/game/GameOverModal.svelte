@@ -21,21 +21,25 @@
     `WOW! Great playing!`,
     `EXCELLENT job!`,
     `AWESOME score!`,
-    `AMAZING! That was elite!`,
-    `…Are you SURE you didn't cheat!?`,
+    `OUTSTANDING! That was elite!`,
+    `SO CLOSE! Keep trying!`,
+    `AMAZING! You scored a HUNDO!`,
   ]
 
   let endgameMessage: string
   $: endgameMessage = endgameMessages[Math.floor($runningScore / 10)]
 
   let highScore: number
+  let fastestScore: number
   let averageScore: number|string
 
   onMount(() => {
-    const previousHighScores = load(PREVIOUS_HIGH_SCORES_STORAGE_KEY) || [0]
-    highScore = Math.max(...previousHighScores)
+    const previousHighScores = load(PREVIOUS_HIGH_SCORES_STORAGE_KEY) || [[0, 0]]
+
+    highScore = Math.max(...previousHighScores.map(score => score[0]))
+    fastestScore = Math.min(...previousHighScores.filter(score => score[0] === highScore).map(score => score[1]))
     averageScore = numberFormatter.format(
-      previousHighScores.reduce((p, c) => p + c, 0) / previousHighScores.length
+      previousHighScores.map(score => score[0]).reduce((p, c) => p + c, 0) / previousHighScores.length
     )
   })
 </script>
@@ -52,9 +56,12 @@
   
   <h3>Stats:</h3>
   <ul>
-    <li>You lost on <b>{$codeWord.toUpperCase()}</b></li>
+    {#if $runningScore < 100}
+      <li>You lost on <b>{$codeWord.toUpperCase()}</b></li>
+    {/if}
+    
     <li>You used <b>{$usedAttempts} attempts</b></li>
-    <li class="space-above"><b>Best score:</b> {highScore}</li>
+    <li class="space-above"><b>Best score:</b> {highScore} in {fastestScore} attempts.</li>
     <li><b>Average score:</b> {averageScore}</li>
   </ul>
 

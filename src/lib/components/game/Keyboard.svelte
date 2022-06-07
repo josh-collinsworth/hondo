@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { isSingleLetter, isValidGuess, chooseRandomCodeWord, setNewScores, saveGameData, setToastMessage } from '$lib/js/helpers'
-  import { currentGuess, previousGuesses, discoveredCodeWord, codeWord, isLoadingNewWord, gameIsOver } from '$lib/js/state'
+  import { isSingleLetter, handleNewGuess } from '$lib/js/helpers'
+  import { currentGuess, previousGuesses, codeWord } from '$lib/js/state'
 
   import Arrow from '../icon/Arrow.svelte'
   import Checkmark from '../icon/Checkmark.svelte'
@@ -43,24 +43,7 @@
         $currentGuess = $currentGuess.slice(0, $currentGuess.length - 1)
       }
     } else if (isEnterKey(key)) {
-      if (isValidGuess($currentGuess)) {
-        if (!$previousGuesses.includes($currentGuess)) {
-          $previousGuesses = [...$previousGuesses, $currentGuess]
-
-          setNewScores()
-          if (!get(gameIsOver)) {
-            saveGameData()
-          }
-        } else {
-          setToastMessage('Already guessed that word')
-        }
-        //Prevents some buggy stuff from happening when loading the game
-        if ($previousGuesses.length > 5) {
-          $previousGuesses = [...$previousGuesses].slice(1, $previousGuesses.length)
-        }
-      } else if ($currentGuess.length === 5) {
-        setToastMessage('Sorry, not in word list')
-      }
+      handleNewGuess()
     }
   }
 </script>
