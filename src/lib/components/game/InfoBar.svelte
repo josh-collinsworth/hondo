@@ -106,20 +106,19 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
   }
 
   .dark-mode-toggle {
+    padding: 4px;
+
     .crescent {
-      width: 1.5em;
-      height: 1.5em;
-      border-radius: 1.5em;
+      width: 100%;
+      height: 100%;
+      border-radius: 3rem;
       background: var(--darkBlue);
-      position: absolute;
-      left: 0.35em;
-      top: 0.35em;
-      z-index: 1;
 
       &.inner {
+        position: absolute;
         background: var(--paper);
-        width: 1.3em;
-        height: 1.3em;
+        width: 1.4em;
+        height: 1.4em;
         left: 0.1em;
         top: 0.2em;
         z-index: 2;

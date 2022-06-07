@@ -228,24 +228,10 @@
 }
 
 .lifeline {
-  border: 0;
-  padding: 0;
+  // border: 0;
+  padding: 4px;
   fill: var(--red);
   overflow: hidden;
-
-  &::before {
-    content: '+';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    line-height: 1;
-    font-size: 1.5em;
-    color: var(--red);
-    padding-top: 0.1em;
-  }
 
   &:disabled {
     fill: var(--lighterAccent);
