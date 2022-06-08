@@ -2,6 +2,10 @@
   display: flex;
 }
 
+.align-center {
+  align-items: center;
+}
+
 .sr {
   position: absolute;
   left: -100vw;

@@ -13,15 +13,15 @@ const toggleIsShowingDirections = (): void => {
   isShowingDirections = !isShowingDirections
 }
 
-const toggleDarkMode = (): void => {
-  darkMode.set(!$darkMode)
+// const toggleDarkMode = (): void => {
+//   darkMode.set(!$darkMode)
 
-  if ($darkMode) {
-    document.querySelector('html').classList.add('dark')
-  } else {
-    document.querySelector('html').classList.remove('dark')
-  }
-}
+//   if ($darkMode) {
+//     document.querySelector('html').classList.add('dark')
+//   } else {
+//     document.querySelector('html').classList.remove('dark')
+//   }
+// }
 
 const useLifeline = (): void => {
   const hasAcknowledgedLifeline = load('acknowledgedLifeline')
@@ -47,36 +47,39 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
 
 
 <div class="info-bar">
-  <div
-    class="info-button score"
-    role="status"
-    aria-live="polite"
-    aria-label={`Score: ` + $runningScore}
-    style="overflow: {$runningScore < 100 ? 'hidden' : 'visible'};"
-  >
-    <div class="score-container" aria-hidden="true">
-      {#each scoreDigits as digit, i}
-        {#key digit}
-          <div
-            class="score-digit digit-{i + 1}"
-            out:fly={{ y: -40, duration: 360, opacity: 1 }}
-            in:fly={{ y: 40, duration: 360, opacity: 1 }}
-          >
-            {digit}
-          </div>
-        {/key}
-      {/each}
+  <div class="display-flex align-center score-container">
+    <div class="score-ring"></div>
+    <div
+      class="info-button score"
+      role="status"
+      aria-live="polite"
+      aria-label={`Score: ` + $runningScore}
+      style="overflow: {$runningScore < 100 ? 'hidden' : 'visible'};"
+    >
+      <div class="score-container" aria-hidden="true">
+        {#each scoreDigits as digit, i}
+          {#key digit}
+            <div
+              class="score-digit digit-{i + 1}"
+              out:fly={{ y: -40, duration: 360, opacity: 1 }}
+              in:fly={{ y: 40, duration: 360, opacity: 1 }}
+            >
+              {digit}
+            </div>
+          {/key}
+        {/each}
+      </div>
     </div>
+    <PowerBar />
   </div>
   <button class="info-button lifeline" on:click={useLifeline} disabled={$maxRemainingAttempts <= 1}>
     <Lifeline />
     <span class="sr">Use a lifeline</span>
   </button>
-  <PowerBar />
-  <button class="info-button dark-mode-toggle" on:click={toggleDarkMode}>
+  <!-- <button class="info-button dark-mode-toggle" on:click={toggleDarkMode}>
     <div class="crescent inner"></div>
     <div class="crescent outer"></div>
-  </button>
+  </button> -->
   <button class="info-button instructions" on:click={toggleIsShowingDirections}>
     ?
   </button>
@@ -92,7 +95,7 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
 <style lang="scss">
   .info-bar {
     display: grid;
-    grid-template-columns: auto auto 1fr  2.5rem auto;
+    grid-template-columns: repeat(3, auto);
     align-items: center;
     justify-items: center;
     gap: 10px;
@@ -126,15 +129,32 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
     }
   }
 
+  .score-container {
+    --buttonSize: 2.5rem;
+    position: relative;
+  }
+
+  .score-ring {
+    width: calc(var(--buttonSize) + 12px);
+    height: calc(var(--buttonSize) + 12px);
+    border: 4px solid var(--darkBlue);
+    position: absolute;
+    left: -6px;
+    top: -6px;
+    border-radius: 3rem;
+  }
+
   .score {
     overflow: hidden;
-    border-radius: 0;
-    font-size: 1.6rem;
-    border: 0;
+    font-size: 1.4rem;
     font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 0 0 2px var(--paper);
+    margin-right: -6px;
+    overflow: hidden;
+    border: 0;
 
     .score-container {
       display: grid;

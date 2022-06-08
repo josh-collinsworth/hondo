@@ -104,7 +104,7 @@
 
 .power-bar-container {
   font-size: 3vw;
-  width: calc(10em + 8px);
+  width: calc(10em + 12px);
   padding: 8px;
   display: flex;
   align-items: center;
@@ -113,7 +113,9 @@
   overflow: hidden;
   padding: 0;
   border-radius: 2rem;
-  height: calc(1.5rem + 4px);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  height: calc(1.5rem + 8px);
   will-change: transform;
 
   @media (min-width: 22rem) {
@@ -140,7 +142,7 @@
     left: 6px;
     top: 0;
     z-index: 4;
-    border-left: 2px solid var(--darkBlue);
+    border-left: 4px solid var(--darkBlue);
     transition: transform 1s cubic-bezier(0.165, 0.84, 0.44, 1);
     pointer-events: none;
   }
@@ -148,7 +150,7 @@
   .power-bar {
     width: 10em;
     border: 0;
-    border-radius: 2rem;
+    border-radius: inherit;
     display: flex;
     margin: 4px;
     height: calc(1.5rem - 4px);
@@ -156,7 +158,7 @@
     overflow: hidden;
     position: relative;
     background: var(--lighterAccent);
-    box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--darkBlue);
+    box-shadow: 0 0 0 2px var(--paper), 0 0 0 6px var(--darkBlue);
   
     .power-bar__grid {
       display: flex;
@@ -179,10 +181,6 @@
 
       @media (min-width: 22rem) {
         border-width: 2px;
-      }
-  
-      &:first-of-type {
-        border: 0;
       }
     }
   
