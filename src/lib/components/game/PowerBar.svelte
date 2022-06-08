@@ -1,7 +1,9 @@
 <script lang="ts">
   import { STARTING_GUESSES } from '$lib/js/constants'
-  import { remainingAttempts, maxRemainingAttempts, usedAttempts} from '$lib/js/state'
+  import { remainingAttempts, maxRemainingAttempts, runningScore } from '$lib/js/state'
+  import { fly } from 'svelte/transition'
 
+  $: scoreDigits = String($runningScore).padStart(3).split('')
   $: calculatedDividerOffset = `${$maxRemainingAttempts}em`
 </script>
 
@@ -17,6 +19,27 @@
     "
   />
   <div class="power-bar">
+    <div
+      class="score"
+      role="status"
+      aria-live="polite"
+      aria-label={`Score: ` + $runningScore}
+      style="overflow: {$runningScore < 100 ? 'hidden' : 'visible'};"
+    >
+      <div class="score-container" aria-hidden="true">
+        {#each scoreDigits as digit, i}
+          {#key digit}
+            <div
+              class="score-digit digit-{i + 1}"
+              out:fly={{ y: -40, duration: 360, opacity: 1 }}
+              in:fly={{ y: 40, duration: 360, opacity: 1 }}
+            >
+              {digit}
+            </div>
+          {/key}
+        {/each}
+      </div>
+    </div>
     <div
       class="power-bar__fill"
       style="

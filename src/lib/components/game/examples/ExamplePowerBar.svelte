@@ -2,6 +2,7 @@
   export let remainingAttempts: number = 10
   export let startingGuesses: number = 10
   export let maxRemainingAttempts = 10
+  export let score = 0
 </script>
 
 <div class="power-bar-container example-power-bar">
@@ -12,6 +13,7 @@
     "
   />
   <div class="power-bar">
+    <div class="score">{score}</div>
     <div
       class="power-bar__fill"
       style="

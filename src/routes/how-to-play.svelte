@@ -1,10 +1,10 @@
 <script lang="ts">  
-  import ExampleGuess from './examples/ExampleGuess.svelte'
-  import ExamplePowerBar from './examples/ExamplePowerBar.svelte'
-  import Arrow from '../icon/Arrow.svelte'
+  import ExampleGuess from '$lib/components/game/examples/ExampleGuess.svelte'
+  import ExamplePowerBar from '$lib/components/game/examples/ExamplePowerBar.svelte'
+  import Arrow from '$lib/components/icon/Arrow.svelte'
 
   import { fade } from 'svelte/transition'
-import Lifeline from '../icon/Lifeline.svelte'
+  import Lifeline from '$lib/components/icon/Lifeline.svelte'
 
   export let close: VoidFunction
 
@@ -36,7 +36,7 @@ import Lifeline from '../icon/Lifeline.svelte'
 
     <h2>When you guess a code word, it's replaced with a new one.</h2>
     
-    <p>However, your last five guesses stay on the board.</p>
+    <p>However, your last five guesses stay on the board as clues.</p>
           
     <div class="example-guess-holder">
       <div>
@@ -77,7 +77,7 @@ import Lifeline from '../icon/Lifeline.svelte'
       <ExampleGuess codeWord="right" guess="right" />
       <ExamplePowerBar remainingAttempts={8} />
       <Arrow direction="down" />
-      <ExamplePowerBar remainingAttempts={9} />
+      <ExamplePowerBar remainingAttempts={9} score={1} />
     </div>
 
 
@@ -96,9 +96,9 @@ import Lifeline from '../icon/Lifeline.svelte'
     </p>
 
     <div class="example-meter-holder">
-      <ExamplePowerBar remainingAttempts={4} />
+      <ExamplePowerBar remainingAttempts={4} score={9} />
       <Arrow direction="down" />
-      <ExamplePowerBar remainingAttempts={5} maxRemainingAttempts={9} />
+      <ExamplePowerBar remainingAttempts={5} score={10} maxRemainingAttempts={9} />
     </div>
       
     
@@ -121,19 +121,14 @@ import Lifeline from '../icon/Lifeline.svelte'
       <li>If you can, try to keep every vowel on the board at all times.</li>
       <li><strong>Be patient</strong>; haste is costly. Getting a high score requires careful thought, and a bit of luck.</li>
     </ul>
+
+    <a href="/">Back</a>
   </div>
 </div>
 
 
 <style lang="scss">
   .directions {
-    position: fixed;
-    z-index: 10;
-    width: calc(100vw - 2rem);
-    height: calc(100vh - 2rem);
-    height: calc(100dvh - 2rem);
-    top: 1rem;
-    left: 1rem;
     border: 2px solid var(--lightAccent);
     background: var(--paper); 
     padding: 1rem;

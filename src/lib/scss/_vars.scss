@@ -27,6 +27,9 @@
   --mediumAccent: var(--mediumGray);
   --darkAccent: var(--darkGray);
 
+  --scoreWidth: 2em;
+  --powerBarHeight: 2rem;
+
   &.dark {
     --ink: var(--offwhite);
     --paper: var(--black);
