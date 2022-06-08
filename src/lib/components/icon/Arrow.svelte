@@ -9,7 +9,7 @@
     width: 1.5rem;
     height: auto;
     stroke-width: 5px;
-    stroke: var(--ink);
+    stroke: var(--lightAccent);
     display: block;
     margin: 0 auto;
 

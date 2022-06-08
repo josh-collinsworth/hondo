@@ -3,37 +3,57 @@
   import ExamplePowerBar from '$lib/components/game/examples/ExamplePowerBar.svelte'
   import Arrow from '$lib/components/icon/Arrow.svelte'
 
-  import { fade } from 'svelte/transition'
   import Lifeline from '$lib/components/icon/Lifeline.svelte'
-
-  export let close: VoidFunction
-
-  const listenForEscape = (e: KeyboardEvent): void => {
-    if (e.key === 'Escape') close()
-  }
 </script>
 
 
-<svelte:window on:keyup={listenForEscape} />
-
-<div class="directions" on:click={close} transition:fade>
+<div class="directions">
   <div class="directions__container">
-    <h1>How to play</h1>
+    <h1>How to play <a href="/" class="back-link">Back</a></h1>
+
     <h2>Guess the code word</h2>
 
-    <ExampleGuess codeWord="xrxxx" guess="ready" />
+    <div class="width-max-content">
+      <ExampleGuess codeWord="xrxxx" guess="ready" />
+    </div>
+
     <p>
       The code word includes <strong>R</strong>, but it's not the&nbsp;first&nbsp;letter.
     </p>
     
     <br />
     
-    <ExampleGuess codeWord="xxxxt" guess="smart" />
+    <div class="width-max-content">
+      <ExampleGuess codeWord="xxxxt" guess="smart" />
+    </div>
+
     <p>
       The code word ends with <strong>T</strong>.
     </p>
-    
 
+
+    <h2>Watch your score and life gauge</h2>
+    <p>Every attempt drains one bar from the gauge…</p>
+
+    <div class="example-diagram">
+      <ExamplePowerBar remainingAttempts={10} />
+      <Arrow direction="down" />
+      <ExampleGuess codeWord="xxxxr" guess="wrong" />
+      <Arrow direction="down" />
+      <ExamplePowerBar remainingAttempts={9} />
+    </div>
+      
+    <p>…but a correct guess <strong>replenishes</strong> one bar instead (and also gives you a point)!</p>
+    
+    <div class="example-diagram">
+      <ExamplePowerBar remainingAttempts={9} />
+      <Arrow direction="down" />
+      <ExampleGuess codeWord="right" guess="right" />
+      <Arrow direction="down" />
+      <ExamplePowerBar remainingAttempts={10} score={1} />
+    </div>
+
+    
     <h2>When you guess a code word, it's replaced with a new one.</h2>
     
     <p>However, your last five guesses stay on the board as clues.</p>
@@ -56,28 +76,8 @@
         <ExampleGuess codeWord="along" guess="aloof" />
         <ExampleGuess codeWord="along" guess="spoof" />
         <ExampleGuess codeWord="along" guess="proof" />
-        <p class="small-print">…now guess a new code word!</p>
+        <p class="small-print">…now guess a new code word</p>
       </div>
-    </div>
-
-
-    <h2>Watch your life meter</h2>
-    <p>Every guess drains one bar…</p>
-
-    <div class="example-meter-holder">
-      <ExampleGuess codeWord="chore" guess="wrong" />
-      <ExamplePowerBar remainingAttempts={10} />
-      <Arrow direction="down" />
-      <ExamplePowerBar remainingAttempts={9} />
-    </div>
-      
-    <p>…but a correct guess <strong>replenishes</strong> one bar instead!</p>
-    
-    <div class="example-meter-holder">
-      <ExampleGuess codeWord="right" guess="right" />
-      <ExamplePowerBar remainingAttempts={8} />
-      <Arrow direction="down" />
-      <ExamplePowerBar remainingAttempts={9} score={1} />
     </div>
 
 
@@ -88,14 +88,11 @@
       </span>
     </h2>
 
-   
-
     <p>
-   
-      A lifeline solves the current code word&mdash;but at the cost of <strong>permanently</strong> shrinking your life meter!
+      A lifeline solves the current code word&mdash;but at the cost of <strong>permanently</strong> shrinking your life gauge!
     </p>
 
-    <div class="example-meter-holder">
+    <div class="example-diagram">
       <ExamplePowerBar remainingAttempts={4} score={9} />
       <Arrow direction="down" />
       <ExamplePowerBar remainingAttempts={5} score={10} maxRemainingAttempts={9} />
@@ -104,11 +101,12 @@
     
 
     <h2>Try to score a Hondo</h2>
-    <ul>
-      <li>The primary goal of Hondo is: stay alive as long as possible, to get your score as high as possible!</li>
-      <li>The secondary goal: try score a Hondo! The game ends when you get to 100.</li>
-      <li>The final goal: score a Hondo in as few guesses as possible!</li>
-    </ul>
+    <p>There are three goals to Hondo:</p>
+    <ol>
+      <li>Get your score as high as possible;</li>
+      <li>Eventually, score a Hondo (the game ends when you get to 100);</li>
+      <li>Once you can score a Hondo, try to do so in as few guesses as possible!</li>
+    </ol>
 
     <hr>
 
@@ -117,17 +115,23 @@
     <ul>
       <li><strong>Watch the keyboard.</strong> It will remind you which letters aren't currently on the board.</li>
       <li><strong>Use lifelines wisely!</strong> Try to deploy them when they might save you the most guesses.</li>
-      <li>If you don't have a good guess (and don't want to use a lifeline), try a word that will add as many new letters to the board as possible.</li>
-      <li>If you can, try to keep every vowel on the board at all times.</li>
+      <li>Try to keep as many different letters on the board as possible at all times, especially vowels.</li>
       <li><strong>Be patient</strong>; haste is costly. Getting a high score requires careful thought, and a bit of luck.</li>
     </ul>
 
-    <a href="/">Back</a>
+    <a href="/" class="back-link">Back to game</a>
   </div>
 </div>
 
 
 <style lang="scss">
+  h1 {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: baseline;
+  }
+
   .directions {
     border: 2px solid var(--lightAccent);
     background: var(--paper); 
@@ -137,31 +141,39 @@
   }
 
   .directions__container {
-    width: 26rem;
+    width: 30rem;
     max-width: 100%;
     margin: 1rem auto;
   }
 
+
   li {
     margin-top: 0.5rem;
-    list-style-type: square;
-    
+
     &::marker {
       color: var(--secondary);
     }
+  }
+
+  ul li {
+    list-style-type: square;
   }
 
   p {
     margin: 0;
 
     &.small-print {
-      margin-bottom: 0;
+      margin: 0.5rem 0 0;
       font-size: 0.8rem;
     }
   }
 
   ul {
     padding-left: 1rem;
+  }
+
+  ol {
+    padding-left: 1.5rem;
   }
 
   h2 {
@@ -199,13 +211,16 @@
     }
   }
 
-  .example-meter-holder {
+  .example-diagram {
     display: grid;
-    width: max-content;
+    width: 100%;
     max-width: 100%;
     grid-template-columns: 100%;
     gap: 0.5rem;
     margin-top: 1rem;
+    padding: 2rem 1.5rem;
+    border: 2px solid var(--lighterAccent);
+    border-radius: 0.5rem;
 
     + p {
       margin-top: 2rem;
@@ -216,5 +231,12 @@
     margin: 2rem 0;
     border: 0;
     border-bottom: 1px solid var(--secondary);
+  }
+
+  .back-link {
+    font-size: 1rem;
+    margin-top: 2rem;
+    display: inline-block;
+    color: var(--darkBlue);
   }
 </style>

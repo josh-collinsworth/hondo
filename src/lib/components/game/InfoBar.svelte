@@ -21,7 +21,7 @@ const useLifeline = (): void => {
   let confirmation = false
 
   if (!hasAcknowledgedLifeline) {
-    confirmation = confirm(`Permanently reduces your maximum attempts to solve the current code word. Use a lifeline?\n\n(This warning won't show again once used.)`)
+    confirmation = confirm(`Permanently reduces life gauge to solve the current code word. Use a lifeline?\n\n(This warning won't show again once used.)`)
 
     if (confirmation) {
       save('acknowledgedLifeline', true)

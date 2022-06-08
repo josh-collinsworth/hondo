@@ -125,21 +125,28 @@
         }
       }
 
-      &[disabled] {
-        color: var(--lightAccent);
-      }
-
       + button {
         margin-left: 2px;
       }
 
       &.used {
+        color: var(--mediumAccent);
         background: var(--lighterAccent);
       }
 
       &.included {
+        color: var(--ink);
         background: var(--secondary);
       }
+    }
+
+
+    :global(button svg) {
+      stroke: var(--ink);
+    }
+
+    :global(button[disabled] svg) {
+      stroke: var(--lightAccent);
     }
   }
 </style>

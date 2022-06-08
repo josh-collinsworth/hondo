@@ -33,8 +33,13 @@
 </div>
 
 
-<style>
+<style lang="scss">
   .example-power-bar {
-    font-size: 1.1rem;
+    margin: 0 auto;
+    font-size: calc(0.6rem + 3vw);
+
+    @media (min-width: 32rem) {
+      font-size: 1.25rem;
+    }
   }
 </style>
