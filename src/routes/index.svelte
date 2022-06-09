@@ -1,5 +1,6 @@
 <script lang="ts" context="module">
-  import { chooseRandomCodeWord, load } from '$lib/js/helpers'
+  import { load } from '$lib/js/helpers'
+  import { chooseRandomCodeWord } from '$lib/js/mutations'
   import { dev } from '$app/env'
 
   chooseRandomCodeWord(dev)
@@ -11,7 +12,7 @@
   import { flip } from 'svelte/animate'
   import { onMount } from 'svelte'
 
-  import { previousGuesses, currentGuess, gameIsOver, remainingAttempts, codeWord, runningScore, maxRemainingAttempts, usedAttempts } from '$lib/js/state'
+  import { previousGuesses, currentGuess, gameIsOver, remainingAttempts, codeWord, runningScore, maxRemainingAttempts, usedAttempts, remainingLifelineCooldowns } from '$lib/js/state'
   import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES } from '$lib/js/constants';
 
   import GuessContent from '$lib/components/game/GuessContent.svelte'
@@ -21,7 +22,7 @@
   import GameOverModal from '$lib/components/game/GameOverModal.svelte'
   import Loader from '$lib/components/game/Loader.svelte'
   import Toast from '$lib/components/game/Toast.svelte'
-import AccessibleStatus from '$lib/components/game/AccessibleStatus.svelte'
+  import AccessibleStatus from '$lib/components/game/AccessibleStatus.svelte'
 
   let isLoading = true
   const defaultTransition = { duration: 600, easing: quintOut, y: -80 }
@@ -39,9 +40,12 @@ import AccessibleStatus from '$lib/components/game/AccessibleStatus.svelte'
 
         // Avoids a loading error with states that didn't save this. Can be removed later.
         let attemptsCap = gameData.maxRemainingAttempts ? gameData.maxRemainingAttempts : STARTING_GUESSES
+        let remainingCooldown = gameData.remainingLifelineCooldowns ? gameData.remainingLifelineCooldowns : []
         
         maxRemainingAttempts.set(attemptsCap)
         previousGuesses.set(previousGuessesToSet)
+        remainingLifelineCooldowns.set(remainingCooldown)
+
         codeWord.set(window.atob(gameData.codeWord))
         remainingAttempts.set(gameData.remainingAttempts)
         runningScore.set(gameData.runningScore)

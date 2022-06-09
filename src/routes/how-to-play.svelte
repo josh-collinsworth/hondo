@@ -89,7 +89,7 @@
     </h2>
 
     <p>
-      A lifeline solves the current code word&mdash;but at the cost of <strong>permanently</strong> shrinking your life gauge!
+      A lifeline solves the current code word&mdash;but at the cost of temporarily shrinking your life gauge!
     </p>
 
     <div class="example-diagram">
@@ -97,6 +97,8 @@
       <Arrow direction="down" />
       <ExamplePowerBar remainingAttempts={5} score={10} maxRemainingAttempts={9} />
     </div>
+
+    <p>Your life gauge will slowly recover after using a lifeline. (<strong>Note:</strong> you can use multiple lifelines at once, for a greater penalty.)</p>
       
     
 
@@ -223,7 +225,7 @@
     border-radius: 0.5rem;
 
     + p {
-      margin-top: 2rem;
+      margin-top: 1rem;
     }
   }
 

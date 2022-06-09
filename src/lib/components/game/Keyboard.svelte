@@ -1,13 +1,10 @@
 <script lang="ts">
-  import { isSingleLetter, handleNewGuess } from '$lib/js/helpers'
   import { currentGuess, previousGuesses, codeWord } from '$lib/js/state'
+  import { handleNewGuess } from '$lib/js/mutations'
+  import { isSingleLetter } from '$lib/js/helpers'
 
   import Arrow from '../icon/Arrow.svelte'
   import Checkmark from '../icon/Checkmark.svelte'
-
-  import { tick } from 'svelte'
-  import { get } from 'svelte/store'
-  import { dev } from '$app/env'
 
   const keys = [
     ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -66,9 +63,15 @@
           {#if isSingleLetter(key)}
             {key}
           {:else if isDeleteKey(key)}
-            <Arrow />
+            <span aria-hidden="true">
+              <Arrow />
+            </span>
+            <span class="sr">Delete</span>
           {:else if isEnterKey(key)}
-            <Checkmark />
+            <span aria-hidden="true">
+              <Checkmark />
+            </span>
+            <span class="sr">Enter</span>
           {/if}
         </button>
       {/each}

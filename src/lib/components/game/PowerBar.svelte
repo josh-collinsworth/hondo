@@ -1,10 +1,16 @@
 <script lang="ts">
-  import { STARTING_GUESSES } from '$lib/js/constants'
-  import { remainingAttempts, maxRemainingAttempts, runningScore } from '$lib/js/state'
+  import { remainingAttempts, maxRemainingAttempts, runningScore, remainingLifelineCooldowns } from '$lib/js/state'
+  import { LIFELINE_DURATION, STARTING_GUESSES } from '$lib/js/constants'
   import { fly } from 'svelte/transition'
 
+  let scoreDigits: string[]
   $: scoreDigits = String($runningScore).padStart(3).split('')
-  $: calculatedDividerOffset = `${$maxRemainingAttempts}em`
+  
+  let totalLifelineCooldown: number
+  $: totalLifelineCooldown = $remainingLifelineCooldowns[0] || 0
+  
+  let calculatedDividerOffset: string 
+  $: calculatedDividerOffset = `${$maxRemainingAttempts + ((LIFELINE_DURATION - totalLifelineCooldown) / LIFELINE_DURATION)}em`
 </script>
 
 <div
