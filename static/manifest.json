@@ -1,0 +1,18 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "hondo.netlify",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "hondo.netlify",
+  "start_url": "/",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "images/256x256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    }
+  ]
+}
