@@ -28,7 +28,7 @@ export const startNewGame = (): void => {
 }
 
 export const chooseRandomCodeWord = (log = false): void => {
-  const newWord = codeWords[Math.floor(Math.random() * codeWords.length)]
+  const newWord: string = codeWords[Math.floor(Math.random() * codeWords.length)]
   if (newWord !== get(codeWord) && !get(previousGuesses).includes(newWord)) {
     codeWord.set(newWord)
     if (log) {
@@ -98,12 +98,16 @@ export const setNewScores = (): void => {
 
 export const useLifeline = (): void => {
   // Is +1 because the first one will immediately be reduced by 1 as part of setNewScores()
-  maxRemainingAttempts.set(get(maxRemainingAttempts) - 1 -get(remainingLifelineCooldowns).length)
-  const cooldownToAdd = get(remainingLifelineCooldowns).length ? LIFELINE_DURATION : LIFELINE_DURATION + 1
-  currentGuess.set(get(codeWord))
+  const durationOfCooldownsToAdd: number = get(remainingLifelineCooldowns).length ? LIFELINE_DURATION : LIFELINE_DURATION + 1
+  const quantityOfCooldownsToAdd: number = get(remainingLifelineCooldowns).length + 1
+  const cooldownsToAdd: number[] = Array.from({ length: quantityOfCooldownsToAdd }).fill(durationOfCooldownsToAdd)
+
+  maxRemainingAttempts.set(get(maxRemainingAttempts) - quantityOfCooldownsToAdd)
   remainingLifelineCooldowns.set(
-    [...get(remainingLifelineCooldowns), cooldownToAdd]
+    [...get(remainingLifelineCooldowns), ...cooldownsToAdd]
   ) 
+
+  currentGuess.set(get(codeWord))
   handleNewGuess()
 }
 
@@ -140,7 +144,7 @@ export const handleCorrectGuess = (): void => {
 
 export const saveGameData = (): void => {
   // This prevents saving more guesses than it should, since there's a slight delay between entry of the word and updating of the game board
-  const guessesToSave = get(previousGuesses)
+  const guessesToSave: string[] = get(previousGuesses)
   if (guessesToSave.length > 5) guessesToSave.slice(1, 6)
 
   save(GAME_DATA_STORAGE_KEY, {
