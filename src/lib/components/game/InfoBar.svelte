@@ -9,7 +9,7 @@
   
   <PowerBar />
   <a href="how-to-play" class="info-button instructions">
-    <span class="sr">How to play</span>
+    <span class="sr">How to play Hondo</span>
     ?
   </a>
 </div>

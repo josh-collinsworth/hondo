@@ -14,7 +14,7 @@
 
 <div class="directions">
   <div class="directions__container">
-    <h1>How to play 
+    <h1>How to play Hondo
       <a href="/" class="back-link">Back</a>
     </h1>
 
@@ -39,8 +39,8 @@
     </p>
 
 
-    <h2>Watch your score and life gauge</h2>
-    <p>Every attempt drains one bar from the gauge…</p>
+    <h2>Watch your score &amp; life gauge</h2>
+    <p>Every incorrect guess drains the gauge…</p>
 
     <div class="example-diagram">
       <ExamplePowerBar remainingAttempts={10} />
@@ -50,7 +50,7 @@
       <ExamplePowerBar remainingAttempts={9} />
     </div>
       
-    <p>…but a correct guess <strong>replenishes</strong> one bar instead (and also gives you a point)!</p>
+    <p>…but a correct guess gives you a point, and <strong>replenishes</strong> the gauge instead!</p>
     
     <div class="example-diagram">
       <ExamplePowerBar remainingAttempts={9} />
@@ -63,7 +63,7 @@
     
     <h2>When you guess a code word, it's replaced with a new one.</h2>
     
-    <p>However, your last five guesses stay on the board as clues.</p>
+    <p>However, your five most recent guesses stay on the board as clues.</p>
           
     <div class="example-guess-holder">
       <div>
@@ -87,6 +87,8 @@
       </div>
     </div>
 
+    <p>Use these clues to string together as many successful guesses as you can.</p>
+
 
     <h2 class="display-flex" style="align-items: center;">
       Stuck? Use a lifeline
@@ -109,25 +111,15 @@
       <ExamplePowerBar remainingAttempts={5} score={10} maxRemainingAttempts={9} />
     </div>
     
-    <p>You can still use a new lifeline while still recovering from an old one, but the penalty will be more severe.</p>
-
-    <div class="example-diagram">
-      <ExamplePowerBar remainingAttempts={5} score={10} maxRemainingAttempts={9} />
-      <Arrow direction="down" />
-      <span aria-hidden="true" class="info-button lifeline" style="margin: auto;">
-        <Lifeline />
-      </span>
-      <Arrow direction="down" />
-      <ExamplePowerBar remainingAttempts={6} score={11} maxRemainingAttempts={7} />
-    </div>
+    <p>Your gauge will slowly recover. You can use more lifelines during recovery, but the penalty will be increasingly severe.</p>
 
 
-    <h2>Try to score a Hondo</h2>
+    <h2>The goal</h2>
     <p>There are three goals to Hondo:</p>
     <ol>
-      <li>Get your score as high as possible;</li>
-      <li>Eventually, score a Hondo (the game ends when you get to 100);</li>
-      <li>Once you can score a Hondo, try to do so in as few guesses as possible!</li>
+      <li>First, get your score as high as possible;</li>
+      <li>If you can, try to score a Hondo (the game ends at 100);</li>
+      <li>Finally, try to score a Hondo in as few guesses as possible!</li>
     </ol>
 
     <hr>
@@ -137,7 +129,7 @@
     <ul>
       <li><strong>Watch the keyboard.</strong> It will remind you which letters aren't currently on the board.</li>
       <li><strong>Use lifelines wisely!</strong> Try to deploy them when they might save you the most guesses.</li>
-      <li>Try to keep as many different letters on the board as possible at all times, especially vowels.</li>
+      <li>Try to keep common letters, especially vowels, on the board at all times.</li>
       <li><strong>Be patient</strong>; haste is costly. Getting a high score requires careful thought, and a bit of luck.</li>
     </ul>
 
@@ -156,7 +148,7 @@
 
   .directions {
     background: var(--paper); 
-    padding: 1rem;
+    padding: 1rem 1rem 3rem;
     font-size: 1rem;
   }
 
@@ -210,7 +202,7 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    margin-top: 2rem;
+    margin: 2rem 0 1rem;
     border: 2px solid var(--lighterAccent);
     border-radius: 0.5rem;
     padding: 2rem 1.5rem;

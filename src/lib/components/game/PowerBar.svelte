@@ -11,6 +11,17 @@
   
   let calculatedDividerOffset: string 
   $: calculatedDividerOffset = `${$maxRemainingAttempts + ((LIFELINE_DURATION - totalLifelineCooldown) / LIFELINE_DURATION)}em`
+
+  let replenishSwitch = false
+  let lastMaxCountValue = $maxRemainingAttempts
+
+  maxRemainingAttempts.subscribe(value => {
+    const newValue = value
+    if (newValue > lastMaxCountValue) {
+      replenishSwitch = !replenishSwitch
+    }
+    lastMaxCountValue = newValue
+  })
 </script>
 
 <div
@@ -18,6 +29,9 @@
   aria-label={`${$remainingAttempts} of ${$maxRemainingAttempts} attempts left.`}
   role="status" aria-live="polite"
 >
+  {#key replenishSwitch}
+    <div class="power-bar__flash" style="width: calc({calculatedDividerOffset})" />
+  {/key}
   <div
     class="power-bar__divider"
     style="

@@ -138,6 +138,7 @@ export const handleCorrectGuess = (): void => {
     chooseRandomCodeWord(dev)
     await tick()
     isLoadingNewWord.set(false)
+    discoveredCodeWord.set('')
     saveGameData()
   }, 1000)
 }

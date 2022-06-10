@@ -1,7 +1,7 @@
 <script lang="ts">
   import { PREVIOUS_HIGH_SCORES_STORAGE_KEY } from '$lib/js/constants'
 
-  import { load, numberFormatter } from '$lib/js/helpers'
+  import { load, floatFormatter } from '$lib/js/helpers'
   import { runningScore, codeWord, usedAttempts } from '$lib/js/state'
   import { startNewGame } from '$lib/js/mutations'
   
@@ -33,7 +33,7 @@
 
     highScore = Math.max(...previousHighScores.map(score => score[0]))
     fastestScore = Math.min(...previousHighScores.filter(score => score[0] === highScore).map(score => score[1]))
-    averageScore = numberFormatter.format(
+    averageScore = floatFormatter.format(
       previousHighScores.map(score => score[0]).reduce((p, c) => p + c, 0) / previousHighScores.length
     )
   })
