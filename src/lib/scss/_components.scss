@@ -48,6 +48,11 @@
 .bottom-container {
   min-height: 6em;
   position: relative;
+
+  .postgame-summary {
+    font-size: 1rem;
+    text-align: center;
+  }
 }
 
 .guess-box {
@@ -232,6 +237,7 @@
 
   &:disabled {
     fill: var(--lighterAccent);
+    border-color: var(--lighterAccent);
   }
 }
 

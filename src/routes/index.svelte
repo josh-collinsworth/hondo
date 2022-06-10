@@ -1,13 +1,13 @@
 <script lang="ts" context="module">
   import { load } from '$lib/js/helpers'
-  import { chooseRandomCodeWord } from '$lib/js/mutations'
+  import { chooseRandomCodeWord, startNewGame } from '$lib/js/mutations'
   import { dev } from '$app/env'
 
   chooseRandomCodeWord(dev)
 </script>
 
 <script lang="ts">
-  import { previousGuesses, currentGuess, gameIsOver, remainingAttempts, codeWord, runningScore, maxRemainingAttempts, usedAttempts, remainingLifelineCooldowns } from '$lib/js/state'
+  import { previousGuesses, currentGuess, gameIsOver, remainingAttempts, codeWord, runningScore, maxRemainingAttempts, usedAttempts, remainingLifelineCooldowns, shownModal } from '$lib/js/state'
   import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES } from '$lib/js/constants';
   import { stringContainsLetter } from '$lib/js/helpers'
   
@@ -20,7 +20,6 @@
   import Confetti from '$lib/components/game/Confetti.svelte'
   import Keyboard from '$lib/components/game/Keyboard.svelte'
   import InfoBar from '$lib/components/game/InfoBar.svelte'
-  import GameOverModal from '$lib/components/game/GameOverModal.svelte'
   import Loader from '$lib/components/game/Loader.svelte'
   import Toast from '$lib/components/game/Toast.svelte'
   import AccessibleStatus from '$lib/components/game/AccessibleStatus.svelte'
@@ -110,10 +109,15 @@
 
     <div class="bottom-container">
       <Toast />
-      {#if $gameIsOver}
-        <GameOverModal />
-      {:else}
+      {#if !$gameIsOver}
         <Keyboard />
+      {:else if !$shownModal}
+        <div class="postgame-summary">
+          <h2>You scored {$runningScore}</h2>
+          <button on:click={startNewGame}>
+            Play again
+          </button>
+        </div>
       {/if}
     </div>
   </div>

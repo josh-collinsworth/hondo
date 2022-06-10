@@ -21,6 +21,12 @@ import { dev } from '$app/env'
 import { SvelteComponent, tick } from 'svelte'
 import { get } from 'svelte/store'
 
+
+export const startNewGame = (): void => {
+  save(GAME_DATA_STORAGE_KEY, null)
+  window.location.reload()
+}
+
 export const chooseRandomCodeWord = (log = false): void => {
   const newWord = codeWords[Math.floor(Math.random() * codeWords.length)]
   if (newWord !== get(codeWord) && !get(previousGuesses).includes(newWord)) {

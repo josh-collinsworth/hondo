@@ -1,5 +1,7 @@
 <script lang="ts">
+  import { gameIsOver } from '$lib/js/state'
   import { showModal } from '$lib/js/mutations'
+
   import LifelineConfirmationModal from '../modals/LifelineConfirmationModal.svelte'
 
   import Lifeline from '../icon/Lifeline.svelte'
@@ -11,7 +13,7 @@
 
 <!-- For debugging -->
 <!-- <div style="position: fixed; top: 0; left: 0;">{$remainingLifelineCooldowns}</div> -->
-<button class="info-button lifeline" on:click={confirm}>
+<button class="info-button lifeline" on:click={confirm} disabled={$gameIsOver}>
   <Lifeline />
   <span class="sr">Use a lifeline</span>
 </button>

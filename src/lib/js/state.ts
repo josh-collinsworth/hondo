@@ -1,8 +1,10 @@
-import type { SvelteComponent } from 'svelte'
 import { writable } from 'svelte/store'
 import { STARTING_GUESSES } from './constants'
 
-export type Modal = 'LifelineConfirmation' | null
+import type LifelineConfirmationModal__SvelteComponent_ from '/components/modals/LifelineConfirmationModal.svelte'
+import type GameOverModal__SvelteComponent_ from '/components/modals/GameOverModal.svelte'
+
+export type Modal = LifelineConfirmationModal__SvelteComponent_|GameOverModal__SvelteComponent_|null
 
 export const currentGuess = writable<string>('')
 export const codeWord =  writable<string>('')

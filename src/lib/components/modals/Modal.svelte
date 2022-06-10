@@ -1,39 +1,36 @@
 <script lang="ts">
-  import { shownModal } from '$lib/js/state' 
-  import LifelineConfirmationModal from './LifelineConfirmationModal.svelte'
+  import { gameIsOver } from '$lib/js/state'
+  import { closeModal } from '$lib/js/mutations'
+  import { fly, fade } from 'svelte/transition'
+  import { quadIn, quadOut, } from 'svelte/easing'
+  import { onMount } from 'svelte'
+
+  const duration = 240
+  let modalCard: HTMLDivElement
+
+  const listenForClose = (e: KeyboardEvent): void => {
+    if (e.key === 'Escape') {
+      closeModal()
+    }
+  }
+
+  onMount(() => {
+    modalCard.focus()
+  })
 </script>
 
 
-<div id="modal-background">
-  <div id=modal-card>
-    {#if $shownModal === 'LifelineConfirmation'}
-      <LifelineConfirmationModal />
-    {/if}
+<svelte:window on:keyup={listenForClose} />
+
+
+<div id="modal-background" transition:fade={{ duration }} on:click|self={closeModal}>
+  <div
+    id=modal-card
+    tabindex="-1"
+    bind:this={modalCard}
+    in:fly={{y: 36, duration, easing: quadOut}}
+    out:fly={{y: -36, duration, easing: quadIn}}
+  >
+    <slot />
   </div>
 </div>
-
-
-<style lang="scss">
-  #modal-background {
-    width: 100vw;
-    min-height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 10;
-    background: rgba(var(--inkRGB), 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  #modal-card {
-    border: 2px solid var(--lightAccent);
-    background: var(--paper);
-    width: 100%;
-    height: 10rem;
-    max-width: 32rem;
-    margin: 1rem;
-    padding: 1rem;
-  }
-</style>

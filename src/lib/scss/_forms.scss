@@ -1,0 +1,15 @@
+button, input {
+  font: inherit;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--lightAccent);
+  border-radius: 0.5rem;
+  background: var(--lightestAccent);
+
+  &.confirm {
+    background: var(--primary);
+    border-color: var(--primary);
+  }
+}

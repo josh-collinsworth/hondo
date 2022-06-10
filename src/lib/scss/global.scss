@@ -1,6 +1,8 @@
 @use 'vars';
 @use 'helpers';
+@use 'forms';
 @use 'components';
+@use 'modals';
 @use 'animation';
 
 @font-face {
@@ -31,10 +33,6 @@ body {
   color: var(--ink);
   line-height: 1.4;
   font-family: 'Ridley Grotesk', sans-serif;
-}
-
-button, input {
-  font: inherit;
 }
 
 h1, h2, h3, h4, h5, h6 {
