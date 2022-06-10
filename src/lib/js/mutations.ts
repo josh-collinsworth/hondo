@@ -58,13 +58,13 @@ export const setNewScores = (): void => {
   // Update the lifelines and see if we need to restore max attempts
   if (get(remainingLifelineCooldowns).length) {
     const previousCooldowns = get(remainingLifelineCooldowns)
-    const updatedCooldowns = previousCooldowns.map(i => i -1).filter(i => i > 0)
+    previousCooldowns[0] -= 1
 
-    if (updatedCooldowns.length < previousCooldowns.length) {
+    if (previousCooldowns[0] === 0) {
+      previousCooldowns.shift()     
       maxRemainingAttempts.set(get(maxRemainingAttempts) + 1)
     }
-
-    remainingLifelineCooldowns.set([...updatedCooldowns])
+    remainingLifelineCooldowns.set(previousCooldowns)
   }
 
   // We do the above before this so score can be added if a new max attempt was just unlocked
@@ -125,6 +125,7 @@ export const saveGameData = (): void => {
     gameIsOver: get(gameIsOver),
     maxRemainingAttempts: get(maxRemainingAttempts),
     usedAttempts: get(usedAttempts),
+    remainingLifelineCooldowns: get(remainingLifelineCooldowns),
   })
 }
 

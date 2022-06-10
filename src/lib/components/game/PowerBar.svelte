@@ -58,7 +58,10 @@
       style="grid-template-columns: repeat({STARTING_GUESSES}, 1fr);"
     >
       {#each Array.from({ length: STARTING_GUESSES }) as _, i}
-        <div class="power-bar__grid-box" />
+        <div
+          class="power-bar__grid-box" 
+          class:disabled={i + 1 > $maxRemainingAttempts}
+        />
       {/each}
     </div>
   </div>

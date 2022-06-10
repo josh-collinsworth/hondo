@@ -9,7 +9,9 @@
 
 <div class="directions">
   <div class="directions__container">
-    <h1>How to play <a href="/" class="back-link">Back</a></h1>
+    <h1>How to play 
+      <a href="/" class="back-link">Back</a>
+    </h1>
 
     <h2>Guess the code word</h2>
 
@@ -89,18 +91,21 @@
     </h2>
 
     <p>
-      A lifeline solves the current code word&mdash;but at the cost of temporarily shrinking your life gauge!
+      A lifeline solves the current code word&mdash;but at the cost of temporarily shrinking your life gauge.
     </p>
 
     <div class="example-diagram">
       <ExamplePowerBar remainingAttempts={4} score={9} />
       <Arrow direction="down" />
+      <span aria-hidden="true" class="info-button lifeline" style="margin: auto;">
+        <Lifeline />
+      </span>
+      <Arrow direction="down" />
       <ExamplePowerBar remainingAttempts={5} score={10} maxRemainingAttempts={9} />
     </div>
 
-    <p>Your life gauge will slowly recover after using a lifeline. (<strong>Note:</strong> you can use multiple lifelines at once, for a greater penalty.)</p>
-      
-    
+    <p>You can use multiple lifelines at once, but the penalty will last longer.</p>
+
 
     <h2>Try to score a Hondo</h2>
     <p>There are three goals to Hondo:</p>
@@ -180,7 +185,7 @@
 
   h2 {
     font-size: 1.5rem;
-    margin-top: 3.5rem;
+    margin-top: 4rem;
 
     &:first-child {
       margin-top: 0;
@@ -190,7 +195,7 @@
   .example-guess-holder {
     display: flex;
     flex-wrap: wrap;
-    justify-content: start;
+    justify-content: space-between;
     align-items: center;
     width: min-content;
     margin-top: 2rem;
@@ -230,9 +235,13 @@
   }
 
   hr {
-    margin: 2rem 0;
+    margin: 4rem 0;
     border: 0;
     border-bottom: 1px solid var(--secondary);
+
+    + * {
+      margin-top: 0;
+    }
   }
 
   .back-link {

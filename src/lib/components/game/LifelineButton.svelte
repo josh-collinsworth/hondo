@@ -19,14 +19,20 @@
     }
 
     if (hasAcknowledgedLifeline || confirmation) {
+      // Is +1 because it will immediately be reduced by 1 as part of setNewScores()
+      const cooldownToAdd = $remainingLifelineCooldowns.length ? LIFELINE_DURATION : LIFELINE_DURATION + 1
       currentGuess.set($codeWord)
       maxRemainingAttempts.set($maxRemainingAttempts - 1)
-      remainingLifelineCooldowns.set([...$remainingLifelineCooldowns, LIFELINE_DURATION + 1]) // Is +1 because it will immediately be reduced by 1 as part of setNewScores()
+      remainingLifelineCooldowns.set(
+        [...$remainingLifelineCooldowns, cooldownToAdd]
+      ) 
       handleNewGuess()
     }
   }
 </script>
 
+<!-- For debugging -->
+<!-- <div style="position: fixed; top: 0; left: 0;">{$remainingLifelineCooldowns}</div> -->
 <button class="info-button lifeline" on:click={useLifeline}>
   <Lifeline />
   <span class="sr">Use a lifeline</span>
