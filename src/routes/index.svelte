@@ -7,14 +7,15 @@
 </script>
 
 <script lang="ts">
+  import { previousGuesses, currentGuess, gameIsOver, remainingAttempts, codeWord, runningScore, maxRemainingAttempts, usedAttempts, remainingLifelineCooldowns } from '$lib/js/state'
+  import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES } from '$lib/js/constants';
+  import { stringContainsLetter } from '$lib/js/helpers'
+  
   import { quintOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
   import { flip } from 'svelte/animate'
   import { onMount } from 'svelte'
-
-  import { previousGuesses, currentGuess, gameIsOver, remainingAttempts, codeWord, runningScore, maxRemainingAttempts, usedAttempts, remainingLifelineCooldowns } from '$lib/js/state'
-  import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES } from '$lib/js/constants';
-
+  
   import GuessContent from '$lib/components/game/GuessContent.svelte'
   import Confetti from '$lib/components/game/Confetti.svelte'
   import Keyboard from '$lib/components/game/Keyboard.svelte'
@@ -84,6 +85,7 @@
             in:fly|local="{{  ...defaultTransition, y: 80 }}"
             animate:flip|local={{ duration: 400 }}
             aria-label={guess}
+            aria-hidden={!stringContainsLetter(guess)}
           >
             <GuessContent {guess} {row} />
           </li>

@@ -16,6 +16,8 @@
 <script lang="ts">
   import '$lib/scss/global.scss'
   import { fade } from 'svelte/transition'
+  import { shownModal } from '$lib/js/state'
+  import Modal from '$lib/components/modals/Modal.svelte'
 
   export let path: string
 </script>
@@ -29,9 +31,13 @@
 </svelte:head>
 
 
+{#if $shownModal}
+  <Modal />
+{/if}
+
 <main>
   {#key path}
-    <div in:fade={{ delay: 350, duration: 300 }} out:fade={{ duration: 300 }}>
+    <div in:fade={{ delay: 600, duration: 200 }} out:fade={{ duration: 200 }}>
       <slot />
     </div>
   {/key}

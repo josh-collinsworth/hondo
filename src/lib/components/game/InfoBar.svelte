@@ -9,6 +9,7 @@
   
   <PowerBar />
   <a href="how-to-play" class="info-button instructions">
+    <span class="sr">How to play</span>
     ?
   </a>
 </div>

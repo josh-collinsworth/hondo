@@ -10,14 +10,15 @@ import {
   discoveredCodeWord,
   remainingLifelineCooldowns,
   message,
-  isLoadingNewWord
+  isLoadingNewWord,
+  shownModal
 } from './state'
-import { PREVIOUS_HIGH_SCORES_STORAGE_KEY, GAME_DATA_STORAGE_KEY } from './constants'
+import { PREVIOUS_HIGH_SCORES_STORAGE_KEY, GAME_DATA_STORAGE_KEY, LIFELINE_DURATION } from './constants'
 import { isValidGuess, load, save } from './helpers'
 import { codeWords } from './codeWords'
 
 import { dev } from '$app/env'
-import { tick } from 'svelte'
+import { SvelteComponent, tick } from 'svelte'
 import { get } from 'svelte/store'
 
 export const chooseRandomCodeWord = (log = false): void => {
@@ -87,6 +88,25 @@ export const setNewScores = (): void => {
     registerHighScore()
     localStorage.removeItem(GAME_DATA_STORAGE_KEY)
   }
+}
+
+export const useLifeline = (): void => {
+  // Is +1 because the first one will immediately be reduced by 1 as part of setNewScores()
+  maxRemainingAttempts.set(get(maxRemainingAttempts) - 1 -get(remainingLifelineCooldowns).length)
+  const cooldownToAdd = get(remainingLifelineCooldowns).length ? LIFELINE_DURATION : LIFELINE_DURATION + 1
+  currentGuess.set(get(codeWord))
+  remainingLifelineCooldowns.set(
+    [...get(remainingLifelineCooldowns), cooldownToAdd]
+  ) 
+  handleNewGuess()
+}
+
+export const showModal = (modal: SvelteComponent): void => {
+  shownModal.set(modal)
+}
+
+export const closeModal = (): void => {
+  shownModal.set(null)
 }
 
 export const registerHighScore = (): void => {

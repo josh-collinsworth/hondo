@@ -109,7 +109,7 @@
       margin: 0;
       padding: 0;
       touch-action: manipulation;
-      transition: background .6s ease-in-out;
+      transition: background .6s cubic-bezier(0.645, 0.045, 0.355, 1);
       color: var(--ink);
       line-height: 1;
 

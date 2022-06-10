@@ -7,6 +7,11 @@
 </script>
 
 
+<svelte:head>
+  <title>How to play Hondo</title>
+</svelte:head>
+
+
 <div class="directions">
   <div class="directions__container">
     <h1>How to play 
@@ -103,8 +108,18 @@
       <Arrow direction="down" />
       <ExamplePowerBar remainingAttempts={5} score={10} maxRemainingAttempts={9} />
     </div>
+    
+    <p>You can still use a new lifeline while still recovering from an old one, but the penalty will be more severe.</p>
 
-    <p>You can use multiple lifelines at once, but the penalty will last longer.</p>
+    <div class="example-diagram">
+      <ExamplePowerBar remainingAttempts={5} score={10} maxRemainingAttempts={9} />
+      <Arrow direction="down" />
+      <span aria-hidden="true" class="info-button lifeline" style="margin: auto;">
+        <Lifeline />
+      </span>
+      <Arrow direction="down" />
+      <ExamplePowerBar remainingAttempts={6} score={11} maxRemainingAttempts={7} />
+    </div>
 
 
     <h2>Try to score a Hondo</h2>
@@ -140,11 +155,9 @@
   }
 
   .directions {
-    border: 2px solid var(--lightAccent);
     background: var(--paper); 
     padding: 1rem;
     font-size: 1rem;
-    overflow: auto;
   }
 
   .directions__container {
@@ -195,20 +208,22 @@
   .example-guess-holder {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    width: min-content;
     margin-top: 2rem;
-
+    border: 2px solid var(--lighterAccent);
+    border-radius: 0.5rem;
+    padding: 2rem 1.5rem;
+    
     .arrow {
       padding: 1rem;
       text-align: center;
       width: 100%;
       transform: rotate(-90deg);
     }
-
+    
     @media (min-width: 32rem) {
-      width: auto;
+      justify-content: space-between;
 
       .arrow { 
         width: auto;

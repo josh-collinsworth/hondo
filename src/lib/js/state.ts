@@ -1,16 +1,20 @@
+import type { SvelteComponent } from 'svelte'
 import { writable } from 'svelte/store'
 import { STARTING_GUESSES } from './constants'
 
-export const currentGuess = writable('')
-export const codeWord =  writable('')
-export const previousGuesses = writable(['',' ','  ','   ','    '])
-export const remainingAttempts = writable(STARTING_GUESSES)
-export const discoveredCodeWord = writable('')
-export const isLoadingNewWord = writable(false)
-export const runningScore = writable(0)
-export const usedAttempts = writable(0)
-export const gameIsOver = writable(false)
-export const maxRemainingAttempts = writable(STARTING_GUESSES)
-export const message = writable('')
-export const darkMode = writable(false)
-export const remainingLifelineCooldowns = writable([])
+export type Modal = 'LifelineConfirmation' | null
+
+export const currentGuess = writable<string>('')
+export const codeWord =  writable<string>('')
+export const previousGuesses = writable<string[]>(['',' ','  ','   ','    '])
+export const remainingAttempts = writable<number>(STARTING_GUESSES)
+export const discoveredCodeWord = writable<string>('')
+export const isLoadingNewWord = writable<boolean>(false)
+export const runningScore = writable<number>(0)
+export const usedAttempts = writable<number>(0)
+export const gameIsOver = writable<boolean>(false)
+export const maxRemainingAttempts = writable<number>(STARTING_GUESSES)
+export const message = writable<string>('')
+export const darkMode = writable<boolean>(false)
+export const remainingLifelineCooldowns = writable<number[]>([])
+export const shownModal = writable<Modal>(null)
