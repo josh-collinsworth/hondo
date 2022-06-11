@@ -8,7 +8,7 @@
   "scope": "/",
   "short_name": "Hondo",
   "start_url": "/",
-  "theme_color": "#ff6a13",
+  "theme_color": "#7ba7bc",
   "icons": [
     {
       "src": "images/256x256.png",
