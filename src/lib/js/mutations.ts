@@ -143,11 +143,11 @@ export const handleCorrectGuess = (): void => {
     saveGameData()
     setTimeout(async () => {
       codeWord.set('')
-      setTimeout(async () => {
+      await tick()
+      setTimeout(() => {
         discoveredCodeWord.set('')
         chooseRandomCodeWord(dev)
         saveGameData()
-        await tick()
       }, 750)
     }, 750)
     // await tick()
