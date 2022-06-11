@@ -107,6 +107,10 @@
   border-bottom: 2px solid var(--mediumAccent);
 }
 
+.power-bar-container--outer {
+  position: relative;
+}
+
 .power-bar-container {
   font-size: 4vw;
   width: calc(var(--scoreWidth) + 10em + 8px);
@@ -120,41 +124,6 @@
   border-radius: 2rem;
   height: calc(var(--powerBarHeight) + 4px);
   will-change: transform;
-  
-  .power-bar__flash {
-    content: '';
-    position: absolute;
-    height: calc(100% - 4px);
-    width: calc(10em + 2px);
-    // width: 100%;
-    left: calc(var(--scoreWidth) + 6px);
-    top: 2px;
-    // left: 0;
-    z-index: 3;
-    background: var(--lightBlue);
-    transform: scaleX(0);
-    transform-origin: left;
-    animation: zoom 1.6s cubic-bezier(0.86, 0, 0.07, 1);
-    opacity: 1;
-
-    @keyframes zoom {
-      0% {
-        transform: scaleX(0);
-        transform-origin: left;
-      }
-      50% {
-        transform: scaleX(1);
-        transform-origin: left;
-      }
-      50.01% {
-        transform-origin: right;
-      }
-      100% {
-        transform: scaleX(0);
-        transform-origin: right;
-      }
-    }
-  }
 
   @media (min-width: 22rem) {
     font-size: 5vw;

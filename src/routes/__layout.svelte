@@ -33,9 +33,10 @@
 
 <svelte:head>
   <title>Hondo</title>
-  <meta name="description" content="Hondo - guess 100 words">
+  <meta name="description" content="Hondo - a game in 100 words or fewer">
   <meta name="author" content="Josh Collinsworth">
   <link rel="manifest" href="manifest.json" />
+  <meta property="og:image" content="https://playhondo.com/images/share-image.png" />
 </svelte:head>
 
 

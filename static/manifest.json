@@ -1,18 +1,29 @@
 {
-  "background_color": "#ffffff",
+  "background_color": "#f7f8fa",
+  "description": "A game in 100 words or less. Use logic, lifelines, and luck to guess 100 code words in a row.",
   "dir": "ltr",
   "display": "standalone",
-  "name": "hondo.netlify",
-  "orientation": "any",
+  "name": "Hondo",
+  "orientation": "portrait",
   "scope": "/",
-  "short_name": "hondo.netlify",
+  "short_name": "Hondo",
   "start_url": "/",
-  "theme_color": "#ffffff",
+  "theme_color": "#ff6a13",
   "icons": [
     {
       "src": "images/256x256.png",
       "type": "image/png",
       "sizes": "256x256"
+    },
+    {
+      "src": "images/512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "/images/icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512"
     }
   ]
 }
