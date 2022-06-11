@@ -25,7 +25,7 @@
     gap: 10px;
     margin-bottom: 1rem;
     position: relative;
-    z-index: 2;
+    z-index: 5;
   }
 
   .instructions {

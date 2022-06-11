@@ -147,7 +147,6 @@
   }
 
   .directions {
-    background: var(--paper); 
     padding: 1rem 1rem 3rem;
     font-size: 1rem;
   }

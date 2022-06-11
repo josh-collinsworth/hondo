@@ -34,43 +34,39 @@
   }
 </script>
 
-{#key $codeWord}
-  {#each {length: 5} as _, i (i)}
-    <div
-      class:loading={$isLoadingNewWord}
-      class="guess-box {highlightArray[i]}"
-      in:fly="{{ 
-        ...defaultTransition,
-        delay: $isLoadingNewWord 
-          ? (700 + (row * 50) + ((i +1) * 40))
-          : (i + 1) * 40
-      }}"
-      out:fly="{{
-        ...defaultTransition, y: -70,
-        delay: $isLoadingNewWord
-          ?  0
-          : (i + 1) * 30
-      }}"
-      animate:flip={{ duration: 500 }}
-    >
-      <!-- The letter is repeated twice because VoiceOver doesn't read the letter and the status together otherwise -->
-      <span aria-hidden="true">
-        {guess[i]
-          ? $previousGuesses[row][i]
-          : ''}
-      </span>
-      <span class="sr">
-        {guess[i]
-          ? $previousGuesses[row][i]
-          : ''}
-        {#if highlightArray[i] === 'exact'}
-          In position
-        {:else if highlightArray[i] === 'partial'}
-          Out of position
-        {:else}
-          Not in word
-        {/if}
-      </span>
-    </div>
-  {/each}
-{/key}
+
+{#each {length: 5} as _, i (i)}
+  <div
+    class="guess-box {highlightArray[i]}"
+    in:fly="{{ 
+      ...defaultTransition,
+      delay: (i + 1) * 40
+    }}"
+    out:fly="{{
+      ...defaultTransition, y: -70,
+      delay: (i + 1) * 30
+    }}"
+    animate:flip={{ duration: 500 }}
+  >
+    <div class="guess-box__background guess-box__background--partial" style="transition-delay: {(((row * 2) + (i * 2)) / 60)}s" />
+    <div class="guess-box__background guess-box__background--exact" style="transition-delay: {(((row * 2) + (i * 2)) / 60)}s" />
+    <!-- The letter is repeated twice because VoiceOver doesn't read the letter and the status together otherwise -->
+    <span aria-hidden="true" style="transition-delay: {(((row * 2) + (i * 2)) / 60) + 0.1}s">
+      {guess[i]
+        ? $previousGuesses[row][i]
+        : ''}
+    </span>
+    <span class="sr">
+      {guess[i]
+        ? $previousGuesses[row][i]
+        : ''}
+      {#if highlightArray[i] === 'exact'}
+        In position
+      {:else if highlightArray[i] === 'partial'}
+        Out of position
+      {:else}
+        Not in word
+      {/if}
+    </span>
+  </div>
+{/each}

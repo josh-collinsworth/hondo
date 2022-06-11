@@ -56,7 +56,6 @@
 }
 
 .guess-box {
-  border: 2px solid var(--lighterAccent);
   border-radius: 0.5em;
   overflow: hidden;
   text-transform: uppercase;
@@ -65,28 +64,24 @@
   justify-content: center;
   line-height: 1;
   position: relative;
-  transform: rotateY(0);
   height: var(--boxSize);
+  background: transparent;
+
+  &::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    border: 2px solid var(--lighterAccent);
+    position: absolute;
+    z-index: -2;
+  }
 
   span {
     display: block;
     line-height: 0.9;
     height: 0.85em;
     overflow: visible;
-  }
-}
-
-.partial {
-  border: 0;
-  background: var(--lightBlue);
-}
-
-.exact {
-  border: 0;
-  background: var(--primary);
-
-  span {
-    display: block;
 
     &::after {
       content: '';
@@ -95,16 +90,56 @@
       bottom: 15%;
       border-bottom: 2px solid currentColor;
       left: calc(50% - 0.375ch);
+      transition: transform 0.55s cubic-bezier(0.86, 0, 0.07, 1);
+      transform: translateY(2em);
     }
   }
 }
 
-.current-guess-box {
-  @extend .guess-box;
+.guess-box__background {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  transform-origin: bottom;
+  transform: scaleY(0);
+  transition: all 0.55s cubic-bezier(0.86, 0, 0.07, 1);
+  background: var(--secondary);
+  z-index: -1;
 
-  border: 0;
-  border-radius: 0;
+  &--partial {
+    background: var(--secondary);
+  }
+  
+  &--exact {
+    background: var(--primary);
+  }
+}
+
+.partial .guess-box__background--partial,
+.exact .guess-box__background--exact {
+  transform: scaleY(1);
+}
+
+
+.exact {
+  span::after {
+    // border-color: currentColor;
+    transform: translateY(0);
+    transition-delay: inherit;
+  }
+}
+
+.current-guess-box {
   border-bottom: 2px solid var(--mediumAccent);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  position: relative;
+  height: var(--boxSize);
 }
 
 .power-bar-container--outer {

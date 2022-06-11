@@ -41,7 +41,7 @@
 
 <main inert={$shownModal} id="#main" tabindex="-1">
   {#key path}
-    <div in:fade={{ delay: 600, duration: 200 }} out:fade={{ duration: 200 }}>
+    <div in:fade={{ delay: 700, duration: 350 }} out:fade={{ duration: 350 }}>
       <slot />
     </div>
   {/key}

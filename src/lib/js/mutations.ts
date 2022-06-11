@@ -49,6 +49,11 @@ export const handleNewGuess = (): void => {
       if (!get(gameIsOver)) {
         saveGameData()
       }
+    } else if (get(previousGuesses).includes(get(currentGuess)) && get(currentGuess) === get(codeWord)){
+      // This whole condition is here just to handle weird error states. Hopefully isn't needed in prod.
+      setToastMessage('Bad state detected. Reshuffling…')
+      handleCorrectGuess()
+      currentGuess.set('')
     } else {
       setToastMessage('Already guessed that word')
     }
@@ -133,14 +138,22 @@ export const registerHighScore = (): void => {
 
 export const handleCorrectGuess = (): void => {
   discoveredCodeWord.set(get(codeWord))
-  setTimeout(async () => {
-    isLoadingNewWord.set(true)
-    chooseRandomCodeWord(dev)
-    await tick()
-    isLoadingNewWord.set(false)
-    discoveredCodeWord.set('')
+  // setTimeout(async () => {
+    // isLoadingNewWord.set(true)
     saveGameData()
-  }, 1000)
+    setTimeout(async () => {
+      codeWord.set('')
+      setTimeout(async () => {
+        discoveredCodeWord.set('')
+        chooseRandomCodeWord(dev)
+        saveGameData()
+        await tick()
+      }, 650)
+    }, 750)
+    // await tick()
+    // isLoadingNewWord.set(false)
+    // discoveredCodeWord.set('')
+  // }, 700)
 }
 
 export const saveGameData = (): void => {

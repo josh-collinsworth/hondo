@@ -1,14 +1,13 @@
 <script lang="ts">
-  import { LIFELINE_DURATION } from '$lib/js/constants'
   import { useLifeline, closeModal } from '$lib/js/mutations'
-  import { maxRemainingAttempts, remainingAttempts, remainingLifelineCooldowns } from '$lib/js/state'
-  import { floatFormatter } from '$lib/js/helpers'
+  import { discoveredCodeWord, maxRemainingAttempts, remainingAttempts, remainingLifelineCooldowns } from '$lib/js/state'
 
   import Lifeline from '../icon/Lifeline.svelte'
 
   let cancelButton: HTMLButtonElement
 
   const useLifelineAndClose = (): void => {
+    if ($discoveredCodeWord) return
     useLifeline()
     closeModal()
   }

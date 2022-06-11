@@ -28,6 +28,8 @@
 <div class="example-guess">
   {#each guess as letter, i}
     <div class="guess-box {highlightArray[i]}">
+      <div class="guess-box__background guess-box__background--partial" />
+      <div class="guess-box__background guess-box__background--exact" />  
       <span>
         {letter}
       </span>

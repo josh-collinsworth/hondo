@@ -1,7 +1,8 @@
 <script lang="ts">
-  import { currentGuess, previousGuesses, codeWord } from '$lib/js/state'
+  import { currentGuess, previousGuesses, codeWord, discoveredCodeWord } from '$lib/js/state'
   import { handleNewGuess } from '$lib/js/mutations'
   import { isSingleLetter } from '$lib/js/helpers'
+  import { browser } from '$app/env'
 
   import Arrow from '../icon/Arrow.svelte'
   import Checkmark from '../icon/Checkmark.svelte'
@@ -15,9 +16,11 @@
   $: lettersOnTheBoard = Array.from(new Set($previousGuesses.flatMap(word => [...word])))
   $: disableEnterKey = $currentGuess.length < 5
   $: disableDeleteKey = !$currentGuess.length
+  $: disableKeyboard = $discoveredCodeWord
+  $: vibrationEnabled = browser && window.navigator && window.navigator.vibrate
 
   const handleKeyUp = (e: KeyboardEvent): void => {
-    if (!e.key) return
+    if (!e.key || disableKeyboard) return
     if (e.key === 'Backspace') {
       handlePress('-')
     } else if (e.key === 'Enter') {
@@ -42,6 +45,10 @@
     } else if (isEnterKey(key)) {
       handleNewGuess()
     }
+
+    if (vibrationEnabled) {
+      window.navigator.vibrate(10)
+    }
   }
 </script>
 
@@ -58,7 +65,7 @@
           data-key={key}
           class:used={lettersOnTheBoard.includes(key)}
           class:included={lettersOnTheBoard.includes(key) && $codeWord.includes(key)}
-          disabled={(isEnterKey(key) && disableEnterKey) || (isDeleteKey(key) && disableDeleteKey)}
+          disabled={disableKeyboard || (isEnterKey(key) && disableEnterKey) || (isDeleteKey(key) && disableDeleteKey)}
         >
           {#if isSingleLetter(key)}
             {key}
@@ -109,7 +116,7 @@
       margin: 0;
       padding: 0;
       touch-action: manipulation;
-      transition: background .6s cubic-bezier(0.645, 0.045, 0.355, 1);
+      transition: background .6s cubic-bezier(0.645, 0.045, 0.355, 1), color .6s cubic-bezier(0.645, 0.045, 0.355, 1);
       color: var(--ink);
       line-height: 1;
 
