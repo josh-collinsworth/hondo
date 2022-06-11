@@ -14,7 +14,7 @@
   }
 
   const listenForEnter = (e: KeyboardEvent): void => {
-    if (e.key === 'Enter' && e.target != cancelButton && lifelineCost < $remainingAttempts) {
+    if (e.key === 'Enter' && e.target != cancelButton && lifelineCost < $maxRemainingAttempts) {
       useLifelineAndClose()
     }
   }
