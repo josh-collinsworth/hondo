@@ -32,7 +32,7 @@
   </span>
 </h2>
 
-{#if lifelineCost < $remainingAttempts}
+{#if lifelineCost < $maxRemainingAttempts}
   <p>Solves the current code word, but temporarily reduces your max life.</p>
 
   <p>Pay <strong>{lifelineCost} bar{lifelineCost === 1 ? '' : 's'}</strong> to use a lifeline?</p>
