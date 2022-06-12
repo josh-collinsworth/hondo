@@ -103,9 +103,6 @@
   height: 100%;
   width: 100%;
   transform-origin: bottom;
-  transform: scaleY(0);
-  transition: all 0.55s cubic-bezier(0.86, 0, 0.07, 1);
-  background: var(--secondary);
   z-index: -1;
 
   &--partial {
@@ -117,17 +114,12 @@
   }
 }
 
-.partial .guess-box__background--partial,
-.exact .guess-box__background--exact {
-  transform: scaleY(1);
-}
-
 
 .exact {
   span::after {
     // border-color: currentColor;
     transform: translateY(0);
-    transition-delay: inherit;
+    transition-delay: 0.1s;
   }
 }
 

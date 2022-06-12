@@ -21,7 +21,6 @@
   import Keyboard from '$lib/components/game/Keyboard.svelte'
   import InfoBar from '$lib/components/game/InfoBar.svelte'
   import Loader from '$lib/components/game/Loader.svelte'
-  import Toast from '$lib/components/game/Toast.svelte'
   import AccessibleStatus from '$lib/components/game/AccessibleStatus.svelte'
 
   let isLoading = true
@@ -108,7 +107,6 @@
     <AccessibleStatus />
 
     <div class="bottom-container">
-      <Toast />
       {#if !$gameIsOver}
         <Keyboard />
       {:else if !$shownModal}

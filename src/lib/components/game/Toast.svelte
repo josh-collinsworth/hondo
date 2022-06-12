@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { message } from '$lib/js/state'
+  import { message, messageType } from '$lib/js/state'
   import { cubicOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
 
@@ -14,8 +14,12 @@
 
 
 {#if $message}
-  <div class="toast center-content display-flex" transition:fly={defaultTransition}>
-    <div class="toast-message sss">
+  <div
+    class="toast center-content display-flex {$messageType}"
+    in:fly={{ ...defaultTransition }}
+    out:fly={{ ...defaultTransition, y: -16}}
+  >
+    <div class="toast-message">
       {$message}
     </div>
   </div>
@@ -28,12 +32,25 @@
     font-size: 1rem;
     text-align: center;
     padding: 0.5rem 1rem;
-    background: var(--red);
-    z-index: 3;
+    z-index: 6;
     color: var(--paper);
-    border-radius: 0.2rem;
-    top: -3.5rem;
-    left: 1rem;
-    width: calc(100% - 2rem);
+    border-radius: 0.5rem;
+    top: 3em;
+    left: 0;
+    width: 100%;
+
+    &.warning {
+      background: var(--red);
+    }
+
+    &.notice {
+      background: var(--primary);
+    }
+
+    &.success {
+      color: var(--primary);
+      background: var(--paper);
+      border: 2px solid var(--primary);
+    }
   }
 </style>

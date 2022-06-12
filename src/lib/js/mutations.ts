@@ -1,3 +1,5 @@
+import type { ToastMessage } from './types'
+
 import {
   codeWord,
   previousGuesses,
@@ -10,8 +12,8 @@ import {
   discoveredCodeWord,
   remainingLifelineCooldowns,
   message,
-  isLoadingNewWord,
-  shownModal
+  shownModal,
+  messageType
 } from './state'
 import { PREVIOUS_HIGH_SCORES_STORAGE_KEY, GAME_DATA_STORAGE_KEY, LIFELINE_DURATION } from './constants'
 import { isValidGuess, load, save } from './helpers'
@@ -51,18 +53,18 @@ export const handleNewGuess = (): void => {
       }
     } else if (get(previousGuesses).includes(get(currentGuess)) && get(currentGuess) === get(codeWord)){
       // This whole condition is here just to handle weird error states. Hopefully isn't needed in prod.
-      setToastMessage('Bad state detected. Reshuffling…')
+      setToast({ message: 'Bad state detected. Reshuffling…', type: 'warning'})
       handleCorrectGuess()
       currentGuess.set('')
     } else {
-      setToastMessage('Already guessed that word')
+      setToast({ message: 'Already guessed that word', type: 'warning'})
     }
     //Prevents some buggy stuff from happening when loading the game
     if (get(previousGuesses).length > 5) {
       previousGuesses.set([...get(previousGuesses)].slice(1, get(previousGuesses).length))
     }
   } else if (get(currentGuess).length === 5) {
-    setToastMessage('Sorry, not in word list')
+    setToast({ message: 'Sorry, not in word list', type: 'warning'})
   }
 }
 
@@ -138,22 +140,13 @@ export const registerHighScore = (): void => {
 
 export const handleCorrectGuess = (): void => {
   discoveredCodeWord.set(get(codeWord))
-  // setTimeout(async () => {
-    // isLoadingNewWord.set(true)
+  saveGameData()
+  // setToast({ message: get(codeWord).toUpperCase(), type: 'success' })
+  setTimeout(async () => {
+    discoveredCodeWord.set('')
+    chooseRandomCodeWord(dev)
     saveGameData()
-    setTimeout(async () => {
-      codeWord.set('')
-      await tick()
-      setTimeout(() => {
-        discoveredCodeWord.set('')
-        chooseRandomCodeWord(dev)
-        saveGameData()
-      }, 750)
-    }, 750)
-    // await tick()
-    // isLoadingNewWord.set(false)
-    // discoveredCodeWord.set('')
-  // }, 700)
+  }, 1200)
 }
 
 export const saveGameData = (): void => {
@@ -173,8 +166,9 @@ export const saveGameData = (): void => {
   })
 }
 
-export const setToastMessage = async (msg: string): Promise<void> => {
+export const setToast = async (msg: ToastMessage = { message: '', type: 'warning' }): Promise<void> => {
   message.set('')
   await tick()
-  message.set(msg)
+  message.set(msg.message)
+  messageType.set(msg.type)
 }

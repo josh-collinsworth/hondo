@@ -1,10 +1,12 @@
 <script lang="ts">
   import PowerBar from './PowerBar.svelte'
   import LifelineButton from './LifelineButton.svelte'
+  import Toast from './Toast.svelte'
 </script>
 
 
 <div class="info-bar">
+  <Toast />
   <LifelineButton />
   
   <PowerBar />
