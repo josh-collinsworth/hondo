@@ -66,6 +66,7 @@
   position: relative;
   height: var(--boxSize);
   background: transparent;
+  will-change: transform;
 
   &::after {
     content: '';
@@ -104,6 +105,7 @@
   width: 100%;
   transform-origin: bottom;
   z-index: -1;
+  will-change: transform;
 
   &--partial {
     background: var(--secondary);
