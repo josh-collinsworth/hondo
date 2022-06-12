@@ -13,7 +13,8 @@ import {
   remainingLifelineCooldowns,
   message,
   shownModal,
-  messageType
+  messageType,
+  bonus
 } from './state'
 import { PREVIOUS_HIGH_SCORES_STORAGE_KEY, GAME_DATA_STORAGE_KEY, LIFELINE_DURATION } from './constants'
 import { isValidGuess, load, save } from './helpers'
@@ -83,11 +84,13 @@ export const setNewScores = (): void => {
 
   // We do the above before this so score can be added if a new max attempt was just unlocked
   if (get(currentGuess) === get(codeWord)) {
-    runningScore.set(get(runningScore) + 1)
+    runningScore.set(get(runningScore) + 1 + get(bonus))
     remainingAttempts.set(Math.min(get(maxRemainingAttempts), get(remainingAttempts) + 1))
+    bonus.set(2)
     handleCorrectGuess()
   } else {
     remainingAttempts.set(Math.min(get(remainingAttempts) - 1, get(maxRemainingAttempts)))
+    bonus.set(Math.max(get(bonus) - 1, 0))
   }
   // Update the count of total used guesses
   usedAttempts.set(get(usedAttempts) + 1)

@@ -31,7 +31,7 @@
       "sizes": "256x256"
     },
     {
-      "src": "512x512.png",
+      "src": "maskable.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any maskable"

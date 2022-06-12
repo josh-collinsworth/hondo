@@ -49,10 +49,6 @@
     margin: 0 auto 2px;
     width: max-content;
 
-    + p {
-      margin-top: 0.5em;
-    }
-
     .guess-box {
       font-size: 1.2rem;
       width: 2rem;

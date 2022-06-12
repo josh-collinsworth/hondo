@@ -51,8 +51,8 @@
     {#if highlightArray[i]}
       {#key highlightArray[i]}
         <div
-          in:slide={{ duration: 420, delay: ((15 - (row * 3)) + (i * 3)) * 20, easing: quintOut }}
-          out:slide={{ duration: 420, delay: ((15 - (row * 3)) + (i * 3)) * 20, easing: quintOut }}
+          in:slide={{ duration: 420, delay: ((10 - (row * 2)) + (i * 3)) * 24, easing: quintOut }}
+          out:slide={{ duration: 420, delay: ((10 - (row * 2)) + (i * 3)) * 24, easing: quintOut }}
           class="guess-box__background guess-box__background--{highlightArray[i]}"
         />
       {/key}

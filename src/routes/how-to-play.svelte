@@ -87,7 +87,7 @@
       </div>
     </div>
 
-    <p>Use these clues to string together as many successful guesses as you can.</p>
+    <p>Use these clues to string together as many successful guesses as you can. <strong>You get bonus points for guessing multiple code words in quick succession!</strong></p>
 
 
     <h2 class="display-flex" style="align-items: center;">
