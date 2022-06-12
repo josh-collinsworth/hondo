@@ -26,11 +26,6 @@
       "type": "image/png"
     },
     {
-      "src": "android-chrome-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
       "src": "256x256.png",
       "type": "image/png",
       "sizes": "256x256"
