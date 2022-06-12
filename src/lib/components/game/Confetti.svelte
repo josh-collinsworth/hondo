@@ -2,7 +2,8 @@
   import { randomIntegerInRange } from '$lib/js/helpers'
   import { discoveredCodeWord } from '$lib/js/state'
 
-  $: if ($discoveredCodeWord) {
+  // TODO: taking this out temporarily to gauge its performance impact
+  $: if ($discoveredCodeWord && false) {
     // confetti is loaded via CDN
     if (typeof confetti !== 'undefined') {
       confetti(Object.assign(

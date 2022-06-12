@@ -11,8 +11,8 @@ import {
   maxRemainingAttempts,
   discoveredCodeWord,
   remainingLifelineCooldowns,
-  message,
   shownModal,
+  message,
   messageType,
   bonus
 } from './state'
@@ -86,6 +86,7 @@ export const setNewScores = (): void => {
   if (get(currentGuess) === get(codeWord)) {
     runningScore.set(get(runningScore) + 1 + get(bonus))
     remainingAttempts.set(Math.min(get(maxRemainingAttempts), get(remainingAttempts) + 1))
+    setToast({ message: get(codeWord).toUpperCase() + ` +` + (1 + get(bonus)), type: 'success' })
     bonus.set(2)
     handleCorrectGuess()
   } else {
