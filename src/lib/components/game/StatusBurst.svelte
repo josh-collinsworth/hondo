@@ -20,11 +20,14 @@
   >
     <div class="status-burst__inner display-flex center-content">
       <h2>
+        {codeWordToShow}
+      </h2>
+      <p>
         {#if $pointsScoredForLastGuess > 1}
-          Bonus!
+          <strong>Bonus!</strong>
         {/if}
         +{$pointsScoredForLastGuess} 
-      </h2>
+      </p>
     </div>
   </div>
 {/if}
@@ -38,13 +41,12 @@
     align-items: flex-start;
     justify-content: center;
     padding-top: 5rem;
-
     top: 0;
     left: 0;
 
     .status-burst__inner {
       width: 100%;
-      background: rgba(var(--paperRGB), 0.9);
+      background: rgba(var(--paperRGB), 0.95);
       padding: 2rem;
       position: relative;
 
@@ -71,8 +73,8 @@
     }
 
     h2 {
-      font-size: 3rem;
-      // text-transform: uppercase;
+      font-size: 2.6rem;
+      text-transform: uppercase;
       font-weight: normal;
       width: 100%;
       text-align: center;
