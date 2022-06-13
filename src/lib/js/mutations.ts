@@ -84,10 +84,14 @@ export const setNewScores = (): void => {
 
   // We do the above before this so score can be added if a new max attempt was just unlocked
   if (get(currentGuess) === get(codeWord)) {
-    runningScore.set(get(runningScore) + 1 + get(bonus))
+    runningScore.set(Math.min(get(runningScore) + 1 + get(bonus), 100))
     remainingAttempts.set(Math.min(get(maxRemainingAttempts), get(remainingAttempts) + 1))
     setToast({ message: get(codeWord).toUpperCase() + ` +` + (1 + get(bonus)), type: 'success' })
-    bonus.set(2)
+    if (!get(bonus)) {
+      bonus.set(2)
+    } else {
+      bonus.set(get(bonus) + 1)
+    }
     handleCorrectGuess()
   } else {
     remainingAttempts.set(Math.min(get(remainingAttempts) - 1, get(maxRemainingAttempts)))
