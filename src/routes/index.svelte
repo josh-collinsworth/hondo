@@ -7,7 +7,7 @@
 </script>
 
 <script lang="ts">
-  import { previousGuesses, currentGuess, gameIsOver, remainingAttempts, codeWord, runningScore, maxRemainingAttempts, usedAttempts, remainingLifelineCooldowns, shownModal } from '$lib/js/state'
+  import { previousGuesses, currentGuess, gameIsOver, remainingAttempts, codeWord, runningScore, maxRemainingAttempts, usedAttempts, remainingLifelineCooldowns, shownModal, bonus, streak } from '$lib/js/state'
   import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES } from '$lib/js/constants';
   import { stringContainsLetter } from '$lib/js/helpers'
   
@@ -17,7 +17,6 @@
   import { onMount } from 'svelte'
   
   import GuessContent from '$lib/components/game/GuessContent.svelte'
-  import Confetti from '$lib/components/game/Confetti.svelte'
   import Keyboard from '$lib/components/game/Keyboard.svelte'
   import InfoBar from '$lib/components/game/InfoBar.svelte'
   import Loader from '$lib/components/game/Loader.svelte'
@@ -40,6 +39,8 @@
         // Avoids a loading error with states that didn't save this. Can be removed later.
         let attemptsCap = gameData.maxRemainingAttempts ? gameData.maxRemainingAttempts : STARTING_GUESSES
         let remainingCooldown = gameData.remainingLifelineCooldowns ? gameData.remainingLifelineCooldowns : []
+        let loadedBonus = gameData.bonus || 0
+        let loadedStreak = gameData.streak || 0
         
         maxRemainingAttempts.set(attemptsCap)
         previousGuesses.set(previousGuessesToSet)
@@ -50,6 +51,8 @@
         runningScore.set(gameData.runningScore)
         gameIsOver.set(gameData.gameIsOver)
         usedAttempts.set(gameData.usedAttempts)
+        bonus.set(loadedBonus)
+        streak.set(loadedStreak)
       }
     } 
     catch(e) {
@@ -68,9 +71,6 @@
   <div class="game-container">
     
     <InfoBar />
-    
-    <!-- TODO: should this be moved? It's just for fireworks -->
-    <Confetti />
 
     {#if isLoading}
       <Loader />

@@ -59,8 +59,9 @@
   border-radius: 0.5em;
   overflow: hidden;
   text-transform: uppercase;
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 100%;
+  align-items: end;
   justify-content: center;
   line-height: 1;
   position: relative;
@@ -78,49 +79,64 @@
     z-index: -2;
   }
 
-  span {
-    display: block;
-    line-height: 0.9;
-    height: 0.85em;
+  .guess-letter {
+    display: flex;
+    line-height: 1;
+    padding-top: 0.08em;
+    height: 100%;
     overflow: visible;
+    text-align: center;
+    grid-area: 1 / 1 / 2 / 2;
+    position: relative;
 
     &::after {
       content: '';
       width: 0.75ch;
       position: absolute;
-      bottom: 15%;
+      bottom: 0;
       border-bottom: 2px solid currentColor;
       left: calc(50% - 0.375ch);
       transition: transform 0.55s cubic-bezier(0.86, 0, 0.07, 1);
-      transform: translateY(2em);
+      transform: translateY(1em);
     }
   }
 }
 
 .guess-box__background {
-  position: absolute;
-  bottom: 0;
-  left: 0;
+  grid-area: 1 / 1 / 2 / 2;
   height: 100%;
   width: 100%;
   transform-origin: bottom;
-  z-index: -1;
   will-change: transform;
+  transform: scaleY(0);
+  transition: transform 0.42s cubic-bezier(0.23, 1, 0.320, 1);
+}
 
-  &--partial {
-    background: var(--secondary);
-  }
-  
-  &--exact {
-    background: var(--primary);
+.guess-box__background--partial {
+  background: var(--secondary);
+}
+
+.guess-box__background--exact {
+  background: var(--primary);
+}
+
+.partial .guess-box__background--partial,
+.exact .guess-box__background--exact {
+  transform: scaleY(1);
+}
+
+@for $row from 1 through 5 {
+  @for $col from 1 through 5 {
+    .guess:nth-of-type(#{$row}) .guess-box:nth-of-type(#{$col}) .guess-box__background {
+      transition-delay: ((10 - ($row * 2)) + ($col * 3)) * 0.03s;
+    }
   }
 }
 
 
 .exact {
-  span::after {
-    // border-color: currentColor;
-    transform: translateY(0);
+  .guess-letter::after {
+    transform: translateY(-0.25em);
     transition-delay: 0.1s;
   }
 }

@@ -14,7 +14,9 @@ import {
   shownModal,
   message,
   messageType,
-  bonus
+  bonus,
+  streak,
+  pointsScored
 } from './state'
 import { PREVIOUS_HIGH_SCORES_STORAGE_KEY, GAME_DATA_STORAGE_KEY, LIFELINE_DURATION } from './constants'
 import { isValidGuess, load, save } from './helpers'
@@ -84,18 +86,21 @@ export const setNewScores = (): void => {
 
   // We do the above before this so score can be added if a new max attempt was just unlocked
   if (get(currentGuess) === get(codeWord)) {
-    runningScore.set(Math.min(get(runningScore) + 1 + get(bonus), 100))
+    const tally = 1 + get(bonus) + get(streak)
+    runningScore.set(Math.min(get(runningScore) + tally, 100))
+    pointsScored.set(tally)
     remainingAttempts.set(Math.min(get(maxRemainingAttempts), get(remainingAttempts) + 1))
-    setToast({ message: get(codeWord).toUpperCase() + ` +` + (1 + get(bonus)), type: 'success' })
-    if (!get(bonus)) {
-      bonus.set(2)
+    bonus.set(2)
+    if (get(streak) || get(streak) === 0) {
+      streak.set(get(streak) + 1)
     } else {
-      bonus.set(get(bonus) + 1)
+      streak.set(0)
     }
     handleCorrectGuess()
   } else {
     remainingAttempts.set(Math.min(get(remainingAttempts) - 1, get(maxRemainingAttempts)))
     bonus.set(Math.max(get(bonus) - 1, 0))
+    streak.set(null)
   }
   // Update the count of total used guesses
   usedAttempts.set(get(usedAttempts) + 1)
@@ -149,7 +154,6 @@ export const registerHighScore = (): void => {
 export const handleCorrectGuess = (): void => {
   discoveredCodeWord.set(get(codeWord))
   saveGameData()
-  // setToast({ message: get(codeWord).toUpperCase(), type: 'success' })
   setTimeout(async () => {
     discoveredCodeWord.set('')
     chooseRandomCodeWord(dev)
@@ -171,6 +175,8 @@ export const saveGameData = (): void => {
     maxRemainingAttempts: get(maxRemainingAttempts),
     usedAttempts: get(usedAttempts),
     remainingLifelineCooldowns: get(remainingLifelineCooldowns),
+    streak: get(streak),
+    bonus: get(bonus),
   })
 }
 

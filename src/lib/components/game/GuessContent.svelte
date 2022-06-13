@@ -1,6 +1,6 @@
 <script lang="ts">
   import { quintOut } from 'svelte/easing'
-  import { fly, slide } from 'svelte/transition'
+  import { fly } from 'svelte/transition'
   import { flip } from 'svelte/animate'
   import { previousGuesses, codeWord } from '$lib/js/state'
 
@@ -48,22 +48,15 @@
     }}"
     animate:flip={{ duration: 500 }}
   >
-    {#if highlightArray[i]}
-      {#key highlightArray[i]}
-        <div
-          in:slide={{ duration: 420, delay: ((10 - (row * 2)) + (i * 3)) * 24, easing: quintOut }}
-          out:slide={{ duration: 420, delay: ((10 - (row * 2)) + (i * 3)) * 24, easing: quintOut }}
-          class="guess-box__background guess-box__background--{highlightArray[i]}"
-        />
-      {/key}
-    {/if}
+    <div class="guess-box__background guess-box__background--partial" />
+    <div class="guess-box__background guess-box__background--exact" />
     <!-- The letter is repeated twice because VoiceOver doesn't read the letter and the status together otherwise -->
-    <span aria-hidden="true" style="transition-delay: {(((row * 2) + (i * 2)) / 60) + 0.1}s">
+    <div class="guess-letter display-flex center-content" aria-hidden="true">
       {guess[i]
         ? $previousGuesses[row][i]
         : ''}
-    </span>
-    <span class="sr">
+    </div>
+    <div class="sr">
       {guess[i]
         ? $previousGuesses[row][i]
         : ''}
@@ -74,6 +67,6 @@
       {:else}
         Not in word
       {/if}
-    </span>
+    </div>
   </div>
 {/each}

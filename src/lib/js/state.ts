@@ -18,4 +18,7 @@ export const messageType = writable<ToastMessage>({ message: '' })
 export const darkMode = writable<boolean>(false)
 export const remainingLifelineCooldowns = writable<number[]>([])
 export const shownModal = writable<Modal>(null)
+
 export const bonus = writable<number>(0)
+export const streak = writable<number|null>(null)
+export const pointsScored = writable<number>(0)

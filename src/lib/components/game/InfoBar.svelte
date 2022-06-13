@@ -2,13 +2,14 @@
   import PowerBar from './PowerBar.svelte'
   import LifelineButton from './LifelineButton.svelte'
   import Toast from './Toast.svelte'
+import StatusBurst from './StatusBurst.svelte';
 </script>
 
 
 <div class="info-bar">
+  <StatusBurst />
   <Toast />
   <LifelineButton />
-  
   <PowerBar />
   <a href="how-to-play" class="info-button instructions">
     <span class="sr">How to play Hondo</span>

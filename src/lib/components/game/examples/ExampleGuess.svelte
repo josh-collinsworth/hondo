@@ -28,14 +28,11 @@
 <div class="example-guess">
   {#each guess as letter, i}
     <div class="guess-box {highlightArray[i]}">
-      {#if highlightArray[i]}
-        <div class="guess-box__background guess-box__background--{highlightArray[i]}" />  
-      {:else}
-        <div class="guess-box__background" />
-      {/if}
-      <span>
+      <div class="guess-box__background guess-box__background--partial" />
+      <div class="guess-box__background guess-box__background--exact" />  
+      <div class="guess-letter display-flex center-content">
         {letter}
-      </span>
+      </div>
     </div>
   {/each}
 </div>

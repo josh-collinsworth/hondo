@@ -38,6 +38,33 @@
       The code word ends with <strong>T</strong>.
     </p>
 
+    
+    <h2>When you guess the code word, the game continues with a new one</h2>
+    
+    <p>However, your five most recent guesses stay on the board as clues.</p>
+          
+    <div class="example-guess-holder">
+      <div>
+        <ExampleGuess codeWord="proof" guess="knife" />
+        <ExampleGuess codeWord="proof" guess="foggy" />
+        <ExampleGuess codeWord="proof" guess="aloof" />
+        <ExampleGuess codeWord="proof" guess="spoof" />
+        <ExampleGuess codeWord="proof" guess="proof" />
+        <p class="small-print">Guess one code word…</p>
+      </div>
+      <div class="arrow">
+        <Arrow />
+      </div>
+      <div>
+        <ExampleGuess codeWord="along" guess="knife" />
+        <ExampleGuess codeWord="along" guess="foggy" />
+        <ExampleGuess codeWord="along" guess="aloof" />
+        <ExampleGuess codeWord="along" guess="spoof" />
+        <ExampleGuess codeWord="along" guess="proof" />
+        <p class="small-print">…guess the next.</p>
+      </div>
+    </div>
+
 
     <h2>Watch your score &amp; life gauge</h2>
     <p>Every incorrect guess drains the gauge…</p>
@@ -60,34 +87,10 @@
       <ExamplePowerBar remainingAttempts={10} score={1} />
     </div>
 
-    
-    <h2>When you guess a code word, it's replaced with a new one.</h2>
-    
-    <p>However, your five most recent guesses stay on the board as clues.</p>
-          
-    <div class="example-guess-holder">
-      <div>
-        <ExampleGuess codeWord="proof" guess="knife" />
-        <ExampleGuess codeWord="proof" guess="foggy" />
-        <ExampleGuess codeWord="proof" guess="aloof" />
-        <ExampleGuess codeWord="proof" guess="spoof" />
-        <ExampleGuess codeWord="proof" guess="proof" />
-        <p class="small-print">Got the word <strong>proof</strong>…</p>
-      </div>
-      <div class="arrow">
-        <Arrow />
-      </div>
-      <div>
-        <ExampleGuess codeWord="along" guess="knife" />
-        <ExampleGuess codeWord="along" guess="foggy" />
-        <ExampleGuess codeWord="along" guess="aloof" />
-        <ExampleGuess codeWord="along" guess="spoof" />
-        <ExampleGuess codeWord="along" guess="proof" />
-        <p class="small-print">…now guess a new code word</p>
-      </div>
-    </div>
 
-    <p>Use these clues to string together as many successful guesses as you can. <strong>You get bonus points for guessing multiple code words in quick succession!</strong></p>
+    <h2>Bonus points</h2>
+
+    <p>You'll get bonus points if you guess a new code word within two guesses. You'll get even <strong>more</strong> bonus points if you can string together multiple correct guesses!</p>
 
 
     <h2 class="display-flex" style="align-items: center;">
@@ -98,7 +101,7 @@
     </h2>
 
     <p>
-      A lifeline solves the current code word&mdash;but at the cost of temporarily shrinking your life gauge.
+      A lifeline solves the current code word for you&mdash;but at the cost of temporarily shrinking your life gauge.
     </p>
 
     <div class="example-diagram">
@@ -111,16 +114,20 @@
       <ExamplePowerBar remainingAttempts={5} score={10} maxRemainingAttempts={9} />
     </div>
     
-    <p>Your gauge will slowly recover. You can use more lifelines during recovery, but the penalty will be increasingly severe.</p>
+    <p>Your gauge will slowly recover. You can use more lifelines during recovery, but the penalty is increasingly severe.</p>
 
 
     <h2>The goal</h2>
-    <p>There are three goals to Hondo:</p>
+    <p>The game ends when either:</p>
     <ol>
-      <li>First, get your score as high as possible;</li>
-      <li>If you can, try to score a Hondo (the game ends at 100);</li>
-      <li>Finally, try to score a Hondo in as few guesses as possible!</li>
+      <li>
+        Your lifeline is empty; or
+      </li>
+      <li>
+        You've scored a Hondo (100).
+      </li>
     </ol>
+    <p>Get your score as high as possible, as fast as possible!</p>
 
     <hr>
 
@@ -128,9 +135,9 @@
   
     <ul>
       <li><strong>Watch the keyboard.</strong> It will remind you which letters aren't currently on the board.</li>
-      <li><strong>Use lifelines wisely!</strong> Try to deploy them when they might save you the most guesses.</li>
+      <li><strong>Use lifelines wisely.</strong> They can save you guesses, get you out of a jam, <strong>or</strong> help keep a streak alive for extra bonus points!</li>
       <li>Try to keep common letters, especially vowels, on the board at all times.</li>
-      <li><strong>Be patient</strong>; haste is costly. Getting a high score requires careful thought, and a bit of luck.</li>
+      <li><strong>Be patient</strong>; haste is costly. Getting a great score requires logic, lifelines, and luck.</li>
     </ul>
 
     <a href="/" class="back-link">Back to game</a>
