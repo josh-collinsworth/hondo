@@ -50,7 +50,7 @@
         <ExampleGuess codeWord="proof" guess="aloof" />
         <ExampleGuess codeWord="proof" guess="spoof" />
         <ExampleGuess codeWord="proof" guess="proof" />
-        <p class="small-print">Guess one code word…</p>
+        <p class="small-print">Got one code word (proof)</p>
       </div>
       <div class="arrow">
         <Arrow />
@@ -61,7 +61,7 @@
         <ExampleGuess codeWord="along" guess="aloof" />
         <ExampleGuess codeWord="along" guess="spoof" />
         <ExampleGuess codeWord="along" guess="proof" />
-        <p class="small-print">…guess the next.</p>
+        <p class="small-print">Now guess the next.</p>
       </div>
     </div>
 
@@ -90,8 +90,59 @@
 
     <h2>Bonus points</h2>
 
-    <p>You'll get bonus points if you guess a new code word within two guesses. You'll get even <strong>more</strong> bonus points if you can string together multiple correct guesses!</p>
+    <p>You'll get a bonus point if you guess a new code word within two attempts of solving the last one.</p> 
+    
+    <div class="example-diagram">
+      <div class="display-flex center-content position-relative width-max-content margin-auto">
+        <ExampleGuess codeWord="snout" guess="snout" />
+        <div class="example-score">
+          +1
+        </div>
+      </div>
+      <Arrow direction="down" />
+      <div class="display-flex center-content position-relative width-max-content margin-auto">
+        <ExampleGuess codeWord="thank" guess="train" />
+      </div>
+      <Arrow direction="down" />
+      <div class="display-flex center-content position-relative width-max-content margin-auto">
+        <ExampleGuess codeWord="thank" guess="thank" />
+        <div class="example-score">
+          +2
+        </div>
+      </div>
+    </div>
 
+    <p>You'll get an <strong>extra</strong> bonus point for every word in a consecutive streak of three or more!</p>
+
+    <div class="example-diagram">
+      <div class="display-flex center-content position-relative width-max-content margin-auto">
+        <ExampleGuess codeWord="store" guess="store" />
+        <div class="example-score">
+          +1
+        </div>
+      </div>
+      <Arrow direction="down" />
+      <div class="display-flex center-content position-relative width-max-content margin-auto">
+        <ExampleGuess codeWord="other" guess="other" />
+        <div class="example-score">
+          +2
+        </div>
+      </div>
+      <Arrow direction="down" />
+      <div class="display-flex center-content position-relative width-max-content margin-auto">
+        <ExampleGuess codeWord="reign" guess="reign" />
+        <div class="example-score">
+          +3
+        </div>
+      </div>
+      <Arrow direction="down" />
+      <div class="display-flex center-content position-relative width-max-content margin-auto">
+        <ExampleGuess codeWord="plays" guess="plays" />
+        <div class="example-score">
+          +4
+        </div>
+      </div>
+    </div>
 
     <h2 class="display-flex" style="align-items: center;">
       Stuck? Use a lifeline
@@ -134,10 +185,10 @@
     <h2>Hints and tips</h2>
   
     <ul>
-      <li><strong>Watch the keyboard.</strong> It will remind you which letters aren't currently on the board.</li>
-      <li><strong>Use lifelines wisely.</strong> They can save you guesses, get you out of a jam, <strong>or</strong> help keep a streak alive for extra bonus points!</li>
+      <li><strong>Watch the keyboard.</strong> It shows which letters aren't currently on the board, which can be a big hint.</li>
+      <li><strong>Use lifelines wisely.</strong> They can save guesses, get you out of a jam, <strong>or</strong> keep a streak alive for extra bonus points!</li>
       <li>Try to keep common letters, especially vowels, on the board at all times.</li>
-      <li><strong>Be patient</strong>; haste is costly. Getting a great score requires logic, lifelines, and luck.</li>
+      <li><strong>Be patient</strong>; haste is costly. Getting a high score requires logic, lifelines, and luck.</li>
     </ul>
 
     <a href="/" class="back-link">Back to game</a>
@@ -180,6 +231,10 @@
   p {
     margin: 0;
 
+    + p {
+      margin-top: 1rem;
+    }
+
     &.small-print {
       margin: 0.5rem 0 0;
       font-size: 0.8rem;
@@ -196,7 +251,7 @@
 
   h2 {
     font-size: 1.5rem;
-    margin-top: 4rem;
+    margin: 5rem 0 1rem;
 
     &:first-child {
       margin-top: 0;
@@ -243,7 +298,7 @@
     border-radius: 0.5rem;
 
     + p {
-      margin-top: 1rem;
+      margin-top: 2rem;
     }
   }
 
@@ -262,5 +317,11 @@
     margin-top: 2rem;
     display: inline-block;
     color: var(--darkBlue);
+  }
+
+  .example-score {
+    position: absolute;
+    right: -2em;
+    font-weight: bold;
   }
 </style>

@@ -7,7 +7,7 @@
 </script>
 
 <script lang="ts">
-  import { previousGuesses, currentGuess, gameIsOver, remainingAttempts, codeWord, runningScore, maxRemainingAttempts, usedAttempts, remainingLifelineCooldowns, shownModal, bonus, streak } from '$lib/js/state'
+  import { previousGuesses, currentGuess, gameIsOver, remainingAttempts, codeWord, runningScore, maxRemainingAttempts, usedAttempts, remainingLifelineCooldowns, shownModal, bonusWindow, streak } from '$lib/js/state'
   import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES } from '$lib/js/constants';
   import { stringContainsLetter } from '$lib/js/helpers'
   
@@ -30,16 +30,12 @@
       const gameData = load(GAME_DATA_STORAGE_KEY)
         
       if (gameData) {
-        //Prevents weird bugs where more than five guesses come back ¯\_(ツ)_/¯
         let previousGuessesToSet = gameData.previousGuesses
-        if (previousGuessesToSet.length > 5) {
-          previousGuessesToSet = previousGuessesToSet.slice(1, 6)
-        }
 
         // Avoids a loading error with states that didn't save this. Can be removed later.
         let attemptsCap = gameData.maxRemainingAttempts ? gameData.maxRemainingAttempts : STARTING_GUESSES
         let remainingCooldown = gameData.remainingLifelineCooldowns ? gameData.remainingLifelineCooldowns : []
-        let loadedBonus = gameData.bonus || 0
+        let loadedBonus = gameData.bonusWindow || 0
         let loadedStreak = gameData.streak || 0
         
         maxRemainingAttempts.set(attemptsCap)
@@ -51,7 +47,7 @@
         runningScore.set(gameData.runningScore)
         gameIsOver.set(gameData.gameIsOver)
         usedAttempts.set(gameData.usedAttempts)
-        bonus.set(loadedBonus)
+        bonusWindow.set(loadedBonus)
         streak.set(loadedStreak)
       }
     } 
@@ -79,7 +75,7 @@
         {#each $previousGuesses as guess, row (guess)}
           <li
             class="guess"
-            out:fly|local="{defaultTransition}"
+            out:fly|local="{{ ...defaultTransition }}"
             in:fly|local="{{  ...defaultTransition, y: 80 }}"
             animate:flip|local={{ duration: 400 }}
             aria-label={guess}
@@ -90,7 +86,7 @@
         {/each}
         <li 
           class="guess current-guess"
-          out:fly|local="{defaultTransition}"
+          out:fly|local="{{ ...defaultTransition }}"
           in:fly|local="{{ ...defaultTransition, y: 80 }}"
         >
           {#each {length: 5} as _, col}

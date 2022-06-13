@@ -14,9 +14,9 @@ import {
   shownModal,
   message,
   messageType,
-  bonus,
+  bonusWindow,
   streak,
-  pointsScored
+  pointsScoredForLastGuess
 } from './state'
 import { PREVIOUS_HIGH_SCORES_STORAGE_KEY, GAME_DATA_STORAGE_KEY, LIFELINE_DURATION } from './constants'
 import { isValidGuess, load, save } from './helpers'
@@ -48,7 +48,9 @@ export const chooseRandomCodeWord = (log = false): void => {
 export const handleNewGuess = (): void => {
   if (isValidGuess(get(currentGuess))) {
     if (!get(previousGuesses).includes(get(currentGuess))) {
-      previousGuesses.set([...get(previousGuesses), get(currentGuess)])
+      const previousFour = [...get(previousGuesses)]
+      previousFour.shift()
+      previousGuesses.set([...previousFour, get(currentGuess)])
 
       setNewScores()
       if (!get(gameIsOver)) {
@@ -62,44 +64,61 @@ export const handleNewGuess = (): void => {
     } else {
       setToast({ message: 'Already guessed that word', type: 'warning'})
     }
-    //Prevents some buggy stuff from happening when loading the game
-    if (get(previousGuesses).length > 5) {
-      previousGuesses.set([...get(previousGuesses)].slice(1, get(previousGuesses).length))
-    }
   } else if (get(currentGuess).length === 5) {
     setToast({ message: 'Sorry, not in word list', type: 'warning'})
   }
 }
 
+const updateLifelinesAfterGuess = (): void => {
+  if (!get(remainingLifelineCooldowns).length) return
+  const previousCooldowns = get(remainingLifelineCooldowns)
+  previousCooldowns[0] -= 1
+
+  if (previousCooldowns[0] === 0) {
+    previousCooldowns.shift()     
+    maxRemainingAttempts.set(get(maxRemainingAttempts) + 1)
+  }
+  remainingLifelineCooldowns.set(previousCooldowns)
+}
+
+export const incrementRemainingAttempts = (adjustment: number): void => {
+  const adjustedRemainingAttempts = get(remainingAttempts) + adjustment
+  if (adjustedRemainingAttempts > get(maxRemainingAttempts)) {
+    remainingAttempts.set(get(maxRemainingAttempts))
+    return
+  }
+  remainingAttempts.set(adjustedRemainingAttempts)
+}
+
+export const incrementRunningScore = (adjustment: number): void => {
+  const adjustedRunningScore = get(runningScore) + adjustment
+  if (adjustedRunningScore > 100) {
+    runningScore.set(100)
+    return
+  }
+  runningScore.set(adjustedRunningScore)
+}
+
 export const setNewScores = (): void => {
   // Update the lifelines and see if we need to restore max attempts
-  if (get(remainingLifelineCooldowns).length) {
-    const previousCooldowns = get(remainingLifelineCooldowns)
-    previousCooldowns[0] -= 1
-
-    if (previousCooldowns[0] === 0) {
-      previousCooldowns.shift()     
-      maxRemainingAttempts.set(get(maxRemainingAttempts) + 1)
-    }
-    remainingLifelineCooldowns.set(previousCooldowns)
-  }
+  updateLifelinesAfterGuess()
 
   // We do the above before this so score can be added if a new max attempt was just unlocked
   if (get(currentGuess) === get(codeWord)) {
-    const tally = 1 + get(bonus) + get(streak)
-    runningScore.set(Math.min(get(runningScore) + tally, 100))
-    pointsScored.set(tally)
-    remainingAttempts.set(Math.min(get(maxRemainingAttempts), get(remainingAttempts) + 1))
-    bonus.set(2)
-    if (get(streak) || get(streak) === 0) {
+    const tally = 1 + (get(bonusWindow) ? 1 : 0) + (get(streak) || 0)
+    incrementRunningScore(tally)
+    pointsScoredForLastGuess.set(tally)
+    incrementRemainingAttempts(1)
+    bonusWindow.set(2)
+    if (get(streak) !== null) {
       streak.set(get(streak) + 1)
     } else {
       streak.set(0)
     }
     handleCorrectGuess()
   } else {
-    remainingAttempts.set(Math.min(get(remainingAttempts) - 1, get(maxRemainingAttempts)))
-    bonus.set(Math.max(get(bonus) - 1, 0))
+    incrementRemainingAttempts(-1)
+    bonusWindow.set(Math.max(get(bonusWindow) - 1, 0))
     streak.set(null)
   }
   // Update the count of total used guesses
@@ -162,13 +181,9 @@ export const handleCorrectGuess = (): void => {
 }
 
 export const saveGameData = (): void => {
-  // This prevents saving more guesses than it should, since there's a slight delay between entry of the word and updating of the game board
-  const guessesToSave: string[] = get(previousGuesses)
-  if (guessesToSave.length > 5) guessesToSave.slice(1, 6)
-
   save(GAME_DATA_STORAGE_KEY, {
     codeWord: window.btoa(get(codeWord)),
-    previousGuesses: guessesToSave,
+    previousGuesses: get(previousGuesses),
     remainingAttempts: get(remainingAttempts),
     runningScore: get(runningScore),
     gameIsOver: get(gameIsOver),
@@ -176,7 +191,7 @@ export const saveGameData = (): void => {
     usedAttempts: get(usedAttempts),
     remainingLifelineCooldowns: get(remainingLifelineCooldowns),
     streak: get(streak),
-    bonus: get(bonus),
+    bonusWindow: get(bonusWindow),
   })
 }
 

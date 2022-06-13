@@ -25,7 +25,7 @@
 <svelte:window on:keydown={listenForEnter} />
 
 <h2 class="display-flex align-center">
-  Use a lifeline?
+  Use a lifeline
   <span class="info-button lifeline" aria-hidden="true">
     <Lifeline />
   </span>

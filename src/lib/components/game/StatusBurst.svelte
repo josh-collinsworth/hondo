@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { pointsScored, discoveredCodeWord } from '$lib/js/state'
+  import { pointsScoredForLastGuess, discoveredCodeWord } from '$lib/js/state'
   import { fade } from 'svelte/transition'
 
   let codeWordToShow: string = ''
@@ -15,19 +15,16 @@
 
 {#if codeWordToShow}
   <div 
-    class="status-burst display-flex center-content"
+    class="status-burst display-flex"
     transition:fade={{ duration: 300 }}
   >
     <div class="status-burst__inner display-flex center-content">
       <h2>
-        {codeWordToShow}
-      </h2>
-      <p>
-        +{$pointsScored} 
-        {#if $pointsScored > 1}
-          streak bonus
+        {#if $pointsScoredForLastGuess > 1}
+          Bonus!
         {/if}
-      </p>
+        +{$pointsScoredForLastGuess} 
+      </h2>
     </div>
   </div>
 {/if}
@@ -38,6 +35,9 @@
     z-index: 9;
     min-height: 100vh;
     width: 100vw;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 5rem;
 
     top: 0;
     left: 0;
@@ -72,7 +72,8 @@
 
     h2 {
       font-size: 3rem;
-      text-transform: uppercase;
+      // text-transform: uppercase;
+      font-weight: normal;
       width: 100%;
       text-align: center;
       margin: 0;

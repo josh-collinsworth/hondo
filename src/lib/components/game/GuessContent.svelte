@@ -42,15 +42,11 @@
       ...defaultTransition,
       delay: (i + 1) * 40
     }}"
-    out:fly="{{
-      ...defaultTransition, y: -70,
-      delay: (i + 1) * 30
-    }}"
     animate:flip={{ duration: 500 }}
   >
     <div class="guess-box__background guess-box__background--partial" />
     <div class="guess-box__background guess-box__background--exact" />
-    <!-- The letter is repeated twice because VoiceOver doesn't read the letter and the status together otherwise -->
+    <!-- The letter is repeated because VoiceOver doesn't read the letter and the status together if they're in separate elements -->
     <div class="guess-letter display-flex center-content" aria-hidden="true">
       {guess[i]
         ? $previousGuesses[row][i]
