@@ -19,6 +19,7 @@
     height: 100dvh;
     width: 100vw;
     padding: 1rem;
+    z-index: 10;
   }
 
   h2 {

@@ -32,8 +32,12 @@ export const startNewGame = (): void => {
   window.location.reload()
 }
 
-export const chooseRandomCodeWord = (log = false): void => {
-  const newWord: string = codeWords[Math.floor(Math.random() * codeWords.length)]
+export const getRandomCodeWord = (): string => {
+  return codeWords[Math.floor(Math.random() * codeWords.length)]
+}
+
+export const setNewRandomCodeWord = (log = false): void => {
+  const newWord: string = getRandomCodeWord()
   if (newWord !== get(codeWord) && !get(previousGuesses).includes(newWord)) {
     codeWord.set(newWord)
     if (log) {
@@ -42,7 +46,7 @@ export const chooseRandomCodeWord = (log = false): void => {
     }
     return
   }
-  chooseRandomCodeWord(log)
+  setNewRandomCodeWord(log)
 }
 
 export const handleNewGuess = (): void => {
@@ -175,7 +179,7 @@ export const handleCorrectGuess = (): void => {
   saveGameData()
   setTimeout(async () => {
     discoveredCodeWord.set('')
-    chooseRandomCodeWord(dev)
+    setNewRandomCodeWord(dev)
     saveGameData()
   }, 1200)
 }

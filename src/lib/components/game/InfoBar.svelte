@@ -1,6 +1,6 @@
 <script lang="ts">
   import PowerBar from './PowerBar.svelte'
-  import LifelineButton from './LifelineButton.svelte'
+  import ShuffleButton from './ShuffleButton.svelte'
   import Toast from './Toast.svelte'
 import StatusBurst from './StatusBurst.svelte';
 </script>
@@ -9,7 +9,8 @@ import StatusBurst from './StatusBurst.svelte';
 <div class="info-bar">
   <StatusBurst />
   <Toast />
-  <LifelineButton />
+  <!-- <LifelineButton /> -->
+  <ShuffleButton />
   <PowerBar />
   <a href="how-to-play" class="info-button instructions">
     <span class="sr">How to play Hondo</span>

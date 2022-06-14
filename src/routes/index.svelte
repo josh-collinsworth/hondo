@@ -1,13 +1,13 @@
 <script lang="ts" context="module">
   import { load } from '$lib/js/helpers'
-  import { chooseRandomCodeWord, startNewGame } from '$lib/js/mutations'
+  import { setNewRandomCodeWord, startNewGame } from '$lib/js/mutations'
   import { dev } from '$app/env'
 
-  chooseRandomCodeWord(dev)
+  setNewRandomCodeWord(dev)
 </script>
 
 <script lang="ts">
-  import { previousGuesses, currentGuess, gameIsOver, remainingAttempts, codeWord, runningScore, maxRemainingAttempts, usedAttempts, remainingLifelineCooldowns, shownModal, bonusWindow, streak } from '$lib/js/state'
+  import { previousGuesses, currentGuess, gameIsOver, remainingAttempts, codeWord, runningScore, maxRemainingAttempts, usedAttempts, remainingLifelineCooldowns, shownModal, bonusWindow, streak, isLoading } from '$lib/js/state'
   import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES } from '$lib/js/constants';
   import { stringContainsLetter } from '$lib/js/helpers'
   
@@ -22,7 +22,6 @@
   import Loader from '$lib/components/game/Loader.svelte'
   import AccessibleStatus from '$lib/components/game/AccessibleStatus.svelte'
 
-  let isLoading = true
   const defaultTransition = { duration: 600, easing: quintOut, y: -80 }
 
   onMount(() => {
@@ -55,7 +54,7 @@
       alert(`Sorry, something went wrong loading your previous game data. Please try again, or clear your browser's local storage. If possible, finishing your current game may also resolve the issue.`)
     } 
     finally {
-      isLoading = false
+      isLoading.set(false)
     }
   })
 </script>
@@ -68,7 +67,7 @@
     
     <InfoBar />
 
-    {#if isLoading}
+    {#if $isLoading}
       <Loader />
     {:else}
       <ul class="guess-container">

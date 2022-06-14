@@ -144,7 +144,7 @@
       </div>
     </div>
 
-    <h2 class="display-flex" style="align-items: center;">
+    <!-- <h2 class="display-flex" style="align-items: center;">
       Stuck? Use a lifeline
       <span aria-hidden="true" class="info-button lifeline" style="margin-left: 0.5em;">
         <Lifeline />
@@ -165,7 +165,7 @@
       <ExamplePowerBar remainingAttempts={5} score={10} maxRemainingAttempts={9} />
     </div>
     
-    <p>Your gauge will slowly recover. You can use more lifelines during recovery, but the penalty is increasingly severe.</p>
+    <p>Your gauge will slowly recover. You can use more lifelines during recovery, but the penalty is increasingly severe.</p> -->
 
 
     <h2>The goal</h2>
@@ -186,8 +186,9 @@
   
     <ul>
       <li><strong>Watch the keyboard.</strong> It shows which letters aren't currently on the board, which can be a big hint.</li>
-      <li><strong>Use lifelines wisely.</strong> They can save guesses, get you out of a jam, <strong>or</strong> keep a streak alive for extra bonus points!</li>
+      <!-- <li><strong>Use lifelines wisely.</strong> They can save guesses, get you out of a jam, <strong>or</strong> keep a streak alive for extra bonus points!</li> -->
       <li>Try to keep common letters, especially vowels, on the board at all times.</li>
+      <li>Use shuffles wisely.</li>
       <li><strong>Be patient</strong>; haste is costly. Getting a high score requires logic, lifelines, and luck.</li>
     </ul>
 

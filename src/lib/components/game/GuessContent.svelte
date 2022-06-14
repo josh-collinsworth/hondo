@@ -42,6 +42,10 @@
       ...defaultTransition,
       delay: (i + 1) * 40
     }}"
+    out:fly="{{
+      ...defaultTransition, y: -70,
+      delay: (i + 1) * 30
+    }}"
     animate:flip={{ duration: 500 }}
   >
     <div class="guess-box__background guess-box__background--partial" />

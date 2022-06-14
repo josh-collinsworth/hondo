@@ -36,7 +36,7 @@
   grid-template-columns: repeat(5, var(--boxSize));
   gap: var(--gapSize);
   justify-content: center;
-  min-height: var(--boxSize);
+  height: var(--boxSize);
 }
 
 .current-guess {
