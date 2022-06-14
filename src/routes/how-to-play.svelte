@@ -2,8 +2,7 @@
   import ExampleGuess from '$lib/components/game/examples/ExampleGuess.svelte'
   import ExamplePowerBar from '$lib/components/game/examples/ExamplePowerBar.svelte'
   import Arrow from '$lib/components/icon/Arrow.svelte'
-
-  import Lifeline from '$lib/components/icon/Lifeline.svelte'
+import Shuffle from '$lib/components/icon/Shuffle.svelte';
 </script>
 
 
@@ -43,31 +42,29 @@
     
     <p>However, your five most recent guesses stay on the board as clues.</p>
           
-    <div class="example-guess-holder">
+    <div class="example-diagram">
       <div>
         <ExampleGuess codeWord="proof" guess="knife" />
         <ExampleGuess codeWord="proof" guess="foggy" />
         <ExampleGuess codeWord="proof" guess="aloof" />
         <ExampleGuess codeWord="proof" guess="spoof" />
         <ExampleGuess codeWord="proof" guess="proof" />
-        <p class="small-print">Got one code word (proof)</p>
+        <p class="small-print">Got one code word (proof)…</p>
       </div>
-      <div class="arrow">
-        <Arrow />
-      </div>
+      <Arrow direction="down" />
       <div>
         <ExampleGuess codeWord="along" guess="knife" />
         <ExampleGuess codeWord="along" guess="foggy" />
         <ExampleGuess codeWord="along" guess="aloof" />
         <ExampleGuess codeWord="along" guess="spoof" />
         <ExampleGuess codeWord="along" guess="proof" />
-        <p class="small-print">Now guess the next.</p>
+        <p class="small-print">…now guess the next.</p>
       </div>
     </div>
 
 
     <h2>Watch your score &amp; life gauge</h2>
-    <p>Every incorrect guess drains the gauge…</p>
+    <p>Every incorrect guess drains life…</p>
 
     <div class="example-diagram">
       <ExamplePowerBar remainingAttempts={10} />
@@ -77,7 +74,7 @@
       <ExamplePowerBar remainingAttempts={9} />
     </div>
       
-    <p>…but a correct guess gives you a point, and <strong>replenishes</strong> the gauge instead!</p>
+    <p>…but a correct guess gives you a point, and <strong>replenishes</strong> life instead!</p>
     
     <div class="example-diagram">
       <ExamplePowerBar remainingAttempts={9} />
@@ -88,31 +85,9 @@
     </div>
 
 
-    <h2>Bonus points</h2>
+    <h3>Streak bonus</h3>
 
-    <p>You'll get a bonus point if you guess a new code word within two attempts of solving the last one.</p> 
-    
-    <div class="example-diagram">
-      <div class="display-flex center-content position-relative width-max-content margin-auto">
-        <ExampleGuess codeWord="snout" guess="snout" />
-        <div class="example-score">
-          +1
-        </div>
-      </div>
-      <Arrow direction="down" />
-      <div class="display-flex center-content position-relative width-max-content margin-auto">
-        <ExampleGuess codeWord="thank" guess="train" />
-      </div>
-      <Arrow direction="down" />
-      <div class="display-flex center-content position-relative width-max-content margin-auto">
-        <ExampleGuess codeWord="thank" guess="thank" />
-        <div class="example-score">
-          +2
-        </div>
-      </div>
-    </div>
-
-    <p>You'll get an <strong>extra</strong> bonus point for every word in a consecutive streak of three or more!</p>
+    <p>You get a bonus point for every consecutive successful guess after the first.</p>
 
     <div class="example-diagram">
       <div class="display-flex center-content position-relative width-max-content margin-auto">
@@ -130,49 +105,56 @@
       </div>
       <Arrow direction="down" />
       <div class="display-flex center-content position-relative width-max-content margin-auto">
-        <ExampleGuess codeWord="reign" guess="reign" />
+        <ExampleGuess codeWord="their" guess="their" />
         <div class="example-score">
           +3
         </div>
       </div>
-      <Arrow direction="down" />
-      <div class="display-flex center-content position-relative width-max-content margin-auto">
-        <ExampleGuess codeWord="plays" guess="plays" />
-        <div class="example-score">
-          +4
-        </div>
-      </div>
     </div>
 
-    <!-- <h2 class="display-flex" style="align-items: center;">
-      Stuck? Use a lifeline
-      <span aria-hidden="true" class="info-button lifeline" style="margin-left: 0.5em;">
-        <Lifeline />
-      </span>
+
+    <h2 class="display-flex" style="align-items: center;">
+      Need help? Try shuffling!
     </h2>
 
     <p>
-      A lifeline solves the current code word for you&mdash;but at the cost of temporarily shrinking your life gauge.
+      Hit the <strong>shuffle button</strong> any time to replace the board with five random new guesses!
     </p>
 
     <div class="example-diagram">
-      <ExamplePowerBar remainingAttempts={4} score={9} />
+      <ExamplePowerBar remainingAttempts={9} />
+      <div>
+        <ExampleGuess codeWord="boxer" guess="clang" />
+        <ExampleGuess codeWord="boxer" guess="chimp" />
+        <ExampleGuess codeWord="boxer" guess="chomp" />
+        <ExampleGuess codeWord="boxer" guess="flaws" />
+        <ExampleGuess codeWord="boxer" guess="flaky" />
+      </div>
       <Arrow direction="down" />
-      <span aria-hidden="true" class="info-button lifeline" style="margin: auto;">
-        <Lifeline />
+      <span aria-hidden="true" class="info-button shuffle-button" style="margin: auto;">
+        <Shuffle />
       </span>
       <Arrow direction="down" />
-      <ExamplePowerBar remainingAttempts={5} score={10} maxRemainingAttempts={9} />
+      <ExamplePowerBar remainingAttempts={7} />
+      <div>
+        <ExampleGuess codeWord="boxer" guess="brown" />
+        <ExampleGuess codeWord="boxer" guess="oxide" />
+        <ExampleGuess codeWord="boxer" guess="regal" />
+        <ExampleGuess codeWord="boxer" guess="epoxy" />
+        <ExampleGuess codeWord="boxer" guess="flown" />
+      </div>
     </div>
-    
-    <p>Your gauge will slowly recover. You can use more lifelines during recovery, but the penalty is increasingly severe.</p> -->
+
+    <p><strong>Shuffling is a key strategy</strong>; it helps replace unhelpful guesses, <strong>and</strong> keeps streaks alive.</p>
+
+    <p>However, <strong>every shuffle costs two life</strong>, so use with care!</p>
 
 
     <h2>The goal</h2>
     <p>The game ends when either:</p>
     <ol>
       <li>
-        Your lifeline is empty; or
+        Your life gauge is empty; or
       </li>
       <li>
         You've scored a Hondo (100).
@@ -185,11 +167,11 @@
     <h2>Hints and tips</h2>
   
     <ul>
-      <li><strong>Watch the keyboard.</strong> It shows which letters aren't currently on the board, which can be a big hint.</li>
-      <!-- <li><strong>Use lifelines wisely.</strong> They can save guesses, get you out of a jam, <strong>or</strong> keep a streak alive for extra bonus points!</li> -->
-      <li>Try to keep common letters, especially vowels, on the board at all times.</li>
-      <li>Use shuffles wisely.</li>
-      <li><strong>Be patient</strong>; haste is costly. Getting a high score requires logic, lifelines, and luck.</li>
+      <li><strong>Look at the keyboard</strong>. It shows which letters aren't currently on the board, which can be a big hint.</li>
+      <li><strong>Use shuffles strategically</strong>. They can get you out of a jam, and can also keep streaks alive for bonus points.</li>
+      <li>If you can, try to keep common letters on the board at all times, especially vowels.
+      </li>
+      <li><strong>Be patient</strong>; haste is costly. Getting a high score requires logic, strategy, and luck.</li>
     </ul>
 
     <a href="/" class="back-link">Back to game</a>
@@ -239,6 +221,7 @@
     &.small-print {
       margin: 0.5rem 0 0;
       font-size: 0.8rem;
+      text-align: center;
     }
   }
 
@@ -259,32 +242,8 @@
     }
   }
 
-  .example-guess-holder {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    margin: 2rem 0 1rem;
-    border: 2px solid var(--lighterAccent);
-    border-radius: 0.5rem;
-    padding: 2rem 1.5rem;
-    
-    .arrow {
-      padding: 1rem;
-      text-align: center;
-      width: 100%;
-      transform: rotate(-90deg);
-    }
-    
-    @media (min-width: 32rem) {
-      justify-content: space-between;
-
-      .arrow { 
-        width: auto;
-        margin-top: -2rem;
-        transform: rotate(180deg);
-      }
-    }
+  h3 {
+    margin-top: 3rem;
   }
 
   .example-diagram {

@@ -1,38 +1,14 @@
 <script lang="ts">
-import { previousGuesses, codeWord, remainingAttempts } from '$lib/js/state'
-import { getRandomCodeWord } from '$lib/js/mutations'
+import { showModal } from '$lib/js/mutations'
+import ShuffleIcon from '../icon/Shuffle.svelte'
+import ShuffleConfirmationModal from '../modals/ShuffleConfirmationModal.svelte'
 
-const shuffle = async (): void => {
-  if ($remainingAttempts < 3) {
-    alert(`You don't have enough attempts to shuffle right now.`)
-    return
-  }
-  const confirmation = confirm(`Replace the board with five new random guesses? Costs two attempts.`)
-
-  if (!confirmation) return
-  let newGuesses: string[] = []
-
-  while (newGuesses.length < 5) {
-    const wordToAdd = getRandomCodeWord()
-
-    if (wordToAdd !== $codeWord && !newGuesses.includes(wordToAdd)) {
-      newGuesses = [...newGuesses, wordToAdd]
-    }
-  }
-  
-  previousGuesses.set(newGuesses)
-  remainingAttempts.set($remainingAttempts - 2)
+const confirmShuffle = (): void => {
+  showModal(ShuffleConfirmationModal)
 }
 </script>
 
-<button on:click={shuffle} class="info-button shuffle-button">
-  <div aria-hidden="true">🔀</div>
+<button on:click={confirmShuffle} class="info-button shuffle-button">
+  <ShuffleIcon />
   <div class="sr">Shuffle board</div>
 </button>
-
-
-<style lang="scss">
-  .shuffle-button {
-    line-height: 1;
-  }
-</style>

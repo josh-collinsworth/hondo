@@ -7,7 +7,7 @@
 </script>
 
 <script lang="ts">
-  import { previousGuesses, currentGuess, gameIsOver, remainingAttempts, codeWord, runningScore, maxRemainingAttempts, usedAttempts, remainingLifelineCooldowns, shownModal, bonusWindow, streak, isLoading } from '$lib/js/state'
+  import { previousGuesses, currentGuess, gameIsOver, remainingAttempts, codeWord, runningScore, maxRemainingAttempts, usedAttempts, shownModal, bonusWindow, streak, isLoading } from '$lib/js/state'
   import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES } from '$lib/js/constants';
   import { stringContainsLetter } from '$lib/js/helpers'
   
@@ -33,13 +33,11 @@
 
         // Avoids a loading error with states that didn't save this. Can be removed later.
         let attemptsCap = gameData.maxRemainingAttempts ? gameData.maxRemainingAttempts : STARTING_GUESSES
-        let remainingCooldown = gameData.remainingLifelineCooldowns ? gameData.remainingLifelineCooldowns : []
         let loadedBonus = gameData.bonusWindow || 0
         let loadedStreak = gameData.streak || 0
         
         maxRemainingAttempts.set(attemptsCap)
         previousGuesses.set(previousGuessesToSet)
-        remainingLifelineCooldowns.set(remainingCooldown)
 
         codeWord.set(window.atob(gameData.codeWord))
         remainingAttempts.set(gameData.remainingAttempts)

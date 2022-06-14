@@ -23,6 +23,8 @@
 
   export let path: string
 
+  $: isInert = Boolean($shownModal) ? true : null
+
   $: if ($gameIsOver) {
     setTimeout(() => {
       shownModal.set(GameOverModal)
@@ -39,9 +41,9 @@
   </Modal>
 {/if}
 
-<main inert={$shownModal} id="#main" tabindex="-1">
+<main inert={isInert} id="#main" tabindex="-1">
   {#key path}
-    <div in:fade={{ delay: 350, duration: 200 }} out:fade={{ duration: 200 }}>
+    <div in:fade={{ delay: 600, duration: 400 }} out:fade={{ duration: 400 }}>
       <slot />
     </div>
   {/key}

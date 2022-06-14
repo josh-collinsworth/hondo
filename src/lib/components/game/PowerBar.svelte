@@ -1,16 +1,10 @@
 <script lang="ts">
-  import { remainingAttempts, maxRemainingAttempts, runningScore, remainingLifelineCooldowns } from '$lib/js/state'
-  import { LIFELINE_DURATION, STARTING_GUESSES } from '$lib/js/constants'
+  import { remainingAttempts, maxRemainingAttempts, runningScore } from '$lib/js/state'
+  import { STARTING_GUESSES } from '$lib/js/constants'
   import { fly } from 'svelte/transition'
 
   let scoreDigits: string[]
   $: scoreDigits = String($runningScore).padStart(3).split('')
-  
-  let totalLifelineCooldown: number
-  $: totalLifelineCooldown = $remainingLifelineCooldowns[0] || 0
-  
-  let calculatedDividerOffset: string 
-  $: calculatedDividerOffset = `${$maxRemainingAttempts + ((LIFELINE_DURATION - totalLifelineCooldown) / LIFELINE_DURATION)}em`
 </script>
 
 <div
@@ -18,12 +12,6 @@
   aria-label={`${$remainingAttempts} of ${$maxRemainingAttempts} attempts left.`}
   role="status" aria-live="polite"
 >
-  <div
-    class="power-bar__divider"
-    style="
-      transform: translateX({calculatedDividerOffset});
-    "
-  />
   <div class="power-bar">
     <div
       class="score"

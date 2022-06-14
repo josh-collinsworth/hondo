@@ -10,7 +10,6 @@ import {
   usedAttempts,
   maxRemainingAttempts,
   discoveredCodeWord,
-  remainingLifelineCooldowns,
   shownModal,
   message,
   messageType,
@@ -18,7 +17,7 @@ import {
   streak,
   pointsScoredForLastGuess
 } from './state'
-import { PREVIOUS_HIGH_SCORES_STORAGE_KEY, GAME_DATA_STORAGE_KEY, LIFELINE_DURATION } from './constants'
+import { PREVIOUS_HIGH_SCORES_STORAGE_KEY, GAME_DATA_STORAGE_KEY } from './constants'
 import { isValidGuess, load, save } from './helpers'
 import { codeWords } from './codeWords'
 
@@ -73,18 +72,6 @@ export const handleNewGuess = (): void => {
   }
 }
 
-const updateLifelinesAfterGuess = (): void => {
-  if (!get(remainingLifelineCooldowns).length) return
-  const previousCooldowns = get(remainingLifelineCooldowns)
-  previousCooldowns[0] -= 1
-
-  if (previousCooldowns[0] === 0) {
-    previousCooldowns.shift()     
-    maxRemainingAttempts.set(get(maxRemainingAttempts) + 1)
-  }
-  remainingLifelineCooldowns.set(previousCooldowns)
-}
-
 export const incrementRemainingAttempts = (adjustment: number): void => {
   const adjustedRemainingAttempts = get(remainingAttempts) + adjustment
   if (adjustedRemainingAttempts > get(maxRemainingAttempts)) {
@@ -103,27 +90,25 @@ export const incrementRunningScore = (adjustment: number): void => {
   runningScore.set(adjustedRunningScore)
 }
 
-export const setNewScores = (): void => {
-  // Update the lifelines and see if we need to restore max attempts
-  updateLifelinesAfterGuess()
+export const incrementStreak = (adjustment: number): void => {
+  streak.set(get(streak) + adjustment)
+}
 
-  // We do the above before this so score can be added if a new max attempt was just unlocked
+export const setStreak = (value: number): void => {
+  streak.set(value)
+}
+
+export const setNewScores = (): void => {
   if (get(currentGuess) === get(codeWord)) {
-    const tally = 1 + (get(bonusWindow) ? 1 : 0) + (get(streak) || 0)
+    const tally = 1 + get(streak)
     incrementRunningScore(tally)
     pointsScoredForLastGuess.set(tally)
     incrementRemainingAttempts(1)
-    bonusWindow.set(2)
-    if (get(streak) !== null) {
-      streak.set(get(streak) + 1)
-    } else {
-      streak.set(0)
-    }
+    incrementStreak(1)
     handleCorrectGuess()
   } else {
     incrementRemainingAttempts(-1)
-    bonusWindow.set(Math.max(get(bonusWindow) - 1, 0))
-    streak.set(null)
+    setStreak(0)
   }
   // Update the count of total used guesses
   usedAttempts.set(get(usedAttempts) + 1)
@@ -137,21 +122,6 @@ export const setNewScores = (): void => {
     registerHighScore()
     localStorage.removeItem(GAME_DATA_STORAGE_KEY)
   }
-}
-
-export const useLifeline = (): void => {
-  // Is +1 because the first one will immediately be reduced by 1 as part of setNewScores()
-  const durationOfCooldownsToAdd: number = get(remainingLifelineCooldowns).length ? LIFELINE_DURATION : LIFELINE_DURATION + 1
-  const quantityOfCooldownsToAdd: number = get(remainingLifelineCooldowns).length + 1
-  const cooldownsToAdd: number[] = Array.from({ length: quantityOfCooldownsToAdd }).fill(durationOfCooldownsToAdd)
-
-  maxRemainingAttempts.set(get(maxRemainingAttempts) - quantityOfCooldownsToAdd)
-  remainingLifelineCooldowns.set(
-    [...get(remainingLifelineCooldowns), ...cooldownsToAdd]
-  ) 
-
-  currentGuess.set(get(codeWord))
-  handleNewGuess()
 }
 
 export const showModal = (modal: SvelteComponent): void => {
@@ -193,7 +163,6 @@ export const saveGameData = (): void => {
     gameIsOver: get(gameIsOver),
     maxRemainingAttempts: get(maxRemainingAttempts),
     usedAttempts: get(usedAttempts),
-    remainingLifelineCooldowns: get(remainingLifelineCooldowns),
     streak: get(streak),
     bonusWindow: get(bonusWindow),
   })
@@ -204,4 +173,26 @@ export const setToast = async (msg: ToastMessage = { message: '', type: 'warning
   await tick()
   message.set(msg.message)
   messageType.set(msg.type)
+}
+
+export const shuffleGuesses = (): void => {
+  let newGuesses: string[] = []
+
+  while (newGuesses.length < 5) {
+    const wordToAdd = getRandomCodeWord()
+
+    if (wordToAdd !== get(codeWord) && !newGuesses.includes(wordToAdd)) {
+      newGuesses = [...newGuesses, wordToAdd]
+    }
+  }
+
+  const previousAttempts = get(remainingAttempts)
+
+  newGuesses.forEach(newGuess => {
+    remainingAttempts.set(get(remainingAttempts) + 1)
+    currentGuess.set(newGuess)
+    handleNewGuess()
+  })
+  
+  remainingAttempts.set(previousAttempts - 2)
 }

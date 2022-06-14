@@ -41,15 +41,15 @@
 <style lang="scss">
   .example-guess {
     display: grid;
-    grid-template-columns: repeat(5, 2rem);
+    font-size: 1.2rem;
+    grid-template-columns: repeat(5, 2em);
     gap: 2px;
     margin: 0 auto 2px;
     width: max-content;
 
     .guess-box {
-      font-size: 1.2rem;
-      width: 2rem;
-      height: 2rem;
+      width: 2em;
+      height: 2em;
       min-height: unset;
     }
   }
