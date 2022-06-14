@@ -282,6 +282,6 @@ import Shuffle from '$lib/components/icon/Shuffle.svelte';
   .example-score {
     position: absolute;
     right: -2em;
-    font-weight: bold;
+    font-size: 1.5rem;
   }
 </style>

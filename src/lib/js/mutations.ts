@@ -176,6 +176,7 @@ export const setToast = async (msg: ToastMessage = { message: '', type: 'warning
 }
 
 export const shuffleGuesses = (): void => {
+  if (get(remainingAttempts) < 3) return
   let newGuesses: string[] = []
 
   while (newGuesses.length < 5) {
@@ -186,13 +187,6 @@ export const shuffleGuesses = (): void => {
     }
   }
 
-  const previousAttempts = get(remainingAttempts)
-
-  newGuesses.forEach(newGuess => {
-    remainingAttempts.set(get(remainingAttempts) + 1)
-    currentGuess.set(newGuess)
-    handleNewGuess()
-  })
-  
-  remainingAttempts.set(previousAttempts - 2)
+  previousGuesses.set(newGuesses)
+  incrementRemainingAttempts(-2)
 }

@@ -67,7 +67,7 @@
       &::after {
         animation-name: burst_left;
         top: unset;
-        bottom: 8px;
+        bottom: -8px;
         transform-origin: right;
       }
     }

@@ -1,4 +1,5 @@
 <div class="loader display-flex center-content">
+  <h2 class="sr">Loading…</h2>
   <div class="dots display-flex center-content">
     <div class="dot"></div>
     <div class="dot"></div>
@@ -20,10 +21,6 @@
     width: 100vw;
     padding: 1rem;
     z-index: 10;
-  }
-
-  h2 {
-    width: 100%;
   }
 
   .dots {
