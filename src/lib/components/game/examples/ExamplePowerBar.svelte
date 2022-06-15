@@ -1,7 +1,6 @@
 <script lang="ts">
   export let remainingAttempts: number = 10
   export let startingGuesses: number = 10
-  export let maxRemainingAttempts = 10
   export let score = 0
 </script>
 

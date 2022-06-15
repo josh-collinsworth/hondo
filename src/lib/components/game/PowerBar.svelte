@@ -1,7 +1,8 @@
 <script lang="ts">
   import { remainingAttempts, maxRemainingAttempts, runningScore } from '$lib/js/state'
-  import { STARTING_GUESSES } from '$lib/js/constants'
+  import { SCORE_TICK_DURATION, STARTING_GUESSES } from '$lib/js/constants'
   import { fly } from 'svelte/transition'
+  import { backIn, backOut, bounceInOut, elasticIn, elasticInOut, elasticOut } from 'svelte/easing'
 
   let scoreDigits: string[]
   $: scoreDigits = String($runningScore).padStart(3).split('')
@@ -25,8 +26,8 @@
           {#key digit}
             <div
               class="score-digit digit-{i + 1}"
-              out:fly={{ y: -40, duration: 360, opacity: 1 }}
-              in:fly={{ y: 40, duration: 360, opacity: 1 }}
+              out:fly={{ y: -36, duration: SCORE_TICK_DURATION, opacity: 1, easing: backIn }}
+              in:fly={{ y: 36, duration: SCORE_TICK_DURATION, opacity: 1, easing: backOut, delay: SCORE_TICK_DURATION / 2 }}
             >
               {digit}
             </div>

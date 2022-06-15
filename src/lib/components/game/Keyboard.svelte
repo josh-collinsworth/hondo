@@ -16,7 +16,7 @@
   $: lettersOnTheBoard = Array.from(new Set($previousGuesses.flatMap(word => [...word])))
   $: disableEnterKey = $currentGuess.length < 5
   $: disableDeleteKey = !$currentGuess.length
-  $: disableKeyboard = $discoveredCodeWord
+  $: disableKeyboard = !!$discoveredCodeWord
   $: vibrationEnabled = browser && window.navigator && window.navigator.vibrate
 
   const handleKeyUp = (e: KeyboardEvent): void => {

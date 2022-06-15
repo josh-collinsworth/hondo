@@ -145,9 +145,9 @@ import Shuffle from '$lib/components/icon/ShuffleIcon.svelte';
       </div>
     </div>
 
-    <p><strong>Shuffling is a key strategy</strong>; it helps replace unhelpful guesses, <strong>and</strong> keeps streaks alive.</p>
+    <p><strong>Shuffling is a key strategy</strong>; it helps replace unhelpful guesses, <strong>and</strong> keeps streaks alive!</p>
 
-    <p>However, <strong>every shuffle costs two life</strong>, so use with care!</p>
+    <p>Note that there's a cooldown period after using a shuffle, during which you won't be able to use another.</p>
 
 
     <h2>The goal</h2>

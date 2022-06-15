@@ -7,7 +7,7 @@
 </script>
 
 <script lang="ts">
-  import { previousGuesses, currentGuess, gameIsOver, remainingAttempts, codeWord, runningScore, maxRemainingAttempts, usedAttempts, shownModal, bonusWindow, streak, isLoading } from '$lib/js/state'
+  import { previousGuesses, currentGuess, gameIsOver, remainingAttempts, codeWord, runningScore, maxRemainingAttempts, usedAttempts, shownModal, bonusWindow, streak, isLoading, shuffleCooldown } from '$lib/js/state'
   import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES } from '$lib/js/constants';
   import { stringContainsLetter } from '$lib/js/helpers'
   
@@ -35,6 +35,7 @@
         let attemptsCap = gameData.maxRemainingAttempts ? gameData.maxRemainingAttempts : STARTING_GUESSES
         let loadedBonus = gameData.bonusWindow || 0
         let loadedStreak = gameData.streak || 0
+        let loadedShuffleCooldown = gameData.shuffleCooldown || 0
         
         maxRemainingAttempts.set(attemptsCap)
         previousGuesses.set(previousGuessesToSet)
@@ -44,8 +45,8 @@
         runningScore.set(gameData.runningScore)
         gameIsOver.set(gameData.gameIsOver)
         usedAttempts.set(gameData.usedAttempts)
-        bonusWindow.set(loadedBonus)
         streak.set(loadedStreak)
+        shuffleCooldown.set(loadedShuffleCooldown)
       }
     } 
     catch(e) {

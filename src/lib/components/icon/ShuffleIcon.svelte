@@ -8,10 +8,8 @@
 
   onMount(() => {
     borderRadius = parseFloat(border.getTotalLength().toFixed(2))
-    console.log(borderRadius)
   })
 </script>
-
 
 <svg
   viewBox="0 0 48 48"

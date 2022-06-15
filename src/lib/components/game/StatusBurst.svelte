@@ -82,7 +82,8 @@
     }
 
     p {
-      font-size: 1rem;
+      font-size: 1.5rem;
+      margin: 1rem 0 0;
       width: 100%;
       text-align: center;
     }

@@ -13,7 +13,6 @@ import {
   shownModal,
   message,
   messageType,
-  bonusWindow,
   streak,
   pointsScoredForLastGuess,
   shuffleCooldown
@@ -21,7 +20,9 @@ import {
 
 import {
   PREVIOUS_HIGH_SCORES_STORAGE_KEY,
-  GAME_DATA_STORAGE_KEY, DEFAULT_SHUFFLE_COOLDOWN
+  GAME_DATA_STORAGE_KEY,
+  DEFAULT_SHUFFLE_COOLDOWN,
+  SCORE_TICK_DURATION,
 } from './constants'
 
 import { isValidGuess, load, save } from './helpers'
@@ -46,8 +47,7 @@ export const setNewRandomCodeWord = (log = false): void => {
   if (newWord !== get(codeWord) && !get(previousGuesses).includes(newWord)) {
     codeWord.set(newWord)
     if (log) {
-      // eslint-disable-next-line no-console
-      console.log(newWord)
+      console.log(newWord) // eslint-disable-line no-console
     }
     return
   }
@@ -89,11 +89,19 @@ export const incrementRemainingAttempts = (adjustment: number): void => {
 
 export const incrementRunningScore = (adjustment: number): void => {
   const adjustedRunningScore = get(runningScore) + adjustment
-  if (adjustedRunningScore > 100) {
-    runningScore.set(100)
-    return
+  const scoreDifferential = Math.abs(adjustedRunningScore - get(runningScore))
+  let timer = 0
+  
+  for (let i = 0; i < scoreDifferential; i++) {
+    timer += SCORE_TICK_DURATION
+    setTimeout(() => {
+      runningScore.set(Math.min(get(runningScore) + 1, 100))
+      if (get(runningScore) >= 100) {
+        handleEndgame()
+        return
+      }
+    }, timer)
   }
-  runningScore.set(adjustedRunningScore)
 }
 
 export const incrementStreak = (adjustment: number): void => {
@@ -125,10 +133,14 @@ export const setNewScores = (): void => {
 
   // Check for game over state
   if (get(remainingAttempts) <= 0 || get(runningScore) >= 100) {
-    gameIsOver.set(true)
-    registerHighScore()
-    localStorage.removeItem(GAME_DATA_STORAGE_KEY)
+    handleEndgame()
   }
+}
+
+export const handleEndgame = (): void => {
+  gameIsOver.set(true)
+  registerHighScore()
+  localStorage.removeItem(GAME_DATA_STORAGE_KEY)
 }
 
 export const showModal = (modal: SvelteComponent): void => {
@@ -145,10 +157,9 @@ export const registerHighScore = (): void => {
   // Just some cleanup from prerelease data saving. Can be removed later.
   previousHighScores = previousHighScores.filter(item => typeof item !== 'number')
 
-  save(
-    PREVIOUS_HIGH_SCORES_STORAGE_KEY, 
-    [...previousHighScores, [get(runningScore), get(usedAttempts)]]
-  )
+  save(PREVIOUS_HIGH_SCORES_STORAGE_KEY, [
+    ...previousHighScores, [get(runningScore), get(usedAttempts)]
+  ])
 }
 
 export const handleCorrectGuess = (): void => {
@@ -171,7 +182,7 @@ export const saveGameData = (): void => {
     maxRemainingAttempts: get(maxRemainingAttempts),
     usedAttempts: get(usedAttempts),
     streak: get(streak),
-    bonusWindow: get(bonusWindow),
+    shuffleCooldown: get(shuffleCooldown),
   })
 }
 
