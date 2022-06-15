@@ -181,6 +181,19 @@
     font-size: 1.7rem;
   }
 
+  .power-bar__divider {
+    width: 100%;
+    height: 100%;
+    background: rgba(var(--paperRGB), 0.9);
+    position: absolute;
+    left: calc(var(--scoreWidth) + 6px);
+    top: 0;
+    z-index: 4;
+    border-left: 2px solid var(--darkBlue);
+    transition: transform 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+    pointer-events: none;
+  }
+
   .power-bar {
     width: calc(var(--scoreWidth) + 10em); 
     border: 0;
@@ -266,13 +279,16 @@
 }
 
 .shuffle-button {
-  --transition: all 1s cubic-bezier(0.23, 1, 0.320, 1);
+  --transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
 
   line-height: 1;
   padding: 0;
-  border: 0;
+  border: 2px solid var(--darkBlue);
   transition: var(--transition);
-  box-shadow: inset 0 0 0 2px var(--lighterGray);
+
+  &[disabled] {
+    border-color: var(--lighterGray);
+  }
 }
 
 .score {

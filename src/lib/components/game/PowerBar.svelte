@@ -6,6 +6,9 @@
 
   let scoreDigits: string[]
   $: scoreDigits = String($runningScore).padStart(3).split('')
+  
+  let calculatedDividerOffset: string 
+  $: calculatedDividerOffset = `${$maxRemainingAttempts}em`
 </script>
 
 <div
@@ -13,6 +16,12 @@
   aria-label={`${$remainingAttempts} of ${$maxRemainingAttempts} attempts left.`}
   role="status" aria-live="polite"
 >
+  <div
+    class="power-bar__divider"
+    style="
+      transform: translateX({calculatedDividerOffset});
+    "
+  />
   <div class="power-bar">
     <div
       class="score"
