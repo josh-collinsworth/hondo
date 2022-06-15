@@ -1,13 +1,13 @@
 <script lang="ts">
   import { shuffleGuesses, closeModal } from '$lib/js/mutations'
-  import { maxRemainingAttempts, remainingAttempts } from '$lib/js/state'
+  import { shuffleCooldown } from '$lib/js/state'
 
-  import ShuffleIcon from '../icon/Shuffle.svelte'
+  import ShuffleIcon from '../icon/ShuffleIcon.svelte'
 
   let cancelButton: HTMLButtonElement
 
   const listenForEnter = (e: KeyboardEvent): void => {
-    if (e.key === 'Enter' && e.target != cancelButton && shuffleCost < $maxRemainingAttempts) {
+    if (e.key === 'Enter' && e.target != cancelButton && !$shuffleCooldown) {
       shuffleAndClose()
     }
   }
@@ -16,8 +16,6 @@
     shuffleGuesses()
     closeModal()
   }
-
-  const shuffleCost = 2
 </script>
 
 
@@ -30,10 +28,8 @@
   </span>
 </h2>
 
-{#if shuffleCost < $remainingAttempts}
-  <p>Replaces all guesses on the board with random words.</p>
-
-  <p>Pay <strong>{shuffleCost}</strong> life to shuffle?</p>
+{#if !$shuffleCooldown}
+  <p>Replaces all guesses on the board with random words. Shuffle now?</p>
 
   <div class="button-bar">
     <button on:click={closeModal} bind:this={cancelButton}>
@@ -44,7 +40,7 @@
     </button>
   </div>
 {:else}
-  <p>Sorry, shuffling costs two bars from your life gauge.</p>
+  <p>Sorry, you can't use shuffle yet. (Guess more words first.)</p>
   
   <div class="button-bar">
     <button on:click={closeModal}>

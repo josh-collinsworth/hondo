@@ -15,9 +15,15 @@ import {
   messageType,
   bonusWindow,
   streak,
-  pointsScoredForLastGuess
+  pointsScoredForLastGuess,
+  shuffleCooldown
 } from './state'
-import { PREVIOUS_HIGH_SCORES_STORAGE_KEY, GAME_DATA_STORAGE_KEY } from './constants'
+
+import {
+  PREVIOUS_HIGH_SCORES_STORAGE_KEY,
+  GAME_DATA_STORAGE_KEY, DEFAULT_SHUFFLE_COOLDOWN
+} from './constants'
+
 import { isValidGuess, load, save } from './helpers'
 import { codeWords } from './codeWords'
 
@@ -112,6 +118,7 @@ export const setNewScores = (): void => {
   }
   // Update the count of total used guesses
   usedAttempts.set(get(usedAttempts) + 1)
+  shuffleCooldown.set(Math.max(0, get(shuffleCooldown) - 1))
 
   // Clear the current guess
   currentGuess.set('')
@@ -176,7 +183,7 @@ export const setToast = async (msg: ToastMessage = { message: '', type: 'warning
 }
 
 export const shuffleGuesses = (): void => {
-  if (get(remainingAttempts) < 3) return
+  if (get(shuffleCooldown)) return
   let newGuesses: string[] = []
 
   while (newGuesses.length < 5) {
@@ -188,5 +195,5 @@ export const shuffleGuesses = (): void => {
   }
 
   previousGuesses.set(newGuesses)
-  incrementRemainingAttempts(-2)
+  shuffleCooldown.set(DEFAULT_SHUFFLE_COOLDOWN)
 }

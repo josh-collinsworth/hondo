@@ -2,7 +2,7 @@
   import ExampleGuess from '$lib/components/game/examples/ExampleGuess.svelte'
   import ExamplePowerBar from '$lib/components/game/examples/ExamplePowerBar.svelte'
   import Arrow from '$lib/components/icon/Arrow.svelte'
-import Shuffle from '$lib/components/icon/Shuffle.svelte';
+import Shuffle from '$lib/components/icon/ShuffleIcon.svelte';
 </script>
 
 

@@ -266,13 +266,14 @@
 }
 
 .shuffle-button {
-  line-height: 1;
-  padding: 0.25rem;
+  --transition: all 1s cubic-bezier(0.23, 1, 0.320, 1);
 
-  &:disabled {
-    fill: var(--lighterAccent);
-    border-color: var(--lighterAccent);
-  }
+  line-height: 1;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  transition: var(--transition);
+  box-shadow: inset 0 0 0 2px var(--lighterGray);
 }
 
 .score {
