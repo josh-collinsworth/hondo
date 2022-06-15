@@ -24,7 +24,7 @@
       </h2>
       <p>
         {#if $pointsScoredForLastGuess > 1}
-          <strong>Bonus!</strong>
+          <strong>Streak bonus!</strong>
         {/if}
         +{$pointsScoredForLastGuess} 
       </p>

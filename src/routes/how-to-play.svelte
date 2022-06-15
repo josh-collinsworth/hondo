@@ -251,7 +251,7 @@ import Shuffle from '$lib/components/icon/Shuffle.svelte';
     width: 100%;
     max-width: 100%;
     grid-template-columns: 100%;
-    gap: 0.5rem;
+    gap: 0.75rem;
     margin-top: 1rem;
     padding: 2rem 1.5rem;
     border: 2px solid var(--lighterAccent);
