@@ -59,8 +59,8 @@
   border-radius: 0.5em;
   overflow: hidden;
   text-transform: uppercase;
-  display: grid;
-  grid-template-columns: 100%;
+  display: flex;
+  flex-wrap: wrap;
   align-items: end;
   justify-content: center;
   line-height: 1;
@@ -79,67 +79,64 @@
     z-index: -2;
   }
 
+  .guess-box__slider {
+    width: 100%;
+    height: calc(var(--boxSize) * 2);
+    animation: slide_up 0.6s cubic-bezier(.68,-0.55,.27,1.55) forwards;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: repeat(2, var(--boxSize));
+    transform: translateY(0%);
+  }
+
+  @keyframes slide_up {
+    from {
+      transform: translateY(0%);
+    }
+    to {
+      transform: translateY(-50%);
+    }
+  }
+
   .guess-letter {
     display: flex;
     line-height: 1;
     padding-top: 0.08em;
-    height: 100%;
+    height: var(--boxSize);
     width: 100%;
     overflow: visible;
     text-align: center;
-    grid-area: 1 / 1 / 2 / 2;
     position: relative;
+    transition: background 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
 
-    &::after {
+    &.exact::after {
       content: '';
       width: 0.75ch;
       position: absolute;
-      bottom: 0;
+      bottom: 15%;
       border-bottom: 2px solid currentColor;
       left: calc(50% - 0.375ch);
-      transition: transform 0.55s cubic-bezier(0.86, 0, 0.07, 1);
-      transform: translateY(1em);
+    }
+
+    &.exact {
+      background: var(--primary);
+    }
+
+    &.partial {
+      background: var(--secondary);
     }
   }
-}
-
-.guess-box__background {
-  grid-area: 1 / 1 / 2 / 2;
-  height: 100%;
-  width: 100%;
-  transform-origin: top;
-  will-change: transform;
-  transform: scaleY(0);
-  transition: transform 0.42s cubic-bezier(0.23, 1, 0.320, 1);
-}
-
-.guess-box__background--partial {
-  background: var(--secondary);
-}
-
-.guess-box__background--exact {
-  background: var(--primary);
-}
-
-.partial .guess-box__background--partial,
-.exact .guess-box__background--exact {
-  transform: scaleY(1);
-  transform-origin: bottom;
 }
 
 @for $row from 1 through 5 {
   @for $col from 1 through 5 {
-    .guess:nth-of-type(#{$row}) .guess-box:nth-of-type(#{$col}) .guess-box__background {
-      transition-delay: ((5 - $row) + ($col * 2)) * 0.05s;
+    .guess:nth-of-type(#{$row}) .guess-box:nth-of-type(#{$col}) .guess-box__slider {
+      animation-delay: ((6 - $row) + ($col * 2)) * 0.015s;
     }
-  }
-}
 
-
-.exact {
-  .guess-letter::after {
-    transform: translateY(-0.25em);
-    transition-delay: 0.1s;
+    .guess:nth-of-type(#{$row}) .guess-box:nth-of-type(#{$col}) .guess-letter {
+      transition-delay: ((6 - $row) + ($col * 2)) * 0.04s;
+    }
   }
 }
 

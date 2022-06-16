@@ -9,7 +9,7 @@ import { SHUFFLE_COST } from '$lib/js/constants';
   let cancelButton: HTMLButtonElement
 
   const listenForEnter = (e: KeyboardEvent): void => {
-    if (e.key === 'Enter' && e.target != cancelButton && $remainingAttempts > SHUFFLE_COST + 1) {
+    if (e.key === 'Enter' && e.target != cancelButton && $remainingAttempts > SHUFFLE_COST) {
       shuffleAndClose()
     }
   }
@@ -30,7 +30,7 @@ import { SHUFFLE_COST } from '$lib/js/constants';
   </span>
 </h2>
 
-{#if $remainingAttempts > SHUFFLE_COST + 1}
+{#if $remainingAttempts > SHUFFLE_COST}
   <p>Replaces all guesses on the board with random words.</p>
 
   <p>Pay <strong>3 life</strong> to shuffle now?</p>

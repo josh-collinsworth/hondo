@@ -2,18 +2,29 @@
   import { load } from '$lib/js/helpers'
   import { setNewRandomCodeWord, startNewGame } from '$lib/js/mutations'
   import { dev } from '$app/env'
+  import { fly } from 'svelte/transition'
 
   setNewRandomCodeWord(dev)
 </script>
 
 <script lang="ts">
-  import { previousGuesses, currentGuess, gameIsOver, remainingAttempts, codeWord, runningScore, maxRemainingAttempts, usedAttempts, shownModal, bonusWindow, streak, isLoading } from '$lib/js/state'
+  import {
+    previousGuesses,
+    visiblePreviousGuesses,
+    currentGuess,
+    gameIsOver,
+    remainingAttempts,
+    codeWord,
+    runningScore,
+    maxRemainingAttempts,
+    usedAttempts,
+    shownModal,
+    streak,
+    isLoading 
+} from '$lib/js/state'
   import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES } from '$lib/js/constants';
   import { stringContainsLetter } from '$lib/js/helpers'
   
-  import { quintOut } from 'svelte/easing'
-  import { fly } from 'svelte/transition'
-  import { flip } from 'svelte/animate'
   import { onMount } from 'svelte'
   
   import GuessContent from '$lib/components/game/GuessContent.svelte'
@@ -21,8 +32,6 @@
   import InfoBar from '$lib/components/game/InfoBar.svelte'
   import Loader from '$lib/components/game/Loader.svelte'
   import AccessibleStatus from '$lib/components/game/AccessibleStatus.svelte'
-
-  const defaultTransition = { duration: 600, easing: quintOut, y: -80 }
 
   onMount(() => {
     try {
@@ -61,27 +70,26 @@
   <!-- For debugging -->
   <!-- <input type="text" bind:value={$codeWord} /> -->
   <div class="game-container">
-    
     <InfoBar />
 
     {#if $isLoading}
       <Loader />
     {:else}
       <ul class="guess-container">
-        {#each {length: 5} as _, row (row)}
+        {#each $visiblePreviousGuesses as guess, row (guess)}
           <li
             class="guess"
-            aria-label={$previousGuesses[row]}
-            aria-hidden={!stringContainsLetter($previousGuesses[row])}
+            aria-label={guess}
+            aria-hidden={!stringContainsLetter(guess)}
           >
-            <GuessContent bind:guess={$previousGuesses[row]} {row} />
+            <GuessContent guess={guess} previousGuess={$previousGuesses[row]}/>
           </li>
         {/each}
         <li 
           class="guess current-guess"
         >
           {#each {length: 5} as _, col}
-            <div class="current-guess-box">
+            <div class="current-guess-box" out:fly>
               {$currentGuess[col]
                 ? $currentGuess[col]
                 : ''}

@@ -15,12 +15,12 @@ import {
   messageType,
   streak,
   pointsScoredForLastGuess,
+  visiblePreviousGuesses,
 } from './state'
 
 import {
   PREVIOUS_HIGH_SCORES_STORAGE_KEY,
   GAME_DATA_STORAGE_KEY,
-  DEFAULT_SHUFFLE_COOLDOWN,
   SCORE_TICK_DURATION,
   SHUFFLE_COST,
 } from './constants'
@@ -44,7 +44,7 @@ export const getRandomCodeWord = (): string => {
 
 export const setNewRandomCodeWord = (log = false): void => {
   const newWord: string = getRandomCodeWord()
-  if (newWord !== get(codeWord) && !get(previousGuesses).includes(newWord)) {
+  if (newWord !== get(codeWord) && !get(visiblePreviousGuesses).includes(newWord)) {
     codeWord.set(newWord)
     if (log) {
       console.log(newWord) // eslint-disable-line no-console
@@ -56,16 +56,16 @@ export const setNewRandomCodeWord = (log = false): void => {
 
 export const handleNewGuess = (): void => {
   if (isValidGuess(get(currentGuess))) {
-    if (!get(previousGuesses).includes(get(currentGuess))) {
-      const previousFour = [...get(previousGuesses)]
-      previousFour.shift()
-      previousGuesses.set([...previousFour, get(currentGuess)])
+    if (!get(visiblePreviousGuesses).includes(get(currentGuess))) {
+      const previousFive = [...get(previousGuesses)]
+      previousFive.shift()
+      previousGuesses.set([...previousFive, get(currentGuess)])
 
       setNewScores()
       if (!get(gameIsOver)) {
         saveGameData()
       }
-    } else if (get(previousGuesses).includes(get(currentGuess)) && get(currentGuess) === get(codeWord)){
+    } else if (get(visiblePreviousGuesses).includes(get(currentGuess)) && get(currentGuess) === get(codeWord)){
       // This whole condition is here just to handle weird error states. Hopefully isn't needed in prod.
       setToast({ message: 'Bad state detected. Reshuffling…', type: 'warning'})
       handleCorrectGuess()
@@ -192,9 +192,10 @@ export const setToast = async (msg: ToastMessage = { message: '', type: 'warning
 }
 
 export const shuffleGuesses = (): void => {
+  // TODO: maybe animate this?
   let newGuesses: string[] = []
 
-  while (newGuesses.length < 5) {
+  while (newGuesses.length < 6) {
     const wordToAdd = getRandomCodeWord()
 
     if (wordToAdd !== get(codeWord) && !newGuesses.includes(wordToAdd)) {
@@ -204,4 +205,6 @@ export const shuffleGuesses = (): void => {
 
   previousGuesses.set(newGuesses)
   remainingAttempts.set(get(remainingAttempts) - SHUFFLE_COST)
+
+  saveGameData()
 }

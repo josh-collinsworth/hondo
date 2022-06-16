@@ -1,12 +1,13 @@
 import type { SvelteComponent } from 'svelte'
-import { writable } from 'svelte/store'
+import { derived, writable } from 'svelte/store'
 import { STARTING_GUESSES } from './constants'
 
 import type { ToastMessage } from './types'
 
 export const currentGuess = writable<string>('')
 export const codeWord =  writable<string>('')
-export const previousGuesses = writable<string[]>(['',' ','  ','   ','    '])
+// export const previousGuesses = writable<string[]>(['',' ','  ','   ','    ', '      '])
+export const previousGuesses = writable<string[]>(['chore', 'shark', 'pizza', 'catch', 'quake', 'viral'])
 export const remainingAttempts = writable<number>(STARTING_GUESSES)
 export const discoveredCodeWord = writable<string>('')
 export const isLoading = writable<boolean>(false)
@@ -23,3 +24,8 @@ export const shownModal = writable<SvelteComponent|null>(null)
 export const bonusWindow = writable<number>(0)
 export const streak = writable<number>(0)
 export const pointsScoredForLastGuess = writable<number>(0)
+
+export const visiblePreviousGuesses = derived(
+  previousGuesses, 
+  previousGuesses => previousGuesses.slice(1)
+)
