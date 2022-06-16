@@ -8,6 +8,7 @@ button {
   border-radius: 0.5rem;
   background: var(--lightestAccent);
   color: var(--ink);
+  font-weight: var(--fontWeightSemiBold);
 
   &.confirm {
     background: var(--primary);

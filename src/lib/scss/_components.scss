@@ -181,19 +181,6 @@
     font-size: 1.7rem;
   }
 
-  .power-bar__divider {
-    width: 100%;
-    height: 100%;
-    background: rgba(var(--paperRGB), 0.9);
-    position: absolute;
-    left: calc(var(--scoreWidth) + 6px);
-    top: 0;
-    z-index: 4;
-    border-left: 2px solid var(--darkBlue);
-    transition: transform 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-    pointer-events: none;
-  }
-
   .power-bar {
     width: calc(var(--scoreWidth) + 10em); 
     border: 0;
@@ -265,7 +252,7 @@
   width: var(--buttonSize);
   height: var(--buttonSize);
   line-height: 2;
-  font-weight: bold;
+  font-weight: var(--fontWeightBold);
   font-family: 'Ridley Grotesk', sans-serif;
   background: var(--paper);
   position: relative;
@@ -293,7 +280,7 @@
 
 .score {
   overflow: hidden;
-  font-weight: bold;
+  font-weight: var(--fontWeightBold);
   display: flex;
   align-items: center;
   justify-content: center;

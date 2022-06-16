@@ -16,12 +16,6 @@
   aria-label={`${$remainingAttempts} of ${$maxRemainingAttempts} attempts left.`}
   role="status" aria-live="polite"
 >
-  <div
-    class="power-bar__divider"
-    style="
-      transform: translateX({calculatedDividerOffset});
-    "
-  />
   <div class="power-bar">
     <div
       class="score"

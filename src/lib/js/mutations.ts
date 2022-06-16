@@ -22,6 +22,7 @@ import {
   GAME_DATA_STORAGE_KEY,
   DEFAULT_SHUFFLE_COOLDOWN,
   SCORE_TICK_DURATION,
+  SHUFFLE_COST,
 } from './constants'
 
 import { isValidGuess, load, save } from './helpers'
@@ -202,8 +203,5 @@ export const shuffleGuesses = (): void => {
   }
 
   previousGuesses.set(newGuesses)
-  maxRemainingAttempts.set(get(maxRemainingAttempts) - 1)
-  if (get(remainingAttempts) > get(maxRemainingAttempts)) {
-    remainingAttempts.set(get(maxRemainingAttempts))
-  }
+  remainingAttempts.set(get(remainingAttempts) - SHUFFLE_COST)
 }

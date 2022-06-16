@@ -1,23 +1,10 @@
 @use 'vars';
+@use 'fonts';
 @use 'helpers';
 @use 'forms';
 @use 'components';
 @use 'modals';
 @use 'animation';
-
-@font-face {
-  font-family: 'Ridley Grotesk';
-  src: url('/fonts/ridleygrotesk-medium-webfont.woff2');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Ridley Grotesk';
-  src: url('/fonts/ridleygrotesk-semibold-webfont.woff2');
-  font-weight: bold;
-  font-style: normal;
-}
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -33,9 +20,14 @@ body {
   color: var(--ink);
   line-height: 1.4;
   font-family: 'Ridley Grotesk', sans-serif;
+  font-weight: var(--fontWeightNormal);
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-weight: bold;
+  font-weight: var(--fontWeightSemiBold);
   line-height: 1.2;
+}
+
+h1 {
+  font-weight: var(--fontWeightBold);
 }

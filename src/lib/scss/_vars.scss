@@ -34,6 +34,10 @@
   --scoreWidth: 2em;
   --powerBarHeight: 2rem;
 
+  --fontWeightNormal: 500;
+  --fontWeightSemiBold: 600;
+  --fontWeightBold: 700;
+
   &.dark {
     --ink: var(--offwhite);
     --paper: var(--black);

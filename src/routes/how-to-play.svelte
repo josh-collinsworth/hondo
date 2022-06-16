@@ -40,7 +40,7 @@ import Shuffle from '$lib/components/icon/ShuffleIcon.svelte';
     
     <h2>When you guess the code word, the game continues with a new one</h2>
     
-    <p>However, your five most recent guesses stay on the board as clues.</p>
+    <p><em>However</em>, your five most recent guesses stay on the board as clues.</p>
           
     <div class="example-diagram">
       <div>
@@ -74,7 +74,7 @@ import Shuffle from '$lib/components/icon/ShuffleIcon.svelte';
       <ExamplePowerBar remainingAttempts={9} />
     </div>
       
-    <p>…but a correct guess gives you a point, and <strong>replenishes</strong> life instead!</p>
+    <p>…but a correct guess gives you a point, and <em>replenishes</em> life instead!</p>
     
     <div class="example-diagram">
       <ExamplePowerBar remainingAttempts={9} />
@@ -147,7 +147,7 @@ import Shuffle from '$lib/components/icon/ShuffleIcon.svelte';
 
     <p><strong>Shuffling is a key strategy</strong>; it helps replace unhelpful guesses, <strong>and</strong> keeps bonus streaks alive!</p>
 
-    <p>However, there is a cost: <strong>each time you shuffle, your maximum life is permanently reduced</strong>! Use shuffles wisely.</p>
+    <p>However, <em>shuffling costs 3 life</em>! Use shuffles wisely.</p>
 
     <h2>The goal</h2>
     <p>The game ends when either:</p>
@@ -282,5 +282,6 @@ import Shuffle from '$lib/components/icon/ShuffleIcon.svelte';
     position: absolute;
     right: -2em;
     font-size: 1.5rem;
+    font-weight: var(--fontWeightBold);
   }
 </style>

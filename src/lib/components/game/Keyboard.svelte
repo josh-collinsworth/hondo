@@ -108,6 +108,7 @@
 
     button {
       font-size: 1.1rem;
+      font-weight: var(--fontWeightNormal);
       flex: 1 1 3ch;
       text-transform: uppercase;
       background: var(--lightestAccent);

@@ -1,6 +1,6 @@
 <script lang="ts">
 import { showModal } from '$lib/js/mutations'
-import { maxRemainingAttempts, runningScore, shuffleCooldown } from '$lib/js/state';
+import { maxRemainingAttempts } from '$lib/js/state';
 import ShuffleIcon from '../icon/ShuffleIcon.svelte'
 import ShuffleConfirmationModal from '../modals/ShuffleConfirmationModal.svelte'
 

@@ -75,7 +75,7 @@
     h2 {
       font-size: 2.6rem;
       text-transform: uppercase;
-      font-weight: normal;
+      font-weight: var(--fontWeightNormal);
       width: 100%;
       text-align: center;
       margin: 0;
