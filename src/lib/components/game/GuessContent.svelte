@@ -1,11 +1,12 @@
 <script lang="ts">
-  import { quintOut } from 'svelte/easing'
+  import { backIn, backOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
-  import { flip } from 'svelte/animate'
   import { previousGuesses, codeWord } from '$lib/js/state'
 
   export let guess: string
   export let row: number = 0
+
+  const transitionDuration = 360
 
   let remainingLetters: string[] = []
   $: if ($codeWord) remainingLetters = [...$codeWord]
@@ -26,36 +27,38 @@
     }
     return ''
   })
-
-  const defaultTransition = {
-    duration: 600,
-    easing: quintOut,
-    y: 70
-  }
 </script>
 
 
-{#each {length: 5} as _, i (i)}
+{#each {length: 5} as letter, i (i)}
   <div
     class="guess-box {highlightArray[i]}"
-    in:fly="{{ 
-      ...defaultTransition,
-      delay: (i + 1) * 40
-    }}"
-    out:fly="{{
-      ...defaultTransition, y: -70,
-      delay: (i + 1) * 30
-    }}"
-    animate:flip={{ duration: 500 }}
   >
     <div class="guess-box__background guess-box__background--partial" />
     <div class="guess-box__background guess-box__background--exact" />
     <!-- The letter is repeated because VoiceOver doesn't read the letter and the status together if they're in separate elements -->
-    <div class="guess-letter display-flex center-content" aria-hidden="true">
-      {guess[i]
-        ? $previousGuesses[row][i]
-        : ''}
-    </div>
+    {#key $previousGuesses}
+      <div
+        class="guess-letter display-flex center-content"
+        aria-hidden="true"
+        in:fly="{{ 
+          y: 70,
+          delay: transitionDuration + ((5 - row) * 20) + ((i + 1) * 30),
+          easing: backOut,
+          duration: transitionDuration,
+        }}"
+        out:fly="{{
+          y: -70,
+          delay: row ? ((5 - row) * 20) + ((i + 1) * 30) : 0,
+          easing: backIn,
+          duration: transitionDuration,
+        }}"
+    >
+        {guess[i]
+          ? $previousGuesses[row][i]
+          : ''}
+      </div>
+    {/key}
     <div class="sr">
       {guess[i]
         ? $previousGuesses[row][i]

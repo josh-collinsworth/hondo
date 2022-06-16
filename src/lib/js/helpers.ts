@@ -4,7 +4,7 @@ export const alphabetAsString = 'abcdefghijklmnopqrstuvwxyz'
 export const alphabetAsArray: string[] = [...alphabetAsString]
 
 export const isSingleLetter = (str: string): boolean => {
-  return alphabetAsArray.includes(str)
+  return alphabetAsArray.includes(str.toLowerCase())
 }
 
 export const stringContainsLetter = (str: string): boolean => {

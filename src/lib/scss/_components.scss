@@ -84,6 +84,7 @@
     line-height: 1;
     padding-top: 0.08em;
     height: 100%;
+    width: 100%;
     overflow: visible;
     text-align: center;
     grid-area: 1 / 1 / 2 / 2;
@@ -106,7 +107,7 @@
   grid-area: 1 / 1 / 2 / 2;
   height: 100%;
   width: 100%;
-  transform-origin: bottom;
+  transform-origin: top;
   will-change: transform;
   transform: scaleY(0);
   transition: transform 0.42s cubic-bezier(0.23, 1, 0.320, 1);
@@ -123,12 +124,13 @@
 .partial .guess-box__background--partial,
 .exact .guess-box__background--exact {
   transform: scaleY(1);
+  transform-origin: bottom;
 }
 
 @for $row from 1 through 5 {
   @for $col from 1 through 5 {
     .guess:nth-of-type(#{$row}) .guess-box:nth-of-type(#{$col}) .guess-box__background {
-      transition-delay: ((10 - ($row * 2)) + ($col * 3)) * 0.03s;
+      transition-delay: ((5 - $row) + ($col * 2)) * 0.05s;
     }
   }
 }

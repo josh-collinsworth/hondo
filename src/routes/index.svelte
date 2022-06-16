@@ -68,22 +68,17 @@
       <Loader />
     {:else}
       <ul class="guess-container">
-        {#each $previousGuesses as guess, row (guess)}
+        {#each {length: 5} as _, row (row)}
           <li
             class="guess"
-            out:fly|local="{{ ...defaultTransition }}"
-            in:fly|local="{{  ...defaultTransition, y: 80 }}"
-            animate:flip|local={{ duration: 400 }}
-            aria-label={guess}
-            aria-hidden={!stringContainsLetter(guess)}
+            aria-label={$previousGuesses[row]}
+            aria-hidden={!stringContainsLetter($previousGuesses[row])}
           >
-            <GuessContent {guess} {row} />
+            <GuessContent bind:guess={$previousGuesses[row]} {row} />
           </li>
         {/each}
         <li 
           class="guess current-guess"
-          out:fly|local="{{ ...defaultTransition }}"
-          in:fly|local="{{ ...defaultTransition, y: 80 }}"
         >
           {#each {length: 5} as _, col}
             <div class="current-guess-box">
