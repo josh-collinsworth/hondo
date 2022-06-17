@@ -33,7 +33,7 @@
   import InfoBar from '$lib/components/game/InfoBar.svelte'
   import Loader from '$lib/components/game/Loader.svelte'
   import AccessibleStatus from '$lib/components/game/AccessibleStatus.svelte'
-import { backIn, backOut } from 'svelte/easing';
+  import { backIn } from 'svelte/easing';
 
   onMount(() => {
     try {
@@ -96,10 +96,15 @@ import { backIn, backOut } from 'svelte/easing';
           {#each {length: 5} as _, col (col)}
             <div class="current-guess-box">
               {#key $previousGuesses}
-                <div
-                  out:fly={{ duration: 420, y: -80, opacity: 1, easing: backIn, delay: col * 30 }}
-                >
-                  {$currentGuess[col] || ''}
+                {#if $currentGuess[col]}
+                  <div class="current-guess-letter">
+                    {$currentGuess[col]}
+                 </div>
+                {/if}
+                <div class="previous-guess-letter" aria-hidden="true">
+                  {#if $currentGuesses[$currentGuesses.length - 1] && $currentGuesses[$currentGuesses.length - 1][col]}
+                    {$currentGuesses[$currentGuesses.length - 1][col]}
+                  {/if}
                 </div>
               {/key}
             </div>

@@ -37,9 +37,12 @@
   gap: var(--gapSize);
   justify-content: center;
   height: var(--boxSize);
+  background: var(--paper);
 }
 
 .current-guess {
+  background: transparent;
+
   @media (min-height: 42rem) {
     margin-bottom: 1rem;
   }
@@ -87,15 +90,6 @@
     grid-template-columns: 100%;
     grid-template-rows: repeat(2, var(--boxSize));
     transform: translateY(0%);
-  }
-
-  @keyframes slide_up {
-    from {
-      transform: translateY(0%);
-    }
-    to {
-      transform: translateY(-50%);
-    }
   }
 
   .guess-letter {
@@ -149,13 +143,36 @@
 .current-guess-box {
   border-bottom: 2px solid var(--mediumAccent);
   text-transform: uppercase;
-  display: flex;
+  display: grid;
+  grid-template-columns: 100%;
+  text-align: center;
   align-items: center;
   justify-content: center;
+  justify-items: center;
   line-height: 1;
   position: relative;
   height: var(--boxSize);
-  z-index: 0;
+  z-index: -1;
+}
+
+.current-guess-letter,
+.previous-guess-letter {
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+.current-guess-letter {
+  animation: pop_in 0.18s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.previous-guess-letter {
+  animation: pop_out 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+  position: relative;
+  z-index: -3;
+}
+@for $i from 1 through 5 {
+  .current-guess-box:nth-of-type(#{$i}) .previous-guess-letter {
+    animation-delay: $i * 0.03s;
+  }
 }
 
 .power-bar-container--outer {

@@ -1,10 +1,29 @@
-@keyframes ascend {
+@keyframes pop_out {
   from {
-    transform: translateY(-1em);
-    opacity: 1;
+    transform: translateY(0);
   }
-  to { 
-    transform: translateY(-2.5em); 
-    opacity: 0;
+  to {
+    transform: translateY(-2.05em);
+  }
+}
+
+@keyframes pop_in {
+  0% {
+    transform: translateY(0.15em);
+  }
+  40% {
+    transform: translateY(0.25em);
+  }
+  100% {
+    transform: translateY(0em);
+  }
+}
+
+@keyframes slide_up {
+  from {
+    transform: translateY(0%);
+  }
+  to {
+    transform: translateY(-50%);
   }
 }
