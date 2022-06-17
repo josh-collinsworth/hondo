@@ -45,7 +45,7 @@
   
   <main inert={isInert} id="#main" tabindex="-1">
     {#key path}
-    <div in:fade={{ delay: 600, duration: 400 }} out:fade={{ duration: 400 }}>
+    <div in:fade={{ delay: 360, duration: 180 }} out:fade={{ duration: 180 }}>
       <slot />
     </div>
     {/key}

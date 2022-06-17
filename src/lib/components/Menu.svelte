@@ -17,11 +17,11 @@
   }
 
   const abandonGame = (): void => {
-    const confirmation = confirm('Delete this game and start a new one?')
-    if (confirmation) {
-      save(GAME_DATA_STORAGE_KEY, null)
-      window.location.reload()
-    }
+    const confirmation = confirm('Start a new game? This will delete any game currently in progress.')
+    if (!confirmation)  return
+    save(GAME_DATA_STORAGE_KEY, null)
+    
+    window.location.replace('/')
   }
 
   $: tabindex = $isMenuOpen ? 0 : -1
@@ -52,7 +52,7 @@
       </li>
       <li>
         <a href="/" on:click|preventDefault={abandonGame}>
-          Abandon game
+          Start new game
         </a>
       </li>
     </ul>

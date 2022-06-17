@@ -1,5 +1,6 @@
 <script lang="ts">
   import Loader from '$lib/components/game/Loader.svelte'
+  import MenuButton from '$lib/components/MenuButton.svelte'
   import { PREVIOUS_HIGH_SCORES_STORAGE_KEY } from '$lib/js/constants'
   import { load, floatFormatter } from '$lib/js/helpers'
   import { onMount } from 'svelte'
@@ -58,6 +59,7 @@
 
 
 <div class="stats display-flex center-content">
+  <MenuButton />
   <h1>Game stats</h1>
 
   {#if isLoading}
@@ -94,6 +96,12 @@
 
 
 <style lang="scss">
+  :global(.menu) {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+
   .stats {
     padding: 2rem;
 
