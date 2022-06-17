@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-  import { load } from '$lib/js/helpers'
+  import { load, save } from '$lib/js/helpers'
   import { setNewRandomCodeWord, startNewGame } from '$lib/js/mutations'
   import { dev } from '$app/env'
   import { is_client } from 'svelte/internal'
@@ -40,12 +40,16 @@ import { backIn, backOut } from 'svelte/easing';
       const gameData = load(GAME_DATA_STORAGE_KEY)
         
       if (gameData) {
-        let currentGuessesToSet = gameData.currentGuesses
-
         // Avoids a loading error with states that didn't save this. Can be removed later.
+        if (!gameData.currentGuesses) {
+          alert(`Sorry, your in-progress game data is outdated and will need to be cleared. Proceeding now.`)
+          save(GAME_DATA_STORAGE_KEY, null)
+          return
+        }
         let attemptsCap = gameData.maxRemainingAttempts ? gameData.maxRemainingAttempts : STARTING_GUESSES
         let loadedStreak = gameData.streak || 0
-        let loadedPreviousGuesses = gameData.previousGuesses || []
+        let loadedPreviousGuesses = gameData.previousGuesses ? gameData.previousGuesses : []
+        let currentGuesses = gameData.currentGuesses ? gameData.currentGuesses : []
         
         maxRemainingAttempts.set(attemptsCap)
         currentGuesses.set(currentGuessesToSet)
