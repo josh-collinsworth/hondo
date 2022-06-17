@@ -1,5 +1,5 @@
 import type { SvelteComponent } from 'svelte'
-import { derived, writable } from 'svelte/store'
+import { writable } from 'svelte/store'
 import { STARTING_GUESSES } from './constants'
 
 import type { ToastMessage } from './types'
@@ -24,3 +24,5 @@ export const shownModal = writable<SvelteComponent|null>(null)
 export const bonusWindow = writable<number>(0)
 export const streak = writable<number>(0)
 export const pointsScoredForLastGuess = writable<number>(0)
+
+export const isMenuOpen = writable<boolean>(false)

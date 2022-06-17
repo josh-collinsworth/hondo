@@ -52,7 +52,6 @@ import { backIn, backOut } from 'svelte/easing';
         let currentGuesses = gameData.currentGuesses ? gameData.currentGuesses : []
         
         maxRemainingAttempts.set(attemptsCap)
-        currentGuesses.set(currentGuessesToSet)
         previousGuesses.set(loadedPreviousGuesses)
 
         codeWord.set(window.atob(gameData.codeWord))

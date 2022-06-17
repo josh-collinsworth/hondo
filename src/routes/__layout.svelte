@@ -20,6 +20,7 @@
   import Modal from '$lib/components/modals/Modal.svelte'
   import SkipToContentLink from '$lib/components/SkipToContentLink.svelte'
   import GameOverModal from '$lib/components/modals/GameOverModal.svelte'
+  import Menu from '$lib/components/Menu.svelte'
 
   export let path: string
 
@@ -33,18 +34,22 @@
 </script>
 
 
-<SkipToContentLink />
-
-{#if $shownModal}
+<div class="layout">
+  <SkipToContentLink />
+  
+  {#if $shownModal}
   <Modal>
     <svelte:component this={$shownModal} />
   </Modal>
-{/if}
-
-<main inert={isInert} id="#main" tabindex="-1">
-  {#key path}
+  {/if}
+  
+  <main inert={isInert} id="#main" tabindex="-1">
+    {#key path}
     <div in:fade={{ delay: 600, duration: 400 }} out:fade={{ duration: 400 }}>
       <slot />
     </div>
-  {/key}
-</main>
+    {/key}
+  </main>
+
+  <Menu />
+</div>
