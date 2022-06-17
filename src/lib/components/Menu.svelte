@@ -51,8 +51,8 @@
         </a>
       </li>
       <li>
-        <a href="#">
-          Stats (coming soon)
+        <a href="/stats" on:click={closeMenu}>
+          Stats
         </a>
       </li>
     </ul>
