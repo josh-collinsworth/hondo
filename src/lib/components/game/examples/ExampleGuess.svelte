@@ -25,13 +25,16 @@
 </script>
 
 
-<div class="example-guess">
+<div class="example-guess guess">
   {#each guess as letter, i}
     <div class="guess-box {highlightArray[i]}">
-      <div class="guess-box__background guess-box__background--partial" />
-      <div class="guess-box__background guess-box__background--exact" />  
-      <div class="guess-letter display-flex center-content">
-        {letter}
+      <div class="guess-box__slider">
+        <div
+          class="guess-letter display-flex center-content {highlightArray[i]}"
+          aria-hidden="true"
+        >
+          {letter}
+        </div>
       </div>
     </div>
   {/each}
@@ -51,6 +54,10 @@
       width: 2em;
       height: 2em;
       min-height: unset;
+    }
+
+    .guess-box__slider {
+      animation: none;
     }
   }
 </style>

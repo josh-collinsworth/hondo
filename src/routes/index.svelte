@@ -2,15 +2,15 @@
   import { load } from '$lib/js/helpers'
   import { setNewRandomCodeWord, startNewGame } from '$lib/js/mutations'
   import { dev } from '$app/env'
+  import { is_client } from 'svelte/internal'
   import { fly } from 'svelte/transition'
 
-  setNewRandomCodeWord(dev)
+  setNewRandomCodeWord(is_client && dev)
 </script>
 
 <script lang="ts">
   import {
-    previousGuesses,
-    visiblePreviousGuesses,
+    currentGuesses,
     currentGuess,
     gameIsOver,
     remainingAttempts,
@@ -20,7 +20,8 @@
     usedAttempts,
     shownModal,
     streak,
-    isLoading 
+    isLoading, 
+    previousGuesses,
 } from '$lib/js/state'
   import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES } from '$lib/js/constants';
   import { stringContainsLetter } from '$lib/js/helpers'
@@ -32,21 +33,23 @@
   import InfoBar from '$lib/components/game/InfoBar.svelte'
   import Loader from '$lib/components/game/Loader.svelte'
   import AccessibleStatus from '$lib/components/game/AccessibleStatus.svelte'
+import { backIn, backOut } from 'svelte/easing';
 
   onMount(() => {
     try {
       const gameData = load(GAME_DATA_STORAGE_KEY)
         
       if (gameData) {
-        let previousGuessesToSet = gameData.previousGuesses
+        let currentGuessesToSet = gameData.currentGuesses
 
         // Avoids a loading error with states that didn't save this. Can be removed later.
         let attemptsCap = gameData.maxRemainingAttempts ? gameData.maxRemainingAttempts : STARTING_GUESSES
-        let loadedBonus = gameData.bonusWindow || 0
         let loadedStreak = gameData.streak || 0
+        let loadedPreviousGuesses = gameData.previousGuesses || []
         
         maxRemainingAttempts.set(attemptsCap)
-        previousGuesses.set(previousGuessesToSet)
+        currentGuesses.set(currentGuessesToSet)
+        previousGuesses.set(loadedPreviousGuesses)
 
         codeWord.set(window.atob(gameData.codeWord))
         remainingAttempts.set(gameData.remainingAttempts)
@@ -76,7 +79,7 @@
       <Loader />
     {:else}
       <ul class="guess-container">
-        {#each $visiblePreviousGuesses as guess, row (guess)}
+        {#each $currentGuesses as guess, row (guess)}
           <li
             class="guess"
             aria-label={guess}
@@ -88,11 +91,15 @@
         <li 
           class="guess current-guess"
         >
-          {#each {length: 5} as _, col}
-            <div class="current-guess-box" out:fly>
-              {$currentGuess[col]
-                ? $currentGuess[col]
-                : ''}
+          {#each {length: 5} as _, col (col)}
+            <div class="current-guess-box">
+              {#key $previousGuesses}
+                <div
+                  out:fly={{ duration: 420, y: -80, opacity: 1, easing: backIn, delay: col * 30 }}
+                >
+                  {$currentGuess[col] || ''}
+                </div>
+              {/key}
             </div>
           {/each}
         </li>

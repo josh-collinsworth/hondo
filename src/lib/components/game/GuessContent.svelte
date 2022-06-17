@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { previousGuesses, codeWord } from '$lib/js/state'
+  import { currentGuesses, codeWord } from '$lib/js/state'
 
   export let guess: string
   export let previousGuess: string = ''
 
-  let remainingGuessLetters: string[] = []
+  let remainingCurrentGuessLetters: string[] = []
   let remainingPreviousGuessLetters: string[] = []
 
   $: if ($codeWord) {
-    remainingGuessLetters = [...$codeWord]
+    remainingCurrentGuessLetters = [...$codeWord]
     remainingPreviousGuessLetters = [...$codeWord]
   }
 
@@ -16,15 +16,15 @@
   let highlightArray: string[]
   $: highlightArray = [...guess].map((letter, i) => {
     if ([...$codeWord][i] === letter) {
-      remainingGuessLetters.splice(remainingGuessLetters.findIndex(i => i === letter), 1)
+      remainingCurrentGuessLetters.splice(remainingCurrentGuessLetters.findIndex(i => i === letter), 1)
       return 'exact'
     } 
     return letter
   }).map((letter, i) => {
     if (letter === 'exact') {
       return letter
-    } else if (remainingGuessLetters.includes(letter) && letter) {
-      remainingGuessLetters.splice(remainingGuessLetters.findIndex(i => i === letter), 1)
+    } else if (remainingCurrentGuessLetters.includes(letter) && letter) {
+      remainingCurrentGuessLetters.splice(remainingCurrentGuessLetters.findIndex(i => i === letter), 1)
       return 'partial'
     }
     return ''
@@ -52,7 +52,7 @@
 {#each {length: 5} as _, i (i)}
   <div class="guess-box">
     <!-- The letter is repeated because VoiceOver doesn't read the letter and the status together if they're in separate elements -->
-    {#key $previousGuesses}
+    {#key $currentGuesses}
       <div class="guess-box__slider">
         <div
           class="guess-letter display-flex center-content {previousHighlightArray[i]}"

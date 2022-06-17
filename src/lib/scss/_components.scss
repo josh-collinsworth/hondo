@@ -108,18 +108,24 @@
     text-align: center;
     position: relative;
     transition: background 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border-radius: 0.5em;
 
-    &.exact::after {
+    &::after {
       content: '';
       width: 0.75ch;
       position: absolute;
       bottom: 15%;
-      border-bottom: 2px solid currentColor;
+      border-bottom: 2px solid rgba(0, 0, 0, 0);
       left: calc(50% - 0.375ch);
+      transition: border-color 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
     }
 
     &.exact {
       background: var(--primary);
+
+      &::after {
+        border-color: var(--ink);
+      }
     }
 
     &.partial {
@@ -149,6 +155,7 @@
   line-height: 1;
   position: relative;
   height: var(--boxSize);
+  z-index: 0;
 }
 
 .power-bar-container--outer {
@@ -209,7 +216,7 @@
       border-left: 1px solid var(--paper);
       width: 1em;
       flex: 0 0 1em;
-      transition: background .6s cubic-bezier(0.645, 0.045, 0.355, 1);
+      transition: background .3s cubic-bezier(0.645, 0.045, 0.355, 1);
 
       &.disabled {
         background: #eaecee;

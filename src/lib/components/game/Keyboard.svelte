@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { currentGuess, codeWord, discoveredCodeWord, visiblePreviousGuesses } from '$lib/js/state'
+  import { currentGuess, codeWord, discoveredCodeWord, currentGuesses } from '$lib/js/state'
   import { handleNewGuess } from '$lib/js/mutations'
   import { isSingleLetter } from '$lib/js/helpers'
   import { browser } from '$app/env'
@@ -13,7 +13,7 @@
     ['-', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '+'],
   ]
 
-  $: lettersOnTheBoard = Array.from(new Set($visiblePreviousGuesses.flatMap(word => [...word])))
+  $: lettersOnTheBoard = Array.from(new Set($currentGuesses.flatMap(word => [...word])))
   $: disableEnterKey = $currentGuess.length < 5
   $: disableDeleteKey = !$currentGuess.length
   $: disableKeyboard = !!$discoveredCodeWord

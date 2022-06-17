@@ -147,7 +147,7 @@ import Shuffle from '$lib/components/icon/ShuffleIcon.svelte';
 
     <p><strong>Shuffling is a key strategy</strong>; it helps replace unhelpful guesses, <strong>and</strong> keeps bonus streaks alive!</p>
 
-    <p>However, <em>shuffling costs 3 life</em>! Use shuffles wisely.</p>
+    <p>However, <strong>shuffling costs 3 life</strong>! Use shuffles wisely.</p>
 
     <h2>The goal</h2>
     <p>The game ends when either:</p>
@@ -192,7 +192,7 @@ import Shuffle from '$lib/components/icon/ShuffleIcon.svelte';
   }
 
   .directions__container {
-    width: 30rem;
+    width: 28rem;
     max-width: 100%;
     margin: 1rem auto;
   }
