@@ -38,9 +38,9 @@
   <SkipToContentLink />
   
   {#if $shownModal}
-  <Modal>
-    <svelte:component this={$shownModal} />
-  </Modal>
+    <Modal>
+      <svelte:component this={$shownModal} />
+    </Modal>
   {/if}
   
   <main inert={isInert} id="#main" tabindex="-1">

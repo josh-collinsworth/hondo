@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { currentGuesses, codeWord } from '$lib/js/state'
+  import { currentGuesses, previousGuesses, codeWord, discoveredCodeWord } from '$lib/js/state'
 
   export let guess: string
   export let previousGuess: string = ''

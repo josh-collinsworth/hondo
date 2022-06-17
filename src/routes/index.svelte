@@ -41,18 +41,17 @@ import { backIn, backOut } from 'svelte/easing';
         
       if (gameData) {
         // Avoids a loading error with states that didn't save this. Can be removed later.
-        if (!gameData.currentGuesses) {
+        if (!gameData.currentGuesses || !gameData.previousGuesses) {
           alert(`Sorry, your in-progress game data is outdated and will need to be cleared. Proceeding now.`)
           save(GAME_DATA_STORAGE_KEY, null)
           return
         }
         let attemptsCap = gameData.maxRemainingAttempts ? gameData.maxRemainingAttempts : STARTING_GUESSES
         let loadedStreak = gameData.streak || 0
-        let loadedPreviousGuesses = gameData.previousGuesses ? gameData.previousGuesses : []
-        let currentGuesses = gameData.currentGuesses ? gameData.currentGuesses : []
         
         maxRemainingAttempts.set(attemptsCap)
-        previousGuesses.set(loadedPreviousGuesses)
+        currentGuesses.set(gameData.currentGuesses)
+        previousGuesses.set(gameData.previousGuesses)
 
         codeWord.set(window.atob(gameData.codeWord))
         remainingAttempts.set(gameData.remainingAttempts)

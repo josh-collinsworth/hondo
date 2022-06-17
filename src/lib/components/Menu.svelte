@@ -46,13 +46,13 @@
         </a>
       </li>
       <li>
-        <a href="/" on:click|preventDefault={abandonGame}>
-          Abandon game
+        <a href="/stats" on:click={closeMenu}>
+          Stats
         </a>
       </li>
       <li>
-        <a href="/stats" on:click={closeMenu}>
-          Stats
+        <a href="/" on:click|preventDefault={abandonGame}>
+          Abandon game
         </a>
       </li>
     </ul>
