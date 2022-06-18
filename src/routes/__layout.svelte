@@ -24,7 +24,7 @@
 
   export let path: string
 
-  $: isInert = $shownModal || $isMenuOpen
+  $: isInert = $shownModal || $isMenuOpen || null
 
   $: if ($gameIsOver) {
     setTimeout(() => {
