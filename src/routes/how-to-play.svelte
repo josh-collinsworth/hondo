@@ -2,7 +2,7 @@
   import ExampleGuess from '$lib/components/game/examples/ExampleGuess.svelte'
   import ExamplePowerBar from '$lib/components/game/examples/ExamplePowerBar.svelte'
   import Arrow from '$lib/components/icon/Arrow.svelte'
-import Shuffle from '$lib/components/icon/ShuffleIcon.svelte';
+  import Shuffle from '$lib/components/icon/ShuffleIcon.svelte'
 </script>
 
 
@@ -122,7 +122,7 @@ import Shuffle from '$lib/components/icon/ShuffleIcon.svelte';
     </p>
 
     <div class="example-diagram">
-      <ExamplePowerBar remainingAttempts={9} />
+      <ExamplePowerBar remainingAttempts={10} />
       <div>
         <ExampleGuess codeWord="boxer" guess="clang" />
         <ExampleGuess codeWord="boxer" guess="chimp" />
