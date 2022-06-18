@@ -89,8 +89,8 @@
 <style lang="scss">
   .keyboard {
     display: grid;
-    grid-template-rows: repeat(3, 2.2em);
-    margin: 0 calc(-1rem + 3px);
+    grid-template-rows: repeat(3, 2.3em);
+    margin: 0 calc(-1rem + 5px);
 
     .row {
       display: flex;
@@ -98,7 +98,7 @@
       width: 100%;
 
       + .row {
-        margin-top: 2px;
+        margin-top: 5px;
       }
     }
 
@@ -113,7 +113,7 @@
       text-transform: uppercase;
       background: var(--lightestAccent);
       border: 1px solid var(--lighterAccent);
-      border-radius: 0.2rem;
+      border-radius: 0.25em;
       margin: 0;
       padding: 0;
       touch-action: manipulation;
@@ -137,7 +137,7 @@
       }
 
       + button {
-        margin-left: 2px;
+        margin-left: 5px;
       }
 
       &.used {

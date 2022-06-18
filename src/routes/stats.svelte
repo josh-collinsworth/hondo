@@ -96,12 +96,6 @@
 
 
 <style lang="scss">
-  :global(.menu) {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-  }
-
   .stats {
     padding: 2rem;
 
@@ -115,6 +109,12 @@
 
     h2 {
       margin: 3rem 0 0;
+    }
+
+    :global(.menu-button) {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
     }
   }
 </style>

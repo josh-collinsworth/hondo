@@ -1,11 +1,11 @@
 <script lang="ts">
   const focusMain = (): void => {
-    document.querySelector('main')?.focus()
+    document.getElementById('game-board')?.focus()
   }
 </script>
 
-<a href="#main" id="skip-to-content-link" on:click={focusMain}>
-  Skip to main content
+<a href="#game-board" id="skip-to-content-link" on:click={focusMain}>
+  Skip to board
 </a>
 
 

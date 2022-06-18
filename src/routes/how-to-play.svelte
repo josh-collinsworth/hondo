@@ -3,19 +3,20 @@
   import ExamplePowerBar from '$lib/components/game/examples/ExamplePowerBar.svelte'
   import Arrow from '$lib/components/icon/Arrow.svelte'
   import Shuffle from '$lib/components/icon/ShuffleIcon.svelte'
+  import MenuButton from '$lib/components/MenuButton.svelte'
 </script>
 
 
 <svelte:head>
   <title>How to play Hondo</title>
+  <meta name="description" content="Learn how to play Hondo, and get some tips and tricks for better scores!">
 </svelte:head>
 
 
 <div class="directions">
   <div class="directions__container">
-    <h1>How to play Hondo
-      <a href="/" class="back-link">Back</a>
-    </h1>
+    <MenuButton />
+    <h1>How to play Hondo</h1>
 
     <h2>Guess the code word</h2>
 
@@ -283,5 +284,11 @@
     right: -2em;
     font-size: 1.5rem;
     font-weight: var(--fontWeightBold);
+  }
+
+  :global(.menu-button) {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
   }
 </style>

@@ -33,7 +33,7 @@
     text-align: center;
     padding: 0.5rem 1rem;
     z-index: 6;
-    color: var(--paper);
+    color: var(--white);
     border-radius: 0.5rem;
     top: 3em;
     left: 0;

@@ -1,13 +1,3 @@
-<script lang="ts" context="module">
-  import { load, save } from '$lib/js/helpers'
-  import { setNewRandomCodeWord, startNewGame } from '$lib/js/mutations'
-  import { dev } from '$app/env'
-  import { is_client } from 'svelte/internal'
-  import { fly } from 'svelte/transition'
-
-  setNewRandomCodeWord(is_client && dev)
-</script>
-
 <script lang="ts">
   import {
     currentGuesses,
@@ -24,16 +14,18 @@
     previousGuesses,
 } from '$lib/js/state'
   import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES } from '$lib/js/constants';
-  import { stringContainsLetter } from '$lib/js/helpers'
-  
-  import { onMount } from 'svelte'
+  import { load, save, stringContainsLetter } from '$lib/js/helpers'
+  import { setNewRandomCodeWord, startNewGame } from '$lib/js/mutations'
   
   import GuessContent from '$lib/components/game/GuessContent.svelte'
   import Keyboard from '$lib/components/game/Keyboard.svelte'
   import InfoBar from '$lib/components/game/InfoBar.svelte'
   import Loader from '$lib/components/game/Loader.svelte'
   import AccessibleStatus from '$lib/components/game/AccessibleStatus.svelte'
-  import { backIn } from 'svelte/easing';
+  
+  import { dev } from '$app/env'
+  import { onMount } from 'svelte'
+  import { is_client } from 'svelte/internal'
 
   onMount(() => {
     try {
@@ -59,10 +51,12 @@
         gameIsOver.set(gameData.gameIsOver)
         usedAttempts.set(gameData.usedAttempts)
         streak.set(loadedStreak)
+      } else {
+        setNewRandomCodeWord(is_client && dev)
       }
     } 
     catch(e) {
-      alert(`Sorry, something went wrong loading your previous game data. Please try again, or clear your browser's local storage. If possible, finishing your current game may also resolve the issue.`)
+      alert(`Sorry, something went wrong loading your previous game data. Please try again, or start a new game from the menu.`)
     } 
     finally {
       isLoading.set(false)
@@ -80,7 +74,7 @@
     {#if $isLoading}
       <Loader />
     {:else}
-      <ul class="guess-container">
+      <ul id="game-board" class="guess-container" tabindex="-1">
         {#each $currentGuesses as guess, row (guess)}
           <li
             class="guess"

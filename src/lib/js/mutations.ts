@@ -16,6 +16,8 @@ import {
   streak,
   pointsScoredForLastGuess,
   previousGuesses,
+  isMenuOpen,
+  isDarkMode,
 } from './state'
 
 import {
@@ -23,19 +25,22 @@ import {
   GAME_DATA_STORAGE_KEY,
   SCORE_TICK_DURATION,
   SHUFFLE_COST,
+  STARTING_GUESSES,
 } from './constants'
 
 import { isValidGuess, load, save } from './helpers'
 import { codeWords } from './codeWords'
 
 import { dev } from '$app/env'
+import { goto } from '$app/navigation'
 import { SvelteComponent, tick } from 'svelte'
 import { get } from 'svelte/store'
 
 
 export const startNewGame = (): void => {
   save(GAME_DATA_STORAGE_KEY, null)
-  window.location.reload()
+  setDefaultGameState()
+  goto('/')
 }
 
 export const getRandomCodeWord = (): string => {
@@ -205,4 +210,33 @@ export const shuffleGuesses = (): void => {
   currentGuesses.set(newGuesses)
   remainingAttempts.set(get(remainingAttempts) - SHUFFLE_COST)
   saveGameData()
+}
+
+export const toggleMenuOpen = (): void => {
+  isMenuOpen.set(!get(isMenuOpen))
+}
+
+export const toggleDarkMode = (): void => {
+  isDarkMode.set(!get(isDarkMode))
+  if (get(isDarkMode)) {
+    document.documentElement.classList.add('dark')
+  } else {
+    document.documentElement.classList.remove('dark')
+  }
+  save('theme', get(isDarkMode) ? 'dark' : 'light')
+}
+
+const setDefaultGameState = (): void => {
+  setNewRandomCodeWord()
+  currentGuess.set('')
+  currentGuesses.set(['',' ','  ','   ','    '])
+  previousGuesses.set(['','','','','',])
+  remainingAttempts.set(STARTING_GUESSES)
+  discoveredCodeWord.set('')
+  runningScore.set(0)
+  usedAttempts.set(0)
+  gameIsOver.set(false)
+  maxRemainingAttempts.set(STARTING_GUESSES)
+  streak.set(0)
+  pointsScoredForLastGuess.set(0)
 }

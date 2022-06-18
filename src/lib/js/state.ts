@@ -21,8 +21,8 @@ export const messageType = writable<ToastMessage>({ message: '' })
 export const darkMode = writable<boolean>(false)
 export const shownModal = writable<SvelteComponent|null>(null)
 
-export const bonusWindow = writable<number>(0)
 export const streak = writable<number>(0)
 export const pointsScoredForLastGuess = writable<number>(0)
 
 export const isMenuOpen = writable<boolean>(false)
+export const isDarkMode = writable<boolean>(false)

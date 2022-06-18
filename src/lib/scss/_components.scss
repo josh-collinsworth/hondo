@@ -205,6 +205,10 @@
   }
 
   .power-bar {
+    .dark & {
+      --darkBlue: var(--lightBlue);
+    }
+
     width: calc(var(--scoreWidth) + 10em); 
     border: 0;
     border-radius: inherit;
@@ -283,6 +287,11 @@
   padding-top: 0.05ch;
   font-size: 1rem;
 
+  .dark & {
+    border-color: var(--lightblue);
+    color: var(--lightBlue);
+  }
+
   svg {
     fill: currentColor;
   }
@@ -296,8 +305,20 @@
   border: 2px solid var(--darkBlue);
   transition: var(--transition);
 
-  &[disabled] {
-    border-color: var(--lighterGray);
+  .arrow-top {
+    fill: var(--darkBlue);
+
+    .dark & {
+      fill: var(--orange);
+    }
+  }
+  
+  .arrow-bottom {
+    fill: var(--secondary);
+
+    .dark & {
+      fill: var(--lightBlue);
+    }
   }
 }
 

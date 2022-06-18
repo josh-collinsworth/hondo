@@ -27,3 +27,14 @@
     transform: translateY(-50%);
   }
 }
+
+@keyframes zoom_in_left {
+  from {
+    transform: translateX(5em);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0em);
+    opacity: 1;
+  }
+}

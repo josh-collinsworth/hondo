@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { currentGuesses, previousGuesses, codeWord, discoveredCodeWord } from '$lib/js/state'
+  import { currentGuesses, codeWord } from '$lib/js/state'
 
   export let guess: string
   export let previousGuess: string = ''
@@ -58,7 +58,7 @@
           class="guess-letter display-flex center-content {previousHighlightArray[i]}"
           aria-hidden="true"
         >
-          {previousGuess[i] || ''}
+          {previousGuess && previousGuess[i] ? previousGuess[i] : ''}
         </div>
         <div
           class="guess-letter guess-letter--next display-flex center-content {highlightArray[i]}"

@@ -15,8 +15,8 @@
 
 <script lang="ts">
   import '$lib/scss/global.scss'
-  import { fade } from 'svelte/transition'
-  import { gameIsOver, shownModal } from '$lib/js/state'
+  import { blur } from 'svelte/transition'
+  import { gameIsOver, isMenuOpen, shownModal } from '$lib/js/state'
   import Modal from '$lib/components/modals/Modal.svelte'
   import SkipToContentLink from '$lib/components/SkipToContentLink.svelte'
   import GameOverModal from '$lib/components/modals/GameOverModal.svelte'
@@ -24,7 +24,7 @@
 
   export let path: string
 
-  $: isInert = Boolean($shownModal) ? true : null
+  $: isInert = $shownModal || $isMenuOpen
 
   $: if ($gameIsOver) {
     setTimeout(() => {
@@ -35,7 +35,9 @@
 
 
 <div class="layout">
-  <SkipToContentLink />
+  {#if path === '/'}
+    <SkipToContentLink />
+  {/if}
   
   {#if $shownModal}
     <Modal>
@@ -45,11 +47,11 @@
   
   <main inert={isInert} id="#main" tabindex="-1">
     {#key path}
-    <div in:fade={{ delay: 360, duration: 180 }} out:fade={{ duration: 180 }}>
-      <slot />
-    </div>
+      <div in:blur={{ delay: 420, duration: 360 }} out:blur={{ duration: 360}}>
+        <slot />
+      </div>
     {/key}
   </main>
 
-  <Menu />
+  <Menu currentPage={path} />
 </div>

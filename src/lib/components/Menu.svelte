@@ -1,106 +1,136 @@
 <script lang="ts">
-  import { GAME_DATA_STORAGE_KEY } from '$lib/js/constants';
   import { isMenuOpen } from '$lib/js/state'
-  import Arrow from './icon/Arrow.svelte'
-  import { save } from '$lib/js/helpers';
+  import { startNewGame, toggleMenuOpen } from '$lib/js/mutations'
 
-  const closeMenu = () => $isMenuOpen = !$isMenuOpen
-  
-  const toggleDarkMode = () => {
-    const root = document.documentElement
-    if (root.classList.contains('dark')) {
-      root.classList.remove('dark')
-    } else {
-      root.classList.add('dark')
+  import DarkModeToggle from './DarkModeToggle.svelte'
+  import CloseMenuButton from './CloseMenuButton.svelte'
+
+  import { tick } from 'svelte'
+  import { fly, fade } from 'svelte/transition'
+  import { quintIn, quintOut } from 'svelte/easing'
+  import { goto } from '$app/navigation'
+
+  export let currentPage: string
+
+  let navMenu: HTMLElement
+
+  const handleReturnToGame = (): void => {
+    console.log(currentPage, currentPage === '/')
+    if (currentPage !== '/') {
+      goto('/')
     }
-    closeMenu()
+    toggleMenuOpen()
   }
 
   const abandonGame = (): void => {
     const confirmation = confirm('Start a new game? This will delete any game currently in progress.')
     if (!confirmation)  return
-    save(GAME_DATA_STORAGE_KEY, null)
-    
-    window.location.replace('/')
+    startNewGame()
+    toggleMenuOpen()
   }
 
-  $: tabindex = $isMenuOpen ? 0 : -1
+  isMenuOpen.subscribe(async (isOpen) => {
+    if (isOpen) {
+      await tick()
+      navMenu.focus()
+    }
+  })
 </script>
 
 
-<aside id="menu" {tabindex} class:open={$isMenuOpen}>
-  <div class="display-flex button-bar">
-    <button on:click={toggleDarkMode} class="info-button">
-      🌙
-    </button>
-    <button on:click={closeMenu} class="info-button">
-      <Arrow direction="right" />
-      <span class="sr">Close menu</span>
-    </button>
-  </div>
-  <nav>
-    <ul>
-      <li>
-        <a href="how-to-play" on:click={closeMenu}>
-          How to play
-        </a>
-      </li>
-      <li>
-        <a href="/stats" on:click={closeMenu}>
-          Stats
-        </a>
-      </li>
-      <li>
-        <a href="/" on:click|preventDefault={abandonGame}>
-          Start new game
-        </a>
-      </li>
-    </ul>
-  </nav>
-</aside>
+{#if $isMenuOpen}
+  <div class="menu-background"
+    on:click={toggleMenuOpen}
+    in:fade={{ duration: 240, easing: quintOut }}
+    out:fade={{ duration: 240, easing: quintIn }}
+  />
+  <aside
+    class="menu"
+    class:open={$isMenuOpen}
+    in:fly={{ x: 120, duration: 240, easing: quintOut }}
+    out:fly={{ x: 120, duration: 240, easing: quintIn }}
+  >
+    <nav tabindex="-1" bind:this={navMenu}>
+      <ul class="menu__links">
+        <li>
+          <a href="how-to-play" on:click={toggleMenuOpen}>
+            How to play
+          </a>
+        </li>
+        <li>
+          <a href="/stats" on:click={toggleMenuOpen}>
+            Stats
+          </a>
+        </li>
+        <li>
+          <a href="/" on:click|preventDefault={handleReturnToGame}>
+            Return to game
+          </a>
+        </li>
+        <li>
+          <a href="/" on:click|preventDefault={abandonGame}>
+            Start new game
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <div class="display-flex button-bar">
+      <DarkModeToggle />
+      <CloseMenuButton />
+    </div>
+  </aside>
+{/if}
 
 
 
 <style lang="scss">
-  #menu {
+  .menu-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(var(--paperRGB), 0.8);
+    z-index: 10;
+  }
+
+  .menu {
     position: absolute;
     top: 0;
-    right: -100%;
+    right: 0;
     width: 100%;
-    max-width: 24rem;
+    max-width: 28rem;
     min-height: 100vh;
     padding: 1rem;
-    transform: translateX(0);
     transition: transform 0.3s cubic-bezier(0.23, 1, 0.320, 1);
     background: var(--darkBlue);
     color: var(--white);
     z-index: 10;
 
-    &.open {
-      transform: translateX(-100%);
-    }
-
-    @media (min-width: 24rem) {
-      right: -24rem;
-      
-      .open {
-        transform: translateX(-24rem);
-      }
+    :global(*:focus) {
+      outline-color: var(--lightBlue);
     }
 
     .button-bar {
-      margin-bottom: 2rem;
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
       gap: 1rem;
       justify-content: right;
     }
 
-    .info-button {
-      padding: 0;
-      border-color: var(--white);
-      background: var(--darkBlue);
+    .menu__links {
+      margin-top: 4rem;
 
-      :global(svg) {
-        stroke: var(--white);
+      li {
+        animation: zoom_in_left 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        opacity: 0;
+
+        @for $i from 1 through 5 {
+          &:nth-of-type(#{$i}) {
+            animation-delay: $i * 0.07s;
+          }
+        } 
       }
     }
 

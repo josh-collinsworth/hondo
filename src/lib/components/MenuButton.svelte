@@ -1,12 +1,12 @@
 <script lang="ts">
   import { isMenuOpen } from '$lib/js/state'
 
-  const toggleIsMenuOpen = (): void => {
+  const toggleMenuOpen = (): void => {
     $isMenuOpen = !$isMenuOpen
   }
 </script>
 
-<button class="info-button menu" on:click={toggleIsMenuOpen}>
+<button class="info-button menu-button" on:click={toggleMenuOpen}>
   <div class="hamburger display-flex align-center">
     <div class="hamburger__bar"></div>
     <div class="hamburger__bar"></div>
@@ -16,7 +16,7 @@
 
 
 <style lang="scss">
-  .menu {
+  .menu-button {
     padding: 0;
   }
 
@@ -28,9 +28,13 @@
     .hamburger__bar {
       content: '';
       width: 100%;
-      height: 2px;
-      background: var(--darkBlue);
+      height: 0px;
+      border-bottom: 2px solid var(--darkBlue);
       display: block;
+
+      .dark & {
+        border-color: var(--lightBlue);
+      }
     }
   }
 </style>
