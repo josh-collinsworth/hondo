@@ -286,7 +286,7 @@
     font-weight: var(--fontWeightBold);
   }
 
-  :global(.menu-button) {
+  .directions :global(.menu-button) {
     position: fixed;
     top: 1rem;
     right: 1rem;
