@@ -128,11 +128,6 @@ import ExclamationBlock from './icon/ExclamationBlock.svelte'
       outline-color: var(--lightBlue);
     }
 
-    h2 {
-      margin: 0;
-      font-size: 2rem;
-    }
-
     .button-bar {
       position: absolute;
       top: 24px;

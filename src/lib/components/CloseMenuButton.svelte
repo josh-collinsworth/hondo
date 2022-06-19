@@ -1,5 +1,5 @@
 <script lang="ts">
-  import XIcon from './icon/Xicon.svelte'
+  import XIcon from './icon/XIcon.svelte'
   import { toggleMenuOpen } from '$lib/js/mutations'
 </script>
 
