@@ -4,11 +4,15 @@
 
   import DarkModeToggle from './DarkModeToggle.svelte'
   import CloseMenuButton from './CloseMenuButton.svelte'
+  import QuestionBlock from './icon/QuestionBlock.svelte'
+  import StatsBlock from './icon/StatsBlock.svelte'
 
   import { tick } from 'svelte'
   import { fly, fade } from 'svelte/transition'
   import { quintIn, quintOut } from 'svelte/easing'
   import { goto } from '$app/navigation'
+import BackBlock from './icon/BackBlock.svelte'
+import ExclamationBlock from './icon/ExclamationBlock.svelte'
 
   export let currentPage: string
 
@@ -51,30 +55,43 @@
     out:fly={{ x: 120, duration: 240, easing: quintIn }}
   >
     <nav tabindex="-1" bind:this={navMenu}>
-      <ul class="menu__links">
+      <ul class="menu__links" aria-labelledby="menu-heading">
         <li>
           <a href="how-to-play" on:click={toggleMenuOpen}>
+            <span aria-hidden="true">
+              <QuestionBlock />
+            </span>
             How to play
           </a>
         </li>
         <li>
           <a href="/stats" on:click={toggleMenuOpen}>
+            <span aria-hidden="true">
+              <StatsBlock />
+            </span>
             Stats
           </a>
         </li>
         <li>
           <a href="/" on:click|preventDefault={handleReturnToGame}>
+            <span aria-hidden="true">
+              <BackBlock />
+            </span>
             Return to game
           </a>
         </li>
         <li>
           <a href="/" on:click|preventDefault={abandonGame}>
+            <span aria-hidden="true">
+              <ExclamationBlock />
+            </span>
             Start new game
           </a>
         </li>
       </ul>
     </nav>
     <div class="display-flex button-bar">
+      <img src="/logo.svg"  style="width: 10rem" alt="Hondo"/>
       <DarkModeToggle />
       <CloseMenuButton />
     </div>
@@ -101,26 +118,39 @@
     width: 100%;
     max-width: 28rem;
     min-height: 100vh;
-    padding: 1rem;
+    padding: 24px;
     transition: transform 0.3s cubic-bezier(0.23, 1, 0.320, 1);
     background: var(--darkBlue);
     color: var(--white);
     z-index: 10;
 
-    :global(*:focus) {
+    :global(*:focus-within) {
       outline-color: var(--lightBlue);
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 2rem;
     }
 
     .button-bar {
       position: absolute;
-      top: 1rem;
-      right: 1rem;
+      top: 24px;
+      right: 24px;
       gap: 1rem;
-      justify-content: right;
+      justify-content: space-between;
+      width: calc(100% - 48px);
+
+      img {
+        flex: 1 0 auto;
+        margin-right: calc(100% - 18rem);
+      }
     }
 
     .menu__links {
-      margin-top: 4rem;
+      margin-top: 6rem;
+      padding-left: 0;
+      list-style-type: none;
 
       li {
         animation: zoom_in_left 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
@@ -131,6 +161,19 @@
             animation-delay: $i * 0.07s;
           }
         } 
+
+        a {
+          text-decoration: none;
+          display: flex;
+          align-items: center;
+
+          span {
+            width: 1.5em;
+            margin-right: 0.75em;
+            height: 100%;
+            line-height: 1;
+          }
+        }
       }
     }
 

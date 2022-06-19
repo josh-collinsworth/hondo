@@ -16,11 +16,12 @@
 <div class="directions">
   <div class="directions__container">
     <MenuButton />
-    <h1>How to play Hondo</h1>
+    <img src="/logo.svg" style="width: 12rem;" alt="Hondo">
+    <h1>How to play</h1>
 
-    <h2>Guess the code word</h2>
-
-    <div class="width-max-content">
+    <h2>Guess as many code words as you&nbsp;can</h2>
+    
+    <div class="width-max-content" style="margin: 2rem 0 0.5rem">
       <ExampleGuess codeWord="xrxxx" guess="ready" />
     </div>
 
@@ -28,9 +29,7 @@
       The code word includes <strong>R</strong>, but it's not the&nbsp;first&nbsp;letter.
     </p>
     
-    <br />
-    
-    <div class="width-max-content">
+    <div class="width-max-content" style="margin: 2rem 0 0.5rem">
       <ExampleGuess codeWord="xxxxt" guess="smart" />
     </div>
 
@@ -39,7 +38,7 @@
     </p>
 
     
-    <h2>When you guess the code word, the game continues with a new one</h2>
+    <h2>When you guess one, the game continues with a new one</h2>
     
     <p><em>However</em>, your five most recent guesses stay on the board as clues.</p>
           
@@ -65,7 +64,7 @@
 
 
     <h2>Watch your score &amp; life gauge</h2>
-    <p>Every incorrect guess drains life…</p>
+    <p>Every incorrect guess drains one life…</p>
 
     <div class="example-diagram">
       <ExamplePowerBar remainingAttempts={10} />
@@ -75,7 +74,7 @@
       <ExamplePowerBar remainingAttempts={9} />
     </div>
       
-    <p>…but a correct guess gives you a point, and <em>replenishes</em> life instead!</p>
+    <p>…but a correct guess gives you a point, and <em>replenishes</em> one life instead!</p>
     
     <div class="example-diagram">
       <ExamplePowerBar remainingAttempts={9} />
@@ -160,7 +159,7 @@
         You've scored a Hondo (100).
       </li>
     </ol>
-    <p>Get your score as high as possible, as fast as possible!</p>
+    <p>Get your score as high as possible, as fast as possible.</p>
 
     <hr>
 
@@ -198,9 +197,13 @@
     margin: 1rem auto;
   }
 
+  ul, ol {
+    margin: 2rem 0;
+  }
+
 
   li {
-    margin-top: 0.5rem;
+    margin-top: 1rem;
 
     &::marker {
       color: var(--secondary);
@@ -234,7 +237,7 @@
   }
 
   h2 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     margin: 5rem 0 1rem;
 
     &:first-child {

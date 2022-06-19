@@ -1,11 +1,11 @@
 <script lang="ts">
-  import Arrow from './icon/Arrow.svelte'
+  import XIcon from './icon/Xicon.svelte'
   import { toggleMenuOpen } from '$lib/js/mutations'
 </script>
 
 
 <button on:click={toggleMenuOpen} class="info-button">
-  <Arrow direction="right" />
+  <XIcon />
   <span class="sr">Close menu</span>
 </button>
 
@@ -13,11 +13,8 @@
 <style lang="scss">
   .info-button {
     padding: 0;
-    border-color: var(--white);
+    color: var(--white);
+    border-color: currentColor;
     background: var(--darkBlue);
-
-    :global(svg) {
-      stroke: var(--white);
-    }
   }
 </style>
