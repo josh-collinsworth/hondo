@@ -21,7 +21,7 @@
   import SkipToContentLink from '$lib/components/SkipToContentLink.svelte'
   import GameOverModal from '$lib/components/modals/GameOverModal.svelte'
   import Menu from '$lib/components/Menu.svelte'
-import Logo from '$lib/components/icon/Logo.svelte'
+  import Logo from '$lib/components/icon/Logo.svelte'
 
   export let path: string
 
@@ -46,7 +46,7 @@ import Logo from '$lib/components/icon/Logo.svelte'
     </Modal>
   {/if}
   
-  <main inert={isInert} class:blurry={$isMenuOpen} id="#main" tabindex="-1">
+  <main inert={isInert} class:blurry={isInert} id="#main" tabindex="-1">
     {#key path}
       <div in:blur={{ delay: 420, duration: 360 }} out:blur={{ duration: 360}}>
         <slot />

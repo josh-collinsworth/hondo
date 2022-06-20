@@ -8,6 +8,7 @@
   import StatsBlock from './icon/StatsBlock.svelte'
   import BackBlock from './icon/BackBlock.svelte'
   import ExclamationBlock from './icon/ExclamationBlock.svelte'
+  import HBlock from './icon/HBlock.svelte'
   import Logo from './icon/Logo.svelte'
 
   import { tick } from 'svelte'
@@ -68,19 +69,11 @@
     <nav tabindex="-1" bind:this={navMenu}>
       <ul class="menu__links" aria-labelledby="menu-heading">
         <li>
-          <a href="how-to-play" on:click={toggleMenuOpen}>
+          <a href="/how-to-play" on:click={toggleMenuOpen}>
             <span aria-hidden="true">
-              <QuestionBlock />
+              <HBlock />
             </span>
             How to play
-          </a>
-        </li>
-        <li>
-          <a href="/stats" on:click={toggleMenuOpen}>
-            <span aria-hidden="true">
-              <StatsBlock />
-            </span>
-            Stats
           </a>
         </li>
         <li>
@@ -97,6 +90,22 @@
               <ExclamationBlock />
             </span>
             Start new game
+          </a>
+        </li>
+        <li>
+          <a href="/stats" on:click={toggleMenuOpen}>
+            <span aria-hidden="true">
+              <StatsBlock />
+            </span>
+            Stats
+          </a>
+        </li>
+        <li>
+          <a href="/faq" on:click={toggleMenuOpen}>
+            <span aria-hidden="true">
+              <QuestionBlock />
+            </span>
+            FAQ
           </a>
         </li>
       </ul>
@@ -122,19 +131,21 @@
     position: fixed;
     top: 0;
     left: 0;
-    bottom: 0;
-    right: 0;
+    height: 100vh;
+    height: 100dvh;
+    width: 100vw;
     background: rgba(var(--paperRGB), 0.9);
     z-index: 10;
   }
 
   .menu {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     width: 100%;
     max-width: 28rem;
-    min-height: 100vh;
+    height: 100vh;
+    height: 100dvh;
     padding: 24px;
     transition: transform 0.3s cubic-bezier(0.23, 1, 0.320, 1);
     background: transparent;

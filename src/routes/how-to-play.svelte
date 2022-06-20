@@ -5,6 +5,7 @@
   import Logo from '$lib/components/icon/Logo.svelte'
   import Shuffle from '$lib/components/icon/ShuffleIcon.svelte'
   import MenuButton from '$lib/components/MenuButton.svelte'
+  import { SHUFFLE_COST } from '$lib/js/constants'
 </script>
 
 
@@ -141,7 +142,7 @@
         <Shuffle />
       </span>
       <Arrow direction="down" />
-      <ExamplePowerBar remainingAttempts={7} />
+      <ExamplePowerBar remainingAttempts={10 - SHUFFLE_COST} />
       <div>
         <ExampleGuess codeWord="boxer" guess="brown" />
         <ExampleGuess codeWord="boxer" guess="oxide" />
@@ -153,7 +154,7 @@
 
     <p><strong>Shuffling is a key strategy</strong>; it helps replace unhelpful guesses, <strong>and</strong> keeps bonus streaks alive!</p>
 
-    <p>However, <strong>shuffling costs 3 life</strong>! Use shuffles wisely.</p>
+    <p>However, <strong>shuffling costs {SHUFFLE_COST} life</strong>! Use shuffles wisely.</p>
 
 
     <h2>The goal</h2>

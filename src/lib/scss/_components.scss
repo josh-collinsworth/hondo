@@ -49,8 +49,12 @@
 }
 
 .bottom-container {
-  min-height: 6em;
+  height: 11rem;
   position: relative;
+  
+  @media (min-height: 52rem) {
+    height: 15rem;
+  }
 
   .postgame-summary {
     font-size: 1rem;
@@ -281,7 +285,7 @@
   line-height: 2;
   font-weight: var(--fontWeightBold);
   font-family: 'Ridley Grotesk', sans-serif;
-  background: var(--paper);
+  background: transparent;
   position: relative;
   z-index: 4;
   padding-top: 0.05ch;

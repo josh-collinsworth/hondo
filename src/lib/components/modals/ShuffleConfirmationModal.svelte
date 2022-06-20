@@ -1,6 +1,5 @@
 <script lang="ts">
-import { SHUFFLE_COST } from '$lib/js/constants';
-
+  import { SHUFFLE_COST } from '$lib/js/constants';
   import { shuffleGuesses, closeModal } from '$lib/js/mutations'
   import { remainingAttempts } from '$lib/js/state'
 
@@ -33,7 +32,7 @@ import { SHUFFLE_COST } from '$lib/js/constants';
 {#if $remainingAttempts > SHUFFLE_COST}
   <p>Replaces all guesses on the board with random words.</p>
 
-  <p>Pay <strong>3 life</strong> to shuffle now?</p>
+  <p>Pay <strong>{SHUFFLE_COST} life</strong> to shuffle now?</p>
 
   <div class="button-bar">
     <button on:click={closeModal} bind:this={cancelButton}>

@@ -8,7 +8,7 @@
     codeWordToShow = $discoveredCodeWord
     setTimeout(() => {
       codeWordToShow = ''
-    }, 1300)
+    }, 1500)
   }
 </script>
 
@@ -26,7 +26,7 @@
         {#if $pointsScoredForLastGuess > 1}
           <strong>Streak bonus!</strong>
         {/if}
-        +{$pointsScoredForLastGuess} 
+        +{$pointsScoredForLastGuess}
       </p>
     </div>
   </div>
@@ -37,18 +37,19 @@
     position: fixed;
     z-index: 9;
     min-height: 100vh;
+    min-height: 100dvh;
     width: 100vw;
-    align-items: flex-start;
+    align-items: flex-end;
     justify-content: center;
-    padding-top: 5rem;
     top: 0;
     left: 0;
 
     .status-burst__inner {
       width: 100%;
-      background: rgba(var(--paperRGB), 0.95);
+      background: rgba(var(--paperRGB), 0.9);
       padding: 2rem;
       position: relative;
+      margin-bottom: 2rem;
 
       &::before,
       &::after {

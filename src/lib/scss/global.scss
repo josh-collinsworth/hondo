@@ -49,3 +49,11 @@ h1 {
   height: 100vh;
   height: 100dvh;
 }
+
+a {
+  color: var(--darkBlue);
+
+  .dark-mode & {
+    color: var(--lightBlue);
+  }
+}

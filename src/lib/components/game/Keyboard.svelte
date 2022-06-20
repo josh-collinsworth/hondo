@@ -89,8 +89,9 @@
 <style lang="scss">
   .keyboard {
     display: grid;
-    grid-template-rows: repeat(3, 2.3em);
+    grid-template-rows: repeat(3, 1fr);
     margin: 0 calc(-1rem + 5px);
+    height: 100%;
 
     .row {
       display: flex;
@@ -147,6 +148,7 @@
 
       &.included {
         color: var(--ink);
+        border-color: var(--secondary);
         background: var(--secondary);
       }
     }
