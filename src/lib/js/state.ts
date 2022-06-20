@@ -20,7 +20,6 @@ export const message = writable<string>('')
 export const messageType = writable<ToastMessage>({ message: '' })
 export const darkMode = writable<boolean>(false)
 export const shownModal = writable<SvelteComponent|null>(null)
-export const freebieWord = writable<string>('')
 
 export const streak = writable<number>(0)
 export const pointsScoredForLastGuess = writable<number>(0)

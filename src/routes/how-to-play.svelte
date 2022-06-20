@@ -156,13 +156,6 @@
     <p>However, <strong>shuffling costs 3 life</strong>! Use shuffles wisely.</p>
 
 
-    <h3>Freebies</h3>
-
-    <p>Sometimes, if your guess is <em>exactly</em> one letter off from the code word, you'll get a <b>freebie</b>: your guess won't be added to the board, and you'll get another chance.</p>
-
-    <p>Freebies come with a downside, though: you won't know <em>which</em> letter is off.</p>
-
-
     <h2>The goal</h2>
     <p><strong>Get your score as high as possible, as fast as possible.</strong></p>
     <p>The game ends when either:</p>

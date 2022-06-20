@@ -12,9 +12,7 @@
     streak,
     isLoading, 
     previousGuesses,
-isMenuOpen,
-freebieWord,
-} from '$lib/js/state'
+  } from '$lib/js/state'
   import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES } from '$lib/js/constants';
   import { load, save, stringContainsLetter } from '$lib/js/helpers'
   import { setNewRandomCodeWord, startNewGame } from '$lib/js/mutations'
@@ -42,7 +40,6 @@ freebieWord,
         }
         let attemptsCap = gameData.maxRemainingAttempts ? gameData.maxRemainingAttempts : STARTING_GUESSES
         let loadedStreak = gameData.streak || 0
-        let loadedFreebieWord = gameData.freebieWord || ''
         
         $codeWord = window.atob(gameData.codeWord)
         $maxRemainingAttempts = attemptsCap
@@ -52,7 +49,6 @@ freebieWord,
         $runningScore = gameData.runningScore
         $gameIsOver = gameData.gameIsOver
         $usedAttempts = gameData.usedAttempts
-        $freebieWord = loadedFreebieWord
         $streak = loadedStreak
       } else {
         setNewRandomCodeWord(is_client && dev)
