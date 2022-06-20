@@ -21,6 +21,7 @@
   import SkipToContentLink from '$lib/components/SkipToContentLink.svelte'
   import GameOverModal from '$lib/components/modals/GameOverModal.svelte'
   import Menu from '$lib/components/Menu.svelte'
+import Logo from '$lib/components/icon/Logo.svelte'
 
   export let path: string
 
@@ -28,7 +29,7 @@
 
   $: if ($gameIsOver) {
     setTimeout(() => {
-      shownModal.set(GameOverModal)
+      $shownModal = GameOverModal
     }, 1200)
   }
 </script>
@@ -45,7 +46,7 @@
     </Modal>
   {/if}
   
-  <main inert={isInert} id="#main" tabindex="-1">
+  <main inert={isInert} class:blurry={$isMenuOpen} id="#main" tabindex="-1">
     {#key path}
       <div in:blur={{ delay: 420, duration: 360 }} out:blur={{ duration: 360}}>
         <slot />
@@ -55,3 +56,5 @@
 
   <Menu currentPage={path} />
 </div>
+
+<div class="logo-preloader sr" style="position:absolute;left:-100vw;"><Logo /></div>

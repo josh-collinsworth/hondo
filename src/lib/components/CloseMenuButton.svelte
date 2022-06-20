@@ -13,8 +13,7 @@
 <style lang="scss">
   .info-button {
     padding: 0;
-    color: var(--white);
+    color: var(--ink);
     border-color: currentColor;
-    background: var(--darkBlue);
   }
 </style>

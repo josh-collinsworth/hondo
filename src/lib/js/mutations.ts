@@ -18,6 +18,7 @@ import {
   previousGuesses,
   isMenuOpen,
   isDarkMode,
+  freebieWord,
 } from './state'
 
 import {
@@ -30,6 +31,8 @@ import {
 
 import { isValidGuess, load, save } from './helpers'
 import { codeWords } from './codeWords'
+
+import FreebieModalSvelte from '../components/modals/FreebieModal.svelte'
 
 import { dev } from '$app/env'
 import { goto } from '$app/navigation'
@@ -61,6 +64,21 @@ export const setNewRandomCodeWord = (log = false): void => {
 
 export const handleNewGuess = (): void => {
   if (isValidGuess(get(currentGuess))) {
+    // Freebie logic
+    const exactLetters = [...get(currentGuess)].filter((letter, i) => [...get(codeWord)][i] === letter).length
+    if (exactLetters === 4 && !get(freebieWord)) {
+      const ignoreFreebieModal = load('never-show-freebie-modal')
+
+      if (!ignoreFreebieModal) {
+        shownModal.set(FreebieModalSvelte)
+      }
+      freebieWord.set(get(codeWord))
+      setToast({ message: `Freebie! ${get(currentGuess).toUpperCase()} is just one letter off.`, type: 'success' })
+      currentGuess.set('')
+      saveGameData()
+      return
+    }
+
     if (!get(currentGuesses).includes(get(currentGuess))) {
       previousGuesses.set([...get(currentGuesses)])
       currentGuesses.set([...get(currentGuesses).slice(1, 5), get(currentGuess)])
@@ -124,6 +142,7 @@ export const setNewScores = (): void => {
     incrementRemainingAttempts(1)
     incrementStreak(1)
     handleCorrectGuess()
+    freebieWord.set('')
   } else {
     incrementRemainingAttempts(-1)
     setStreak(0)
@@ -186,6 +205,7 @@ export const saveGameData = (): void => {
     maxRemainingAttempts: get(maxRemainingAttempts),
     usedAttempts: get(usedAttempts),
     streak: get(streak),
+    freebieWord: get(freebieWord),
   })
 }
 

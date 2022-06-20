@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { gameIsOver } from '$lib/js/state'
   import { closeModal } from '$lib/js/mutations'
   import { fly, fade } from 'svelte/transition'
   import { quadIn, quadOut, } from 'svelte/easing'

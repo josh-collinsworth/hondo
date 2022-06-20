@@ -2,6 +2,7 @@
   import ExampleGuess from '$lib/components/game/examples/ExampleGuess.svelte'
   import ExamplePowerBar from '$lib/components/game/examples/ExamplePowerBar.svelte'
   import Arrow from '$lib/components/icon/Arrow.svelte'
+  import Logo from '$lib/components/icon/Logo.svelte'
   import Shuffle from '$lib/components/icon/ShuffleIcon.svelte'
   import MenuButton from '$lib/components/MenuButton.svelte'
 </script>
@@ -16,10 +17,12 @@
 <div class="directions">
   <div class="directions__container">
     <MenuButton />
-    <img src="/logo.svg" style="width: 12rem;" alt="Hondo">
+    <div style="width: 12rem;">
+      <Logo />
+    </div>
     <h1>How to play</h1>
 
-    <h2>Guess as many code words as you&nbsp;can</h2>
+    <h2>Guess all the code words you&nbsp;can</h2>
     
     <div class="width-max-content" style="margin: 2rem 0 0.5rem">
       <ExampleGuess codeWord="xrxxx" guess="ready" />
@@ -74,7 +77,7 @@
       <ExamplePowerBar remainingAttempts={9} />
     </div>
       
-    <p>…but a correct guess gives you a point, and <em>replenishes</em> one life instead!</p>
+    <p>…but a correct guess gives you a point, and <em>replenishes</em> one life instead.</p>
     
     <div class="example-diagram">
       <ExamplePowerBar remainingAttempts={9} />
@@ -83,6 +86,9 @@
       <Arrow direction="down" />
       <ExamplePowerBar remainingAttempts={10} score={1} />
     </div>
+
+
+    <h2>Special rules to know</h2>
 
 
     <h3>Streak bonus</h3>
@@ -113,9 +119,9 @@
     </div>
 
 
-    <h2 class="display-flex" style="align-items: center;">
-      Need help? Try shuffling!
-    </h2>
+    <h3 class="display-flex" style="align-items: center;">
+      Need help? Try shuffling
+    </h3>
 
     <p>
       Hit the <strong>shuffle button</strong> any time to replace the board with five random new guesses!
@@ -149,7 +155,16 @@
 
     <p>However, <strong>shuffling costs 3 life</strong>! Use shuffles wisely.</p>
 
+
+    <h3>Freebies</h3>
+
+    <p>Sometimes, if your guess is <em>exactly</em> one letter off from the code word, you'll get a <b>freebie</b>: your guess won't be added to the board, and you'll get another chance.</p>
+
+    <p>Freebies come with a downside, though: you won't know <em>which</em> letter is off.</p>
+
+
     <h2>The goal</h2>
+    <p><strong>Get your score as high as possible, as fast as possible.</strong></p>
     <p>The game ends when either:</p>
     <ol>
       <li>
@@ -159,7 +174,6 @@
         You've scored a Hondo (100).
       </li>
     </ol>
-    <p>Get your score as high as possible, as fast as possible.</p>
 
     <hr>
 
@@ -247,6 +261,7 @@
 
   h3 {
     margin-top: 3rem;
+    font-size: 1.3rem;
   }
 
   .example-diagram {

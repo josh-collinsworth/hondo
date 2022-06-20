@@ -6,13 +6,14 @@
   import CloseMenuButton from './CloseMenuButton.svelte'
   import QuestionBlock from './icon/QuestionBlock.svelte'
   import StatsBlock from './icon/StatsBlock.svelte'
+  import BackBlock from './icon/BackBlock.svelte'
+  import ExclamationBlock from './icon/ExclamationBlock.svelte'
+  import Logo from './icon/Logo.svelte'
 
   import { tick } from 'svelte'
   import { fly, fade } from 'svelte/transition'
   import { quintIn, quintOut } from 'svelte/easing'
   import { goto } from '$app/navigation'
-import BackBlock from './icon/BackBlock.svelte'
-import ExclamationBlock from './icon/ExclamationBlock.svelte'
 
   export let currentPage: string
 
@@ -24,6 +25,12 @@ import ExclamationBlock from './icon/ExclamationBlock.svelte'
       goto('/')
     }
     toggleMenuOpen()
+  }
+
+  const listenForClose = (e: KeyboardEvent): void => {
+    if (e.key === 'Escape') {
+      toggleMenuOpen()
+    }
   }
 
   const abandonGame = (): void => {
@@ -42,8 +49,12 @@ import ExclamationBlock from './icon/ExclamationBlock.svelte'
 </script>
 
 
+<svelte:window on:keyup={listenForClose} />
+
+
 {#if $isMenuOpen}
-  <div class="menu-background"
+  <div
+    class="menu-background"
     on:click={toggleMenuOpen}
     in:fade={{ duration: 240, easing: quintOut }}
     out:fade={{ duration: 240, easing: quintIn }}
@@ -91,9 +102,15 @@ import ExclamationBlock from './icon/ExclamationBlock.svelte'
       </ul>
     </nav>
     <div class="display-flex button-bar">
-      <img src="/logo.svg"  style="width: 10rem" alt="Hondo"/>
-      <DarkModeToggle />
-      <CloseMenuButton />
+      <div class="button-bar__logo display-flex center-content">
+        <a href="/" on:click|preventDefault={handleReturnToGame} class="display-flex center-content">
+          <Logo />
+        </a>
+      </div>
+      <div class="button-bar__buttons display-flex center-content">
+        <DarkModeToggle />
+        <CloseMenuButton />
+      </div>
     </div>
   </aside>
 {/if}
@@ -107,7 +124,7 @@ import ExclamationBlock from './icon/ExclamationBlock.svelte'
     left: 0;
     bottom: 0;
     right: 0;
-    background: rgba(var(--paperRGB), 0.8);
+    background: rgba(var(--paperRGB), 0.9);
     z-index: 10;
   }
 
@@ -120,8 +137,8 @@ import ExclamationBlock from './icon/ExclamationBlock.svelte'
     min-height: 100vh;
     padding: 24px;
     transition: transform 0.3s cubic-bezier(0.23, 1, 0.320, 1);
-    background: var(--darkBlue);
-    color: var(--white);
+    background: transparent;
+    color: var(--ink);
     z-index: 10;
 
     :global(*:focus-within) {
@@ -136,9 +153,12 @@ import ExclamationBlock from './icon/ExclamationBlock.svelte'
       justify-content: space-between;
       width: calc(100% - 48px);
 
-      img {
-        flex: 1 0 auto;
-        margin-right: calc(100% - 18rem);
+      .button-bar__logo {
+        width: 12rem;
+      }
+
+      .button-bar__buttons {
+        gap: 0.5rem;
       }
     }
 
@@ -177,7 +197,7 @@ import ExclamationBlock from './icon/ExclamationBlock.svelte'
     }
 
     a {
-      color: var(--white);
+      color: inherit;
       font-size: 1.2rem;
     }
   }

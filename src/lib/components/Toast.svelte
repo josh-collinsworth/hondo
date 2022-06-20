@@ -7,8 +7,8 @@
 
   $: if ($message) {
     setTimeout(() => {
-      message.set('')
-    }, 2000)
+      $message = ''
+    }, 3000)
   }
 </script>
 

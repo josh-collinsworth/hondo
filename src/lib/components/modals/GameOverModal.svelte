@@ -2,7 +2,7 @@
   import { PREVIOUS_HIGH_SCORES_STORAGE_KEY } from '$lib/js/constants'
 
   import { load, floatFormatter } from '$lib/js/helpers'
-  import { runningScore, codeWord, usedAttempts } from '$lib/js/state'
+  import { runningScore, codeWord, usedAttempts, shownModal } from '$lib/js/state'
   import { startNewGame } from '$lib/js/mutations'
   
   import { onMount } from 'svelte'
@@ -27,6 +27,11 @@
   let highScore: number
   let fastestScore: number
   let averageScore: number|string
+
+  const handleStartNewGame = (): void => {
+    startNewGame()
+    $shownModal = null
+  }
 
   onMount(() => {
     const previousHighScores = load(PREVIOUS_HIGH_SCORES_STORAGE_KEY) || [[0, 0]]
@@ -55,7 +60,7 @@
   <li><b>Average score:</b> {averageScore}</li>
 </ul>
 
-<button on:click={startNewGame} class="confirm">
+<button on:click={handleStartNewGame} class="confirm">
   Play again!
 </button>
 

@@ -12,6 +12,8 @@
     streak,
     isLoading, 
     previousGuesses,
+isMenuOpen,
+freebieWord,
 } from '$lib/js/state'
   import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES } from '$lib/js/constants';
   import { load, save, stringContainsLetter } from '$lib/js/helpers'
@@ -40,17 +42,18 @@
         }
         let attemptsCap = gameData.maxRemainingAttempts ? gameData.maxRemainingAttempts : STARTING_GUESSES
         let loadedStreak = gameData.streak || 0
+        let loadedFreebieWord = gameData.freebieWord || ''
         
-        maxRemainingAttempts.set(attemptsCap)
-        currentGuesses.set(gameData.currentGuesses)
-        previousGuesses.set(gameData.previousGuesses)
-
-        codeWord.set(window.atob(gameData.codeWord))
-        remainingAttempts.set(gameData.remainingAttempts)
-        runningScore.set(gameData.runningScore)
-        gameIsOver.set(gameData.gameIsOver)
-        usedAttempts.set(gameData.usedAttempts)
-        streak.set(loadedStreak)
+        $codeWord = window.atob(gameData.codeWord)
+        $maxRemainingAttempts = attemptsCap
+        $currentGuesses = gameData.currentGuesses
+        $previousGuesses = gameData.previousGuesses
+        $remainingAttempts = gameData.remainingAttempts
+        $runningScore = gameData.runningScore
+        $gameIsOver = gameData.gameIsOver
+        $usedAttempts = gameData.usedAttempts
+        $freebieWord = loadedFreebieWord
+        $streak = loadedStreak
       } else {
         setNewRandomCodeWord(is_client && dev)
       }
@@ -59,13 +62,13 @@
       alert(`Sorry, something went wrong loading your previous game data. Please try again, or start a new game from the menu.`)
     } 
     finally {
-      isLoading.set(false)
+      $isLoading = false
     }
   })
 </script>
 
 
-<main>
+<section>
   <!-- For debugging -->
   <!-- <input type="text" bind:value={$codeWord} /> -->
   <div class="game-container">
@@ -122,4 +125,4 @@
       {/if}
     </div>
   </div>
-</main>
+</section>

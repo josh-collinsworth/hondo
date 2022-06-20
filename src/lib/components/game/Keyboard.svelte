@@ -36,7 +36,7 @@
   const handlePress = async (key: string): Promise<void> => {
     if (isSingleLetter(key)) {
       if ($currentGuess.length < 5) {
-        currentGuess.set($currentGuess + key)
+        $currentGuess = $currentGuess + key
       }
     } else if (isDeleteKey(key)) {
       if ($currentGuess.length) {
