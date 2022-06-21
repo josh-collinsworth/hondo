@@ -1,26 +1,26 @@
 <script lang="ts">
-  import { message, messageType } from '$lib/js/state'
+  import { toast } from '$lib/state/global'
   import { cubicOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
 
   const defaultTransition = { y: 16, easing: cubicOut, duration: 300 }
 
-  $: if ($message) {
+  $: if ($toast.message) {
     setTimeout(() => {
-      $message = ''
+      $toast = { ...$toast, message: '' }
     }, 3000)
   }
 </script>
 
 
-{#if $message}
+{#if $toast.message}
   <div
-    class="toast center-content display-flex {$messageType}"
+    class="toast center-content display-flex {$toast.type}"
     in:fly={{ ...defaultTransition }}
     out:fly={{ ...defaultTransition, y: -16}}
   >
     <div class="toast-message">
-      {$message}
+      {$toast.message}
     </div>
   </div>
 {/if}

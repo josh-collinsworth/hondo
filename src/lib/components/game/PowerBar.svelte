@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { remainingAttempts, maxRemainingAttempts, runningScore } from '$lib/js/state'
+  import { remainingAttempts, maxRemainingAttempts, runningScore } from '$lib/state/game'
   import { SCORE_TICK_DURATION, STARTING_GUESSES } from '$lib/js/constants'
   import { fly } from 'svelte/transition'
-  import { backIn, backOut, bounceInOut, elasticIn, elasticInOut, elasticOut } from 'svelte/easing'
+  import { backIn, backOut } from 'svelte/easing'
 
   let scoreDigits: string[]
   $: scoreDigits = String($runningScore).padStart(3).split('')

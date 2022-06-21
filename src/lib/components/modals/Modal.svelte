@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { closeModal } from '$lib/js/mutations'
+  import { closeModal } from '$lib/state/mutations'
   import { fly, fade } from 'svelte/transition'
   import { quadIn, quadOut, } from 'svelte/easing'
   import { onMount } from 'svelte'

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { currentGuess, codeWord, discoveredCodeWord, currentGuesses } from '$lib/js/state'
-  import { handleNewGuess } from '$lib/js/mutations'
+  import { currentGuess, codeWord, discoveredCodeWord, currentGuesses } from '$lib/state/game'
+  import { handleNewGuess } from '$lib/state/mutations'
   import { isSingleLetter } from '$lib/js/helpers'
   import { browser } from '$app/env'
 

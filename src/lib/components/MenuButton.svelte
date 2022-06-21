@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { isMenuOpen } from '$lib/js/state'
+  import { isMenuOpen } from '$lib/state/global'
 
   const toggleMenuOpen = (): void => {
     $isMenuOpen = !$isMenuOpen

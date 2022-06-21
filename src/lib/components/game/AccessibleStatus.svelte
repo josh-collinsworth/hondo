@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { codeWord, currentGuesses } from '$lib/js/state'
+  import { codeWord, currentGuesses } from '$lib/state/game'
 
   let lastGuess: string 
-  $: lastGuess = [...$currentGuesses].pop()
+  $: lastGuess = [...$currentGuesses].pop() || ''
 
   let remainingLetters: string[] = []
   $: if ($codeWord) remainingLetters = [...$codeWord]

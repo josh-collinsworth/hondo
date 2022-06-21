@@ -1,4 +1,4 @@
-import type { ToastMessage } from './types'
+import type { ToastMessage } from '../js/types'
 
 import {
   codeWord,
@@ -10,15 +10,12 @@ import {
   usedAttempts,
   maxRemainingAttempts,
   discoveredCodeWord,
-  shownModal,
-  message,
-  messageType,
   streak,
   pointsScoredForLastGuess,
   previousGuesses,
-  isMenuOpen,
-  isDarkMode,
-} from './state'
+} from './game'
+import { shownModal, toast, isMenuOpen } from './global'
+import { isDarkMode } from './user'
 
 import {
   PREVIOUS_HIGH_SCORES_STORAGE_KEY,
@@ -26,10 +23,10 @@ import {
   SCORE_TICK_DURATION,
   SHUFFLE_COST,
   STARTING_GUESSES,
-} from './constants'
+} from '../js/constants'
 
-import { isValidGuess, load, save } from './helpers'
-import { codeWords } from './codeWords'
+import { isValidGuess, load, save } from '../js/helpers'
+import { codeWords } from '../js/codeWords'
 
 import { dev } from '$app/env'
 import { goto } from '$app/navigation'
@@ -193,7 +190,7 @@ export const setToast = async (msg: ToastMessage = { message: '', type: 'warning
   message.set('')
   await tick()
   message.set(msg.message)
-  messageType.set(msg.type)
+  toast.set(msg.type)
 }
 
 export const shuffleGuesses = (): void => {

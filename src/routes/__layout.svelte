@@ -16,7 +16,8 @@
 <script lang="ts">
   import '$lib/scss/global.scss'
   import { blur } from 'svelte/transition'
-  import { gameIsOver, isMenuOpen, shownModal } from '$lib/js/state'
+  import { gameIsOver } from '$lib/state/game'
+  import { isMenuOpen, shownModal } from '$lib/state/global'
   import Modal from '$lib/components/modals/Modal.svelte'
   import SkipToContentLink from '$lib/components/SkipToContentLink.svelte'
   import GameOverModal from '$lib/components/modals/GameOverModal.svelte'

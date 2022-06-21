@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { isDarkMode } from '$lib/js/state'
-  import { toggleDarkMode } from '$lib/js/mutations'
+  import { isDarkMode } from '$lib/state/user'
+  import { toggleDarkMode } from '$lib/state/mutations'
   import LightDarkIcon from './icon/LightDarkIcon.svelte'
   import { onMount } from 'svelte'
 

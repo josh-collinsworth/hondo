@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { isMenuOpen } from '$lib/js/state'
-  import { startNewGame, toggleMenuOpen } from '$lib/js/mutations'
+  import { isMenuOpen } from '$lib/state/global'
+  import { startNewGame, toggleMenuOpen } from '$lib/state/mutations'
 
   import DarkModeToggle from './DarkModeToggle.svelte'
   import CloseMenuButton from './CloseMenuButton.svelte'
