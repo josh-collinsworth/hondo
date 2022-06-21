@@ -2,8 +2,9 @@
   import { PREVIOUS_HIGH_SCORES_STORAGE_KEY } from '$lib/js/constants'
 
   import { load, floatFormatter } from '$lib/js/helpers'
-  import { runningScore, codeWord, usedAttempts, shownModal } from '$lib/js/state'
-  import { startNewGame } from '$lib/js/mutations'
+  import { runningScore, codeWord, usedAttempts } from '$lib/state/game'
+  import { shownModal } from '$lib/state/global'
+  import { startNewGame } from '$lib/state/mutations'
   
   import { onMount } from 'svelte'
 

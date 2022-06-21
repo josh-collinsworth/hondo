@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { pointsScoredForLastGuess, discoveredCodeWord } from '$lib/js/state'
+  import { pointsScoredForLastGuess, discoveredCodeWord } from '$lib/state/game'
   import { fade } from 'svelte/transition'
 
   let codeWordToShow: string = ''

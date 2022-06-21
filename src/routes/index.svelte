@@ -8,14 +8,13 @@
     runningScore,
     maxRemainingAttempts,
     usedAttempts,
-    shownModal,
     streak,
-    isLoading, 
     previousGuesses,
-  } from '$lib/js/state'
+  } from '$lib/state/game'
+  import { shownModal, isLoading } from '$lib/state/global'
   import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES } from '$lib/js/constants';
   import { load, save, stringContainsLetter } from '$lib/js/helpers'
-  import { setNewRandomCodeWord, startNewGame } from '$lib/js/mutations'
+  import { setNewRandomCodeWord, startNewGame } from '$lib/state/mutations'
   
   import GuessContent from '$lib/components/game/GuessContent.svelte'
   import Keyboard from '$lib/components/game/Keyboard.svelte'

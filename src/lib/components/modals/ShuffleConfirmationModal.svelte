@@ -1,7 +1,7 @@
 <script lang="ts">
   import { SHUFFLE_COST } from '$lib/js/constants';
-  import { shuffleGuesses, closeModal } from '$lib/js/mutations'
-  import { remainingAttempts } from '$lib/js/state'
+  import { shuffleGuesses, closeModal } from '$lib/state/mutations'
+  import { remainingAttempts } from '$lib/state/game'
 
   import ShuffleIcon from '../icon/ShuffleIcon.svelte'
 

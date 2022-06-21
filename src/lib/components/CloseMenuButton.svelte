@@ -1,6 +1,6 @@
 <script lang="ts">
   import XIcon from './icon/XIcon.svelte'
-  import { toggleMenuOpen } from '$lib/js/mutations'
+  import { toggleMenuOpen } from '$lib/state/mutations'
 </script>
 
 
