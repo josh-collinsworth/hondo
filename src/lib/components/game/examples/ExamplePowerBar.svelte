@@ -14,14 +14,6 @@
         background-size: {( startingGuesses / remainingAttempts) * 100}%;
       "
     />
-    <div 
-      class="power-bar__grid"
-      style="grid-template-columns: repeat({startingGuesses}, 1fr);"
-    >
-      {#each Array.from({ length: startingGuesses }) as _, i}
-        <div class="power-bar__grid-box" />
-      {/each}
-    </div>
   </div>
 </div>
 

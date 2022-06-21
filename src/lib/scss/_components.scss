@@ -185,7 +185,7 @@
 
 .power-bar-container {
   font-size: 4vw;
-  width: calc(var(--scoreWidth) + 10em + 8px);
+  width: 100%;
   padding: 0;
   display: flex;
   align-items: center;
@@ -196,67 +196,28 @@
   height: calc(var(--powerBarHeight) + 4px);
   will-change: transform;
 
-  @media (min-width: 22rem) {
-    font-size: 5vw;
-  }
-
-  @media (min-width: 26rem) {
-    font-size: 5.5vw;
-  }
-
-  @media (min-width: 32rem) {
-    font-size: 1.7rem;
-  }
-
   .power-bar {
-    .dark & {
-      --darkBlue: var(--lightBlue);
-    }
-
-    width: calc(var(--scoreWidth) + 10em); 
+    width: 100%;
+    display: grid;
+    grid-template-columns: var(--scoreWidth) 1fr; 
     border: 0;
     border-radius: inherit;
-    display: flex;
     margin: 4px;
     height: calc(var(--powerBarHeight) - 4px);
-    align-content: stretch;
+    align-items: center;
     overflow: hidden;
     position: relative;
     background: var(--lighterAccent);
     box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--darkBlue);
-  
-    .power-bar__grid {
-      display: flex;
-      width: 10em;
-      position: absolute;
-      height: var(--powerBarHeight);
-      left: var(--scoreWidth);
-      top: 0;
-      z-index: 2;
-      transition: inherit;
-      width: 10em;
+    
+    
+    .dark & {
+      --darkBlue: var(--lightBlue);
     }
-  
-    .power-bar__grid-box {
-      border-left: 1px solid var(--paper);
-      width: 1em;
-      flex: 0 0 1em;
-      transition: background .3s cubic-bezier(0.645, 0.045, 0.355, 1);
 
-      &.disabled {
-        background: #eaecee;
-        background: var(--lightestAccent);
-      }
-
-      @media (min-width: 22rem) {
-        border-width: 2px;
-      }
-    }
-  
     .power-bar__fill {
       transform-origin: left;
       background: var(--primary);
-      background: linear-gradient(to right, var(--red), var(--orange));
       background: linear-gradient(90deg, #e4002b, #e6102a, #ea2727, #f03b23, #f64d1e, #fb5c19, #fe6615, #ff6a13);
       transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
       display: flex;
@@ -266,7 +227,7 @@
       overflow: hidden;
       position: relative;
       z-index: 0;
-      width: 10em;
+      width: 100%;
     }
   }
 }
@@ -338,7 +299,8 @@
   background: var(--paper);
   color: var(--darkBlue);
   width: var(--scoreWidth);
-  padding-top: 0.075em;
+  height: 100%;
+  margin-top: -2px;
   padding-left: 2px;
 
   .score-container {

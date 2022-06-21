@@ -6,9 +6,6 @@
 
   let scoreDigits: string[]
   $: scoreDigits = String($runningScore).padStart(3).split('')
-  
-  let calculatedDividerOffset: string 
-  $: calculatedDividerOffset = `${$maxRemainingAttempts}em`
 </script>
 
 <div
@@ -45,16 +42,5 @@
         background-size: {( STARTING_GUESSES / $remainingAttempts) * 100}%;
       "
     />
-    <div 
-      class="power-bar__grid"
-      style="grid-template-columns: repeat({STARTING_GUESSES}, 1fr);"
-    >
-      {#each Array.from({ length: STARTING_GUESSES }) as _, i}
-        <div
-          class="power-bar__grid-box" 
-          class:disabled={i + 1 > $maxRemainingAttempts}
-        />
-      {/each}
-    </div>
   </div>
 </div>
