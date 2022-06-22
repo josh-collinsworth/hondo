@@ -181,7 +181,7 @@
       <li><strong>Be patient</strong>; haste is costly. Getting a high score requires logic, strategy, and luck.</li>
     </ul>
 
-    <a href="/" class="back-link">Back to game</a>
+    <a href="/game" class="back-link">Back to game</a>
   </div>
 </div>
 

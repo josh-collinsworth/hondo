@@ -5,6 +5,7 @@ button, input {
 button,
 .button {
   padding: 0.5rem 1rem;
+  display: inline-block;
   border: 2px solid var(--lightAccent);
   border-radius: 0.5rem;
   background: var(--lightestAccent);

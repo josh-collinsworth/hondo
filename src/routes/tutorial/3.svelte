@@ -7,19 +7,13 @@
 
 <h2>Keep going as long as you can.</h2>
 
-<p>Every incorrect guess drains your gauge…</p>
+<p>Every incorrect guess drains your gauge…but a correct guess gives you a point, and <em>replenishes</em> your gauge instead!</p>
 
 <div class="example-diagram">
   <ExamplePowerBarWide remainingAttempts={10} />
   <Arrow direction="down" />
   <ExampleGuess codeWord="xxxxr" guess="wrong" />
   <Arrow direction="down" />
-  <ExamplePowerBarWide remainingAttempts={9} />
-</div>
-  
-<p>…but a correct guess gives you a point, and <em>replenishes</em> your gauge instead!</p>
-
-<div class="example-diagram">
   <ExamplePowerBarWide remainingAttempts={9} />
   <Arrow direction="down" />
   <ExampleGuess codeWord="right" guess="right" />

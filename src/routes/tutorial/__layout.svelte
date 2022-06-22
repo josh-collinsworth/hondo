@@ -14,12 +14,16 @@ export const load = async ({ url }): Promise<LoadOutput> => {
 
 
 <script lang="ts">
-import { TOTAL_TUTORIAL_PAGES } from "$lib/js/constants"
+import { TOTAL_TUTORIAL_PAGES } from '$lib/js/constants'
+import { onMount } from 'svelte';
+import { hasViewedTutorial } from '$lib/state/global'
 
 export let path: string
 
-$: next = Number(path) < TOTAL_TUTORIAL_PAGES ? `/tutorial/${Number(path) + 1}` : '/'
+$: next = Number(path) < TOTAL_TUTORIAL_PAGES ? `/tutorial/${Number(path) + 1}` : '/game'
 $: previous = Number(path) - 1 || null
+
+onMount(() => $hasViewedTutorial = true)
 </script>
 
 
@@ -31,7 +35,7 @@ $: previous = Number(path) - 1 || null
       {#if previous}
         <a href="/tutorial/{previous}" class="button">Back</a>
       {:else}
-        <a href="/" class="button">Skip tutorial</a>
+        <a href="/game" class="button">Skip tutorial</a>
       {/if}
       <a href={next} class="button confirm">Next</a>
     </div>

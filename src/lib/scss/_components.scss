@@ -53,7 +53,7 @@
   position: relative;
   
   @media (min-height: 44rem) {
-    height: 13.5rem;
+    height: 12.5rem;
   }
 
   .postgame-summary {
@@ -199,6 +199,10 @@
 
     .power-bar {
       display: flex;
+
+      .pulse {
+        animation: pulse 1s ease-in-out infinite alternate-reverse;
+      }
     }
   }
 

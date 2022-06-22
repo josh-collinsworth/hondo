@@ -1,16 +1,10 @@
 <script lang="ts">
-import { saveToLocalStorage } from '$lib/js/helpers';
-
-import { shownModal } from '$lib/state/global'
+import { saveToLocalStorage } from '$lib/js/helpers'
 import { closeModal } from '$lib/state/mutations'
 
-const startTutorial = (): void => {
-  // $shownModal = tutoralO
-}
-
-const handleCloseModal = (): void => {
-  saveToLocalStorage('skip-tutorial', true)
-  $shownModal = null
+const dismissForever = (): void => {
+  saveToLocalStorage('skipTutorial', true)
+  closeModal()
 }
 </script>
 
@@ -21,10 +15,13 @@ const handleCloseModal = (): void => {
 
 
 <div class="button-bar">
-  <button on:click={handleCloseModal}>
-    No, thanks
+  <button on:click={closeModal}>
+    Not now
   </button>
-  <button class="confirm" on:click={startTutorial}>
+  <button on:click={dismissForever}>
+    Never
+  </button>
+  <a class="button confirm" href="/tutorial/1" on:click={closeModal}>
     Sure!
-  </button>
+  </a>
 </div>

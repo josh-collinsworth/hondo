@@ -21,9 +21,8 @@
   let navMenu: HTMLElement
 
   const handleReturnToGame = (): void => {
-    console.log(currentPage, currentPage === '/')
-    if (currentPage !== '/') {
-      goto('/')
+    if (currentPage !== '/game') {
+      goto('/game')
     }
     toggleMenuOpen()
   }
@@ -69,27 +68,19 @@
     <nav tabindex="-1" bind:this={navMenu}>
       <ul class="menu__links" aria-labelledby="menu-heading">
         <li>
+          <a href="/" on:click={toggleMenuOpen}>
+            <span aria-hidden="true">
+              <BackBlock />
+            </span>
+            Main menu
+          </a>
+        </li>
+        <li>
           <a href="/tutorial/1" on:click={toggleMenuOpen}>
             <span aria-hidden="true">
               <HBlock />
             </span>
             How to play
-          </a>
-        </li>
-        <li>
-          <a href="/" on:click|preventDefault={handleReturnToGame}>
-            <span aria-hidden="true">
-              <BackBlock />
-            </span>
-            Return to game
-          </a>
-        </li>
-        <li>
-          <a href="/" on:click|preventDefault={abandonGame}>
-            <span aria-hidden="true">
-              <ExclamationBlock />
-            </span>
-            Start new game
           </a>
         </li>
         <li>
@@ -112,7 +103,7 @@
     </nav>
     <div class="display-flex button-bar">
       <div class="button-bar__logo display-flex center-content">
-        <a href="/" on:click|preventDefault={handleReturnToGame} class="display-flex center-content">
+        <a href="/game" on:click|preventDefault={handleReturnToGame} class="display-flex center-content">
           <Logo />
         </a>
       </div>
@@ -131,8 +122,8 @@
     position: fixed;
     top: 0;
     left: 0;
-    height: 100vh;
-    height: 100dvh;
+    min-height: 100vh;
+    min-height: 100dvh;
     width: 100vw;
     background: rgba(var(--paperRGB), 0.9);
     z-index: 10;
@@ -144,8 +135,8 @@
     right: 0;
     width: 100%;
     max-width: 28rem;
-    height: 100vh;
-    height: 100dvh;
+    min-height: 100vh;
+    min-height: 100dvh;
     padding: 24px;
     transition: transform 0.3s cubic-bezier(0.23, 1, 0.320, 1);
     background: transparent;

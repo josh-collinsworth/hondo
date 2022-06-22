@@ -1,132 +1,107 @@
 <script lang="ts">
-import {
-  currentGuesses,
-  currentGuess,
-  gameIsOver,
-  remainingAttempts,
-  codeWord,
-  runningScore,
-  maxRemainingAttempts,
-  usedAttempts,
-  streak,
-  previousGuesses,
-} from '$lib/state/game'
-import { shownModal, isLoading } from '$lib/state/global'
-import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES } from '$lib/js/constants';
-import { loadFromLocalStorage, saveToLocalStorage, stringContainsLetter } from '$lib/js/helpers'
-import { setNewRandomCodeWord, startNewGame } from '$lib/state/mutations'
-
-import GuessContent from '$lib/components/game/GuessContent.svelte'
-import Keyboard from '$lib/components/game/Keyboard.svelte'
-import InfoBar from '$lib/components/game/InfoBar.svelte'
+import Logo from '$lib/components/icon/Logo.svelte'
+import { GAME_DATA_STORAGE_KEY } from '$lib/js/constants'
+import { loadFromLocalStorage } from '$lib/js/helpers'
 import Loader from '$lib/components/game/Loader.svelte'
-import AccessibleStatus from '$lib/components/game/AccessibleStatus.svelte'
-import TutorialIntro from '$lib/components/modals/TutorialIntro.svelte'
-
-import { dev } from '$app/env'
 import { onMount } from 'svelte'
-import { is_client } from 'svelte/internal'
+import MenuButton from '$lib/components/MenuButton.svelte'
+import { startNewGame } from '$lib/state/mutations'
+import { goto } from '$app/navigation'
+
+let localIsLoading = true
+let savedGame = false
+
+$: buttonText = savedGame ? 'Continue playing' : 'New game'
+
+const abandonGame = (): void => {
+  const confirmation = confirm('Start a new game? This will delete any game currently in progress.')
+  if (!confirmation)  return
+  startNewGame()
+  goto('/game')
+}
 
 onMount(() => {
-  try {
-    const gameData = loadFromLocalStorage(GAME_DATA_STORAGE_KEY)
-      
-    if (gameData) {
-      // Avoids a loading error with states that didn't save this. Can be removed later.
-      if (!gameData.currentGuesses || !gameData.previousGuesses) {
-        alert(`Sorry, your in-progress game data is outdated and will need to be cleared. Proceeding now.`)
-        saveToLocalStorage(GAME_DATA_STORAGE_KEY, null)
-        return
-      }
-      let attemptsCap = gameData.maxRemainingAttempts ? gameData.maxRemainingAttempts : STARTING_GUESSES
-      let loadedStreak = gameData.streak || 0
-      
-      $codeWord = window.atob(gameData.codeWord)
-      $maxRemainingAttempts = attemptsCap
-      $currentGuesses = gameData.currentGuesses
-      $previousGuesses = gameData.previousGuesses
-      $remainingAttempts = gameData.remainingAttempts
-      $runningScore = gameData.runningScore
-      $gameIsOver = gameData.gameIsOver
-      $usedAttempts = gameData.usedAttempts
-      $streak = loadedStreak
-    } else {
-      setNewRandomCodeWord(is_client && dev)
-    }
-  } 
-  catch(e) {
-    alert(`Sorry, something went wrong loading your previous game data. Please try again, or start a new game from the menu.`)
-  } 
-  finally {
-    $isLoading = false
+  const savedGameData = loadFromLocalStorage(GAME_DATA_STORAGE_KEY)
 
-    const hasPlayed = loadFromLocalStorage('skip-tutorial')
-    if (!hasPlayed) {
-      $shownModal = TutorialIntro
-    }
-
+  if (savedGameData) {
+    savedGame = true
   }
+
+  localIsLoading = false
 })
 </script>
 
+<div class="container">
+  {#if localIsLoading}
+  <Loader />
+  {:else}
+    <div class="menu-button">
+      <MenuButton />
+    </div>
 
-<section>
-  <!-- For debugging -->
-  <!-- <input type="text" bind:value={$codeWord} /> -->
+    <div class="logo">
+      <Logo />
+    </div>
 
-
-  <div class="game-container">
-    <InfoBar />
-
-    {#if $isLoading}
-      <Loader />
-    {:else}
-      <ul id="game-board" class="guess-container" tabindex="-1">
-        {#each $currentGuesses as guess, row (guess)}
-          <li
-            class="guess"
-            aria-label={guess}
-            aria-hidden={!stringContainsLetter(guess)}
-          >
-            <GuessContent guess={guess} previousGuess={$previousGuesses[row]}/>
+    <nav class="menu-buttons">
+      <ul class="no-bullets">
+        <li>
+          <a href="/game" class="button confirm">
+            {buttonText}
+          </a>
+        </li>
+        
+        {#if savedGame}
+          <li>
+            <a class="button" href="/game" on:click|preventDefault={abandonGame}>
+              Start a new game
+            </a>
           </li>
-        {/each}
-        <li 
-          class="guess current-guess"
-        >
-          {#each {length: 5} as _, col (col)}
-            <div class="current-guess-box">
-              {#key $previousGuesses}
-                {#if $currentGuess[col]}
-                  <div class="current-guess-letter">
-                    {$currentGuess[col]}
-                 </div>
-                {/if}
-                <div class="previous-guess-letter" aria-hidden="true">
-                  {#if $currentGuesses[$currentGuesses.length - 1] && $currentGuesses[$currentGuesses.length - 1][col]}
-                    {$currentGuesses[$currentGuesses.length - 1][col]}
-                  {/if}
-                </div>
-              {/key}
-            </div>
-          {/each}
+        {/if}
+
+        <li>
+          <a href="/tutorial/1" class="button">
+            How to play
+          </a>
         </li>
       </ul>
-    {/if}
+    </nav>
+  {/if}
+</div>
 
-    <AccessibleStatus />
 
-    <div class="bottom-container">
-      {#if !$gameIsOver}
-        <Keyboard />
-      {:else if !$shownModal}
-        <div class="postgame-summary">
-          <h2>You scored {$runningScore}</h2>
-          <button on:click={startNewGame}>
-            Play again
-          </button>
-        </div>
-      {/if}
-    </div>
-  </div>
-</section>
+<style lang="scss">
+  .container {
+    padding: 24px;
+    max-width: 28rem;
+    width: 100%;
+    margin: auto;
+    min-height: 100vh;
+    justify-content: start;
+
+    .menu-button {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      width: max-content;
+      background: var(--paper);
+    }
+
+    .logo {
+      display: flex;
+      height: 2.5rem;
+      margin-bottom: 4rem;
+      max-width: max-content;
+    }
+
+    .menu-buttons {
+      li + li {
+        margin-top: 1rem;
+      }
+
+      .button {
+        max-width: max-content;
+      }
+    }
+  }
+</style>

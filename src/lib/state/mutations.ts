@@ -21,6 +21,8 @@ import {
   SCORE_TICK_DURATION,
   SHUFFLE_COST,
   STARTING_GUESSES,
+  GUESS_COST,
+  GUESS_BENEFIT,
 } from '../js/constants'
 
 import { isValidGuess, loadFromLocalStorage, saveToLocalStorage } from '../js/helpers'
@@ -35,7 +37,7 @@ import { get } from 'svelte/store'
 export const startNewGame = (): void => {
   saveToLocalStorage(GAME_DATA_STORAGE_KEY, null)
   setDefaultGameState()
-  goto('/')
+  goto('/game')
 }
 
 export const getRandomCodeWord = (): string => {
@@ -116,11 +118,11 @@ export const setNewScores = (): void => {
     const tally = 1 + get(streak)
     incrementRunningScore(tally)
     pointsScoredForLastGuess.set(tally)
-    incrementRemainingAttempts(1)
+    incrementRemainingAttempts(GUESS_BENEFIT)
     incrementStreak(1)
     handleCorrectGuess()
   } else {
-    incrementRemainingAttempts(-1)
+    incrementRemainingAttempts(-GUESS_COST)
     setStreak(0)
   }
   // Update the count of total used guesses
@@ -128,6 +130,14 @@ export const setNewScores = (): void => {
 
   // Clear the current guess
   currentGuess.set('')
+
+  // Alert the player if this is their last guess
+  if (get(remainingAttempts) <= GUESS_COST) {
+    setToast({
+      message: 'Last guess!',
+      type: 'warning',
+    })
+  }
 
   // Check for game over state
   if (get(remainingAttempts) <= 0 || get(runningScore) >= 100) {

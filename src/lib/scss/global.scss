@@ -21,7 +21,7 @@ body {
   line-height: 1.4;
   font-family: 'Ridley Grotesk', sans-serif;
   font-weight: var(--fontWeightNormal);
-  overflow: hidden;
+  // overflow: hidden;
 }
 
 main {
@@ -50,9 +50,9 @@ h1 {
   width: 100%;
   max-width: 100%;
   position: relative;
-  overflow-x: hidden;
-  height: 100vh;
-  height: 100dvh;
+  // overflow-x: hidden;
+  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 a {

@@ -37,7 +37,7 @@
 
 
 <div class="layout">
-  {#if path === '/'}
+  {#if path === '/game'}
     <SkipToContentLink />
   {/if}
   

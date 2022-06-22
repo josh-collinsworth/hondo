@@ -15,9 +15,9 @@
     position: fixed;
     top: 0;
     left: 0;
-    background: rgba(255, 255, 255, 0.8);
-    height: 100vh;
-    height: 100dvh;
+    background: rgba(var(--paperRGB), 0.8);
+    min-height: 100vh;
+    min-height: 100dvh;
     width: 100vw;
     padding: 1rem;
     z-index: 10;
