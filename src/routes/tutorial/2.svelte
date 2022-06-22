@@ -4,8 +4,8 @@ import Arrow from '$lib/components/icon/Arrow.svelte'
 </script>
 
 
-<h2>When you guess one, the game continues with a new one</h2>
-<p><em>However</em>, your five most recent guesses stay on the board as clues.</p>
+<h2>When you guess a code word, the game keeps going with a new one.</h2>
+<p><em>However</em>, your five most recent guesses always stay on the board as clues.</p>
       
 <div class="example-diagram">
   <div>

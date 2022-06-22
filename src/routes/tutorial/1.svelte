@@ -10,7 +10,7 @@ import Arrow from '$lib/components/icon/Arrow.svelte'
   <ExampleGuess codeWord="xrxxx" guess="ready" />
 </div>
 
-<p>
+<p class="small-print">
   The code word includes <strong>R</strong>, but it's not the&nbsp;first&nbsp;letter.
 </p>
 
@@ -18,33 +18,19 @@ import Arrow from '$lib/components/icon/Arrow.svelte'
   <ExampleGuess codeWord="xxxxt" guess="smart" />
 </div>
 
-<p>
+<p class="small-print">
   The code word ends with <strong>T</strong>.
 </p>
 
-<h3>
-  You score points for correct guesses, and bonus points for consecutive correct guesses.
-</h3>
+<p>Every correct guess scores a point. The goal is to score as many points as possible (up to 100).</p>
 
-<div class="example-diagram">
-  <div class="display-flex center-content position-relative width-max-content margin-auto">
-    <ExampleGuess codeWord="store" guess="store" />
-    <div class="example-score">
-      +1
-    </div>
-  </div>
-  <Arrow direction="down" />
-  <div class="display-flex center-content position-relative width-max-content margin-auto">
-    <ExampleGuess codeWord="other" guess="other" />
-    <div class="example-score">
-      +2
-    </div>
-  </div>
-  <Arrow direction="down" />
-  <div class="display-flex center-content position-relative width-max-content margin-auto">
-    <ExampleGuess codeWord="their" guess="their" />
-    <div class="example-score">
-      +3
-    </div>
-  </div>
-</div>
+
+<style>
+.small-print {
+  text-align: left;
+}
+
+.small-print + p {
+  margin-top: 2rem;
+}
+</style>

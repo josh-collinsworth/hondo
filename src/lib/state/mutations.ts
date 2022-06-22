@@ -16,8 +16,9 @@ import {
 import { shownModal, toast, isMenuOpen } from './global'
 import { isDarkMode } from './user'
 import {
-  PREVIOUS_HIGH_SCORES_STORAGE_KEY,
+  GAME_HISTORY_STORAGE_KEY,
   GAME_DATA_STORAGE_KEY,
+  LONGEST_STREAK_STORAGE_KEY,
   SCORE_TICK_DURATION,
   SHUFFLE_COST,
   STARTING_GUESSES,
@@ -132,7 +133,7 @@ export const setNewScores = (): void => {
   currentGuess.set('')
 
   // Alert the player if this is their last guess
-  if (get(remainingAttempts) <= GUESS_COST) {
+  if (get(remainingAttempts) && get(remainingAttempts) <= GUESS_COST) {
     setToast({
       message: 'Last guess!',
       type: 'warning',
@@ -160,12 +161,12 @@ export const closeModal = (): void => {
 }
 
 export const registerHighScore = (): void => {
-  let previousHighScores = loadFromLocalStorage(PREVIOUS_HIGH_SCORES_STORAGE_KEY) || []
+  let previousHighScores = loadFromLocalStorage(GAME_HISTORY_STORAGE_KEY) || []
 
   // Just some cleanup from prerelease data saving. Can be removed later.
   previousHighScores = previousHighScores.filter(item => typeof item !== 'number')
 
-  saveToLocalStorage(PREVIOUS_HIGH_SCORES_STORAGE_KEY, [
+  saveToLocalStorage(GAME_HISTORY_STORAGE_KEY, [
     ...previousHighScores, [get(runningScore), get(usedAttempts)]
   ])
 }
@@ -192,6 +193,10 @@ export const saveGameData = (): void => {
     usedAttempts: get(usedAttempts),
     streak: get(streak),
   })
+  const longestStreak = loadFromLocalStorage(LONGEST_STREAK_STORAGE_KEY) || 0
+  if (get(pointsScoredForLastGuess) > longestStreak) {
+    saveToLocalStorage(LONGEST_STREAK_STORAGE_KEY, get(pointsScoredForLastGuess))
+  }
 }
 
 export const setToast = async (msg: ToastMessage = { message: '', type: 'warning' }): Promise<void> => {

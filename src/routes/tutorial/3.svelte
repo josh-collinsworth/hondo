@@ -1,24 +1,33 @@
 <script lang="ts">
 import ExampleGuess from '$lib/components/game/examples/ExampleGuess.svelte'
-import ExamplePowerBarWide from '$lib/components/game/examples/ExamplePowerBarWide.svelte'
 import Arrow from '$lib/components/icon/Arrow.svelte'
 </script>
 
-
-<h2>Keep going as long as you can.</h2>
-
-<p>Every incorrect guess drains your gauge…but a correct guess gives you a point, and <em>replenishes</em> your gauge instead!</p>
+<h2>
+  Back-to-back correct guesses score bonus points.
+</h2>
 
 <div class="example-diagram">
-  <ExamplePowerBarWide remainingAttempts={10} />
+  <div class="display-flex center-content position-relative width-max-content margin-auto">
+    <ExampleGuess codeWord="store" guess="store" />
+    <div class="example-score">
+      +1
+    </div>
+  </div>
   <Arrow direction="down" />
-  <ExampleGuess codeWord="xxxxr" guess="wrong" />
+  <div class="display-flex center-content position-relative width-max-content margin-auto">
+    <ExampleGuess codeWord="other" guess="other" />
+    <div class="example-score">
+      +2
+    </div>
+  </div>
   <Arrow direction="down" />
-  <ExamplePowerBarWide remainingAttempts={9} />
-  <Arrow direction="down" />
-  <ExampleGuess codeWord="right" guess="right" />
-  <Arrow direction="down" />
-  <ExamplePowerBarWide remainingAttempts={10} score={1} />
+  <div class="display-flex center-content position-relative width-max-content margin-auto">
+    <ExampleGuess codeWord="their" guess="their" />
+    <div class="example-score">
+      +3
+    </div>
+  </div>
 </div>
 
-<h3>The game ends when your gauge is empty, OR when your score reaches 100.</h3>
+<p>It's hard to do, but remember: you'll always have five previous words on the board to use as clues. (And you'll unlock some extra help later…)</p>

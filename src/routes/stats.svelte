@@ -1,7 +1,7 @@
 <script lang="ts">
 import Loader from '$lib/components/game/Loader.svelte'
 import MenuButton from '$lib/components/MenuButton.svelte'
-import { PREVIOUS_HIGH_SCORES_STORAGE_KEY } from '$lib/js/constants'
+import { GAME_HISTORY_STORAGE_KEY, LONGEST_STREAK_STORAGE_KEY } from '$lib/js/constants'
 import { loadFromLocalStorage, floatFormatter } from '$lib/js/helpers'
 import { onMount } from 'svelte'
 
@@ -13,15 +13,21 @@ let averageGuesses: number|string
 let medianScore: number
 let medianGuesses: number
 let fastestHondo: number
+let longestStreak: number
+let totalScore: number
 
 onMount(() => {
-  const loadedStats = loadFromLocalStorage(PREVIOUS_HIGH_SCORES_STORAGE_KEY)
+  const loadedStats = loadFromLocalStorage(GAME_HISTORY_STORAGE_KEY)
+  const loadedLongestStreak = loadFromLocalStorage(LONGEST_STREAK_STORAGE_KEY) || 0
+  
+  longestStreak = loadedLongestStreak
+
   if (loadedStats) {
     stats = loadedStats
     highScore = Math.max(...stats.map((score: number[]) => score[0]))
-    averageScore = floatFormatter.format(
-      stats.map((score: number[]) => score[0]).reduce((p: number, c: number) => p + c, 0) / stats.length
-    )
+    const scoresOnly = stats.map((score: number[]) => score[0])
+    totalScore = scoresOnly.reduce((p: number, c: number) => p + c, 0)
+    averageScore = floatFormatter.format(totalScore / stats.length)
     averageGuesses = floatFormatter.format(
       stats.map((score: number[]) => score[1]).reduce((p: number, c: number) => p + c, 0) / stats.length
     )
@@ -77,6 +83,14 @@ onMount(() => {
         {:else}
         <p>You haven't scored a Hondo yet. Keep trying!</p>
         {/if}
+      </li>
+      <li>
+        <h2>Longest streak</h2>
+        <p>{longestStreak}</p>
+      </li>
+      <li>
+        <h2>Total points scored</h2>
+        <p>{totalScore}</p>
       </li>
       <li>
         <h2>Average score</h2>

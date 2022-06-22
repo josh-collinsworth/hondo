@@ -16,22 +16,28 @@ export const load = async ({ url }): Promise<LoadOutput> => {
 <script lang="ts">
 import '$lib/scss/global.scss'
 import { fly } from 'svelte/transition'
-import { gameIsOver } from '$lib/state/game'
+import { gameIsOver, runningScore } from '$lib/state/game'
 import { isMenuOpen, shownModal } from '$lib/state/global'
 import Modal from '$lib/components/modals/Modal.svelte'
 import SkipToContentLink from '$lib/components/SkipToContentLink.svelte'
-import GameOverModal from '$lib/components/modals/GameOverModal.svelte'
 import Menu from '$lib/components/Menu.svelte'
 import Logo from '$lib/components/icon/Logo.svelte'
+import { goto } from '$app/navigation';
+import { setToast } from '$lib/state/mutations';
 
 export let path: string
 
 $: isInert = $shownModal || $isMenuOpen || null
 
 $: if ($gameIsOver) {
+  if ($runningScore >= 100) {
+    setToast({ message: 'Congratulations!', type: 'success' })
+  } else (
+    setToast({ message: 'Too bad!', type: 'warning' })
+  )
   setTimeout(() => {
-    $shownModal = GameOverModal
-  }, 1200)
+    goto('/game-over')
+  }, 1500)
 }
 </script>
 

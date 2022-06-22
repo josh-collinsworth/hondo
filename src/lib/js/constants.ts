@@ -1,5 +1,6 @@
-export const PREVIOUS_HIGH_SCORES_STORAGE_KEY = 'previousHighScores'
+export const GAME_HISTORY_STORAGE_KEY = 'previousHighScores'
 export const GAME_DATA_STORAGE_KEY = 'gameData'
+export const LONGEST_STREAK_STORAGE_KEY = 'longestStreak'
 export const DEFAULT_SHUFFLE_COOLDOWN = 15 // Unused
 export const SCORE_TICK_DURATION = 220
 

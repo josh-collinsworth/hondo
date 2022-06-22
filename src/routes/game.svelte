@@ -116,16 +116,7 @@ onMount(() => {
     <AccessibleStatus />
 
     <div class="bottom-container">
-      {#if !$gameIsOver}
-        <Keyboard />
-      {:else if !$shownModal}
-        <div class="postgame-summary">
-          <h2>You scored {$runningScore}</h2>
-          <button on:click={startNewGame}>
-            Play again
-          </button>
-        </div>
-      {/if}
+      <Keyboard />
     </div>
   </div>
 </section>

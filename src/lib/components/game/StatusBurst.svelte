@@ -108,15 +108,15 @@ $: if ($discoveredCodeWord) {
   @keyframes slide_right {
     0% { transform: translateX(-3rem) }
     20% { transform: translateX(0) }
-    67% { transform: translateX(0) }
-    100% { transform: translateX(3rem) }
+    75% { transform: translateX(0); opacity: 1 }
+    100% { transform: translateX(3rem); opacity: 0 }
   }
   
   @keyframes slide_left {
     0% { transform: translateX(3rem) }
     20% { transform: translateX(0) }
-    67% { transform: translateX(0) }
-    100% { transform: translateX(-3rem) }
+    75% { transform: translateX(0); opacity: 1 }
+    100% { transform: translateX(-3rem); opacity: 0 }
   }
 }
 </style>

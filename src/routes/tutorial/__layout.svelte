@@ -86,5 +86,10 @@ onMount(() => $hasViewedTutorial = true)
       @extend button !optional;
     }
   }
+
+  h2 {
+    font-size: 1.6rem;
+    font-weight: var(--fontWeightNormal);
+  }
 }
 </style>

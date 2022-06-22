@@ -32,5 +32,6 @@ import ScoreDisplay from './ScoreDisplay.svelte'
   margin-bottom: 1rem;
   position: relative;
   z-index: 5;
+  height: 4rem;
 }
 </style>

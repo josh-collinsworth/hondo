@@ -1,5 +1,5 @@
 <script lang="ts">
-import { currentGuess, codeWord, discoveredCodeWord, currentGuesses } from '$lib/state/game'
+import { currentGuess, codeWord, discoveredCodeWord, currentGuesses, gameIsOver } from '$lib/state/game'
 import { handleNewGuess } from '$lib/state/mutations'
 import { isSingleLetter } from '$lib/js/helpers'
 import { browser } from '$app/env'
@@ -16,7 +16,7 @@ const keys = [
 $: lettersOnTheBoard = Array.from(new Set($currentGuesses.flatMap(word => [...word])))
 $: disableEnterKey = $currentGuess.length < 5
 $: disableDeleteKey = !$currentGuess.length
-$: disableKeyboard = !!$discoveredCodeWord
+$: disableKeyboard = $gameIsOver
 $: vibrationEnabled = browser && window.navigator && window.navigator.vibrate
 
 const handleKeyUp = (e: KeyboardEvent): void => {
