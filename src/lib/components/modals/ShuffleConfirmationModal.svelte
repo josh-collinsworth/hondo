@@ -30,7 +30,7 @@
 </h2>
 
 {#if $remainingAttempts > SHUFFLE_COST}
-  <p>Replaces the board with new random words, but drains your gauge.</p>
+  <p>Replaces the board with new random words, but drains your gauge by 20%.</p>
 
   <p>Shuffle now?</p>
 
