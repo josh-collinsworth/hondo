@@ -1,22 +1,22 @@
 <script lang="ts">
-  import { SHUFFLE_COST } from '$lib/js/constants';
-  import { shuffleGuesses, closeModal } from '$lib/state/mutations'
-  import { remainingAttempts } from '$lib/state/game'
+import { SHUFFLE_COST } from '$lib/js/constants';
+import { shuffleGuesses, closeModal } from '$lib/state/mutations'
+import { remainingAttempts } from '$lib/state/game'
 
-  import ShuffleIcon from '../icon/ShuffleIcon.svelte'
+import ShuffleIcon from '../icon/ShuffleIcon.svelte'
 
-  let cancelButton: HTMLButtonElement
+let cancelButton: HTMLButtonElement
 
-  const listenForEnter = (e: KeyboardEvent): void => {
-    if (e.key === 'Enter' && e.target != cancelButton && $remainingAttempts > SHUFFLE_COST) {
-      shuffleAndClose()
-    }
+const listenForEnter = (e: KeyboardEvent): void => {
+  if (e.key === 'Enter' && e.target != cancelButton && $remainingAttempts > SHUFFLE_COST) {
+    shuffleAndClose()
   }
+}
 
-  const shuffleAndClose = (): void => {
-    shuffleGuesses()
-    closeModal()
-  }
+const shuffleAndClose = (): void => {
+  shuffleGuesses()
+  closeModal()
+}
 </script>
 
 
@@ -54,7 +54,7 @@
 
 
 <style lang="scss">
-  h2 {
-    justify-content: space-between;
-  }
+h2 {
+  justify-content: space-between;
+}
 </style>

@@ -71,37 +71,37 @@ onMount(() => {
 
 
 <style lang="scss">
-  .container {
-    padding: 24px;
-    max-width: 28rem;
-    width: 100%;
-    margin: auto;
-    min-height: 100vh;
-    justify-content: start;
+.container {
+  padding: 24px;
+  max-width: 28rem;
+  width: 100%;
+  margin: auto;
+  min-height: 100vh;
+  justify-content: start;
 
-    .menu-button {
-      position: fixed;
-      top: 24px;
-      right: 24px;
-      width: max-content;
-      background: var(--paper);
+  .menu-button {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    width: max-content;
+    background: var(--paper);
+  }
+
+  .logo {
+    display: flex;
+    height: 2.5rem;
+    margin-bottom: 4rem;
+    max-width: max-content;
+  }
+
+  .menu-buttons {
+    li + li {
+      margin-top: 1rem;
     }
 
-    .logo {
-      display: flex;
-      height: 2.5rem;
-      margin-bottom: 4rem;
+    .button {
       max-width: max-content;
     }
-
-    .menu-buttons {
-      li + li {
-        margin-top: 1rem;
-      }
-
-      .button {
-        max-width: max-content;
-      }
-    }
   }
+}
 </style>

@@ -1,55 +1,55 @@
 <script lang="ts">
-  import { currentGuess, codeWord, discoveredCodeWord, currentGuesses } from '$lib/state/game'
-  import { handleNewGuess } from '$lib/state/mutations'
-  import { isSingleLetter } from '$lib/js/helpers'
-  import { browser } from '$app/env'
+import { currentGuess, codeWord, discoveredCodeWord, currentGuesses } from '$lib/state/game'
+import { handleNewGuess } from '$lib/state/mutations'
+import { isSingleLetter } from '$lib/js/helpers'
+import { browser } from '$app/env'
 
-  import Arrow from '../icon/Arrow.svelte'
-  import Checkmark from '../icon/Checkmark.svelte'
+import Arrow from '../icon/Arrow.svelte'
+import Checkmark from '../icon/Checkmark.svelte'
 
-  const keys = [
-    ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
-    ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
-    ['-', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '+'],
-  ]
+const keys = [
+  ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+  ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
+  ['-', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '+'],
+]
 
-  $: lettersOnTheBoard = Array.from(new Set($currentGuesses.flatMap(word => [...word])))
-  $: disableEnterKey = $currentGuess.length < 5
-  $: disableDeleteKey = !$currentGuess.length
-  $: disableKeyboard = !!$discoveredCodeWord
-  $: vibrationEnabled = browser && window.navigator && window.navigator.vibrate
+$: lettersOnTheBoard = Array.from(new Set($currentGuesses.flatMap(word => [...word])))
+$: disableEnterKey = $currentGuess.length < 5
+$: disableDeleteKey = !$currentGuess.length
+$: disableKeyboard = !!$discoveredCodeWord
+$: vibrationEnabled = browser && window.navigator && window.navigator.vibrate
 
-  const handleKeyUp = (e: KeyboardEvent): void => {
-    if (!e.key || disableKeyboard) return
-    if (e.key === 'Backspace') {
-      handlePress('-')
-    } else if (e.key === 'Enter') {
-      handlePress('+')
-    } else if (isSingleLetter(e.key.toLowerCase())) {
-      handlePress(e.key)
+const handleKeyUp = (e: KeyboardEvent): void => {
+  if (!e.key || disableKeyboard) return
+  if (e.key === 'Backspace') {
+    handlePress('-')
+  } else if (e.key === 'Enter') {
+    handlePress('+')
+  } else if (isSingleLetter(e.key.toLowerCase())) {
+    handlePress(e.key)
+  }
+}
+
+const isEnterKey = (key: string): boolean => key === '+'
+const isDeleteKey = (key: string): boolean => key === '-'
+
+const handlePress = async (key: string): Promise<void> => {
+  if (isSingleLetter(key)) {
+    if ($currentGuess.length < 5) {
+      $currentGuess = $currentGuess + key
     }
+  } else if (isDeleteKey(key)) {
+    if ($currentGuess.length) {
+      $currentGuess = $currentGuess.slice(0, $currentGuess.length - 1)
+    }
+  } else if (isEnterKey(key)) {
+    handleNewGuess()
   }
 
-  const isEnterKey = (key: string): boolean => key === '+'
-  const isDeleteKey = (key: string): boolean => key === '-'
-
-  const handlePress = async (key: string): Promise<void> => {
-    if (isSingleLetter(key)) {
-      if ($currentGuess.length < 5) {
-        $currentGuess = $currentGuess + key
-      }
-    } else if (isDeleteKey(key)) {
-      if ($currentGuess.length) {
-        $currentGuess = $currentGuess.slice(0, $currentGuess.length - 1)
-      }
-    } else if (isEnterKey(key)) {
-      handleNewGuess()
-    }
-
-    if (vibrationEnabled) {
-      window.navigator.vibrate(10)
-    }
+  if (vibrationEnabled) {
+    window.navigator.vibrate(10)
   }
+}
 </script>
 
 
@@ -87,78 +87,78 @@
 </div>
 
 <style lang="scss">
-  .keyboard {
-    display: grid;
-    grid-template-rows: repeat(3, 1fr);
-    margin: 0 calc(-1rem + 5px);
-    height: 100%;
+.keyboard {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  margin: 0 calc(-1rem + 5px);
+  height: 100%;
 
-    .row {
-      display: flex;
-      margin: 0 auto;
-      width: 100%;
+  .row {
+    display: flex;
+    margin: 0 auto;
+    width: 100%;
 
-      + .row {
-        margin-top: 5px;
-      }
-    }
-
-    .row:nth-of-type(2) {
-      max-width: calc(100% - 2.5rem)
-    }
-
-    button {
-      font-size: 1.1rem;
-      font-weight: var(--fontWeightNormal);
-      flex: 1 1 3ch;
-      text-transform: uppercase;
-      background: var(--lightestAccent);
-      border: 1px solid var(--lighterAccent);
-      border-radius: 0.25em;
-      margin: 0;
-      padding: 0;
-      touch-action: manipulation;
-      transition: background .6s cubic-bezier(0.645, 0.045, 0.355, 1), color .6s cubic-bezier(0.645, 0.045, 0.355, 1);
-      color: var(--ink);
-      line-height: 1;
-
-      @media (min-width: 26rem) {
-        font-size: 1.2rem;
-      }
-
-      &[data-key="-"],
-      &[data-key="+"] {
-        flex: 1 1 5ch;
-        font-size: 0.9rem;
-        padding: 0 0.5ch;
-
-        @media (min-width: 26rem) {
-          font-size: 1.1rem;
-        }
-      }
-
-      + button {
-        margin-left: 5px;
-      }
-
-      &.used {
-        color: var(--mediumAccent);
-        background: var(--lighterAccent);
-      }
-
-      &.included {
-        color: var(--ink);
-        border-color: var(--secondary);
-        background: var(--secondary);
-      }
-    }
-
-    :global(button svg) {
-      stroke: var(--ink);
-    }
-
-    :global(button[disabled] svg) {
-      stroke: var(--lightAccent);
+    + .row {
+      margin-top: 5px;
     }
   }
+
+  .row:nth-of-type(2) {
+    max-width: calc(100% - 2.5rem)
+  }
+
+  button {
+    font-size: 1.1rem;
+    font-weight: var(--fontWeightNormal);
+    flex: 1 1 3ch;
+    text-transform: uppercase;
+    background: var(--lightestAccent);
+    border: 1px solid var(--lighterAccent);
+    border-radius: 0.25em;
+    margin: 0;
+    padding: 0;
+    touch-action: manipulation;
+    transition: background .6s cubic-bezier(0.645, 0.045, 0.355, 1), color .6s cubic-bezier(0.645, 0.045, 0.355, 1);
+    color: var(--ink);
+    line-height: 1;
+
+    @media (min-width: 26rem) {
+      font-size: 1.2rem;
+    }
+
+    &[data-key="-"],
+    &[data-key="+"] {
+      flex: 1 1 5ch;
+      font-size: 0.9rem;
+      padding: 0 0.5ch;
+
+      @media (min-width: 26rem) {
+        font-size: 1.1rem;
+      }
+    }
+
+    + button {
+      margin-left: 5px;
+    }
+
+    &.used {
+      color: var(--mediumAccent);
+      background: var(--lighterAccent);
+    }
+
+    &.included {
+      color: var(--ink);
+      border-color: var(--secondary);
+      background: var(--secondary);
+    }
+  }
+
+  :global(button svg) {
+    stroke: var(--ink);
+  }
+
+  :global(button[disabled] svg) {
+    stroke: var(--lightAccent);
+  }
+}
 </style>

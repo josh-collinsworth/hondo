@@ -1,6 +1,6 @@
 <script lang="ts">
-  import ExampleGuess from '$lib/components/game/examples/ExampleGuess.svelte'
-  import Arrow from '$lib/components/icon/Arrow.svelte'
+import ExampleGuess from '$lib/components/game/examples/ExampleGuess.svelte'
+import Arrow from '$lib/components/icon/Arrow.svelte'
 </script>
 
 

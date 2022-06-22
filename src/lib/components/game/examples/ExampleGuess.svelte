@@ -1,27 +1,27 @@
 <script lang="ts">
-  export let guess: string
-  export let codeWord: string
+export let guess: string
+export let codeWord: string
 
-  // All this logic is copied directly from the GuessContent modal. Seemed easier to copy than to make the modal work for both purposes, with all the animation and such in the real one.
-  let remainingLetters: string[] = []
-  $: if (codeWord) remainingLetters = [...codeWord]
+// All this logic is copied directly from the GuessContent modal. Seemed easier to copy than to make the modal work for both purposes, with all the animation and such in the real one.
+let remainingLetters: string[] = []
+$: if (codeWord) remainingLetters = [...codeWord]
 
-  let highlightArray: string[]
-  $: highlightArray = [...guess].map((letter, i) => {
-    if ([...codeWord][i] === letter) {
-      remainingLetters.splice(remainingLetters.findIndex(i => i === letter), 1)
-      return 'exact'
-    } 
+let highlightArray: string[]
+$: highlightArray = [...guess].map((letter, i) => {
+  if ([...codeWord][i] === letter) {
+    remainingLetters.splice(remainingLetters.findIndex(i => i === letter), 1)
+    return 'exact'
+  } 
+  return letter
+}).map((letter, i) => {
+  if (letter === 'exact') {
     return letter
-  }).map((letter, i) => {
-    if (letter === 'exact') {
-      return letter
-    } else if (remainingLetters.includes(letter) && letter) {
-      remainingLetters.splice(remainingLetters.findIndex(i => i === letter), 1)
-      return 'partial'
-    }
-    return ''
-  })
+  } else if (remainingLetters.includes(letter) && letter) {
+    remainingLetters.splice(remainingLetters.findIndex(i => i === letter), 1)
+    return 'partial'
+  }
+  return ''
+})
 </script>
 
 
@@ -42,22 +42,22 @@
 
 
 <style lang="scss">
-  .example-guess {
-    display: grid;
-    font-size: 1.2rem;
-    grid-template-columns: repeat(5, 2em);
-    gap: 2px;
-    margin: 0 auto 2px;
-    width: max-content;
+.example-guess {
+  display: grid;
+  font-size: 1.2rem;
+  grid-template-columns: repeat(5, 2em);
+  gap: 2px;
+  margin: 0 auto 2px;
+  width: max-content;
 
-    .guess-box {
-      width: 2em;
-      height: 2em;
-      min-height: unset;
-    }
-
-    .guess-box__slider {
-      animation: none;
-    }
+  .guess-box {
+    width: 2em;
+    height: 2em;
+    min-height: unset;
   }
+
+  .guess-box__slider {
+    animation: none;
+  }
+}
 </style>

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import XIcon from './icon/XIcon.svelte'
-  import { toggleMenuOpen } from '$lib/state/mutations'
+import XIcon from './icon/XIcon.svelte'
+import { toggleMenuOpen } from '$lib/state/mutations'
 </script>
 
 
@@ -11,9 +11,9 @@
 
 
 <style lang="scss">
-  .info-button {
-    padding: 0;
-    color: var(--ink);
-    border-color: currentColor;
-  }
+.info-button {
+  padding: 0;
+  color: var(--ink);
+  border-color: currentColor;
+}
 </style>

@@ -1,38 +1,38 @@
 <script context="module" lang="ts">
-  import type { LoadOutput } from '@sveltejs/kit'
+import type { LoadOutput } from '@sveltejs/kit'
 
-  export const load = async ({ url }): Promise<LoadOutput> => {
-    const path: string = url.pathname
+export const load = async ({ url }): Promise<LoadOutput> => {
+  const path: string = url.pathname
 
-    return {
-      props: {
-        path
-      }
+  return {
+    props: {
+      path
     }
   }
+}
 </script>
 
 
 <script lang="ts">
-  import '$lib/scss/global.scss'
-  import { fly } from 'svelte/transition'
-  import { gameIsOver } from '$lib/state/game'
-  import { isMenuOpen, shownModal } from '$lib/state/global'
-  import Modal from '$lib/components/modals/Modal.svelte'
-  import SkipToContentLink from '$lib/components/SkipToContentLink.svelte'
-  import GameOverModal from '$lib/components/modals/GameOverModal.svelte'
-  import Menu from '$lib/components/Menu.svelte'
-  import Logo from '$lib/components/icon/Logo.svelte'
+import '$lib/scss/global.scss'
+import { fly } from 'svelte/transition'
+import { gameIsOver } from '$lib/state/game'
+import { isMenuOpen, shownModal } from '$lib/state/global'
+import Modal from '$lib/components/modals/Modal.svelte'
+import SkipToContentLink from '$lib/components/SkipToContentLink.svelte'
+import GameOverModal from '$lib/components/modals/GameOverModal.svelte'
+import Menu from '$lib/components/Menu.svelte'
+import Logo from '$lib/components/icon/Logo.svelte'
 
-  export let path: string
+export let path: string
 
-  $: isInert = $shownModal || $isMenuOpen || null
+$: isInert = $shownModal || $isMenuOpen || null
 
-  $: if ($gameIsOver) {
-    setTimeout(() => {
-      $shownModal = GameOverModal
-    }, 1200)
-  }
+$: if ($gameIsOver) {
+  setTimeout(() => {
+    $shownModal = GameOverModal
+  }, 1200)
+}
 </script>
 
 

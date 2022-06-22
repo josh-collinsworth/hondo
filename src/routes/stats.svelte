@@ -1,60 +1,60 @@
 <script lang="ts">
-  import Loader from '$lib/components/game/Loader.svelte'
-  import MenuButton from '$lib/components/MenuButton.svelte'
-  import { PREVIOUS_HIGH_SCORES_STORAGE_KEY } from '$lib/js/constants'
-  import { loadFromLocalStorage, floatFormatter } from '$lib/js/helpers'
-  import { onMount } from 'svelte'
+import Loader from '$lib/components/game/Loader.svelte'
+import MenuButton from '$lib/components/MenuButton.svelte'
+import { PREVIOUS_HIGH_SCORES_STORAGE_KEY } from '$lib/js/constants'
+import { loadFromLocalStorage, floatFormatter } from '$lib/js/helpers'
+import { onMount } from 'svelte'
 
-  let stats = []
-  let isLoading = true
-  let highScore: number
-  let averageScore: number|string
-  let averageGuesses: number|string
-  let medianScore: number
-  let medianGuesses: number
-  let fastestHondo: number
+let stats = []
+let isLoading = true
+let highScore: number
+let averageScore: number|string
+let averageGuesses: number|string
+let medianScore: number
+let medianGuesses: number
+let fastestHondo: number
 
-  onMount(() => {
-    const loadedStats = loadFromLocalStorage(PREVIOUS_HIGH_SCORES_STORAGE_KEY)
-    if (loadedStats) {
-      stats = loadedStats
-      highScore = Math.max(...stats.map((score: number[]) => score[0]))
-      averageScore = floatFormatter.format(
-        stats.map((score: number[]) => score[0]).reduce((p: number, c: number) => p + c, 0) / stats.length
-      )
-      averageGuesses = floatFormatter.format(
-        stats.map((score: number[]) => score[1]).reduce((p: number, c: number) => p + c, 0) / stats.length
-      )
-      const hondos = stats.filter((score: number[]) => score[0] === 100)
-      if (hondos.length) {
-        fastestHondo = Math.min(...hondos.map((score: number[]) => score[1]))
-      }
-      let medianScoreTally = stats.map(score => score[0]).sort((a, b) => a > b)
-      let medianGuessesTally = stats.map(score => score[1]).sort((a, b) => a > b)
-      
-      while (medianScoreTally.length > 1) {
-        if (medianScoreTally.length === 2) {
-          medianScoreTally.pop()
-        }
-        else {
-          medianScoreTally.pop()
-          medianScoreTally.shift()
-        }
-      }
-      while (medianGuessesTally.length > 1) {
-        if (medianGuessesTally.length === 2) {
-          medianGuessesTally.pop()
-        }
-        else {
-          medianGuessesTally.pop()
-          medianGuessesTally.shift()
-        }
-      }
-      medianScore = medianScoreTally[0]
-      medianGuesses= medianGuessesTally[0]
+onMount(() => {
+  const loadedStats = loadFromLocalStorage(PREVIOUS_HIGH_SCORES_STORAGE_KEY)
+  if (loadedStats) {
+    stats = loadedStats
+    highScore = Math.max(...stats.map((score: number[]) => score[0]))
+    averageScore = floatFormatter.format(
+      stats.map((score: number[]) => score[0]).reduce((p: number, c: number) => p + c, 0) / stats.length
+    )
+    averageGuesses = floatFormatter.format(
+      stats.map((score: number[]) => score[1]).reduce((p: number, c: number) => p + c, 0) / stats.length
+    )
+    const hondos = stats.filter((score: number[]) => score[0] === 100)
+    if (hondos.length) {
+      fastestHondo = Math.min(...hondos.map((score: number[]) => score[1]))
     }
-    isLoading = false
-  })
+    let medianScoreTally = stats.map(score => score[0]).sort((a, b) => a > b)
+    let medianGuessesTally = stats.map(score => score[1]).sort((a, b) => a > b)
+    
+    while (medianScoreTally.length > 1) {
+      if (medianScoreTally.length === 2) {
+        medianScoreTally.pop()
+      }
+      else {
+        medianScoreTally.pop()
+        medianScoreTally.shift()
+      }
+    }
+    while (medianGuessesTally.length > 1) {
+      if (medianGuessesTally.length === 2) {
+        medianGuessesTally.pop()
+      }
+      else {
+        medianGuessesTally.pop()
+        medianGuessesTally.shift()
+      }
+    }
+    medianScore = medianScoreTally[0]
+    medianGuesses= medianGuessesTally[0]
+  }
+  isLoading = false
+})
 </script>
 
 
@@ -96,25 +96,25 @@
 
 
 <style lang="scss">
-  .stats {
-    padding: 2rem;
+.stats {
+  padding: 2rem;
 
-    > * {
-      width: 100%;
-    }
-
-    h1 {
-      margin-top: 0;
-    }
-
-    h2 {
-      margin: 3rem 0 0;
-    }
-
-    :global(.menu-button) {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-    }
+  > * {
+    width: 100%;
   }
+
+  h1 {
+    margin-top: 0;
+  }
+
+  h2 {
+    margin: 3rem 0 0;
+  }
+
+  :global(.menu-button) {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+}
 </style>

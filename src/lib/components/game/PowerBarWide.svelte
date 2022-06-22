@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { remainingAttempts, maxRemainingAttempts, runningScore } from '$lib/state/game'
-  import { GUESS_COST, STARTING_GUESSES } from '$lib/js/constants'
+import { remainingAttempts, maxRemainingAttempts, runningScore } from '$lib/state/game'
+import { GUESS_COST, STARTING_GUESSES } from '$lib/js/constants'
 </script>
 
 <div

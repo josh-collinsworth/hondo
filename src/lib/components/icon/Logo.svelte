@@ -30,25 +30,25 @@
 
 
 <style lang="scss">
-  .logo {
-    .logo-letter {
-      fill: var(--black);
+.logo {
+  .logo-letter {
+    fill: var(--black);
+  }
+
+  .logo-letter-border {
+    fill: var(--lighterGray);
+  }
+
+  .logo-letter-bg {
+    fill: var(--lightestGray);
+
+    &.exact {
+      fill: var(--orange);
     }
 
-    .logo-letter-border {
-      fill: var(--lighterGray);
-    }
-
-    .logo-letter-bg {
-      fill: var(--lightestGray);
-
-      &.exact {
-        fill: var(--orange);
-      }
-  
-      &.partial {
-        fill: var(--lightBlue);
-      }
+    &.partial {
+      fill: var(--lightBlue);
     }
   }
+}
 </style>
