@@ -1,5 +1,4 @@
 import type { ToastMessage } from '../js/types'
-
 import {
   codeWord,
   currentGuesses,
@@ -16,7 +15,6 @@ import {
 } from './game'
 import { shownModal, toast, isMenuOpen } from './global'
 import { isDarkMode } from './user'
-
 import {
   PREVIOUS_HIGH_SCORES_STORAGE_KEY,
   GAME_DATA_STORAGE_KEY,
@@ -25,7 +23,7 @@ import {
   STARTING_GUESSES,
 } from '../js/constants'
 
-import { isValidGuess, load, save } from '../js/helpers'
+import { isValidGuess, loadFromLocalStorage, saveToLocalStorage } from '../js/helpers'
 import { codeWords } from '../js/codeWords'
 
 import { dev } from '$app/env'
@@ -35,7 +33,7 @@ import { get } from 'svelte/store'
 
 
 export const startNewGame = (): void => {
-  save(GAME_DATA_STORAGE_KEY, null)
+  saveToLocalStorage(GAME_DATA_STORAGE_KEY, null)
   setDefaultGameState()
   goto('/')
 }
@@ -152,12 +150,12 @@ export const closeModal = (): void => {
 }
 
 export const registerHighScore = (): void => {
-  let previousHighScores = load(PREVIOUS_HIGH_SCORES_STORAGE_KEY) || []
+  let previousHighScores = loadFromLocalStorage(PREVIOUS_HIGH_SCORES_STORAGE_KEY) || []
 
   // Just some cleanup from prerelease data saving. Can be removed later.
   previousHighScores = previousHighScores.filter(item => typeof item !== 'number')
 
-  save(PREVIOUS_HIGH_SCORES_STORAGE_KEY, [
+  saveToLocalStorage(PREVIOUS_HIGH_SCORES_STORAGE_KEY, [
     ...previousHighScores, [get(runningScore), get(usedAttempts)]
   ])
 }
@@ -173,7 +171,7 @@ export const handleCorrectGuess = (): void => {
 }
 
 export const saveGameData = (): void => {
-  save(GAME_DATA_STORAGE_KEY, {
+  saveToLocalStorage(GAME_DATA_STORAGE_KEY, {
     codeWord: window.btoa(get(codeWord)),
     currentGuesses: get(currentGuesses),
     previousGuesses: get(previousGuesses),
@@ -187,10 +185,10 @@ export const saveGameData = (): void => {
 }
 
 export const setToast = async (msg: ToastMessage = { message: '', type: 'warning' }): Promise<void> => {
-  message.set('')
+  const { message, type } = msg
+  toast.set({ message: '', type })
   await tick()
-  message.set(msg.message)
-  toast.set(msg.type)
+  toast.set({ message, type })
 }
 
 export const shuffleGuesses = (): void => {
@@ -220,7 +218,7 @@ export const toggleDarkMode = (): void => {
   } else {
     document.documentElement.classList.remove('dark')
   }
-  save('theme', get(isDarkMode) ? 'dark' : 'light')
+  saveToLocalStorage('theme', get(isDarkMode) ? 'dark' : 'light')
 }
 
 const setDefaultGameState = (): void => {

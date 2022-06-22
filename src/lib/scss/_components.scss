@@ -179,10 +179,6 @@
   }
 }
 
-.power-bar-container--outer {
-  position: relative;
-}
-
 .power-bar-container {
   font-size: 4vw;
   width: 100%;
@@ -195,6 +191,16 @@
   border-radius: 2rem;
   height: calc(var(--powerBarHeight) + 4px);
   will-change: transform;
+
+  &.wide {
+    --powerBarHeight: 0.625rem;
+ 
+    grid-column: 1 / -1;
+
+    .power-bar {
+      display: flex;
+    }
+  }
 
   .power-bar {
     width: 100%;
@@ -289,19 +295,22 @@
 
 .score {
   overflow: hidden;
-  font-weight: var(--fontWeightBold);
+  font-weight: var(--fontWeightNormal);
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 0 0 2px var(--paper);
   overflow: hidden;
-  border: 0;
+  // border: 0;
   background: var(--paper);
   color: var(--darkBlue);
   width: var(--scoreWidth);
   height: 100%;
-  margin-top: -2px;
-  padding-left: 2px;
+  padding: 2px 0 0;
+
+  .dark & {
+    color: var(--lightBlue);
+  }
 
   .score-container {
     --buttonSize: 2.5rem;
@@ -314,11 +323,7 @@
     width: min-content;
     padding: 0;
     text-align: center;
-    font-size: 1em;
-
-    @media (min-width: 28rem) {
-      font-size: 1.4rem;
-    }
+    font-size: 2rem;
   }
 
   .score-digit {

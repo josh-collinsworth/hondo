@@ -25,16 +25,21 @@ body {
 }
 
 main {
-  transition: filter 0.24s cubic-bezier(0.86, 0, 0.07, 1);
+  transition: all 0.24s cubic-bezier(0.86, 0, 0.07, 1);
 
   &.blurry {
-    filter: blur(6px);
+    opacity: 0.3;
   }
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: var(--fontWeightSemiBold);
   line-height: 1.2;
+  margin: 3rem 0 1rem;
+  
+  &:first-child {
+    margin-top: 0;
+  }
 }
 
 h1 {

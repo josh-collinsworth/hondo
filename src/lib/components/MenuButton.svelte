@@ -22,15 +22,19 @@
 
   .hamburger {
     width: 1.25rem;
-    height: 1rem;
+    height: auto;
     flex-wrap: wrap;
 
     .hamburger__bar {
       content: '';
       width: 100%;
-      height: 0px;
+      height: 0;
       border-bottom: 2px solid var(--darkBlue);
       display: block;
+
+      + .hamburger__bar {
+        margin-top: 3px;
+      }
 
       .dark & {
         border-color: var(--lightBlue);

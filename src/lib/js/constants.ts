@@ -6,3 +6,4 @@ export const SCORE_TICK_DURATION = 220
 export const SHUFFLE_COST = 2
 export const GUESS_COST = 1
 export const SUCCESSFUL_GUESS_GAIN = 1
+export const TOTAL_TUTORIAL_PAGES = 4

@@ -15,7 +15,7 @@
 
 <script lang="ts">
   import '$lib/scss/global.scss'
-  import { blur } from 'svelte/transition'
+  import { fly } from 'svelte/transition'
   import { gameIsOver } from '$lib/state/game'
   import { isMenuOpen, shownModal } from '$lib/state/global'
   import Modal from '$lib/components/modals/Modal.svelte'
@@ -49,7 +49,7 @@
   
   <main inert={isInert} class:blurry={isInert} id="#main" tabindex="-1">
     {#key path}
-      <div in:blur={{ delay: 420, duration: 360 }} out:blur={{ duration: 360}}>
+      <div in:fly={{ delay: 420, duration: 360, y: 8 }} out:fly={{ duration: 360, y: -8 }}>
         <slot />
       </div>
     {/key}

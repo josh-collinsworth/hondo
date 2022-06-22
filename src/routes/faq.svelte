@@ -1,9 +1,7 @@
 <script>
-import Logo from "$lib/components/icon/Logo.svelte";
-import MenuButton from "$lib/components/MenuButton.svelte";
-
+import Logo from '$lib/components/icon/Logo.svelte'
+import MenuButton from '$lib/components/MenuButton.svelte'
 </script>
-
 
 
 <section class="about">
@@ -106,6 +104,9 @@ import MenuButton from "$lib/components/MenuButton.svelte";
       top: 24px;
       right: 24px;
 
+      :global(button) {
+        background: var(--paper);
+      }
     }
 
     h1 {

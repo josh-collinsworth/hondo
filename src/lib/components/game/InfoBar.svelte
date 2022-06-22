@@ -4,6 +4,8 @@
   import Toast from '../Toast.svelte'
   import StatusBurst from './StatusBurst.svelte'
   import MenuButton from '../MenuButton.svelte'
+  import PowerBarWide from './PowerBarWide.svelte'
+  import ScoreDisplay from './ScoreDisplay.svelte'
 </script>
 
 
@@ -12,8 +14,10 @@
   <Toast />
   <!-- <LifelineButton /> -->
   <ShuffleButton />
-  <PowerBar />
+  <ScoreDisplay />
+  <!-- <PowerBar /> -->
   <MenuButton />
+  <PowerBarWide />
 </div>
 <!-- For debugging -->
 <!-- <button on:click={() => runningScore.set($runningScore + 1)}>+1</button> -->

@@ -2,13 +2,15 @@ button, input {
   font: inherit;
 }
 
-button {
+button,
+.button {
   padding: 0.5rem 1rem;
   border: 2px solid var(--lightAccent);
   border-radius: 0.5rem;
   background: var(--lightestAccent);
   color: var(--ink);
   font-weight: var(--fontWeightSemiBold);
+  text-decoration: none;
 
   &.confirm {
     background: var(--primary);

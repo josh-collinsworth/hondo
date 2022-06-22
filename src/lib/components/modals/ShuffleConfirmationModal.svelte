@@ -30,9 +30,9 @@
 </h2>
 
 {#if $remainingAttempts > SHUFFLE_COST}
-  <p>Replaces all guesses on the board with random words.</p>
+  <p>Replaces the board with new random words, but drains your gauge.</p>
 
-  <p>Pay <strong>{SHUFFLE_COST} life</strong> to shuffle now?</p>
+  <p>Shuffle now?</p>
 
   <div class="button-bar">
     <button on:click={closeModal} bind:this={cancelButton}>

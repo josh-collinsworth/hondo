@@ -35,7 +35,7 @@
     z-index: 6;
     color: var(--white);
     border-radius: 0.5rem;
-    top: 3em;
+    top: 5rem;
     left: 0;
     width: 100%;
 

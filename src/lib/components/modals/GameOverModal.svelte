@@ -1,7 +1,7 @@
 <script lang="ts">
   import { PREVIOUS_HIGH_SCORES_STORAGE_KEY } from '$lib/js/constants'
 
-  import { load, floatFormatter } from '$lib/js/helpers'
+  import { loadFromLocalStorage, floatFormatter } from '$lib/js/helpers'
   import { runningScore, codeWord, usedAttempts } from '$lib/state/game'
   import { shownModal } from '$lib/state/global'
   import { startNewGame } from '$lib/state/mutations'
@@ -35,7 +35,7 @@
   }
 
   onMount(() => {
-    const previousHighScores = load(PREVIOUS_HIGH_SCORES_STORAGE_KEY) || [[0, 0]]
+    const previousHighScores = loadFromLocalStorage(PREVIOUS_HIGH_SCORES_STORAGE_KEY) || [[0, 0]]
 
     highScore = Math.max(...previousHighScores.map(score => score[0]))
     fastestScore = Math.min(...previousHighScores.filter(score => score[0] === highScore).map(score => score[1]))

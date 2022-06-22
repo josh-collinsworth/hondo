@@ -2,7 +2,7 @@
   import Loader from '$lib/components/game/Loader.svelte'
   import MenuButton from '$lib/components/MenuButton.svelte'
   import { PREVIOUS_HIGH_SCORES_STORAGE_KEY } from '$lib/js/constants'
-  import { load, floatFormatter } from '$lib/js/helpers'
+  import { loadFromLocalStorage, floatFormatter } from '$lib/js/helpers'
   import { onMount } from 'svelte'
 
   let stats = []
@@ -15,7 +15,7 @@
   let fastestHondo: number
 
   onMount(() => {
-    const loadedStats = load(PREVIOUS_HIGH_SCORES_STORAGE_KEY)
+    const loadedStats = loadFromLocalStorage(PREVIOUS_HIGH_SCORES_STORAGE_KEY)
     if (loadedStats) {
       stats = loadedStats
       highScore = Math.max(...stats.map((score: number[]) => score[0]))

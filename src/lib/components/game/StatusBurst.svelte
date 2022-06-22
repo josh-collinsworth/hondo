@@ -80,6 +80,7 @@
       width: 100%;
       text-align: center;
       margin: 0;
+      animation: slide_right 1.9s cubic-bezier(0.23, 1, 0.320, 1) forwards;
     }
 
     p {
@@ -87,6 +88,7 @@
       margin: 1rem 0 0;
       width: 100%;
       text-align: center;
+      animation: slide_left 1.9s cubic-bezier(0.23, 1, 0.320, 1) forwards;
     }
 
     @keyframes burst_right {
@@ -101,6 +103,20 @@
       20% { transform: scaleX(1) }
       80% { transform: scaleX(1); transform-origin: left; }
       100% { transform: scaleX(0);  transform-origin: left; }
+    }
+
+    @keyframes slide_right {
+      0% { transform: translateX(-3rem) }
+      20% { transform: translateX(0) }
+      67% { transform: translateX(0) }
+      100% { transform: translateX(3rem) }
+    }
+    
+    @keyframes slide_left {
+      0% { transform: translateX(3rem) }
+      20% { transform: translateX(0) }
+      67% { transform: translateX(0) }
+      100% { transform: translateX(-3rem) }
     }
   }
 </style>

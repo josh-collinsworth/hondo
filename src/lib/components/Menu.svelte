@@ -69,7 +69,7 @@
     <nav tabindex="-1" bind:this={navMenu}>
       <ul class="menu__links" aria-labelledby="menu-heading">
         <li>
-          <a href="/how-to-play" on:click={toggleMenuOpen}>
+          <a href="/tutorial/1" on:click={toggleMenuOpen}>
             <span aria-hidden="true">
               <HBlock />
             </span>
