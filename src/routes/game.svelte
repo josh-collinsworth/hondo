@@ -82,7 +82,6 @@ onMount(() => {
 
   <div class="game-container">
     <InfoBar />
-{$remainingAttempts}
     {#if $isLoading}
       <Loader />
     {:else}
