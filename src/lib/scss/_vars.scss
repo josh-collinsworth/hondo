@@ -1,4 +1,13 @@
 :root { 
+  --altRed: #A23E48;
+  --altBlack: #191919;
+  --altDarkerGray: #2F242C;
+  --altDarkerBlue: #002642;
+  --altDarkBlue: #173A53;
+  --altMediumGray: #2C4C63;
+  --altOrange: #FF570A;
+  --altBlue: #8797AF;
+
   --offwhite: #f7f8fa;
   --lightestGray: #f0f1f3;
   --lighterGray: #d9dadc;
@@ -13,6 +22,13 @@
   --red: #e4002b;
   --lightBlue: #7ba7bc;
   --darkBlue: #34657f;
+
+  // --lightBlue: var(--altBlue);
+  // --orange: var(--altOrange);
+  // --black: var(--altBlack);
+  // --darkBlue: var(--altDarkBlue);
+  // --mediumGray: var(--altMediumGray);
+
 
   --orangeRGB: 255, 106, 19;
   --lightBlueRGB: 123, 167, 188;
