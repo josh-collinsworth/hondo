@@ -72,10 +72,6 @@ onMount(() => {
 
 <style lang="scss">
 .container {
-  padding: 24px;
-  max-width: 28rem;
-  width: 100%;
-  margin: auto;
   min-height: 100vh;
   justify-content: start;
 

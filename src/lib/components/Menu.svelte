@@ -14,6 +14,7 @@ import { tick } from 'svelte'
 import { fly, fade } from 'svelte/transition'
 import { quintIn, quintOut } from 'svelte/easing'
 import { goto } from '$app/navigation'
+import ExclamationBlock from './icon/ExclamationBlock.svelte';
 
 export let currentPage: string
 
@@ -30,13 +31,6 @@ const listenForClose = (e: KeyboardEvent): void => {
   if (e.key === 'Escape' && $isMenuOpen) {
     toggleMenuOpen()
   }
-}
-
-const abandonGame = (): void => {
-  const confirmation = confirm('Start a new game? This will delete any game currently in progress.')
-  if (!confirmation)  return
-  startNewGame()
-  toggleMenuOpen()
 }
 
 isMenuOpen.subscribe(async (isOpen) => {
@@ -80,6 +74,14 @@ isMenuOpen.subscribe(async (isOpen) => {
               <HBlock />
             </span>
             How to play
+          </a>
+        </li>
+        <li>
+          <a href="/powerups" on:click={toggleMenuOpen}>
+            <span aria-hidden="true">
+              <ExclamationBlock />
+            </span>
+            Powerups
           </a>
         </li>
         <li>

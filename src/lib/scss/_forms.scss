@@ -18,3 +18,8 @@ button,
     border-color: var(--primary);
   }
 }
+
+fieldset {
+  border: 1px solid var(--lightAccent);
+  padding: 1rem;
+}

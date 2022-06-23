@@ -1,21 +1,40 @@
 <script lang="ts">
 import { isMenuOpen } from '$lib/state/global'
 
+export let floating: boolean = false
+
 const toggleMenuOpen = (): void => {
   $isMenuOpen = !$isMenuOpen
 }
 </script>
 
-<button class="info-button menu-button" on:click={toggleMenuOpen}>
-  <div class="hamburger display-flex align-center">
-    <div class="hamburger__bar"></div>
-    <div class="hamburger__bar"></div>
-    <div class="hamburger__bar"></div>
-  </div>
-</button>
+<div class:floating class="menu-button-wrapper">
+  <button class="info-button menu-button" on:click={toggleMenuOpen}>
+    <div class="hamburger display-flex align-center">
+      <div class="hamburger__bar"></div>
+      <div class="hamburger__bar"></div>
+      <div class="hamburger__bar"></div>
+    </div>
+  </button>
+</div>
 
 
 <style lang="scss">
+.menu-button-wrapper {
+  max-width: max-content;
+  height: auto;
+
+  &.floating {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+
+    .menu-button {
+      background: var(--paper);
+    }
+  }
+}
+
 .menu-button {
   padding: 0;
 }

@@ -22,8 +22,6 @@ import {
   SCORE_TICK_DURATION,
   SHUFFLE_COST,
   STARTING_GUESSES,
-  GUESS_COST,
-  GUESS_BENEFIT,
 } from '../js/constants'
 
 import { isValidGuess, loadFromLocalStorage, saveToLocalStorage } from '../js/helpers'
@@ -33,6 +31,7 @@ import { dev } from '$app/env'
 import { goto } from '$app/navigation'
 import { SvelteComponent, tick } from 'svelte'
 import { get } from 'svelte/store'
+import { adjustedGuessBenefit, adjustedGuessCost, staticPowerup } from './powerups'
 
 
 export const startNewGame = (): void => {
@@ -60,13 +59,34 @@ export const setNewRandomCodeWord = (log = false): void => {
 export const handleNewGuess = (): void => {
   if (isValidGuess(get(currentGuess))) {
     if (!get(currentGuesses).includes(get(currentGuess))) {
-      previousGuesses.set([...get(currentGuesses)])
-      currentGuesses.set([...get(currentGuesses).slice(1, 5), get(currentGuess)])
+      if (get(staticPowerup) === 'wordserk') {
+        const guessScores = [...get(currentGuesses)].map(word => {
+          let total = 0
+          Array.from(word).forEach((letter, i) => {
+            if ([...get(codeWord)][i] === letter) {
+              total += 3
+            } else if (get(codeWord).includes(letter)) {
+              total += 1
+            }
+          })
+          return total
+        })
+        const highScoreIndex = guessScores.indexOf(Math.min(...guessScores))
 
+        const newCurrentGuesses = get(currentGuesses)
+        newCurrentGuesses[highScoreIndex] = get(currentGuess)
+
+        previousGuesses.set([...get(currentGuesses)])
+        currentGuesses.set([...newCurrentGuesses])
+      } else {
+        previousGuesses.set([...get(currentGuesses)])
+        currentGuesses.set([...get(currentGuesses).slice(1, 5), get(currentGuess)])
+      }
       setNewScores()
       if (!get(gameIsOver)) {
         saveGameData()
       }
+      
     } else if (get(currentGuesses).includes(get(currentGuess)) && get(currentGuess) === get(codeWord)){
       // This whole condition is here just to handle weird error states. Hopefully isn't needed in prod.
       setToast({ message: 'Bad state detected. Reshuffling…', type: 'warning'})
@@ -119,11 +139,11 @@ export const setNewScores = (): void => {
     const tally = 1 + get(streak)
     incrementRunningScore(tally)
     pointsScoredForLastGuess.set(tally)
-    incrementRemainingAttempts(GUESS_BENEFIT)
+    incrementRemainingAttempts(get(adjustedGuessBenefit))
     incrementStreak(1)
     handleCorrectGuess()
   } else {
-    incrementRemainingAttempts(-GUESS_COST)
+    incrementRemainingAttempts(-get(adjustedGuessCost))
     setStreak(0)
   }
   // Update the count of total used guesses
@@ -133,7 +153,7 @@ export const setNewScores = (): void => {
   currentGuess.set('')
 
   // Alert the player if this is their last guess
-  if (get(remainingAttempts) && get(remainingAttempts) <= GUESS_COST) {
+  if (get(remainingAttempts) && get(remainingAttempts) <= get(adjustedGuessCost)) {
     setToast({
       message: 'Last guess!',
       type: 'warning',

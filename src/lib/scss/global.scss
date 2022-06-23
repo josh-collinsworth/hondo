@@ -55,6 +55,13 @@ h1 {
   min-height: 100dvh;
 }
 
+.container {
+  padding: 24px;
+  max-width: 28rem;
+  width: 100%;
+  margin: auto;
+}
+
 a {
   color: var(--darkBlue);
 
