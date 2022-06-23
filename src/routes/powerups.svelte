@@ -4,26 +4,26 @@ import QuestionBlock from '$lib/components/icon/QuestionBlock.svelte'
 import StatsBlock from '$lib/components/icon/StatsBlock.svelte'
 import XIcon from '$lib/components/icon/XIcon.svelte'
 import MenuButton from '$lib/components/MenuButton.svelte'
-import { POWERUPS_STORAGE_KEY, STATIC_POWERUP_EFFECTS } from '$lib/js/constants'
+import { POWERUPS_STORAGE_KEY } from '$lib/js/constants'
+import { staticPowerups } from '$lib/state/powerups'
 import { loadFromLocalStorage, saveToLocalStorage } from '$lib/js/helpers'
-import { staticPowerup } from '$lib/state/powerups'
+import { selectedStaticPowerup } from '$lib/state/powerups'
 import { onMount } from 'svelte'
 
 const saveValueLocally = () => {
   const savedPowerups = loadFromLocalStorage(POWERUPS_STORAGE_KEY) || {}
   saveToLocalStorage(POWERUPS_STORAGE_KEY, {
-    ...savedPowerups, static: $staticPowerup
+    ...savedPowerups, static: $selectedStaticPowerup
   })
 }
 
-$: staticPowerupInfo = STATIC_POWERUP_EFFECTS[$staticPowerup]
+$: selectedStaticPowerupInfo = $staticPowerups[$selectedStaticPowerup]
 
 onMount(() => {
-  console.log('onMount', $staticPowerup)
   const savedPowerups = loadFromLocalStorage(POWERUPS_STORAGE_KEY)
 
   if (savedPowerups) {
-    $staticPowerup = savedPowerups.static
+    $selectedStaticPowerup = savedPowerups.static
   }
 })
 </script>
@@ -40,28 +40,28 @@ onMount(() => {
       <legend>Static</legend>
 
       <div class="powerup-list">
-        <input type="radio" bind:group={$staticPowerup} id="none" name="static" value="none" on:change={saveValueLocally}/>
+        <input type="radio" bind:group={$selectedStaticPowerup} id="none" name="static" value="none" on:change={saveValueLocally}/>
         <label for="none" class="powerup-card none">
           <XIcon />
         </label>
 
-        <input type="radio" bind:group={$staticPowerup} id="educatedGuesses" name="static" value="educatedGuesses" on:change={saveValueLocally} />
+        <input type="radio" bind:group={$selectedStaticPowerup} id="educatedGuesses" name="static" value="educatedGuesses" on:change={saveValueLocally} />
         <label for="educatedGuesses" class="powerup-card">
           <BackBlock />
         </label>
         
-        <input type="radio" bind:group={$staticPowerup} id="sweeterSuccess" name="static" value="sweeterSuccess" on:change={saveValueLocally} />
+        <input type="radio" bind:group={$selectedStaticPowerup} id="sweeterSuccess" name="static" value="sweeterSuccess" on:change={saveValueLocally} />
         <label for="sweeterSuccess" class="powerup-card">
           <QuestionBlock />
         </label>
 
-        <input type="radio" bind:group={$staticPowerup} id="wordserk" name="static" value="wordserk" on:change={saveValueLocally} />
-        <label for="wordserk" class="powerup-card">
+        <input type="radio" bind:group={$selectedStaticPowerup} id="safeStreak" name="static" value="safeStreak" on:change={saveValueLocally} />
+        <label for="safeStreak" class="powerup-card">
           <StatsBlock />
         </label>
       </div>
-      <h2>{staticPowerupInfo.title}</h2>
-      <p>{staticPowerupInfo.description}</p>
+      <h2>{selectedStaticPowerupInfo.title}</h2>
+      <p>{selectedStaticPowerupInfo.description}</p>
     </fieldset>
 
 

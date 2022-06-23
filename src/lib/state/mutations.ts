@@ -31,7 +31,7 @@ import { dev } from '$app/env'
 import { goto } from '$app/navigation'
 import { SvelteComponent, tick } from 'svelte'
 import { get } from 'svelte/store'
-import { adjustedGuessBenefit, adjustedGuessCost, staticPowerup } from './powerups'
+import { adjustedGuessBenefit, adjustedGuessCost, adjustedScorePerCodeWord, isStreakAllowed, selectedStaticPowerup } from './powerups'
 
 
 export const startNewGame = (): void => {
@@ -59,29 +59,9 @@ export const setNewRandomCodeWord = (log = false): void => {
 export const handleNewGuess = (): void => {
   if (isValidGuess(get(currentGuess))) {
     if (!get(currentGuesses).includes(get(currentGuess))) {
-      if (get(staticPowerup) === 'wordserk') {
-        const guessScores = [...get(currentGuesses)].map(word => {
-          let total = 0
-          Array.from(word).forEach((letter, i) => {
-            if ([...get(codeWord)][i] === letter) {
-              total += 3
-            } else if (get(codeWord).includes(letter)) {
-              total += 1
-            }
-          })
-          return total
-        })
-        const highScoreIndex = guessScores.indexOf(Math.min(...guessScores))
+      previousGuesses.set([...get(currentGuesses)])
+      currentGuesses.set([...get(currentGuesses).slice(1, 5), get(currentGuess)])
 
-        const newCurrentGuesses = get(currentGuesses)
-        newCurrentGuesses[highScoreIndex] = get(currentGuess)
-
-        previousGuesses.set([...get(currentGuesses)])
-        currentGuesses.set([...newCurrentGuesses])
-      } else {
-        previousGuesses.set([...get(currentGuesses)])
-        currentGuesses.set([...get(currentGuesses).slice(1, 5), get(currentGuess)])
-      }
       setNewScores()
       if (!get(gameIsOver)) {
         saveGameData()
@@ -136,7 +116,8 @@ export const setStreak = (value: number): void => {
 
 export const setNewScores = (): void => {
   if (get(currentGuess) === get(codeWord)) {
-    const tally = 1 + get(streak)
+    const streakPoints = get(isStreakAllowed) ? get(streak) : 0
+    const tally = get(adjustedScorePerCodeWord) + streakPoints
     incrementRunningScore(tally)
     pointsScoredForLastGuess.set(tally)
     incrementRemainingAttempts(get(adjustedGuessBenefit))

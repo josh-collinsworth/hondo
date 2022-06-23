@@ -1,5 +1,6 @@
 <script lang="ts">
 import { pointsScoredForLastGuess, discoveredCodeWord } from '$lib/state/game'
+import { isStreakAllowed } from '$lib/state/powerups';
 import { fade } from 'svelte/transition'
 
 let codeWordToShow: string = ''
@@ -23,7 +24,7 @@ $: if ($discoveredCodeWord) {
         {codeWordToShow}
       </h2>
       <p>
-        {#if $pointsScoredForLastGuess > 1}
+        {#if $pointsScoredForLastGuess > 1 && $isStreakAllowed}
           <strong>Streak bonus!</strong>
         {/if}
         +{$pointsScoredForLastGuess}

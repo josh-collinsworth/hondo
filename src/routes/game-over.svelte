@@ -1,6 +1,6 @@
 <script lang="ts">
-import { GAME_DATA_STORAGE_KEY, GAME_HISTORY_STORAGE_KEY } from '$lib/js/constants'
-import { loadFromLocalStorage, floatFormatter } from '$lib/js/helpers'
+import { GAME_HISTORY_STORAGE_KEY } from '$lib/js/constants'
+import { loadFromLocalStorage } from '$lib/js/helpers'
 import { runningScore, codeWord, usedAttempts, gameIsOver } from '$lib/state/game'
 import { shownModal } from '$lib/state/global'
 import { startNewGame } from '$lib/state/mutations'
