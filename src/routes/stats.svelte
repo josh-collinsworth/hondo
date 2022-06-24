@@ -1,65 +1,74 @@
 <script lang="ts">
 import Loader from '$lib/components/game/Loader.svelte'
 import MenuButton from '$lib/components/MenuButton.svelte'
-import { GAME_HISTORY_STORAGE_KEY, LONGEST_STREAK_STORAGE_KEY } from '$lib/js/constants'
+import { LONGEST_STREAK_STORAGE_KEY } from '$lib/js/constants'
+import { gameHistory, totalGamesPlayed, totalPointsScored, highScore, totalHondos, hondos } from '$lib/state/getters'
 import { loadFromLocalStorage, floatFormatter } from '$lib/js/helpers'
 import { onMount } from 'svelte'
+import type { PlayedGame } from '$lib/js/types'
 
-let stats = []
-let isLoading = true
-let highScore: number
-let averageScore: number|string
-let averageGuesses: number|string
-let medianScore: number
-let medianGuesses: number
-let fastestHondo: number
-let longestStreak: number
-let totalScore: number
+let localIsLoading = true
+
+let stats = {
+  played: 0,
+  highScore: 0,
+  totalScore: 0,
+  averageScore: <number|string> 0,
+  averageGuesses: <number|string> 0,
+  longestStreak: 0,
+  totalGamesPlayed: 0,
+  fastestHondo: <number|null> null,
+  medianScore: 0,
+  medianGuesses: 0,
+}
 
 onMount(() => {
-  const loadedStats = loadFromLocalStorage(GAME_HISTORY_STORAGE_KEY)
-  const loadedLongestStreak = loadFromLocalStorage(LONGEST_STREAK_STORAGE_KEY) || 0
-  
-  longestStreak = loadedLongestStreak
+  const playedGames: PlayedGame[] = gameHistory()
+  const loadedLongestStreak = loadFromLocalStorage(LONGEST_STREAK_STORAGE_KEY)
 
-  if (loadedStats) {
-    stats = loadedStats
-    highScore = Math.max(...stats.map((score: number[]) => score[0]))
-    const scoresOnly = stats.map((score: number[]) => score[0])
-    totalScore = scoresOnly.reduce((p: number, c: number) => p + c, 0)
-    averageScore = floatFormatter.format(totalScore / stats.length)
-    averageGuesses = floatFormatter.format(
-      stats.map((score: number[]) => score[1]).reduce((p: number, c: number) => p + c, 0) / stats.length
-    )
-    const hondos = stats.filter((score: number[]) => score[0] === 100)
-    if (hondos.length) {
-      fastestHondo = Math.min(...hondos.map((score: number[]) => score[1]))
-    }
-    let medianScoreTally = stats.map(score => score[0]).sort((a, b) => a > b)
-    let medianGuessesTally = stats.map(score => score[1]).sort((a, b) => a > b)
-    
-    while (medianScoreTally.length > 1) {
-      if (medianScoreTally.length === 2) {
-        medianScoreTally.pop()
-      }
-      else {
-        medianScoreTally.pop()
-        medianScoreTally.shift()
-      }
-    }
-    while (medianGuessesTally.length > 1) {
-      if (medianGuessesTally.length === 2) {
-        medianGuessesTally.pop()
-      }
-      else {
-        medianGuessesTally.pop()
-        medianGuessesTally.shift()
-      }
-    }
-    medianScore = medianScoreTally[0]
-    medianGuesses= medianGuessesTally[0]
+  console.log(playedGames)
+  
+  stats.longestStreak = loadedLongestStreak || 0
+
+  if (playedGames.length) {
+    stats.played = playedGames.length
+}
+  stats.highScore = highScore()
+  stats.totalScore = totalPointsScored()
+  stats.totalGamesPlayed = totalGamesPlayed()
+  stats.averageScore = floatFormatter.format(stats.totalScore / stats.totalGamesPlayed)
+  stats.averageGuesses = floatFormatter.format(
+    stats.totalScore / stats.totalGamesPlayed
+  )
+  const playedHondos = hondos()
+  if (playedHondos.length) {
+    stats.fastestHondo = Math.min(...playedHondos.map((score: number[]) => score[1]))
   }
-  isLoading = false
+  let medianScoreTally = playedGames.map(score => score[0]).sort((a, b) => a - b)
+  let medianGuessesTally = playedGames.map(score => score[1]).sort((a, b) => a - b)
+  
+  while (medianScoreTally.length > 1) {
+    if (medianScoreTally.length === 2) {
+      medianScoreTally.pop()
+    }
+    else {
+      medianScoreTally.pop()
+      medianScoreTally.shift()
+    }
+  }
+  while (medianGuessesTally.length > 1) {
+    if (medianGuessesTally.length === 2) {
+      medianGuessesTally.pop()
+    }
+    else {
+      medianGuessesTally.pop()
+      medianGuessesTally.shift()
+    }
+  }
+  stats.medianScore = medianScoreTally[0]
+  stats.medianGuesses= medianGuessesTally[0]
+
+  localIsLoading = false
 })
 </script>
 
@@ -68,37 +77,37 @@ onMount(() => {
   <MenuButton />
   <h1>Game stats</h1>
 
-  {#if isLoading}
+  {#if localIsLoading}
     <Loader />
-  {:else if stats.length}
+  {:else if stats.played}
     <ul class="no-bullets">
       <li>
         <h2>Highest score</h2>
-        <p>{highScore}</p>
+        <p>{stats.highScore}</p>
       </li>
       <li>
         <h2>Fastest Hondo</h2>
-        {#if fastestHondo}
-        <p>{fastestHondo} attempts</p>
+          {#if stats.fastestHondo}
+        <p>{stats.fastestHondo} attempts</p>
         {:else}
-        <p>You haven't scored a Hondo yet. Keep trying!</p>
+          <p>You haven't scored a Hondo yet. Keep trying!</p>
         {/if}
       </li>
       <li>
         <h2>Longest streak</h2>
-        <p>{longestStreak}</p>
+        <p>{stats.longestStreak}</p>
       </li>
       <li>
         <h2>Total points scored</h2>
-        <p>{totalScore}</p>
+        <p>{stats.totalScore}</p>
       </li>
       <li>
         <h2>Average score</h2>
-        <p>{averageScore} in {averageGuesses} guesses</p>
+        <p>{stats.averageScore} in {stats.averageGuesses} guesses</p>
       </li>
       <li>
         <h2>Median score</h2>
-        <p>{medianScore} in {medianGuesses} guesses</p>
+        <p>{stats.medianScore} in {stats.medianGuesses} guesses</p>
       </li>
     </ul>
   {:else}

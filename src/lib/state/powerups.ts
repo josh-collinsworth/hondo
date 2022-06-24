@@ -2,16 +2,24 @@ import { GUESS_COST, GUESS_BENEFIT, SCORE_PER_CODE_WORD } from '$lib/js/constant
 import { derived, readable, writable, get } from 'svelte/store'
 
 export type StaticPowerupType = 'educatedGuesses'|'sweeterSuccess'|'safeStreak'|'none'
+
 export type StaticPowerupEffects = {
   guessCost?: number
   guessBenefit?: number
   score?: number
   streak?: boolean
 }
-export type StaticPowerup= {
+
+export type PowerupUnlock = {
+  getter: string
+  threshold: number
+}
+
+export type StaticPowerup = {
   title: string,
   description: string,
-  effects: StaticPowerupEffects
+  effects: StaticPowerupEffects,
+  unlock: PowerupUnlock
 }
 
 export const selectedStaticPowerup = writable<StaticPowerupType>('none')

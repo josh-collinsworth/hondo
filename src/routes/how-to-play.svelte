@@ -231,7 +231,6 @@ p {
 
   &.small-print {
     margin: 0.5rem 0 0;
-    font-size: 0.8rem;
     text-align: center;
   }
 }

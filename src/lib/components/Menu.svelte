@@ -1,20 +1,20 @@
 <script lang="ts">
 import { isMenuOpen } from '$lib/state/global'
-import { startNewGame, toggleMenuOpen } from '$lib/state/mutations'
+import { toggleMenuOpen } from '$lib/state/mutations'
 
 import DarkModeToggle from './DarkModeToggle.svelte'
 import CloseMenuButton from './CloseMenuButton.svelte'
-import QuestionBlock from './icon/QuestionBlock.svelte'
-import StatsBlock from './icon/StatsBlock.svelte'
-import BackBlock from './icon/BackBlock.svelte'
-import HBlock from './icon/HBlock.svelte'
+import QuestionBlock from './icon/blocks/QuestionBlock.svelte'
+import StatsBlock from './icon/blocks/StatsBlock.svelte'
+import BackBlock from './icon/blocks/BackBlock.svelte'
+import HBlock from './icon/blocks/HBlock.svelte'
 import Logo from './icon/Logo.svelte'
 
 import { tick } from 'svelte'
 import { fly, fade } from 'svelte/transition'
 import { quintIn, quintOut } from 'svelte/easing'
 import { goto } from '$app/navigation'
-import ExclamationBlock from './icon/ExclamationBlock.svelte';
+import ExclamationBlock from './icon/blocks/ExclamationBlock.svelte';
 
 export let currentPage: string
 
