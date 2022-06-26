@@ -12,6 +12,7 @@ import {
   streak,
   pointsScoredForLastGuess,
   previousGuesses,
+  gameHistory,
 } from './game'
 import { shownModal, toast, isMenuOpen } from './global'
 import { isDarkMode } from './user'
@@ -167,9 +168,12 @@ export const registerHighScore = (): void => {
   // Just some cleanup from prerelease data saving. Can be removed later.
   previousHighScores = previousHighScores.filter(item => typeof item !== 'number')
 
-  saveToLocalStorage(GAME_HISTORY_STORAGE_KEY, [
+  const dataToSave = [
     ...previousHighScores, [get(runningScore), get(usedAttempts)]
-  ])
+  ]
+
+  saveToLocalStorage(GAME_HISTORY_STORAGE_KEY, dataToSave)
+  gameHistory.set(dataToSave)
 }
 
 export const handleCorrectGuess = (): void => {

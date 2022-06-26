@@ -1,29 +1,23 @@
 <script context="module" lang="ts">
 import type { LoadOutput } from '@sveltejs/kit'
 
-export const load = async ({ url }): Promise<LoadOutput> => {
-  const path: string = url.pathname
-
-  return {
-    props: {
-      path
-    }
-  }
-}
+export const load = async ({ url }): Promise<LoadOutput> => ({props: { path: <string>url.pathname }})
 </script>
 
 
 <script lang="ts">
 import '$lib/scss/global.scss'
-import { fly } from 'svelte/transition'
-import { gameIsOver, runningScore } from '$lib/state/game'
+import { gameHistory, gameIsOver, runningScore } from '$lib/state/game'
 import { isMenuOpen, shownModal } from '$lib/state/global'
-import Modal from '$lib/components/modals/Modal.svelte'
+import { setToast } from '$lib/state/mutations';
 import SkipToContentLink from '$lib/components/SkipToContentLink.svelte'
+import Modal from '$lib/components/modals/Modal.svelte'
 import Menu from '$lib/components/Menu.svelte'
 import Logo from '$lib/components/icon/Logo.svelte'
+import { fly } from 'svelte/transition'
 import { goto } from '$app/navigation';
-import { setToast } from '$lib/state/mutations';
+import { onMount } from 'svelte';
+import { retrieveGameHistory } from '$lib/state/getters';
 
 export let path: string
 
@@ -39,6 +33,10 @@ $: if ($gameIsOver) {
     goto('/game-over')
   }, 1500)
 }
+
+onMount(() => {
+  $gameHistory = retrieveGameHistory() || []
+})
 </script>
 
 

@@ -14,11 +14,9 @@ import HBlock from '$lib/components/icon/blocks/HBlock.svelte'
 import QuestionBlock from '$lib/components/icon/blocks/QuestionBlock.svelte'
 import DarkModeToggle from '$lib/components/DarkModeToggle.svelte'
 import Padlock from '$lib/components/icon/Padlock.svelte'
-import { is_client } from 'svelte/internal';
 
 let localIsLoading = true
 let savedGame = false
-let powerupComponent = is_client && totalGamesPlayed() ? ExclamationBlock : Padlock
 
 $: buttonText = savedGame ? 'Continue playing' : 'New game'
 
@@ -73,7 +71,7 @@ onMount(() => {
             How to play
           </a>
         </li>
-        {#if totalGamesPlayed()}
+        {#if $totalGamesPlayed}
           <li>
             <a href="/powerups">
               <span class="link__icon" aria-hidden="true">

@@ -1,51 +1,26 @@
 <script lang="ts">
+import { LONGEST_STREAK_STORAGE_KEY } from '$lib/js/constants'
+import { totalGamesPlayed, totalPointsScored, highScore, fastestHondo, totalGuessesUsed } from '$lib/state/getters'
+import { gameHistory } from '$lib/state/game'
+import { loadFromLocalStorage, floatFormatter } from '$lib/js/helpers'
 import Loader from '$lib/components/game/Loader.svelte'
 import MenuButton from '$lib/components/MenuButton.svelte'
-import { LONGEST_STREAK_STORAGE_KEY } from '$lib/js/constants'
-import { gameHistory, totalGamesPlayed, totalPointsScored, highScore, totalHondos, hondos } from '$lib/state/getters'
-import { loadFromLocalStorage, floatFormatter } from '$lib/js/helpers'
 import { onMount } from 'svelte'
-import type { PlayedGame } from '$lib/js/types'
 
 let localIsLoading = true
+let medianScore: number
+let medianGuesses: number
 
-let stats = {
-  played: 0,
-  highScore: 0,
-  totalScore: 0,
-  averageScore: <number|string> 0,
-  averageGuesses: <number|string> 0,
-  longestStreak: 0,
-  totalGamesPlayed: 0,
-  fastestHondo: <number|null> null,
-  medianScore: 0,
-  medianGuesses: 0,
-}
+$: averageScore = floatFormatter.format($totalPointsScored / $totalGamesPlayed)
+$: averageGuesses = floatFormatter.format($totalGuessesUsed / $totalGamesPlayed)
+ 
 
 onMount(() => {
-  const playedGames: PlayedGame[] = gameHistory()
   const loadedLongestStreak = loadFromLocalStorage(LONGEST_STREAK_STORAGE_KEY)
+  const longestStreak = loadedLongestStreak || 0
 
-  console.log(playedGames)
-  
-  stats.longestStreak = loadedLongestStreak || 0
-
-  if (playedGames.length) {
-    stats.played = playedGames.length
-}
-  stats.highScore = highScore()
-  stats.totalScore = totalPointsScored()
-  stats.totalGamesPlayed = totalGamesPlayed()
-  stats.averageScore = floatFormatter.format(stats.totalScore / stats.totalGamesPlayed)
-  stats.averageGuesses = floatFormatter.format(
-    stats.totalScore / stats.totalGamesPlayed
-  )
-  const playedHondos = hondos()
-  if (playedHondos.length) {
-    stats.fastestHondo = Math.min(...playedHondos.map((score: number[]) => score[1]))
-  }
-  let medianScoreTally = playedGames.map(score => score[0]).sort((a, b) => a - b)
-  let medianGuessesTally = playedGames.map(score => score[1]).sort((a, b) => a - b)
+  let medianScoreTally = $gameHistory.map(score => score[0]).sort((a, b) => a - b)
+  let medianGuessesTally = $gameHistory.map(score => score[1]).sort((a, b) => a - b)
   
   while (medianScoreTally.length > 1) {
     if (medianScoreTally.length === 2) {
@@ -65,8 +40,8 @@ onMount(() => {
       medianGuessesTally.shift()
     }
   }
-  stats.medianScore = medianScoreTally[0]
-  stats.medianGuesses= medianGuessesTally[0]
+  medianScore = medianScoreTally[0]
+  medianGuesses= medianGuessesTally[0]
 
   localIsLoading = false
 })
@@ -79,35 +54,35 @@ onMount(() => {
 
   {#if localIsLoading}
     <Loader />
-  {:else if stats.played}
+  {:else if $totalGamesPlayed}
     <ul class="no-bullets">
       <li>
         <h2>Highest score</h2>
-        <p>{stats.highScore}</p>
+        <p>{$highScore}</p>
       </li>
       <li>
         <h2>Fastest Hondo</h2>
-          {#if stats.fastestHondo}
-        <p>{stats.fastestHondo} attempts</p>
+          {#if $fastestHondo}
+        <p>{$fastestHondo} attempts</p>
         {:else}
           <p>You haven't scored a Hondo yet. Keep trying!</p>
         {/if}
       </li>
       <li>
         <h2>Longest streak</h2>
-        <p>{stats.longestStreak}</p>
+        <p>{longestStreak}</p>
       </li>
       <li>
         <h2>Total points scored</h2>
-        <p>{stats.totalScore}</p>
+        <p>{$totalPointsScored}</p>
       </li>
       <li>
         <h2>Average score</h2>
-        <p>{stats.averageScore} in {stats.averageGuesses} guesses</p>
+        <p>{averageScore} in {averageGuesses} guesses</p>
       </li>
       <li>
         <h2>Median score</h2>
-        <p>{stats.medianScore} in {stats.medianGuesses} guesses</p>
+        <p>{medianScore} in {medianGuesses} guesses</p>
       </li>
     </ul>
   {:else}

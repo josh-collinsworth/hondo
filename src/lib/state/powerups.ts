@@ -1,5 +1,6 @@
 import { GUESS_COST, GUESS_BENEFIT, SCORE_PER_CODE_WORD } from '$lib/js/constants'
 import { derived, readable, writable, get } from 'svelte/store'
+import * as getters from './getters'
 
 export type StaticPowerupType = 'educatedGuesses'|'sweeterSuccess'|'safeStreak'|'none'
 
@@ -19,7 +20,7 @@ export type StaticPowerup = {
   title: string,
   description: string,
   effects: StaticPowerupEffects,
-  unlock: PowerupUnlock
+  unlock: PowerupUnlock,
 }
 
 export const selectedStaticPowerup = writable<StaticPowerupType>('none')
@@ -36,6 +37,10 @@ export const staticPowerups = readable({
     title: 'None',
     description: 'Play with no static powerup.',
     effects: defaultEffects,
+    unlock: {
+      getter: 'totalGamesPlayed',
+      threshold: 0,
+    },
   },
   'educatedGuesses': <StaticPowerup>{
     title: 'Educated Guesses',
@@ -43,7 +48,11 @@ export const staticPowerups = readable({
     effects: {
       ...defaultEffects,
       guessCost: -1,
-    }
+    },
+    unlock: {
+      getter: 'totalGamesPlayed',
+      threshold: 1,
+    },
   },
   'sweeterSuccess': <StaticPowerup>{
     title: 'Sweeter success',
@@ -51,7 +60,11 @@ export const staticPowerups = readable({
     effects: {
       ...defaultEffects,
       guessBenefit: 2
-    }
+    },
+    unlock: {
+      getter: 'totalGamesPlayed',
+      threshold: 1,
+    },
   },
   'safeStreak': <StaticPowerup>{
     title: 'Safe Streak',
@@ -60,7 +73,11 @@ export const staticPowerups = readable({
       ...defaultEffects,
       score: 1,
       streak: false,
-    }
+    },
+    unlock: {
+      getter: 'totalGamesPlayed',
+      threshold: 1,
+    },
   }
 })
 
