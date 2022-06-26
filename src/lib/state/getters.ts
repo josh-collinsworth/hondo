@@ -41,5 +41,10 @@ export const totalHondos = derived(
 
 export const fastestHondo = derived(
   hondos,
-  $hondos => Math.min(...$hondos.map((score: number[]) => score[1]))
+  $hondos => {
+    if ($hondos.length) {
+      return Math.min(...$hondos.map((score: number[]) => score[1]))
+    }
+    return null
+  }
 )

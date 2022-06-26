@@ -10,6 +10,7 @@ import { onMount } from 'svelte'
 let localIsLoading = true
 let medianScore: number
 let medianGuesses: number
+let longestStreak: number
 
 $: averageScore = floatFormatter.format($totalPointsScored / $totalGamesPlayed)
 $: averageGuesses = floatFormatter.format($totalGuessesUsed / $totalGamesPlayed)
@@ -17,12 +18,13 @@ $: averageGuesses = floatFormatter.format($totalGuessesUsed / $totalGamesPlayed)
 
 onMount(() => {
   const loadedLongestStreak = loadFromLocalStorage(LONGEST_STREAK_STORAGE_KEY)
-  const longestStreak = loadedLongestStreak || 0
+  longestStreak = loadedLongestStreak || 0
 
   let medianScoreTally = $gameHistory.map(score => score[0]).sort((a, b) => a - b)
   let medianGuessesTally = $gameHistory.map(score => score[1]).sort((a, b) => a - b)
   
   while (medianScoreTally.length > 1) {
+    console.log(medianScoreTally)
     if (medianScoreTally.length === 2) {
       medianScoreTally.pop()
     }
@@ -65,7 +67,7 @@ onMount(() => {
           {#if $fastestHondo}
         <p>{$fastestHondo} attempts</p>
         {:else}
-          <p>You haven't scored a Hondo yet. Keep trying!</p>
+          <p>You haven't scored a Hondo yet. Keep&nbsp;trying!</p>
         {/if}
       </li>
       <li>
@@ -82,7 +84,11 @@ onMount(() => {
       </li>
       <li>
         <h2>Median score</h2>
-        <p>{medianScore} in {medianGuesses} guesses</p>
+        {#if medianScore && medianGuesses}
+          <p>{medianScore} in {medianGuesses} guesses</p>
+        {:else}
+          <p>Not enough data yet</p>
+        {/if}
       </li>
     </ul>
   {:else}
@@ -106,7 +112,11 @@ onMount(() => {
   }
 
   h2 {
-    margin: 3rem 0 0;
+    margin: 3rem auto 0;
+    font-size: 1rem;
+    border-bottom: 1px solid currentColor;
+    max-width: max-content;
+    text-align: center;
   }
 
   :global(.menu-button) {
