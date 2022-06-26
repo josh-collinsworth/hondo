@@ -21,7 +21,28 @@ body {
   line-height: 1.5;
   font-family: 'Ridley Grotesk', sans-serif;
   font-weight: var(--fontWeightNormal);
+}
+
+body,
+html {
+  overflow-y: overlay;
   // overflow: hidden;
+  ::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+  
+  ::-webkit-scrollbar,
+  ::-webkit-scrollbar-track {
+    /* the "track" of the bar - great for customizing "background" colors */
+    background: rgba(255,255,255,0);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    /* the actual draggable element, the star of the show! */
+    background: var(--darkBlue);
+    border-radius: 4rem;
+  }
 }
 
 main {
