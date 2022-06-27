@@ -9,12 +9,13 @@ import StatsBlock from './icon/blocks/StatsBlock.svelte'
 import BackBlock from './icon/blocks/BackBlock.svelte'
 import HBlock from './icon/blocks/HBlock.svelte'
 import Logo from './icon/Logo.svelte'
+import ExclamationBlock from './icon/blocks/ExclamationBlock.svelte'
 
 import { tick } from 'svelte'
 import { fly, fade } from 'svelte/transition'
 import { quintIn, quintOut } from 'svelte/easing'
 import { goto } from '$app/navigation'
-import ExclamationBlock from './icon/blocks/ExclamationBlock.svelte';
+import { is_client } from 'svelte/internal';
 
 export let currentPage: string
 
@@ -34,9 +35,9 @@ const listenForClose = (e: KeyboardEvent): void => {
 }
 
 isMenuOpen.subscribe(async (isOpen) => {
-  if (isOpen) {
+  if (isOpen && is_client) {
     await tick()
-    navMenu.focus()
+    navMenu?.focus()
   }
 })
 </script>

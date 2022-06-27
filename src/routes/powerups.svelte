@@ -1,29 +1,26 @@
 <script>
-import XIcon from '$lib/components/icon/XIcon.svelte'
-import MenuButton from '$lib/components/MenuButton.svelte'
 import { POWERUPS_STORAGE_KEY } from '$lib/js/constants'
 import { staticPowerups } from '$lib/state/powerups'
 import { loadFromLocalStorage, saveToLocalStorage } from '$lib/js/helpers'
-import { selectedStaticPowerup } from '$lib/state/powerups'
+import { selectedStaticPowerupKey } from '$lib/state/powerups'
 import { onMount } from 'svelte'
-import SweeterSuccess from '$lib/components/icon/powerups/SweeterSuccess.svelte';
-import SafeStreak from '$lib/components/icon/powerups/SafeStreak.svelte';
-import EducatedGuesses from '$lib/components/icon/powerups/EducatedGuesses.svelte';
+import { get } from 'svelte/store'
+import * as getters from '$lib/state/getters'
 
 const saveValueLocally = () => {
   const savedPowerups = loadFromLocalStorage(POWERUPS_STORAGE_KEY) || {}
   saveToLocalStorage(POWERUPS_STORAGE_KEY, {
-    ...savedPowerups, static: $selectedStaticPowerup
+    ...savedPowerups, static: $selectedStaticPowerupKey
   })
 }
 
-$: selectedStaticPowerupInfo = $staticPowerups[$selectedStaticPowerup]
+$: selectedStaticPowerup = $staticPowerups.find(powerup => powerup.slug === $selectedStaticPowerupKey)
 
 onMount(() => {
   const savedPowerups = loadFromLocalStorage(POWERUPS_STORAGE_KEY)
 
   if (savedPowerups) {
-    $selectedStaticPowerup = savedPowerups.static
+    $selectedStaticPowerupKey = savedPowerups.static
   }
 })
 </script>
@@ -31,38 +28,34 @@ onMount(() => {
 
 <div class="powerups">
   <div class="container">
-    <MenuButton floating={true} />
-
-    <h1>Powerups</h1>
+    <h1>Choose your powerups</h1>
 
     <div class="powerup-category">
       <h2>Static</h2>
 
       <div class="powerup-list">
-        <input type="radio" bind:group={$selectedStaticPowerup} id="educatedGuesses" name="static" value="educatedGuesses" on:change={saveValueLocally} />
-        <label for="educatedGuesses" class="powerup-card">
-          <EducatedGuesses />
-        </label>
-        <input type="radio" bind:group={$selectedStaticPowerup} id="sweeterSuccess" name="static" value="sweeterSuccess" on:change={saveValueLocally} />
-        <label for="sweeterSuccess" class="powerup-card">
-          <SweeterSuccess />
-        </label>
-        
-        <input type="radio" bind:group={$selectedStaticPowerup} id="safeStreak" name="static" value="safeStreak" on:change={saveValueLocally} />
-        <label for="safeStreak" class="powerup-card">
-          <SafeStreak />
-        </label>
-        
-        <input type="radio" bind:group={$selectedStaticPowerup} id="none" name="static" value="none" on:change={saveValueLocally}/>
-        <label for="none" class="powerup-card none">
-          <XIcon />
-        </label> 
+
+        {#each $staticPowerups as powerup}
+        <!-- TODO: make it so a disabled powerup can't be selected -->
+          <input type="radio" bind:group={$selectedStaticPowerupKey} id={powerup.slug} name="static" value={powerup.slug} on:change={saveValueLocally} />
+          <label for={powerup.slug} class="powerup-card" class:locked={get(getters[powerup.unlock.getter]) < powerup.unlock.threshold}>
+            <svelte:component this={powerup.icon} />
+          </label>
+        {/each}
       </div>
-      <h3>{selectedStaticPowerupInfo.title}</h3>
-      <p>{selectedStaticPowerupInfo.description}</p>
+      <h3>{selectedStaticPowerup.title}</h3>
+      <p>{selectedStaticPowerup.description}</p>
   </div>
 
-  <a href="/" class="button">Main menu</a>
+  <div class="button-bar">
+    <a href="/" class="button">
+      Back
+    </a>
+
+    <a href="/game" class="button confirm">
+      Play!
+    </a>
+  </div>
 
   </div>
 </div>
@@ -72,11 +65,12 @@ onMount(() => {
 .powerups {
   h1 {
     margin: 0;
+    font-size: 1.3rem;
   }
 
   .powerup-category {
     padding: 1rem;
-    margin: 2rem 0;
+    margin: 24px 0;
     border: 2px solid var(--lighterAccent);
     border-radius: 0.5rem;
   }
@@ -93,7 +87,7 @@ onMount(() => {
   .powerup-list {
     display: grid;
     grid-template-columns: 2fr 2fr 2fr 2.5rem;
-    gap: 1rem;
+    gap: 0.5rem;
     align-items: center;
     align-content: center;
 
@@ -108,7 +102,11 @@ onMount(() => {
       line-height: 0;
       transition: background 0.15s ease-in-out;
 
-      &.none {
+      &.locked {
+        opacity: 0.4;
+      }
+
+      &[for=none] {
         padding: 0.25rem;
       }
     }

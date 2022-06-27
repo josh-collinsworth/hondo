@@ -32,7 +32,7 @@ import { dev } from '$app/env'
 import { goto } from '$app/navigation'
 import { SvelteComponent, tick } from 'svelte'
 import { get } from 'svelte/store'
-import { adjustedGuessBenefit, adjustedGuessCost, adjustedScorePerCodeWord, isStreakAllowed, selectedStaticPowerup } from './powerups'
+import { adjustedGuessBenefit, adjustedGuessCost, adjustedScorePerCodeWord, isStreakAllowed } from './powerups'
 
 
 export const startNewGame = (): void => {

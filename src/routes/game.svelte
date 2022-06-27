@@ -26,7 +26,7 @@ import TutorialIntro from '$lib/components/modals/TutorialIntro.svelte'
 import { dev } from '$app/env'
 import { onMount } from 'svelte'
 import { is_client } from 'svelte/internal'
-import { selectedStaticPowerup } from '$lib/state/powerups';
+import { selectedStaticPowerupKey } from '$lib/state/powerups';
 
 onMount(() => {
   try {
@@ -34,7 +34,7 @@ onMount(() => {
     const powerups = loadFromLocalStorage(POWERUPS_STORAGE_KEY)
 
     if (powerups && powerups.static) {
-      $selectedStaticPowerup = powerups.static
+      $selectedStaticPowerupKey = powerups.static
     }
       
     if (gameData) {

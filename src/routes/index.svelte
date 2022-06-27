@@ -17,9 +17,9 @@ import Padlock from '$lib/components/icon/Padlock.svelte'
 
 let localIsLoading = true
 let savedGame = false
+let gameLocation = (savedGame || !$totalGamesPlayed) ? '/game' : '/powerups'
 
 $: buttonText = savedGame ? 'Continue playing' : 'New game'
-
 
 const abandonGame = (): void => {
   const confirmation = confirm('Start a new game? This will delete any game currently in progress.')
@@ -41,7 +41,7 @@ onMount(() => {
 
 <div class="container">
   {#if localIsLoading}
-  <Loader />
+    <Loader />
   {:else}
     <div class="menu-button">
       <DarkModeToggle />
@@ -56,7 +56,7 @@ onMount(() => {
     <nav>
       <ul class="main-nav__links" aria-labelledby="menu-heading">
         <li>
-          <a href="/game">
+          <a href="{gameLocation}">
             <span class="link__icon" aria-hidden="true">
               <PlayBlock />
             </span>
@@ -71,7 +71,7 @@ onMount(() => {
             How to play
           </a>
         </li>
-        {#if $totalGamesPlayed}
+        <!-- {#if $totalGamesPlayed}
           <li>
             <a href="/powerups">
               <span class="link__icon" aria-hidden="true">
@@ -87,7 +87,7 @@ onMount(() => {
             </span>
             Powerups
           </li>
-        {/if}
+        {/if} -->
         <li>
           <a href="/stats">
             <span class="link__icon" aria-hidden="true">
