@@ -77,14 +77,14 @@ isMenuOpen.subscribe(async (isOpen) => {
             How to play
           </a>
         </li>
-        <li>
+        <!-- <li>
           <a href="/powerups" on:click={toggleMenuOpen}>
             <span aria-hidden="true">
               <ExclamationBlock />
             </span>
             Powerups
           </a>
-        </li>
+        </li> -->
         <li>
           <a href="/stats" on:click={toggleMenuOpen}>
             <span aria-hidden="true">
@@ -203,6 +203,10 @@ isMenuOpen.subscribe(async (isOpen) => {
   a {
     color: inherit;
     font-size: 1.2rem;
+  }
+
+  .button-bar {
+    margin-top: 0;
   }
 }
 </style>

@@ -1,8 +1,6 @@
 <script lang="ts">
 import { closeModal } from '$lib/state/mutations'
 
-import ShuffleIcon from '../icon/ShuffleIcon.svelte'
-
 let cancelButton: HTMLButtonElement
 
 const listenForEnter = (e: KeyboardEvent): void => {

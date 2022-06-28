@@ -12,6 +12,7 @@ button,
   color: var(--ink);
   font-weight: var(--fontWeightSemiBold);
   text-decoration: none;
+  touch-action: manipulation;
 
   &.confirm {
     background: var(--primary);

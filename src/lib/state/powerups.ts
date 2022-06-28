@@ -19,6 +19,7 @@ export type StaticPowerupEffects = {
 export type PowerupUnlock = {
   getter: string
   threshold: number
+  description: string
 }
 
 export type StaticPowerup = {
@@ -51,6 +52,7 @@ export const staticPowerups = readable<StaticPowerup[]>([
     unlock: {
       getter: 'totalGamesPlayed',
       threshold: 1,
+      description: 'Play your first game of Hondo',
     },
     icon: EducatedGuesses,
   },
@@ -65,13 +67,14 @@ export const staticPowerups = readable<StaticPowerup[]>([
     unlock: {
       getter: 'totalGamesPlayed',
       threshold: 1,
+      description: 'Play your first game of Hondo',
     },
     icon: SweeterSuccess,
   },
   {
     slug: 'safeStreak',
     title: 'Safe Streak',
-    description: 'Correct guesses are worth an extra point, but you do not get bonus points for streaks.',
+    description: `Correct guesses are worth 2 points, but you don't get bonus points for streaks.`,
     effects: {
       ...defaultEffects,
       score: 1,
@@ -80,6 +83,7 @@ export const staticPowerups = readable<StaticPowerup[]>([
     unlock: {
       getter: 'totalGamesPlayed',
       threshold: 10,
+      description: 'Play 10 total games to unlock',
     },
     icon: SafeStreak,
   },

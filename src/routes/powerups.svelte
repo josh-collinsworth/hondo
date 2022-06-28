@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import { POWERUPS_STORAGE_KEY } from '$lib/js/constants'
 import { staticPowerups } from '$lib/state/powerups'
 import { loadFromLocalStorage, saveToLocalStorage } from '$lib/js/helpers'
@@ -6,11 +6,21 @@ import { selectedStaticPowerupKey } from '$lib/state/powerups'
 import { onMount } from 'svelte'
 import { get } from 'svelte/store'
 import * as getters from '$lib/state/getters'
+import Padlock from '$lib/components/icon/Padlock.svelte'
+import { setToast } from '$lib/state/mutations';
 
 const saveValueLocally = () => {
   const savedPowerups = loadFromLocalStorage(POWERUPS_STORAGE_KEY) || {}
   saveToLocalStorage(POWERUPS_STORAGE_KEY, {
     ...savedPowerups, static: $selectedStaticPowerupKey
+  })
+}
+
+const promptToChooseValidPowerups = (): void => {
+  console.log('clicked')
+  setToast({
+    message: 'Please choose powerups that are unlocked',
+    type: 'warning'
   })
 }
 
@@ -36,15 +46,24 @@ onMount(() => {
       <div class="powerup-list">
 
         {#each $staticPowerups as powerup}
-        <!-- TODO: make it so a disabled powerup can't be selected -->
           <input type="radio" bind:group={$selectedStaticPowerupKey} id={powerup.slug} name="static" value={powerup.slug} on:change={saveValueLocally} />
           <label for={powerup.slug} class="powerup-card" class:locked={get(getters[powerup.unlock.getter]) < powerup.unlock.threshold}>
-            <svelte:component this={powerup.icon} />
+            <span aria-hidden="true">
+              <svelte:component this={get(getters[powerup.unlock.getter]) < powerup.unlock.threshold ? Padlock: powerup.icon} />
+            </span>
+            <div class="sr">{selectedStaticPowerup.title}</div>
           </label>
         {/each}
       </div>
       <h3>{selectedStaticPowerup.title}</h3>
       <p>{selectedStaticPowerup.description}</p>
+      {#if get(getters[selectedStaticPowerup.unlock.getter]) < selectedStaticPowerup.unlock.threshold}
+        <p class="unlock-message">
+          <span class="unlock-icon" aria-hidden="true">
+            <Padlock />
+          </span> 
+          {selectedStaticPowerup.unlock.description}</p>
+      {/if}
   </div>
 
   <div class="button-bar">
@@ -52,9 +71,15 @@ onMount(() => {
       Back
     </a>
 
-    <a href="/game" class="button confirm">
-      Play!
-    </a>
+    {#if get(getters[selectedStaticPowerup.unlock.getter]) < selectedStaticPowerup.unlock.threshold}
+      <button class="button unavailable" on:click={promptToChooseValidPowerups}>
+        Play!
+      </button>
+    {:else}
+      <a href="/game" class="button confirm">
+        Play! 
+      </a>
+    {/if}
   </div>
 
   </div>
@@ -65,7 +90,11 @@ onMount(() => {
 .powerups {
   h1 {
     margin: 0;
-    font-size: 1.3rem;
+    font-size: 1.25rem;
+  }
+
+  h2 {
+    font-size: 1.125rem;
   }
 
   .powerup-category {
@@ -73,14 +102,32 @@ onMount(() => {
     margin: 24px 0;
     border: 2px solid var(--lighterAccent);
     border-radius: 0.5rem;
-  }
 
-  h3 {
-    margin: 1rem 0 0;
-
-    + p {
+    h3 {
+      margin: 1rem 0 0;
+      font-size: 1rem;
+    }
+  
+    p {
       margin: 0.5rem 0 0;
       font-size: 0.875rem;
+    }
+  }
+
+  p.unlock-message {
+    background: var(--red);
+    color: var(--white);
+    padding: 0.5em;
+    border-radius: 0.5em;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    .unlock-icon {
+      width: 1rem;
+      padding-top: 0.2em;
+      display: block;
+      margin-right: 0.5em;
     }
   }
 
@@ -119,7 +166,16 @@ onMount(() => {
     &:checked + .powerup-card {
       border-color: var(--primary);
       background: var(--primary);
+
+      &.locked {
+        border-color: var(--lighterAccent);
+        background: var(--lighterAccent);
+      }
     }
+  }
+
+  .button.unavailable {
+    opacity: 0.5;
   }
 }
 </style>
