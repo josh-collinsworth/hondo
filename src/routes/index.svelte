@@ -10,8 +10,9 @@ import {
   usedAttempts,
   streak,
   previousGuesses,
+usedShuffles,
 } from '$lib/state/game'
-import { shownModal, isLoading, hasViewedTutorial } from '$lib/state/global'
+import { isLoading } from '$lib/state/global'
 import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES } from '$lib/js/constants';
 import { loadFromLocalStorage, saveToLocalStorage, stringContainsLetter } from '$lib/js/helpers'
 import { setNewRandomCodeWord, startNewGame } from '$lib/state/mutations'
@@ -21,7 +22,6 @@ import Keyboard from '$lib/components/game/Keyboard.svelte'
 import InfoBar from '$lib/components/game/InfoBar.svelte'
 import Loader from '$lib/components/game/Loader.svelte'
 import AccessibleStatus from '$lib/components/game/AccessibleStatus.svelte'
-import TutorialIntro from '$lib/components/modals/TutorialIntro.svelte'
 
 import { dev } from '$app/env'
 import { onMount } from 'svelte'
@@ -50,6 +50,10 @@ onMount(() => {
       $gameIsOver = gameData.gameIsOver
       $usedAttempts = gameData.usedAttempts
       $streak = loadedStreak
+      
+      if (gameData.usedShuffles) {
+        $usedShuffles = gameData.usedShuffles
+      }
     } else {
       setNewRandomCodeWord(is_client && dev)
     }
@@ -59,11 +63,6 @@ onMount(() => {
   } 
   finally {
     $isLoading = false
-
-    const hasPlayed = loadFromLocalStorage('skipTutorial')
-    if (!hasPlayed && ! $hasViewedTutorial) {
-      $shownModal = TutorialIntro
-    }
   }
 })
 </script>
@@ -98,7 +97,7 @@ onMount(() => {
                 {#if $currentGuess[col]}
                   <div class="current-guess-letter">
                     {$currentGuess[col]}
-                 </div>
+                  </div>
                 {/if}
                 <div class="previous-guess-letter" aria-hidden="true">
                   {#if $currentGuesses[$currentGuesses.length - 1] && $currentGuesses[$currentGuesses.length - 1][col]}

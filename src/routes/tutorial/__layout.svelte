@@ -15,15 +15,11 @@ export const load = async ({ url }): Promise<LoadOutput> => {
 
 <script lang="ts">
 import { TOTAL_TUTORIAL_PAGES } from '$lib/js/constants'
-import { onMount } from 'svelte';
-import { hasViewedTutorial } from '$lib/state/global'
 
 export let path: string
 
 $: next = Number(path) < TOTAL_TUTORIAL_PAGES ? `/tutorial/${Number(path) + 1}` : '/'
 $: previous = Number(path) - 1 || null
-
-onMount(() => $hasViewedTutorial = true)
 </script>
 
 

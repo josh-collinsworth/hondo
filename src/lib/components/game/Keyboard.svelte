@@ -88,19 +88,18 @@ const handlePress = async (key: string): Promise<void> => {
 
 <style lang="scss">
 .keyboard {
+  --keyboardGap: 6px;
+
   display: grid;
   grid-template-rows: repeat(3, 1fr);
-  margin: 0 calc(-1rem + 5px);
+  margin: 0 calc(-1rem + var(--keyboardGap));
   height: 100%;
 
   .row {
     display: flex;
     margin: 0 auto;
     width: 100%;
-
-    + .row {
-      margin-top: 5px;
-    }
+    margin-bottom: var(--keyboardGap);
   }
 
   .row:nth-of-type(2) {
@@ -138,7 +137,7 @@ const handlePress = async (key: string): Promise<void> => {
     }
 
     + button {
-      margin-left: 5px;
+      margin-left: var(--keyboardGap);
     }
 
     &.used {

@@ -13,6 +13,7 @@ import {
   pointsScoredForLastGuess,
   previousGuesses,
   gameHistory,
+  usedShuffles,
 } from './game'
 import { shownModal, toast, isMenuOpen } from './global'
 import { isDarkMode } from './user'
@@ -168,8 +169,16 @@ export const registerHighScore = (): void => {
   // Just some cleanup from prerelease data saving. Can be removed later.
   previousHighScores = previousHighScores.filter(item => typeof item !== 'number')
 
+  /**
+   * To save on localStorage space, game history is stored in an array, not an object with keys.
+   * [
+   *  0: Final score
+   *  1: Used attempts
+   *  2: Used shuffles
+   * ] 
+   **/ 
   const dataToSave = [
-    ...previousHighScores, [get(runningScore), get(usedAttempts)]
+    ...previousHighScores, [get(runningScore), get(usedAttempts), get(usedShuffles)]
   ]
 
   saveToLocalStorage(GAME_HISTORY_STORAGE_KEY, dataToSave)
@@ -197,6 +206,7 @@ export const saveGameData = (): void => {
     maxRemainingAttempts: get(maxRemainingAttempts),
     usedAttempts: get(usedAttempts),
     streak: get(streak),
+    usedShuffles: get(usedShuffles),
   })
   const longestStreak = loadFromLocalStorage(LONGEST_STREAK_STORAGE_KEY) || 0
   if (get(pointsScoredForLastGuess) > longestStreak) {
@@ -224,6 +234,7 @@ export const shuffleGuesses = (): void => {
   previousGuesses.set(get(currentGuesses))
   currentGuesses.set(newGuesses)
   remainingAttempts.set(get(remainingAttempts) - SHUFFLE_COST)
+  usedShuffles.set(get(usedShuffles) + 1)
   saveGameData()
 }
 
