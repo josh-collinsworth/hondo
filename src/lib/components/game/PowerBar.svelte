@@ -42,5 +42,12 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
         background-size: {( STARTING_GUESSES / $remainingAttempts) * 100}%;
       "
     />
+    <div class="power-bar__grid">
+      {#each Array.from({ length: STARTING_GUESSES }) as _, i}
+        <div
+          class="power-bar__grid-box" 
+        />
+      {/each}
+    </div>
   </div>
 </div>

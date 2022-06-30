@@ -20,7 +20,7 @@ import { hasViewedTutorial } from '$lib/state/global'
 
 export let path: string
 
-$: next = Number(path) < TOTAL_TUTORIAL_PAGES ? `/tutorial/${Number(path) + 1}` : '/game'
+$: next = Number(path) < TOTAL_TUTORIAL_PAGES ? `/tutorial/${Number(path) + 1}` : '/'
 $: previous = Number(path) - 1 || null
 
 onMount(() => $hasViewedTutorial = true)
@@ -35,7 +35,7 @@ onMount(() => $hasViewedTutorial = true)
       {#if previous}
         <a href="/tutorial/{previous}" class="button">Back</a>
       {:else}
-        <a href="/game" class="button">Skip tutorial</a>
+        <a href="/" class="button">Skip tutorial</a>
       {/if}
       <a href={next} class="button confirm">Next</a>
     </div>

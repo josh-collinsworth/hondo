@@ -1,4 +1,6 @@
 <script lang="ts">
+import { STARTING_GUESSES } from '$lib/js/constants'
+
 export let remainingAttempts: number = 10
 export let startingGuesses: number = 10
 export let score = 0
@@ -14,21 +16,22 @@ export let score = 0
         background-size: {( startingGuesses / remainingAttempts) * 100}%;
       "
     />
+    <div class="power-bar__grid">
+      {#each Array.from({ length: STARTING_GUESSES }) as _, i}
+        <div
+          class="power-bar__grid-box" 
+        />
+      {/each}
+    </div>
   </div>
 </div>
 
 
 <style lang="scss">
 .example-power-bar {
+  --powerBarHeight: 1.5rem;
+
   margin: 0 auto;
-  font-size: calc(0.5rem + 3vw);
-
-  .power-bar {
-    height: 1.2em;
-  }
-
-  @media (min-width: 32rem) {
-    font-size: 1rem;
-  }
+  max-width: 12rem;
 }
 </style>

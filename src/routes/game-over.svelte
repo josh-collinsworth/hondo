@@ -5,7 +5,6 @@ import { runningScore, codeWord, usedAttempts, gameIsOver } from '$lib/state/gam
 import { shownModal } from '$lib/state/global'
 import { startNewGame } from '$lib/state/mutations'
 import { onMount } from 'svelte'
-import PowerupsUnlockedModal from '$lib/components/modals/PowerupsUnlockedModal.svelte'
 
 const handleStartNewGame = (): void => {
   startNewGame()
@@ -14,10 +13,6 @@ const handleStartNewGame = (): void => {
 
 onMount(() => {
   const gameHistory = loadFromLocalStorage(GAME_HISTORY_STORAGE_KEY)
-
-  if (gameHistory && gameHistory.length === 1) {
-    $shownModal = PowerupsUnlockedModal
-  }
 })
 </script>
 

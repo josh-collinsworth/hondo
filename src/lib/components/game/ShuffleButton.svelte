@@ -1,8 +1,8 @@
 <script lang="ts">
 import { showModal } from '$lib/state/mutations'
 import { maxRemainingAttempts } from '$lib/state/game';
-import LightningBolt from '../icon/LightningBolt.svelte'
 import ShuffleConfirmationModal from '../modals/ShuffleConfirmationModal.svelte'
+import ShuffleIcon from '../icon/ShuffleIcon.svelte';
 
 const confirmShuffle = (): void => {
   showModal(ShuffleConfirmationModal)
@@ -14,6 +14,6 @@ const confirmShuffle = (): void => {
   disabled={$maxRemainingAttempts <= 1}
   class="info-button shuffle-button"
 >
-  <LightningBolt />
+  <ShuffleIcon />
   <div class="sr">Shuffle board</div>
 </button>

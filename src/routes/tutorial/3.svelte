@@ -30,4 +30,4 @@ import Arrow from '$lib/components/icon/Arrow.svelte'
   </div>
 </div>
 
-<p>It's hard to do, but remember: you'll always have five previous words on the board to use as clues. (And you'll unlock some extra help later…)</p>
+<p>It's hard to do, but remember: you'll always have five previous words on the board to use as clues.</p>

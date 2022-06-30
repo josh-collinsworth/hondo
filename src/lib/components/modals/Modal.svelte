@@ -1,10 +1,10 @@
 <script lang="ts">
 import { closeModal } from '$lib/state/mutations'
 import { fly, fade } from 'svelte/transition'
-import { quadIn, quadOut, } from 'svelte/easing'
+import { cubicIn, cubicOut, } from 'svelte/easing'
 import { onMount } from 'svelte'
 
-const duration = 240
+const duration = 320
 let modalCard: HTMLDivElement
 
 const listenForClose = (e: KeyboardEvent): void => {
@@ -27,8 +27,8 @@ onMount(() => {
     id=modal-card
     tabindex="-1"
     bind:this={modalCard}
-    in:fly={{y: 36, duration, easing: quadOut}}
-    out:fly={{y: -36, duration, easing: quadIn}}
+    in:fly={{y: 36, duration, easing: cubicOut}}
+    out:fly={{y: -36, duration, easing: cubicIn}}
   >
     <slot />
   </div>

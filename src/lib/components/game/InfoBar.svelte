@@ -14,10 +14,10 @@ import ScoreDisplay from './ScoreDisplay.svelte'
   <Toast />
   <!-- <LifelineButton /> -->
   <ShuffleButton />
-  <ScoreDisplay />
-  <!-- <PowerBar /> -->
+  <!-- <ScoreDisplay /> -->
+  <PowerBar />
   <MenuButton />
-  <PowerBarWide />
+  <!-- <PowerBarWide /> -->
 </div>
 <!-- For debugging -->
 <!-- <button on:click={() => runningScore.set($runningScore + 1)}>+1</button> -->
@@ -32,6 +32,6 @@ import ScoreDisplay from './ScoreDisplay.svelte'
   margin-bottom: 1rem;
   position: relative;
   z-index: 5;
-  height: 4rem;
+  height: var(--buttonHeight);
 }
 </style>

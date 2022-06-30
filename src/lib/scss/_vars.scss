@@ -15,7 +15,7 @@
   --mediumGray: #888b8d;
   --darkGray: #53565a;
   --darkerGray: #282a2f;
-  --black: #101820;
+  --black: #282a2f;
   --white: #fff;
   --yellow: #ffd100;
   --orange: #ff6a13;
@@ -49,8 +49,9 @@
   --mediumAccent: var(--mediumGray);
   --darkAccent: var(--darkGray);
 
-  --scoreWidth: 2.5em;
-  --powerBarHeight: 2rem;
+  --buttonSize: 2.5rem;
+  --scoreWidth: 2.5rem;
+  --powerBarHeight: calc(var(--buttonSize) - 4px);
 
   --fontWeightNormal: 500;
   --fontWeightSemiBold: 600;

@@ -23,7 +23,7 @@
     </div>
     <h1>How to play</h1>
 
-    <h2>Guess all the code words you&nbsp;can</h2>
+    <h2>Hondo is a word guessing game.</h2>
     
     <div class="width-max-content" style="margin: 2rem 0 0.5rem">
       <ExampleGuess codeWord="xrxxx" guess="ready" />
@@ -67,20 +67,16 @@
     </div>
 
 
-    <h2>Watch your score &amp; life gauge</h2>
-    <p>Every incorrect guess drains one life…</p>
+    <h2>Score points, but watch your energy gauge</h2>
+    <p>Every incorrect guess drains one energy, but a correct guess gives you a point, and <em>replenishes</em> one energy instead.</p>
+
+    <p>If you run out of energy, the game is over.</p>
 
     <div class="example-diagram">
       <ExamplePowerBar remainingAttempts={10} />
       <Arrow direction="down" />
       <ExampleGuess codeWord="xxxxr" guess="wrong" />
       <Arrow direction="down" />
-      <ExamplePowerBar remainingAttempts={9} />
-    </div>
-      
-    <p>…but a correct guess gives you a point, and <em>replenishes</em> one life instead.</p>
-    
-    <div class="example-diagram">
       <ExamplePowerBar remainingAttempts={9} />
       <Arrow direction="down" />
       <ExampleGuess codeWord="right" guess="right" />
@@ -89,10 +85,7 @@
     </div>
 
 
-    <h2>Special rules to know</h2>
-
-
-    <h3>Streak bonus</h3>
+    <h2>Streak bonuses</h2>
 
     <p>You get a bonus point for every consecutive successful guess after the first.</p>
 
@@ -120,9 +113,9 @@
     </div>
 
 
-    <h3 class="display-flex" style="align-items: center;">
+    <h2>
       Need help? Try shuffling
-    </h3>
+    </h2>
 
     <p>
       Hit the <strong>shuffle button</strong> any time to replace the board with five random new guesses!
@@ -154,7 +147,7 @@
 
     <p><strong>Shuffling is a key strategy</strong>; it helps replace unhelpful guesses, <strong>and</strong> keeps bonus streaks alive!</p>
 
-    <p>However, <strong>shuffling costs {SHUFFLE_COST} life</strong>! Use shuffles wisely.</p>
+    <p>However, <strong>shuffling costs {SHUFFLE_COST} energy</strong>! Use shuffles wisely.</p>
 
 
     <h2>The goal</h2>
@@ -162,7 +155,7 @@
     <p>The game ends when either:</p>
     <ol>
       <li>
-        Your life gauge is empty; or
+        Your energy gauge is empty; or
       </li>
       <li>
         You've scored a Hondo (100).
@@ -181,7 +174,7 @@
       <li><strong>Be patient</strong>; haste is costly. Getting a high score requires logic, strategy, and luck.</li>
     </ul>
 
-    <a href="/game" class="back-link">Back to game</a>
+    <a href="/" class="back-link">Back to game</a>
   </div>
 </div>
 
@@ -294,7 +287,8 @@ hr {
   position: absolute;
   right: -2em;
   font-size: 1.5rem;
-  font-weight: var(--fontWeightBold);
+  font-weight: var(--fontWeightSemiBold);
+  color: var(--darkBlue);
 }
 
 .directions :global(.menu-button) {

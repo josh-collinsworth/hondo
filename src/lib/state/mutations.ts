@@ -23,6 +23,8 @@ import {
   SCORE_TICK_DURATION,
   SHUFFLE_COST,
   STARTING_GUESSES,
+  GUESS_BENEFIT,
+  GUESS_COST,
 } from '../js/constants'
 
 import { isValidGuess, loadFromLocalStorage, saveToLocalStorage } from '../js/helpers'
@@ -32,13 +34,11 @@ import { dev } from '$app/env'
 import { goto } from '$app/navigation'
 import { SvelteComponent, tick } from 'svelte'
 import { get } from 'svelte/store'
-import { adjustedGuessBenefit, adjustedGuessCost, adjustedScorePerCodeWord, isStreakAllowed } from './powerups'
-
 
 export const startNewGame = (): void => {
   saveToLocalStorage(GAME_DATA_STORAGE_KEY, null)
   setDefaultGameState()
-  goto('/game')
+  goto('/')
 }
 
 export const getRandomCodeWord = (): string => {
@@ -117,15 +117,15 @@ export const setStreak = (value: number): void => {
 
 export const setNewScores = (): void => {
   if (get(currentGuess) === get(codeWord)) {
-    const streakPoints = get(isStreakAllowed) ? get(streak) : 0
-    const tally = get(adjustedScorePerCodeWord) + streakPoints
+    const streakPoints = get(streak)
+    const tally = GUESS_BENEFIT + streakPoints
     incrementRunningScore(tally)
     pointsScoredForLastGuess.set(tally)
-    incrementRemainingAttempts(get(adjustedGuessBenefit))
+    incrementRemainingAttempts(GUESS_BENEFIT)
     incrementStreak(1)
     handleCorrectGuess()
   } else {
-    incrementRemainingAttempts(-get(adjustedGuessCost))
+    incrementRemainingAttempts(-GUESS_COST)
     setStreak(0)
   }
   // Update the count of total used guesses
@@ -135,7 +135,7 @@ export const setNewScores = (): void => {
   currentGuess.set('')
 
   // Alert the player if this is their last guess
-  if (get(remainingAttempts) && get(remainingAttempts) <= get(adjustedGuessCost)) {
+  if (get(remainingAttempts) && get(remainingAttempts) <= GUESS_COST) {
     setToast({
       message: 'Last guess!',
       type: 'warning',

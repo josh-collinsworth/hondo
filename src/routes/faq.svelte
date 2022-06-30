@@ -10,7 +10,7 @@ import MenuButton from '$lib/components/MenuButton.svelte'
       <MenuButton />
     </div>
     <h1 class="display-flex align-center">
-      <a href="/game">
+      <a href="/">
         <Logo />
       </a>
       FAQ
@@ -85,7 +85,7 @@ import MenuButton from '$lib/components/MenuButton.svelte'
     <p>I built Hondo just for my own enjoyment (and hopefully, yours). Have fun.
   </div>
 
-  <a href="/game" class="back-link">Back to game</a>
+  <a href="/" class="back-link">Back to game</a>
 </section>
 
 

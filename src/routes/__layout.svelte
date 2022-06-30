@@ -41,7 +41,7 @@ onMount(() => {
 
 
 <div class="layout">
-  {#if path === '/game'}
+  {#if path === '/'}
     <SkipToContentLink />
   {/if}
   

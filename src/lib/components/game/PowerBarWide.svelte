@@ -1,7 +1,6 @@
 <script lang="ts">
 import { remainingAttempts, maxRemainingAttempts, runningScore } from '$lib/state/game'
-import { STARTING_GUESSES } from '$lib/js/constants'
-import { adjustedGuessCost } from '$lib/state/powerups';
+import { STARTING_GUESSES, GUESS_COST } from '$lib/js/constants'
 </script>
 
 <div
@@ -12,7 +11,7 @@ import { adjustedGuessCost } from '$lib/state/powerups';
   <div class="power-bar">
     <div
       class="power-bar__fill"
-      class:pulse={$remainingAttempts <= $adjustedGuessCost}
+      class:pulse={$remainingAttempts <= GUESS_COST}
       style="
         transform: scaleX({ $remainingAttempts / STARTING_GUESSES });
         background-size: {( STARTING_GUESSES / $remainingAttempts) * 100}%;
