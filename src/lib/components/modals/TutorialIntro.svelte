@@ -21,7 +21,7 @@ const dismissForever = (): void => {
   <button on:click={dismissForever}>
     Never
   </button>
-  <a class="button confirm" href="/tutorial/1" on:click={closeModal}>
+  <a class="button confirm" href="/how-to-play" on:click={closeModal}>
     Sure!
   </a>
 </div>

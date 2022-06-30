@@ -65,7 +65,7 @@ isMenuOpen.subscribe(async (isOpen) => {
             <span aria-hidden="true">
               <BackBlock />
             </span>
-            Main menu
+            Back to game
           </a>
         </li>
         <li>

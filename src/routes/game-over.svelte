@@ -30,7 +30,6 @@ onMount(() => {
     </ul>
 
     <div class="button-bar">
-      <a href="/" class="button">Main menu</a>
       <button on:click={handleStartNewGame} class="button confirm">
         Play again!
       </button>
@@ -43,7 +42,7 @@ onMount(() => {
     <h2>Whoops, you seem a little lost.</h2>
 
     <div>
-      <a href="/" class="button">Back to main menu</a>
+      <a href="/" class="button">Back to game</a>
     </div>
   {/if}
 </div>
