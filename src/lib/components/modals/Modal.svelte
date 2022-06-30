@@ -1,21 +1,21 @@
 <script lang="ts">
-  import { closeModal } from '$lib/state/mutations'
-  import { fly, fade } from 'svelte/transition'
-  import { quadIn, quadOut, } from 'svelte/easing'
-  import { onMount } from 'svelte'
+import { closeModal } from '$lib/state/mutations'
+import { fly, fade } from 'svelte/transition'
+import { cubicIn, cubicOut, } from 'svelte/easing'
+import { onMount } from 'svelte'
 
-  const duration = 240
-  let modalCard: HTMLDivElement
+const duration = 320
+let modalCard: HTMLDivElement
 
-  const listenForClose = (e: KeyboardEvent): void => {
-    if (e.key === 'Escape') {
-      closeModal()
-    }
+const listenForClose = (e: KeyboardEvent): void => {
+  if (e.key === 'Escape') {
+    closeModal()
   }
+}
 
-  onMount(() => {
-    modalCard.focus()
-  })
+onMount(() => {
+  modalCard.focus()
+})
 </script>
 
 
@@ -27,8 +27,8 @@
     id=modal-card
     tabindex="-1"
     bind:this={modalCard}
-    in:fly={{y: 36, duration, easing: quadOut}}
-    out:fly={{y: -36, duration, easing: quadIn}}
+    in:fly={{y: 36, duration, easing: cubicOut}}
+    out:fly={{y: -36, duration, easing: cubicIn}}
   >
     <slot />
   </div>

@@ -16,7 +16,7 @@
   border-radius: 0.5rem;
   background: rgba(var(--paperRGB), 0.9);
   width: 100%;
-  max-width: 32rem;
+  max-width: 30rem;
   margin: 1rem;
   padding: 1.5rem;
 
@@ -26,11 +26,5 @@
 
   h2 {
     margin-top: 0;
-  }
-
-  .button-bar {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
   }
 }

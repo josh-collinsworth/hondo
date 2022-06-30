@@ -1,14 +1,11 @@
 <script lang="ts">
-  import { remainingAttempts, maxRemainingAttempts, runningScore } from '$lib/state/game'
-  import { SCORE_TICK_DURATION, STARTING_GUESSES } from '$lib/js/constants'
-  import { fly } from 'svelte/transition'
-  import { backIn, backOut } from 'svelte/easing'
+import { remainingAttempts, maxRemainingAttempts, runningScore } from '$lib/state/game'
+import { SCORE_TICK_DURATION, STARTING_GUESSES } from '$lib/js/constants'
+import { fly } from 'svelte/transition'
+import { backIn, backOut } from 'svelte/easing'
 
-  let scoreDigits: string[]
-  $: scoreDigits = String($runningScore).padStart(3).split('')
-  
-  let calculatedDividerOffset: string 
-  $: calculatedDividerOffset = `${$maxRemainingAttempts}em`
+let scoreDigits: string[]
+$: scoreDigits = String($runningScore).padStart(3).split('')
 </script>
 
 <div
@@ -45,14 +42,10 @@
         background-size: {( STARTING_GUESSES / $remainingAttempts) * 100}%;
       "
     />
-    <div 
-      class="power-bar__grid"
-      style="grid-template-columns: repeat({STARTING_GUESSES}, 1fr);"
-    >
+    <div class="power-bar__grid">
       {#each Array.from({ length: STARTING_GUESSES }) as _, i}
         <div
           class="power-bar__grid-box" 
-          class:disabled={i + 1 > $maxRemainingAttempts}
         />
       {/each}
     </div>

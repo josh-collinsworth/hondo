@@ -1,60 +1,52 @@
 <script lang="ts">
-  import Loader from '$lib/components/game/Loader.svelte'
-  import MenuButton from '$lib/components/MenuButton.svelte'
-  import { PREVIOUS_HIGH_SCORES_STORAGE_KEY } from '$lib/js/constants'
-  import { load, floatFormatter } from '$lib/js/helpers'
-  import { onMount } from 'svelte'
+import { LONGEST_STREAK_STORAGE_KEY } from '$lib/js/constants'
+import { totalGamesPlayed, totalPointsScored, highScore, fastestHondo, totalGuessesUsed } from '$lib/state/getters'
+import { gameHistory } from '$lib/state/game'
+import { loadFromLocalStorage, floatFormatter } from '$lib/js/helpers'
+import Loader from '$lib/components/game/Loader.svelte'
+import MenuButton from '$lib/components/MenuButton.svelte'
+import { onMount } from 'svelte'
 
-  let stats = []
-  let isLoading = true
-  let highScore: number
-  let averageScore: number|string
-  let averageGuesses: number|string
-  let medianScore: number
-  let medianGuesses: number
-  let fastestHondo: number
+let localIsLoading = true
+let medianScore: number
+let medianGuesses: number
+let longestStreak: number
 
-  onMount(() => {
-    const loadedStats = load(PREVIOUS_HIGH_SCORES_STORAGE_KEY)
-    if (loadedStats) {
-      stats = loadedStats
-      highScore = Math.max(...stats.map((score: number[]) => score[0]))
-      averageScore = floatFormatter.format(
-        stats.map((score: number[]) => score[0]).reduce((p: number, c: number) => p + c, 0) / stats.length
-      )
-      averageGuesses = floatFormatter.format(
-        stats.map((score: number[]) => score[1]).reduce((p: number, c: number) => p + c, 0) / stats.length
-      )
-      const hondos = stats.filter((score: number[]) => score[0] === 100)
-      if (hondos.length) {
-        fastestHondo = Math.min(...hondos.map((score: number[]) => score[1]))
-      }
-      let medianScoreTally = stats.map(score => score[0]).sort((a, b) => a > b)
-      let medianGuessesTally = stats.map(score => score[1]).sort((a, b) => a > b)
-      
-      while (medianScoreTally.length > 1) {
-        if (medianScoreTally.length === 2) {
-          medianScoreTally.pop()
-        }
-        else {
-          medianScoreTally.pop()
-          medianScoreTally.shift()
-        }
-      }
-      while (medianGuessesTally.length > 1) {
-        if (medianGuessesTally.length === 2) {
-          medianGuessesTally.pop()
-        }
-        else {
-          medianGuessesTally.pop()
-          medianGuessesTally.shift()
-        }
-      }
-      medianScore = medianScoreTally[0]
-      medianGuesses= medianGuessesTally[0]
+$: averageScore = floatFormatter.format($totalPointsScored / $totalGamesPlayed)
+$: averageGuesses = floatFormatter.format($totalGuessesUsed / $totalGamesPlayed)
+ 
+
+onMount(() => {
+  const loadedLongestStreak = loadFromLocalStorage(LONGEST_STREAK_STORAGE_KEY)
+  longestStreak = loadedLongestStreak || 0
+
+  let medianScoreTally = $gameHistory.map(score => score[0]).sort((a, b) => a - b)
+  let medianGuessesTally = $gameHistory.map(score => score[1]).sort((a, b) => a - b)
+  
+  while (medianScoreTally.length > 1) {
+    console.log(medianScoreTally)
+    if (medianScoreTally.length === 2) {
+      medianScoreTally.pop()
     }
-    isLoading = false
-  })
+    else {
+      medianScoreTally.pop()
+      medianScoreTally.shift()
+    }
+  }
+  while (medianGuessesTally.length > 1) {
+    if (medianGuessesTally.length === 2) {
+      medianGuessesTally.pop()
+    }
+    else {
+      medianGuessesTally.pop()
+      medianGuessesTally.shift()
+    }
+  }
+  medianScore = medianScoreTally[0]
+  medianGuesses= medianGuessesTally[0]
+
+  localIsLoading = false
+})
 </script>
 
 
@@ -62,21 +54,29 @@
   <MenuButton />
   <h1>Game stats</h1>
 
-  {#if isLoading}
+  {#if localIsLoading}
     <Loader />
-  {:else if stats.length}
+  {:else if $totalGamesPlayed}
     <ul class="no-bullets">
       <li>
         <h2>Highest score</h2>
-        <p>{highScore}</p>
+        <p>{$highScore}</p>
       </li>
       <li>
         <h2>Fastest Hondo</h2>
-        {#if fastestHondo}
-        <p>{fastestHondo} attempts</p>
+          {#if $fastestHondo}
+        <p>{$fastestHondo} attempts</p>
         {:else}
-        <p>You haven't scored a Hondo yet. Keep trying!</p>
+          <p>You haven't scored a Hondo yet. Keep&nbsp;trying!</p>
         {/if}
+      </li>
+      <li>
+        <h2>Longest streak</h2>
+        <p>{longestStreak}</p>
+      </li>
+      <li>
+        <h2>Total points scored</h2>
+        <p>{$totalPointsScored}</p>
       </li>
       <li>
         <h2>Average score</h2>
@@ -84,7 +84,11 @@
       </li>
       <li>
         <h2>Median score</h2>
-        <p>{medianScore} in {medianGuesses} guesses</p>
+        {#if medianScore && medianGuesses}
+          <p>{medianScore} in {medianGuesses} guesses</p>
+        {:else}
+          <p>Not enough data yet</p>
+        {/if}
       </li>
     </ul>
   {:else}
@@ -96,25 +100,29 @@
 
 
 <style lang="scss">
-  .stats {
-    padding: 2rem;
+.stats {
+  padding: 2rem;
 
-    > * {
-      width: 100%;
-    }
-
-    h1 {
-      margin-top: 0;
-    }
-
-    h2 {
-      margin: 3rem 0 0;
-    }
-
-    :global(.menu-button) {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-    }
+  > * {
+    width: 100%;
   }
+
+  h1 {
+    margin-top: 0;
+  }
+
+  h2 {
+    margin: 3rem auto 0;
+    font-size: 1rem;
+    border-bottom: 1px solid currentColor;
+    max-width: max-content;
+    text-align: center;
+  }
+
+  :global(.menu-button) {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+}
 </style>

@@ -1,9 +1,7 @@
 <script>
-import Logo from "$lib/components/icon/Logo.svelte";
-import MenuButton from "$lib/components/MenuButton.svelte";
-
+import Logo from '$lib/components/icon/Logo.svelte'
+import MenuButton from '$lib/components/MenuButton.svelte'
 </script>
-
 
 
 <section class="about">
@@ -92,42 +90,45 @@ import MenuButton from "$lib/components/MenuButton.svelte";
 
 
 <style lang="scss">
-  .about {
-    padding: 24px;
+.about {
+  padding: 24px;
 
-    .about-container {
-      width: 100%;
-      max-width: 34rem;
-      margin: auto;
-    }
+  .about-container {
+    width: 100%;
+    max-width: 34rem;
+    margin: auto;
+  }
 
-    .button-bar {
-      position: fixed;
-      top: 24px;
-      right: 24px;
+  .button-bar {
+    position: fixed;
+    top: 24px;
+    right: 24px;
 
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      margin-top: 0;
-
-      a {
-        height: 1em;
-        width: auto;
-        margin-right: 0.5em;
-        display: block;
-      }
-    }
-
-    h2 {
-      margin-top: 4rem;
-    }
-
-    .back-link {
-      display: block;
-      font-size: 1.2rem;
-      margin-top: 4rem;
+    :global(button) {
+      background: var(--paper);
     }
   }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-top: 0;
+
+    a {
+      height: 1em;
+      width: auto;
+      margin-right: 0.5em;
+      display: block;
+    }
+  }
+
+  h2 {
+    margin-top: 4rem;
+  }
+
+  .back-link {
+    display: block;
+    font-size: 1.2rem;
+    margin-top: 4rem;
+  }
+}
 </style>

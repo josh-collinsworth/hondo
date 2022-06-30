@@ -1,3 +1,4 @@
+import type { PlayedGame } from '$lib/js/types'
 import { writable } from 'svelte/store'
 import { STARTING_GUESSES } from '../js/constants'
 
@@ -14,3 +15,4 @@ export const gameIsOver = writable<boolean>(false)
 export const maxRemainingAttempts = writable<number>(STARTING_GUESSES)
 export const streak = writable<number>(0)
 export const pointsScoredForLastGuess = writable<number>(0)
+export const gameHistory = writable<PlayedGame[]>([])

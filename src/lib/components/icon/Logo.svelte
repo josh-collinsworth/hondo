@@ -1,8 +1,8 @@
-<svg class="logo" width="100%" height="100%" viewBox="0 0 858 164" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+<svg class="logo" width="auto" height="100%" viewBox="0 0 858 164" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
   <g class="h">
     <path class="logo-letter-bg exact" d="M163.498,42.656c0,-23.543 -19.113,-42.656 -42.656,-42.656l-78.186,0c-23.543,0 -42.656,19.113 -42.656,42.656l-0,78.186c-0,23.543 19.113,42.656 42.656,42.656l78.186,0c23.543,0 42.656,-19.113 42.656,-42.656c0,0 0,-78.186 0,-78.186Z" />
     <path class="logo-letter" d="M105.052,85.966l0,34.621l11.097,0l-0,-77.676l-11.097,-0l0,32.402l-46.606,0l0,-32.402l-11.097,-0l0,77.676l11.097,0l0,-34.621l46.606,-0Z" style="fill-rule:nonzero;"/>
-    <rect x="47.349" y="136.901" width="68.799" height="10.653" />
+    <rect class="logo-letter" x="47.349" y="136.901" width="68.799" height="10.653" />
   </g>
 
   <g class="o">
@@ -30,25 +30,25 @@
 
 
 <style lang="scss">
-  .logo {
-    .logo-letter {
-      fill: var(--black);
+.logo {
+  .logo-letter {
+    fill: var(--black);
+  }
+
+  .logo-letter-border {
+    fill: var(--lighterGray);
+  }
+
+  .logo-letter-bg {
+    fill: var(--lightestGray);
+
+    &.exact {
+      fill: var(--orange);
     }
 
-    .logo-letter-border {
-      fill: var(--lighterGray);
-    }
-
-    .logo-letter-bg {
-      fill: var(--lightestGray);
-
-      &.exact {
-        fill: var(--orange);
-      }
-  
-      &.partial {
-        fill: var(--lightBlue);
-      }
+    &.partial {
+      fill: var(--lightBlue);
     }
   }
+}
 </style>

@@ -4,3 +4,5 @@ export type ToastMessage = {
   message: string
   type?: ToastStatus
 }
+
+export type PlayedGame = [number, number]

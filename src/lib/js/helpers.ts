@@ -12,11 +12,11 @@ export const stringContainsLetter = (str: string): boolean => {
   return Boolean(str.match(/[abcdefghijklmnopqrstuvwxyz]/))
 }
 
-export const save = (key: string, data: any): void => {
+export const saveToLocalStorage = (key: string, data: any): void => {
   localStorage.setItem(key, JSON.stringify(data))
 }
 
-export const load = (key: string): any => {
+export const loadFromLocalStorage = (key: string): any => {
   const item = localStorage.getItem(key)
   if (item) {
     return JSON.parse(localStorage.getItem(key))

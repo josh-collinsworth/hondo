@@ -1,38 +1,42 @@
 <script context="module" lang="ts">
-  import type { LoadOutput } from '@sveltejs/kit'
+import type { LoadOutput } from '@sveltejs/kit'
 
-  export const load = async ({ url }): Promise<LoadOutput> => {
-    const path: string = url.pathname
-
-    return {
-      props: {
-        path
-      }
-    }
-  }
+export const load = async ({ url }): Promise<LoadOutput> => ({props: { path: <string>url.pathname }})
 </script>
 
 
 <script lang="ts">
-  import '$lib/scss/global.scss'
-  import { blur } from 'svelte/transition'
-  import { gameIsOver } from '$lib/state/game'
-  import { isMenuOpen, shownModal } from '$lib/state/global'
-  import Modal from '$lib/components/modals/Modal.svelte'
-  import SkipToContentLink from '$lib/components/SkipToContentLink.svelte'
-  import GameOverModal from '$lib/components/modals/GameOverModal.svelte'
-  import Menu from '$lib/components/Menu.svelte'
-  import Logo from '$lib/components/icon/Logo.svelte'
+import '$lib/scss/global.scss'
+import { gameHistory, gameIsOver, runningScore } from '$lib/state/game'
+import { isMenuOpen, shownModal } from '$lib/state/global'
+import { setToast } from '$lib/state/mutations';
+import SkipToContentLink from '$lib/components/SkipToContentLink.svelte'
+import Modal from '$lib/components/modals/Modal.svelte'
+import Menu from '$lib/components/Menu.svelte'
+import Logo from '$lib/components/icon/Logo.svelte'
+import { fly } from 'svelte/transition'
+import { goto } from '$app/navigation';
+import { onMount } from 'svelte';
+import { retrieveGameHistory } from '$lib/state/getters';
 
-  export let path: string
+export let path: string
 
-  $: isInert = $shownModal || $isMenuOpen || null
+$: isInert = $shownModal || $isMenuOpen || null
 
-  $: if ($gameIsOver) {
-    setTimeout(() => {
-      $shownModal = GameOverModal
-    }, 1200)
-  }
+$: if ($gameIsOver) {
+  if ($runningScore >= 100) {
+    setToast({ message: 'Congratulations!', type: 'success' })
+  } else (
+    setToast({ message: 'Too bad!', type: 'warning' })
+  )
+  setTimeout(() => {
+    goto('/game-over')
+  }, 1500)
+}
+
+onMount(() => {
+  $gameHistory = retrieveGameHistory() || []
+})
 </script>
 
 
@@ -49,7 +53,7 @@
   
   <main inert={isInert} class:blurry={isInert} id="#main" tabindex="-1">
     {#key path}
-      <div in:blur={{ delay: 420, duration: 360 }} out:blur={{ duration: 360}}>
+      <div in:fly={{ delay: 420, duration: 360, y: 8 }} out:fly={{ duration: 360, y: -8 }}>
         <slot />
       </div>
     {/key}

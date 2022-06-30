@@ -1,5 +1,4 @@
 import type { ToastMessage } from '../js/types'
-
 import {
   codeWord,
   currentGuesses,
@@ -13,19 +12,22 @@ import {
   streak,
   pointsScoredForLastGuess,
   previousGuesses,
+  gameHistory,
 } from './game'
 import { shownModal, toast, isMenuOpen } from './global'
 import { isDarkMode } from './user'
-
 import {
-  PREVIOUS_HIGH_SCORES_STORAGE_KEY,
+  GAME_HISTORY_STORAGE_KEY,
   GAME_DATA_STORAGE_KEY,
+  LONGEST_STREAK_STORAGE_KEY,
   SCORE_TICK_DURATION,
   SHUFFLE_COST,
   STARTING_GUESSES,
+  GUESS_BENEFIT,
+  GUESS_COST,
 } from '../js/constants'
 
-import { isValidGuess, load, save } from '../js/helpers'
+import { isValidGuess, loadFromLocalStorage, saveToLocalStorage } from '../js/helpers'
 import { codeWords } from '../js/codeWords'
 
 import { dev } from '$app/env'
@@ -33,9 +35,8 @@ import { goto } from '$app/navigation'
 import { SvelteComponent, tick } from 'svelte'
 import { get } from 'svelte/store'
 
-
 export const startNewGame = (): void => {
-  save(GAME_DATA_STORAGE_KEY, null)
+  saveToLocalStorage(GAME_DATA_STORAGE_KEY, null)
   setDefaultGameState()
   goto('/')
 }
@@ -66,6 +67,7 @@ export const handleNewGuess = (): void => {
       if (!get(gameIsOver)) {
         saveGameData()
       }
+      
     } else if (get(currentGuesses).includes(get(currentGuess)) && get(currentGuess) === get(codeWord)){
       // This whole condition is here just to handle weird error states. Hopefully isn't needed in prod.
       setToast({ message: 'Bad state detected. Reshuffling…', type: 'warning'})
@@ -115,14 +117,15 @@ export const setStreak = (value: number): void => {
 
 export const setNewScores = (): void => {
   if (get(currentGuess) === get(codeWord)) {
-    const tally = 1 + get(streak)
+    const streakPoints = get(streak)
+    const tally = GUESS_BENEFIT + streakPoints
     incrementRunningScore(tally)
     pointsScoredForLastGuess.set(tally)
-    incrementRemainingAttempts(1)
+    incrementRemainingAttempts(GUESS_BENEFIT)
     incrementStreak(1)
     handleCorrectGuess()
   } else {
-    incrementRemainingAttempts(-1)
+    incrementRemainingAttempts(-GUESS_COST)
     setStreak(0)
   }
   // Update the count of total used guesses
@@ -130,6 +133,14 @@ export const setNewScores = (): void => {
 
   // Clear the current guess
   currentGuess.set('')
+
+  // Alert the player if this is their last guess
+  if (get(remainingAttempts) && get(remainingAttempts) <= GUESS_COST) {
+    setToast({
+      message: 'Last guess!',
+      type: 'warning',
+    })
+  }
 
   // Check for game over state
   if (get(remainingAttempts) <= 0 || get(runningScore) >= 100) {
@@ -152,14 +163,17 @@ export const closeModal = (): void => {
 }
 
 export const registerHighScore = (): void => {
-  let previousHighScores = load(PREVIOUS_HIGH_SCORES_STORAGE_KEY) || []
+  let previousHighScores = loadFromLocalStorage(GAME_HISTORY_STORAGE_KEY) || []
 
   // Just some cleanup from prerelease data saving. Can be removed later.
   previousHighScores = previousHighScores.filter(item => typeof item !== 'number')
 
-  save(PREVIOUS_HIGH_SCORES_STORAGE_KEY, [
+  const dataToSave = [
     ...previousHighScores, [get(runningScore), get(usedAttempts)]
-  ])
+  ]
+
+  saveToLocalStorage(GAME_HISTORY_STORAGE_KEY, dataToSave)
+  gameHistory.set(dataToSave)
 }
 
 export const handleCorrectGuess = (): void => {
@@ -173,7 +187,7 @@ export const handleCorrectGuess = (): void => {
 }
 
 export const saveGameData = (): void => {
-  save(GAME_DATA_STORAGE_KEY, {
+  saveToLocalStorage(GAME_DATA_STORAGE_KEY, {
     codeWord: window.btoa(get(codeWord)),
     currentGuesses: get(currentGuesses),
     previousGuesses: get(previousGuesses),
@@ -184,13 +198,17 @@ export const saveGameData = (): void => {
     usedAttempts: get(usedAttempts),
     streak: get(streak),
   })
+  const longestStreak = loadFromLocalStorage(LONGEST_STREAK_STORAGE_KEY) || 0
+  if (get(pointsScoredForLastGuess) > longestStreak) {
+    saveToLocalStorage(LONGEST_STREAK_STORAGE_KEY, get(pointsScoredForLastGuess))
+  }
 }
 
 export const setToast = async (msg: ToastMessage = { message: '', type: 'warning' }): Promise<void> => {
-  message.set('')
+  const { message, type } = msg
+  toast.set({ message: '', type })
   await tick()
-  message.set(msg.message)
-  toast.set(msg.type)
+  toast.set({ message, type })
 }
 
 export const shuffleGuesses = (): void => {
@@ -220,7 +238,7 @@ export const toggleDarkMode = (): void => {
   } else {
     document.documentElement.classList.remove('dark')
   }
-  save('theme', get(isDarkMode) ? 'dark' : 'light')
+  saveToLocalStorage('theme', get(isDarkMode) ? 'dark' : 'light')
 }
 
 const setDefaultGameState = (): void => {

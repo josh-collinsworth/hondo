@@ -18,23 +18,49 @@ body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
-  line-height: 1.4;
+  line-height: 1.5;
   font-family: 'Ridley Grotesk', sans-serif;
   font-weight: var(--fontWeightNormal);
-  overflow: hidden;
+}
+
+body,
+html {
+  overflow-y: overlay;
+  // overflow: hidden;
+  ::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+  
+  ::-webkit-scrollbar,
+  ::-webkit-scrollbar-track {
+    /* the "track" of the bar - great for customizing "background" colors */
+    background: rgba(255,255,255,0);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    /* the actual draggable element, the star of the show! */
+    background: var(--darkBlue);
+    border-radius: 4rem;
+  }
 }
 
 main {
-  transition: filter 0.24s cubic-bezier(0.86, 0, 0.07, 1);
+  transition: all 0.24s cubic-bezier(0.86, 0, 0.07, 1);
 
   &.blurry {
-    filter: blur(6px);
+    opacity: 0.3;
   }
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: var(--fontWeightSemiBold);
   line-height: 1.2;
+  margin: 3rem 0 1rem;
+  
+  &:first-child {
+    margin-top: 0;
+  }
 }
 
 h1 {
@@ -45,9 +71,16 @@ h1 {
   width: 100%;
   max-width: 100%;
   position: relative;
-  overflow-x: hidden;
-  height: 100vh;
-  height: 100dvh;
+  // overflow-x: hidden;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.container {
+  padding: 24px;
+  max-width: 28rem;
+  width: 100%;
+  margin: auto;
 }
 
 a {
@@ -56,4 +89,11 @@ a {
   .dark-mode & {
     color: var(--lightBlue);
   }
+}
+
+
+.button-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
 }

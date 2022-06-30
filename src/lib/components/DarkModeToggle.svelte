@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { isDarkMode } from '$lib/state/user'
-  import { toggleDarkMode } from '$lib/state/mutations'
-  import LightDarkIcon from './icon/LightDarkIcon.svelte'
-  import { onMount } from 'svelte'
+import { isDarkMode } from '$lib/state/user'
+import { toggleDarkMode } from '$lib/state/mutations'
+import LightDarkIcon from './icon/LightDarkIcon.svelte'
+import { onMount } from 'svelte'
 
-  onMount(() => {
-    if (document.documentElement.classList.contains('dark')) {
-      $isDarkMode = true
-    }
-  })
+onMount(() => {
+  if (document.documentElement.classList.contains('dark')) {
+    $isDarkMode = true
+  }
+})
 </script>
 
 <button on:click={toggleDarkMode} class="info-button" aria-pressed={$isDarkMode}>
