@@ -171,6 +171,9 @@ export const registerHighScore = (): void => {
 
   /**
    * To save on localStorage space, game history is stored in an array, not an object with keys.
+   * This is admittedly not a good idea from a code stability standpoint, but having the same key
+   * over and over in localStorage is extremely wasteful, so this solution wins out.
+   * 
    * [
    *  0: Final score
    *  1: Used attempts
