@@ -12,11 +12,12 @@ import { adjustedGuessCost } from '$lib/state/powerups';
   <div class="power-bar">
     <div
       class="power-bar__fill"
-      class:pulse={$remainingAttempts <= $adjustedGuessCost}
       style="
         transform: scaleX({ $remainingAttempts / STARTING_GUESSES });
         background-size: {( STARTING_GUESSES / $remainingAttempts) * 100}%;
       "
-    />
+    >
+      <div class="power-bar__fill--blinker" style="width: {$adjustedGuessCost * ( STARTING_GUESSES / $remainingAttempts)}%" />
+    </div>
   </div>
 </div>

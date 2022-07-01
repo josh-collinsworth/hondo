@@ -23,12 +23,13 @@ export type PowerupUnlock = {
 }
 
 export type StaticPowerup = {
-  slug: string,
-  title: string,
-  description: string,
-  effects: StaticPowerupEffects,
-  unlock: PowerupUnlock,
-  icon: SvelteComponent
+  slug: string
+  title: string
+  description: string
+  effects: StaticPowerupEffects
+  unlock: PowerupUnlock
+  icon?: SvelteComponent
+  emoji: string
 }
 
 export const selectedStaticPowerupKey = writable<StaticPowerupType>('none')
@@ -42,9 +43,20 @@ const defaultEffects: StaticPowerupEffects = {
 
 export const staticPowerups = readable<StaticPowerup[]>([
   {
+    slug: 'none',
+    title: 'None',
+    description: 'Play with no charm.',
+    effects: defaultEffects,
+    unlock: {
+      getter: 'totalGamesPlayed',
+      threshold: 0,
+    },
+    emoji: '❌',
+  },
+  {
     slug: 'educatedGuesses',
     title: 'Educated Guesses',
-    description: 'Guesses cost 10% less than normal.',
+    description: 'Guesses cost 10% less energy.',
     effects: {
       ...defaultEffects,
       guessCost: -1,
@@ -54,12 +66,12 @@ export const staticPowerups = readable<StaticPowerup[]>([
       threshold: 1,
       description: 'Play your first game of Hondo',
     },
-    icon: EducatedGuesses,
+    emoji: '🔎'
   },
   {
     slug: 'sweeterSuccess',
     title: 'Sweeter success',
-    description: 'Correct guesses refill your meter by 20% more.',
+    description: 'Correct guesses restore 20% more energy.',
     effects: {
       ...defaultEffects,
       guessBenefit: 2
@@ -69,7 +81,7 @@ export const staticPowerups = readable<StaticPowerup[]>([
       threshold: 1,
       description: 'Play your first game of Hondo',
     },
-    icon: SweeterSuccess,
+    emoji: '🧁'
   },
   {
     slug: 'safeStreak',
@@ -85,18 +97,7 @@ export const staticPowerups = readable<StaticPowerup[]>([
       threshold: 10,
       description: 'Play 10 total games to unlock',
     },
-    icon: SafeStreak,
-  },
-  {
-    slug: 'none',
-    title: 'None',
-    description: 'Play with no static powerup.',
-    effects: defaultEffects,
-    unlock: {
-      getter: 'totalGamesPlayed',
-      threshold: 0,
-    },
-    icon: XIcon,
+    emoji: '🧷'
   },
 ])
 
