@@ -1,51 +1,49 @@
-import EducatedGuesses from '$lib/components/icon/powerups/EducatedGuesses.svelte'
-import SweeterSuccess from '$lib/components/icon/powerups/SweeterSuccess.svelte'
-import SafeStreak from '$lib/components/icon/powerups/SafeStreak.svelte'
-import XIcon from '$lib/components/icon/XIcon.svelte'
-import { GUESS_COST, GUESS_BENEFIT, SCORE_PER_CODE_WORD } from '$lib/js/constants'
+import { GUESS_COST, GUESS_BENEFIT, SCORE_PER_CODE_WORD, SHUFFLE_COST } from '$lib/js/constants'
 import type { SvelteComponent } from 'svelte'
 import { derived, readable, writable, get } from 'svelte/store'
 import 'svelte'
 
-export type StaticPowerupType = 'educatedGuesses'|'sweeterSuccess'|'safeStreak'|'none'
+export type PowerupType = 'educatedGuesses'|'sweeterSuccess'|'safeStreak'|'none'
 
-export type StaticPowerupEffects = {
+export type PowerupEffects = {
   guessCost?: number
   guessBenefit?: number
   score?: number
   streak?: boolean
+  shuffleCost?: number
 }
 
 export type PowerupUnlock = {
   getter: string
   threshold: number
-  description: string
+  description?: string
 }
 
-export type StaticPowerup = {
+export type Powerup = {
   slug: string
   title: string
   description: string
-  effects: StaticPowerupEffects
+  effects: PowerupEffects
   unlock: PowerupUnlock
   icon?: SvelteComponent
   emoji: string
 }
 
-export const selectedStaticPowerupKey = writable<StaticPowerupType>('none')
+export const selectedPowerupKey = writable<PowerupType>('none')
 
-const defaultEffects: StaticPowerupEffects = {
+const defaultEffects: PowerupEffects = {
   guessCost: 0,
   guessBenefit: 0,
   score: 0,
   streak: true,
+  shuffleCost: 0,
 }
 
-export const staticPowerups = readable<StaticPowerup[]>([
+export const powerups = readable<Powerup[]>([
   {
     slug: 'none',
     title: 'None',
-    description: 'Play with no charm.',
+    description: 'Play with no charm',
     effects: defaultEffects,
     unlock: {
       getter: 'totalGamesPlayed',
@@ -56,7 +54,7 @@ export const staticPowerups = readable<StaticPowerup[]>([
   {
     slug: 'educatedGuesses',
     title: 'Educated Guesses',
-    description: 'Guesses cost 10% less energy.',
+    description: 'Guesses cost 10% less energy',
     effects: {
       ...defaultEffects,
       guessCost: -1,
@@ -71,7 +69,7 @@ export const staticPowerups = readable<StaticPowerup[]>([
   {
     slug: 'sweeterSuccess',
     title: 'Sweeter success',
-    description: 'Correct guesses restore 20% more energy.',
+    description: 'Correct guesses restore 20% more energy',
     effects: {
       ...defaultEffects,
       guessBenefit: 2
@@ -82,6 +80,21 @@ export const staticPowerups = readable<StaticPowerup[]>([
       description: 'Play your first game of Hondo',
     },
     emoji: '🧁'
+  },
+  {
+    slug: 'chaos',
+    title: 'Chaos',
+    description: 'Shuffles cost 20% less',
+    effects: {
+      ...defaultEffects,
+      shuffleCost: SHUFFLE_COST * -0.2
+    },
+    unlock: {
+      getter: 'totalPointsScored',
+      threshold: 100,
+      description: `Score 100 total points`,
+    },
+    emoji: '🎲'
   },
   {
     slug: 'safeStreak',
@@ -101,30 +114,35 @@ export const staticPowerups = readable<StaticPowerup[]>([
   },
 ])
 
-export const getCurrentStaticPowerup = (key: string): StaticPowerup|undefined => get(staticPowerups).find(powerup => powerup.slug === key)
+export const getCurrentPowerup = (key: string): Powerup|undefined => get(powerups).find(powerup => powerup.slug === key)
 
 export const adjustedGuessCost = derived(
-  selectedStaticPowerupKey,
-  $selectedStaticPowerupKey => {
-    return GUESS_COST + getCurrentStaticPowerup($selectedStaticPowerupKey).effects.guessCost
+  selectedPowerupKey,
+  $selectedPowerupKey => {
+    return GUESS_COST + getCurrentPowerup($selectedPowerupKey).effects.guessCost
   }
 )
 
 export const adjustedGuessBenefit = derived(
-  selectedStaticPowerupKey,
-  $selectedStaticPowerupKey => {
-    return GUESS_BENEFIT + getCurrentStaticPowerup($selectedStaticPowerupKey).effects.guessBenefit
+  selectedPowerupKey,
+  $selectedPowerupKey => {
+    return GUESS_BENEFIT + getCurrentPowerup($selectedPowerupKey).effects.guessBenefit
   }
 )
 
 export const adjustedScorePerCodeWord = derived(
-  selectedStaticPowerupKey,
-  $selectedStaticPowerupKey => {
-    return SCORE_PER_CODE_WORD + getCurrentStaticPowerup($selectedStaticPowerupKey).effects.score
+  selectedPowerupKey,
+  $selectedPowerupKey => {
+    return SCORE_PER_CODE_WORD + getCurrentPowerup($selectedPowerupKey).effects.score
   }
 )
 
 export const isStreakAllowed = derived(
-  selectedStaticPowerupKey,
-  $selectedStaticPowerupKey => getCurrentStaticPowerup($selectedStaticPowerupKey).effects.streak
+  selectedPowerupKey,
+  $selectedPowerupKey => getCurrentPowerup($selectedPowerupKey).effects.streak
+)
+
+export const adjustedShuffleCost = derived(
+  selectedPowerupKey,
+  $selectedPowerupKey => SHUFFLE_COST + getCurrentPowerup($selectedPowerupKey).effects.streak
 )

@@ -1,43 +1,33 @@
 :root { 
-  --altRed: #A23E48;
-  --altBlack: #191919;
-  --altDarkerGray: #2F242C;
-  --altDarkerBlue: #002642;
-  --altDarkBlue: #173A53;
-  --altMediumGray: #2C4C63;
-  --altOrange: #FF570A;
-  --altBlue: #8797AF;
+  --lighterAltBlue: #8ECAE6;
+  --lightAltBlue: #219EBC;
+  --altBlue: #126782;
+  --darkAltBlue: #023047;
+  --brightestAltOrange: #FFB703;
+  --brightAltOrange: #FD9E02;
+  --altOrange: #FB8500;
+  --altOrangeRed: #BB3E03;
+  --altRed: #AE2012;
+  --altDarkRed: #9B2226;
 
-  --offwhite: #f7f8fa;
-  --lightestGray: #f0f1f3;
-  --lighterGray: #d9dadc;
-  --lightGray: #a7a8aa;
-  --mediumGray: #888b8d;
-  --darkGray: #53565a;
-  --darkerGray: #282a2f;
-  --black: #101820;
-  --white: #fff;
-  --yellow: #ffd100;
-  --orange: #ff6a13;
-  --red: #e4002b;
-  --lightBlue: #7ba7bc;
-  --darkBlue: #34657f;
-
-  // --lightBlue: var(--altBlue);
-  // --orange: var(--altOrange);
-  // --black: var(--altBlack);
-  // --darkBlue: var(--altDarkBlue);
-  // --mediumGray: var(--altMediumGray);
-
-
-  --orangeRGB: 255, 106, 19;
-  --lightBlueRGB: 123, 167, 188;
-  --darkBlueRGB: 52, 101, 127;
+  --offwhite: #F9FCFE;
+  --lightestGray: #eaf1f7;
+  --lighterGray: #d5dae1;
+  --mediumGray: #126782;
+  --darkGray: #FFF;
+  --darkerGray: #0F4B67;
+  --black: #023047;
+  --white: #DEF8FF;
+  --orange: #FB8500;
+  --red: #BB3E03;
+  --lighterBlue: #8ECAE6;
+  --lightBlue: #219EBC;
+  --darkBlue: #126782;
 
   --paper: var(--offwhite);
   --ink: var(--black);
-  --paperRGB: 247, 248, 250; // #f7f8fa
-  --inkRGB: 16, 24, 32; // #101820;
+  --paperRGB: 249, 252, 254; // #f7f8fa
+  --inkRGB: 2, 48, 71; // #101820;
 
   --primary: var(--orange);
   --secondary: var(--lightBlue);
@@ -45,14 +35,14 @@
 
   --lightestAccent: var(--lightestGray);
   --lighterAccent: var(--lighterGray);
-  --lightAccent: var(--lightGray);
   --mediumAccent: var(--mediumGray);
   --darkAccent: var(--darkGray);
-
+  
   --scoreWidth: 2.5em;
   --powerBarHeight: 2rem;
-
+  
   --fontWeightNormal: 500;
+  --lightAccent: var(--lighterBlue);
   --fontWeightSemiBold: 600;
   --fontWeightBold: 700;
 
@@ -66,9 +56,8 @@
     --lightestAccent: var(--black);
     --lighterAccent: var(--darkerGray);
     --lightAccent: var(--mediumGray);
-    --mediumAccent: var(--lightGray);
     --darkAccent: var(--lighterGray);
-  
+    
     --paperRGB: 16, 24, 26; // #f7f8fa
   }
 }

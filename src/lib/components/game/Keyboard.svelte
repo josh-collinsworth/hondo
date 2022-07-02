@@ -89,9 +89,17 @@ const handlePress = async (key: string): Promise<void> => {
 <style lang="scss">
 .keyboard {
   display: grid;
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 3.5rem);
   margin: 0 calc(-1rem + 5px);
   height: 100%;
+
+  @media (min-height: 44rem) {
+    grid-template-rows: repeat(3, 4rem);
+  }
+
+  @media (min-height: 50rem) {
+    grid-template-rows: repeat(3, 4.2rem);
+  }
 
   .row {
     display: flex;
@@ -112,8 +120,8 @@ const handlePress = async (key: string): Promise<void> => {
     font-weight: var(--fontWeightNormal);
     flex: 1 1 3ch;
     text-transform: uppercase;
-    background: var(--lightestAccent);
-    border: 1px solid var(--lighterAccent);
+    background: transparent;
+    border: 1.5px solid var(--lightAccent);
     border-radius: 0.25em;
     margin: 0;
     padding: 0;
@@ -142,14 +150,16 @@ const handlePress = async (key: string): Promise<void> => {
     }
 
     &.used {
-      color: var(--mediumAccent);
-      background: var(--lighterAccent);
+      color: var(--lighterAccent);
+      background: var(--lightestAccent);
+      border-color: var(--lighterAccent);
     }
 
     &.included {
       color: var(--ink);
       border-color: var(--secondary);
       background: var(--secondary);
+      opacity: 1;
     }
   }
 

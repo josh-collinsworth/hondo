@@ -48,20 +48,6 @@
   }
 }
 
-.bottom-container {
-  height: 11.5rem;
-  position: relative;
-  
-  @media (min-height: 44rem) {
-    height: 12.5rem;
-  }
-
-  .postgame-summary {
-    font-size: 1rem;
-    text-align: center;
-  }
-}
-
 .guess-box {
   border-radius: 0.5em;
   overflow: hidden;
@@ -81,7 +67,7 @@
     width: 100%;
     height: 100%;
     border-radius: inherit;
-    border: 2px solid var(--lighterAccent);
+    border: 2px solid var(--lightAccent);
     position: absolute;
     z-index: -2;
   }
@@ -224,7 +210,7 @@
     .power-bar__fill {
       transform-origin: left;
       background: var(--primary);
-      background: linear-gradient(90deg, #e4002b, #e6102a, #ea2727, #f03b23, #f64d1e, #fb5c19, #fe6615, #ff6a13);
+      background: linear-gradient(90deg, var(--red), var(--orange));
       transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
       display: flex;
       justify-content: flex-end;

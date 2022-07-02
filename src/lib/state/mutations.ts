@@ -154,6 +154,7 @@ export const handleEndgame = (): void => {
   localStorage.removeItem(GAME_DATA_STORAGE_KEY)
 }
 
+
 export const showModal = (modal: SvelteComponent): void => {
   shownModal.set(modal)
 }
@@ -241,8 +242,8 @@ export const toggleDarkMode = (): void => {
   saveToLocalStorage('theme', get(isDarkMode) ? 'dark' : 'light')
 }
 
-const setDefaultGameState = (): void => {
-  setNewRandomCodeWord()
+export const setDefaultGameState = (isDev: boolean): void => {
+  setNewRandomCodeWord(isDev)
   currentGuess.set('')
   currentGuesses.set(['',' ','  ','   ','    '])
   previousGuesses.set(['','','','','',])

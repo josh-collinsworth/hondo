@@ -37,7 +37,7 @@
     }
     
     &:nth-of-type(2) {
-      background: var(--yellow);
+      background: var(--lightBlue);
       animation-delay: 0.08s;
     }
     
