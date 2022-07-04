@@ -143,10 +143,6 @@ onMount(() => {
     font-size: 1.2rem;
     width: max-content;
 
-    &.disabled {
-      color: var(--lighterGray);
-    }
-
     .link__icon {
       width: 1.5em;
       margin-right: 0.75em;

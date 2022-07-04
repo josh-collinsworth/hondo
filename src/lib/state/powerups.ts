@@ -57,7 +57,7 @@ export const powerups = readable<Powerup[]>([
     description: 'Guesses cost 10% less energy',
     effects: {
       ...defaultEffects,
-      guessCost: -1,
+      guessCost: GUESS_COST * 0.9,
     },
     unlock: {
       getter: 'totalGamesPlayed',
@@ -72,7 +72,7 @@ export const powerups = readable<Powerup[]>([
     description: 'Correct guesses restore 20% more energy',
     effects: {
       ...defaultEffects,
-      guessBenefit: 2
+      guessBenefit: GUESS_BENEFIT * 1.2
     },
     unlock: {
       getter: 'totalGamesPlayed',
@@ -87,7 +87,7 @@ export const powerups = readable<Powerup[]>([
     description: 'Shuffles cost 20% less',
     effects: {
       ...defaultEffects,
-      shuffleCost: SHUFFLE_COST * -0.2
+      shuffleCost: SHUFFLE_COST * 0.8
     },
     unlock: {
       getter: 'totalPointsScored',
@@ -144,5 +144,5 @@ export const isStreakAllowed = derived(
 
 export const adjustedShuffleCost = derived(
   selectedPowerupKey,
-  $selectedPowerupKey => SHUFFLE_COST + getCurrentPowerup($selectedPowerupKey).effects.streak
+  $selectedPowerupKey => getCurrentPowerup($selectedPowerupKey).effects.shuffleCost
 )

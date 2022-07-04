@@ -21,7 +21,6 @@ import {
   GAME_DATA_STORAGE_KEY,
   LONGEST_STREAK_STORAGE_KEY,
   SCORE_TICK_DURATION,
-  SHUFFLE_COST,
   STARTING_GUESSES,
 } from '../js/constants'
 
@@ -32,7 +31,7 @@ import { dev } from '$app/env'
 import { goto } from '$app/navigation'
 import { SvelteComponent, tick } from 'svelte'
 import { get } from 'svelte/store'
-import { adjustedGuessBenefit, adjustedGuessCost, adjustedScorePerCodeWord, isStreakAllowed } from './powerups'
+import { adjustedGuessBenefit, adjustedGuessCost, adjustedScorePerCodeWord, adjustedShuffleCost, isStreakAllowed } from './powerups'
 
 
 export const startNewGame = (): void => {
@@ -224,7 +223,8 @@ export const shuffleGuesses = (): void => {
 
   previousGuesses.set(get(currentGuesses))
   currentGuesses.set(newGuesses)
-  remainingAttempts.set(get(remainingAttempts) - SHUFFLE_COST)
+  console.log(get(adjustedGuessCost))
+  remainingAttempts.set(get(remainingAttempts) - get(adjustedShuffleCost))
   saveGameData()
 }
 
