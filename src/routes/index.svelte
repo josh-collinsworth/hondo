@@ -9,16 +9,14 @@ import Logo from '$lib/components/icon/Logo.svelte'
 import Loader from '$lib/components/game/Loader.svelte'
 import PlayBlock from '$lib/components/icon/blocks/PlayBlock.svelte'
 import StatsBlock from '$lib/components/icon/blocks/StatsBlock.svelte'
-import ExclamationBlock from '$lib/components/icon/blocks/ExclamationBlock.svelte'
 import HBlock from '$lib/components/icon/blocks/HBlock.svelte'
 import QuestionBlock from '$lib/components/icon/blocks/QuestionBlock.svelte'
 import DarkModeToggle from '$lib/components/DarkModeToggle.svelte'
-import Padlock from '$lib/components/icon/Padlock.svelte'
 
 let localIsLoading = true
 let savedGame = false
-let gameLocation = (savedGame || !$totalGamesPlayed) ? '/game' : '/powerups'
 
+$: gameLocation = (savedGame || !$totalGamesPlayed) ? '/game' : '/powerups'
 $: buttonText = savedGame ? 'Continue playing' : 'New game'
 
 const abandonGame = (): void => {
@@ -71,23 +69,6 @@ onMount(() => {
             How to play
           </a>
         </li>
-        <!-- {#if $totalGamesPlayed}
-          <li>
-            <a href="/powerups">
-              <span class="link__icon" aria-hidden="true">
-                <ExclamationBlock  />
-              </span>
-              Powerups
-            </a>
-          </li>
-        {:else}
-          <li class="disabled">
-            <span class="link__icon" aria-hidden="true">
-              <Padlock />
-            </span>
-            Powerups
-          </li>
-        {/if} -->
         <li>
           <a href="/stats">
             <span class="link__icon" aria-hidden="true">

@@ -223,7 +223,6 @@ export const shuffleGuesses = (): void => {
 
   previousGuesses.set(get(currentGuesses))
   currentGuesses.set(newGuesses)
-  console.log(get(adjustedGuessCost))
   remainingAttempts.set(get(remainingAttempts) - get(adjustedShuffleCost))
   saveGameData()
 }

@@ -6,8 +6,6 @@ import { selectedPowerupKey } from '$lib/state/powerups'
 import { onMount } from 'svelte'
 import { get } from 'svelte/store'
 import * as getters from '$lib/state/getters'
-import Padlock from '$lib/components/icon/Padlock.svelte'
-import { setToast } from '$lib/state/mutations';
 
 const saveValueLocally = () => {
   const savedPowerups = loadFromLocalStorage(POWERUPS_STORAGE_KEY) || {}
@@ -15,16 +13,6 @@ const saveValueLocally = () => {
     ...savedPowerups, static: $selectedPowerupKey
   })
 }
-
-const promptToChooseValidPowerups = (): void => {
-  console.log('clicked')
-  setToast({
-    message: 'Please choose powerups that are unlocked',
-    type: 'warning'
-  })
-}
-
-$: selectedPowerup = $powerups.find(powerup => powerup.slug === $selectedPowerupKey)
 
 onMount(() => {
   const savedPowerups = loadFromLocalStorage(POWERUPS_STORAGE_KEY)
@@ -76,15 +64,9 @@ onMount(() => {
         Back
       </a>
 
-      {#if get(getters[selectedPowerup.unlock.getter]) < selectedPowerup.unlock.threshold}
-        <button class="button unavailable" on:click={promptToChooseValidPowerups}>
-          Play!
-        </button>
-      {:else}
-        <a href="/game" class="button confirm">
-          Play! 
-        </a>
-      {/if}
+      <a href="/game" class="button confirm">
+        Play! 
+      </a>
     </div>
   </div>
 </div>
@@ -179,10 +161,6 @@ onMount(() => {
         border-color: var(--lighterAccent);
       }
     }
-  }
-
-  .button.unavailable {
-    opacity: 0.5;
   }
 }
 </style>

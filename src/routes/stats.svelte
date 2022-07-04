@@ -24,7 +24,6 @@ onMount(() => {
   let medianGuessesTally = $gameHistory.map(score => score[1]).sort((a, b) => a - b)
   
   while (medianScoreTally.length > 1) {
-    console.log(medianScoreTally)
     if (medianScoreTally.length === 2) {
       medianScoreTally.pop()
     }

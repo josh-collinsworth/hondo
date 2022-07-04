@@ -47,12 +47,12 @@
     }
     
     &:nth-of-type(4) {
-      background: var(--secondary);
+      background: var(--lighterBlue);
       animation-delay: 0.24s;
     }
 
     &:nth-of-type(5) {
-      background: var(--darkAccent);
+      background: var(--red);
       animation-delay: 0.32s;
     }
   }
