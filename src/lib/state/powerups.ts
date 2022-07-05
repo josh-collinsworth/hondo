@@ -32,11 +32,11 @@ export type Powerup = {
 export const selectedPowerupKey = writable<PowerupType>('none')
 
 const defaultEffects: PowerupEffects = {
-  guessCost: 0,
-  guessBenefit: 0,
+  guessCost: GUESS_COST,
+  guessBenefit: GUESS_BENEFIT,
   score: 0,
   streak: true,
-  shuffleCost: 0,
+  shuffleCost: SHUFFLE_COST,
 }
 
 export const powerups = readable<Powerup[]>([
