@@ -154,10 +154,6 @@ export const handleEndgame = (): void => {
 }
 
 
-export const showModal = (modal: SvelteComponent): void => {
-  shownModal.set(modal)
-}
-
 export const closeModal = (): void => {
   shownModal.set(null)
 }
