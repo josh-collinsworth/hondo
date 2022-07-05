@@ -116,12 +116,6 @@ export const setStreak = (value: number): void => {
 
 export const setNewScores = (): void => {
   if (get(currentGuess) === get(codeWord)) {
-    const streakPoints = get(isStreakAllowed) ? get(streak) : 0
-    const tally = get(adjustedScorePerCodeWord) + streakPoints
-    incrementRunningScore(tally)
-    pointsScoredForLastGuess.set(tally)
-    incrementRemainingAttempts(get(adjustedGuessBenefit))
-    incrementStreak(1)
     handleCorrectGuess()
   } else {
     incrementRemainingAttempts(-get(adjustedGuessCost))
@@ -173,6 +167,12 @@ export const registerHighScore = (): void => {
 }
 
 export const handleCorrectGuess = (): void => {
+  const streakPoints = get(isStreakAllowed) ? get(streak) : 0
+  const tally = get(adjustedScorePerCodeWord) + streakPoints
+  incrementRunningScore(tally)
+  pointsScoredForLastGuess.set(tally)
+  incrementRemainingAttempts(get(adjustedGuessBenefit))
+  incrementStreak(1)
   discoveredCodeWord.set(get(codeWord))
   saveGameData()
   setTimeout(async () => {

@@ -178,10 +178,14 @@
   padding: 0;
   will-change: transform;
 
+  .dark & {
+    --darkBlue: var(--lightBlue);
+  }
+
   &.wide {
     --powerBarHeight: 0.875rem;
 
-    grid-column: 2 / -1;
+    grid-column: 1 / -1;
     padding: 2px;
 
     .power-bar {
@@ -202,10 +206,6 @@
     overflow: hidden;
     position: relative;
     background: var(--lighterAccent);
-    
-    .dark & {
-      --darkBlue: var(--lightBlue);
-    }
 
     .power-bar__fill {
       transform-origin: left;

@@ -47,7 +47,7 @@ $: if ($discoveredCodeWord) {
 
   .status-burst__inner {
     width: 100%;
-    background: rgba(var(--paperRGB), 0.9);
+    background: var(--paper);
     padding: 2rem;
     position: relative;
     margin-bottom: 2rem;

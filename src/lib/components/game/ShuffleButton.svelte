@@ -1,7 +1,6 @@
 <script lang="ts">
 import { shownModal } from '$lib/state/global'
 import { maxRemainingAttempts } from '$lib/state/game'
-import ShuffleIcon from '../icon/ShuffleIcon.svelte'
 import ShuffleConfirmationModal from '../modals/ShuffleConfirmationModal.svelte'
 import ShuffleIcon from '../icon/ShuffleIcon.svelte';
 

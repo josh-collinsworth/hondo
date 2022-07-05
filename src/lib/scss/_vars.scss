@@ -10,24 +10,26 @@
   --altRed: #AE2012;
   --altDarkRed: #9B2226;
 
-  --offwhite: #F9FCFE;
-  --lightestGray: #eaf1f7;
-  --lighterGray: #d5dae1;
-  --mediumGray: #126782;
+  --black: #160d27;
+  --lightestGray: #efefec;
+  --lighterGray: #d3d3cb;
+  --mediumGray: #42463a;
   --darkGray: #FFF;
-  --darkerGray: #0F4B67;
-  --black: #023047;
-  --white: #DEF8FF;
-  --orange: #FB8500;
-  --red: #BB3E03;
-  --lighterBlue: #8ECAE6;
-  --lightBlue: #219EBC;
-  --darkBlue: #126782;
+  --darkerGray: #363930;
+  --offwhite: #fefff6;
+  --white: #FFFFFF;
+  --orange: #f78c28;
+  --red: #f96e30;
+  --lightestBlue: #ede8ea;
+  --lighterBlue: #e5d8e3;
+  --lightBlue: #c5b1d6;
+  --darkBlue: #4a2c81;
+  --darkerBlue: #160d27;
 
   --paper: var(--offwhite);
   --ink: var(--black);
-  --paperRGB: 249, 252, 254; // #f7f8fa
-  --inkRGB: 2, 48, 71; // #101820;
+  --paperRGB: 254, 255, 246;
+  --inkRGB: 9, 5, 15;
 
   --primary: var(--orange);
   --secondary: var(--lightBlue);
@@ -50,14 +52,16 @@
     --ink: var(--offwhite);
     --paper: var(--black);
 
-    --secondary: var(--darkBlue);
-    --tertiary: var(--lightBlue);
+    // --secondary: var(--darkBlue);
+    // --tertiary: var(--lightBlue);
 
     --lightestAccent: var(--black);
     --lighterAccent: var(--darkerGray);
-    --lightAccent: var(--mediumGray);
+    --lighterAccent: #341f5a;
+    --lightAccent: var(--darkBlue);
+    --mediumAccent: #3f256e;
     --darkAccent: var(--lighterGray);
     
-    --paperRGB: 16, 24, 26; // #f7f8fa
+    --paperRGB: 9, 5, 15; // #f7f8fa
   }
 }

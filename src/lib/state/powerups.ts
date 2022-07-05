@@ -119,14 +119,14 @@ export const getCurrentPowerup = (key: string): Powerup|undefined => get(powerup
 export const adjustedGuessCost = derived(
   selectedPowerupKey,
   $selectedPowerupKey => {
-    return GUESS_COST + getCurrentPowerup($selectedPowerupKey).effects.guessCost
+    return getCurrentPowerup($selectedPowerupKey).effects.guessCost
   }
 )
 
 export const adjustedGuessBenefit = derived(
   selectedPowerupKey,
   $selectedPowerupKey => {
-    return GUESS_BENEFIT + getCurrentPowerup($selectedPowerupKey).effects.guessBenefit
+    return getCurrentPowerup($selectedPowerupKey).effects.guessBenefit
   }
 )
 
