@@ -4,6 +4,7 @@ import { shuffleGuesses, closeModal } from '$lib/state/mutations'
 import { remainingAttempts } from '$lib/state/game'
 
 import ShuffleIcon from '../icon/ShuffleIcon.svelte'
+import { adjustedShuffleCost } from '$lib/state/powerups';
 
 let cancelButton: HTMLButtonElement
 
@@ -22,6 +23,7 @@ const shuffleAndClose = (): void => {
 
 <svelte:window on:keydown={listenForEnter} />
 
+
 <h2 class="display-flex align-center">
   Shuffle
   <span class="info-button shuffle-button" aria-hidden="true">
@@ -30,7 +32,7 @@ const shuffleAndClose = (): void => {
 </h2>
 
 {#if $remainingAttempts > SHUFFLE_COST}
-  <p>Replaces the board with new random words, but drains your gauge by 20%.</p>
+  <p>Replaces the board with new random words, but drains your gauge by {$adjustedShuffleCost}.</p>
 
   <p>Shuffle now?</p>
 

@@ -103,6 +103,7 @@ import MenuButton from '$lib/components/MenuButton.svelte'
     position: fixed;
     top: 24px;
     right: 24px;
+    margin-top: 0;
 
     :global(button) {
       background: var(--paper);

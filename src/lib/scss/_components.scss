@@ -183,7 +183,7 @@
   }
 
   &.wide {
-    --powerBarHeight: 0.875rem;
+    --powerBarHeight: 1rem;
 
     grid-column: 1 / -1;
     padding: 2px;
@@ -191,6 +191,16 @@
     .power-bar {
       display: flex;
       margin: 0;
+    }
+
+    .power-bar__numbers {
+      font-size: 0.625rem;
+      font-weight: var(--fontWeightSemiBold);
+      line-height: 1;
+      display: block;
+      width: 2.2em;
+      margin: 1px 4px 0 3px;
+      text-align: center;
     }
   }
 

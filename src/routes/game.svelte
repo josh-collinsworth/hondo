@@ -14,7 +14,7 @@ import {
 import { shownModal, isLoading, hasViewedTutorial } from '$lib/state/global'
 import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES, POWERUPS_STORAGE_KEY } from '$lib/js/constants';
 import { loadFromLocalStorage, saveToLocalStorage, stringContainsLetter } from '$lib/js/helpers'
-import { setNewRandomCodeWord, startNewGame } from '$lib/state/mutations'
+import { setDefaultGameState } from '$lib/state/mutations'
 
 import GuessContent from '$lib/components/game/GuessContent.svelte'
 import Keyboard from '$lib/components/game/Keyboard.svelte'
@@ -57,7 +57,7 @@ onMount(() => {
       $usedAttempts = gameData.usedAttempts
       $streak = loadedStreak
     } else {
-      setNewRandomCodeWord(is_client && dev)
+      setDefaultGameState(is_client && dev)
     }
   } 
   catch(e) {

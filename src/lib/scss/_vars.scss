@@ -1,15 +1,4 @@
 :root { 
-  --lighterAltBlue: #8ECAE6;
-  --lightAltBlue: #219EBC;
-  --altBlue: #126782;
-  --darkAltBlue: #023047;
-  --brightestAltOrange: #FFB703;
-  --brightAltOrange: #FD9E02;
-  --altOrange: #FB8500;
-  --altOrangeRed: #BB3E03;
-  --altRed: #AE2012;
-  --altDarkRed: #9B2226;
-
   --black: #160d27;
   --lightestGray: #efefec;
   --lighterGray: #d3d3cb;
@@ -19,7 +8,7 @@
   --offwhite: #fefff6;
   --white: #FFFFFF;
   --orange: #f78c28;
-  --red: #f96e30;
+  --red: #ca4206;
   --lightestBlue: #ede8ea;
   --lighterBlue: #e5d8e3;
   --lightBlue: #c5b1d6;
@@ -52,7 +41,7 @@
     --ink: var(--offwhite);
     --paper: var(--black);
 
-    // --secondary: var(--darkBlue);
+    --secondary: #8c64ae;
     // --tertiary: var(--lightBlue);
 
     --lightestAccent: var(--black);

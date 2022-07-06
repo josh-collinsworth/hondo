@@ -9,7 +9,6 @@ import StatsBlock from './icon/blocks/StatsBlock.svelte'
 import BackBlock from './icon/blocks/BackBlock.svelte'
 import HBlock from './icon/blocks/HBlock.svelte'
 import Logo from './icon/Logo.svelte'
-import ExclamationBlock from './icon/blocks/ExclamationBlock.svelte'
 
 import { tick } from 'svelte'
 import { fly, fade } from 'svelte/transition'
@@ -56,8 +55,7 @@ isMenuOpen.subscribe(async (isOpen) => {
   <aside
     class="menu"
     class:open={$isMenuOpen}
-    in:fly={{ x: 120, duration: 240, easing: quintOut }}
-    out:fly={{ x: 120, duration: 240, easing: quintIn }}
+    out:fly={{ x: 80, duration: 200, easing: quintIn }}
   >
     <nav tabindex="-1" bind:this={navMenu}>
       <ul class="menu__links" aria-labelledby="menu-heading">
@@ -77,14 +75,6 @@ isMenuOpen.subscribe(async (isOpen) => {
             How to play
           </a>
         </li>
-        <!-- <li>
-          <a href="/powerups" on:click={toggleMenuOpen}>
-            <span aria-hidden="true">
-              <ExclamationBlock />
-            </span>
-            Powerups
-          </a>
-        </li> -->
         <li>
           <a href="/stats" on:click={toggleMenuOpen}>
             <span aria-hidden="true">
@@ -103,7 +93,7 @@ isMenuOpen.subscribe(async (isOpen) => {
         </li>
       </ul>
     </nav>
-    <div class="display-flex button-bar">
+    <div class="display-flex button-bar menu__buttons">
       <div class="button-bar__logo display-flex center-content">
         <a href="/game" on:click|preventDefault={handleReturnToGame} class="display-flex center-content">
           <Logo />
@@ -207,6 +197,11 @@ isMenuOpen.subscribe(async (isOpen) => {
 
   .button-bar {
     margin-top: 0;
+  }
+
+  .menu__buttons {
+    animation: zoom_in_left 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    opacity: 0;
   }
 }
 </style>
