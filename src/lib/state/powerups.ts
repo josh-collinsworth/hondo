@@ -3,8 +3,6 @@ import type { SvelteComponent } from 'svelte'
 import { derived, readable, writable, get } from 'svelte/store'
 import 'svelte'
 
-export type PowerupType = 'educatedGuesses'|'sweeterSuccess'|'safeStreak'|'none'
-
 export type PowerupEffects = {
   guessCost?: number
   guessBenefit?: number
@@ -29,7 +27,7 @@ export type Powerup = {
   emoji: string
 }
 
-export const selectedPowerupKey = writable<PowerupType>('none')
+export const selectedPowerupKey = writable<string>('none')
 
 const defaultEffects: PowerupEffects = {
   guessCost: GUESS_COST,
@@ -114,7 +112,9 @@ export const powerups = readable<Powerup[]>([
   },
 ])
 
-export const getCurrentPowerup = (key: string): Powerup|undefined => get(powerups).find(powerup => powerup.slug === key)
+export const getCurrentPowerup = (key: string): Powerup => {
+  return get(powerups).find(powerup => powerup.slug === key) || get(powerups)[0]
+}
 
 export const adjustedGuessCost = derived(
   selectedPowerupKey,

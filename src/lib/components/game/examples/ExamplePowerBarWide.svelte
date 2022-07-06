@@ -12,5 +12,10 @@ export let startingGuesses: number = 10
         background-size: {( startingGuesses / remainingAttempts) * 100}%;
       "
     />
+    <div class="power-bar__grid">
+      {#each { length: 10 } as _, i}
+        <div class="power-bar__grid-box" />
+      {/each}
+    </div>
   </div>
 </div>

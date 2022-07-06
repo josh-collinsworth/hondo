@@ -183,24 +183,15 @@
   }
 
   &.wide {
-    --powerBarHeight: 1rem;
+    --powerBarHeight: 0.875rem;
 
     grid-column: 1 / -1;
     padding: 2px;
+    margin-top: 2px;
 
     .power-bar {
       display: flex;
       margin: 0;
-    }
-
-    .power-bar__numbers {
-      font-size: 0.625rem;
-      font-weight: var(--fontWeightSemiBold);
-      line-height: 1;
-      display: block;
-      width: 2.2em;
-      margin: 1px 4px 0 3px;
-      text-align: center;
     }
   }
 
@@ -238,11 +229,35 @@
       }
     }
   }
+
+  .power-bar__grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    width: 100%;
+    position: absolute;
+    height:100%;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    transition: inherit;
+  }
+
+  .power-bar__grid-box {
+    border-left: 1px solid var(--paper);
+    flex: 0 0 1em;
+    transition: background .3s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+    &:first-of-type {
+      border: 0;
+    }
+
+    @media (min-width: 22rem) {
+      border-width: 2px;
+    }
+  }
 }
 
 .info-button {
-  --buttonSize: 2.5rem;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -259,6 +274,8 @@
   z-index: 4;
   padding-top: 0.05ch;
   font-size: 1rem;
+  text-decoration: none;
+  font-size: 1.25rem;
 
   .dark & {
     border-color: var(--lightblue);
