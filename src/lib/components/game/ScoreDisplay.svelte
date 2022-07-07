@@ -1,6 +1,6 @@
 <script lang="ts">
-import { remainingAttempts, maxRemainingAttempts, runningScore } from '$lib/state/game'
-import { SCORE_TICK_DURATION, STARTING_GUESSES } from '$lib/js/constants'
+import { runningScore } from '$lib/state/game'
+import { SCORE_TICK_DURATION } from '$lib/js/constants'
 import { fly } from 'svelte/transition'
 import { backIn, backOut } from 'svelte/easing'
 

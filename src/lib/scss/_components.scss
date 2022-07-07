@@ -180,6 +180,8 @@
 
   .dark & {
     --darkBlue: var(--lightBlue);
+
+    border-color: var(--mediumBlue);
   }
 
   &.wide {
@@ -344,6 +346,8 @@
     padding: 0;
     text-align: center;
     font-size: 2rem;
+    height: 1em;
+    line-height: 1em;
   }
 
   .score-digit {

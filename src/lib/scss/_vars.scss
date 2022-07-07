@@ -12,6 +12,7 @@
   --lightestBlue: #ede8ea;
   --lighterBlue: #e5d8e3;
   --lightBlue: #c5b1d6;
+  --mediumBlue: #8c64ae;
   --darkBlue: #4a2c81;
   --darkerBlue: #160d27;
 
@@ -42,7 +43,7 @@
     --ink: var(--offwhite);
     --paper: var(--black);
 
-    --secondary: #8c64ae;
+    --secondary: var(--mediumBlue);
     // --tertiary: var(--lightBlue);
 
     --lightestAccent: var(--black);
