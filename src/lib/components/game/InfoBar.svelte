@@ -11,11 +11,11 @@ import { selectedPowerupKey, getCurrentPowerup } from '$lib/state/powerups'
 
 <div class="info-bar">
   <!-- First row -->
-  <span class="tiny">Shuffle</span>
+  <!-- <span class="tiny">Shuffle</span>
   <span class="tiny">Charm</span>
   <span class="tiny">Score</span>
   <span class="tiny"></span>
-  <span class="tiny">Menu</span>
+  <span class="tiny">Menu</span> -->
 
   <StatusBurst />
   <Toast />

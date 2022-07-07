@@ -32,7 +32,7 @@ const shuffleAndClose = (): void => {
 </h2>
 
 {#if $remainingAttempts > SHUFFLE_COST}
-  <p>Replaces the board with new random words, but drains your gauge by {$adjustedShuffleCost}.</p>
+  <p>Replaces the board with new random words, but drains your gauge by {$adjustedShuffleCost / 10} bars.</p>
 
   <p>Shuffle now?</p>
 
