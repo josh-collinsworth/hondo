@@ -31,7 +31,7 @@ import { dev } from '$app/env'
 import { goto } from '$app/navigation'
 import { SvelteComponent, tick } from 'svelte'
 import { get } from 'svelte/store'
-import { adjustedGuessBenefit, adjustedGuessCost, adjustedScorePerCodeWord, adjustedShuffleCost, isStreakAllowed } from './powerups'
+import { adjustedGuessBenefit, adjustedGuessCost, adjustedScorePerCodeWord, adjustedShuffleCost, adjustedLifelineCost, isStreakAllowed } from './powerups'
 
 
 export const startNewGame = (): void => {
@@ -220,6 +220,12 @@ export const shuffleGuesses = (): void => {
   previousGuesses.set(get(currentGuesses))
   currentGuesses.set(newGuesses)
   remainingAttempts.set(get(remainingAttempts) - get(adjustedShuffleCost))
+  saveGameData()
+}
+
+export const useLifeline = (): void => {
+  setNewRandomCodeWord()
+  remainingAttempts.set(get(remainingAttempts) - get(adjustedLifelineCost))
   saveGameData()
 }
 

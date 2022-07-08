@@ -18,6 +18,11 @@ button,
     background: var(--primary);
     border-color: var(--primary);
   }
+
+  &.secondary {
+    background: var(--secondary);
+    border-color: var(--secondary);
+  }
 }
 
 fieldset {

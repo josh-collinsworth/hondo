@@ -53,7 +53,7 @@ onMount(() => {
   
   <main inert={isInert} class:blurry={isInert} id="#main" tabindex="-1">
     {#key path}
-      <div in:fly={{ delay: 420, duration: 360, y: 8 }} out:fly={{ duration: 360, y: -8 }}>
+      <div class="transition" in:fly={{ delay: 420, duration: 360, y: 8 }} out:fly={{ duration: 360, y: -8 }}>
         <slot />
       </div>
     {/key}

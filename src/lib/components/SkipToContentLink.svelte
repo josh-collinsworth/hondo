@@ -12,7 +12,7 @@ const focusMain = (): void => {
 <style lang="scss">
 #skip-to-content-link {
   position: absolute;
-  top: -3rem;
+  top: -6rem;
   width: max-content;
   display: flex;
   padding: 1rem;

@@ -17,8 +17,8 @@ import { backIn, backOut } from 'svelte/easing'
 
 <div class="info-bar">
   <!-- First row -->
-  <span class="tiny">Shuffle</span>
-  <span class="tiny">Charm</span>
+  <span class="tiny">Powers</span>
+  <span class="tiny">Charms</span>
   <span class="tiny">Score</span>
   <span class="tiny">Bonus</span>
   <span class="tiny">Menu</span>
@@ -42,7 +42,7 @@ import { backIn, backOut } from 'svelte/easing'
           out:fly={{ y: -36, duration: SCORE_TICK_DURATION, opacity: 1, easing: backIn }}
           in:fly={{ y: 36, duration: SCORE_TICK_DURATION, opacity: 1, easing: backOut, delay: SCORE_TICK_DURATION }}
         >
-        {$streak + 1}
+        {$streak}
       </div>
       {/key}
     </div>
@@ -63,7 +63,7 @@ import { backIn, backOut } from 'svelte/easing'
   margin-bottom: 1rem;
   position: relative;
   z-index: 5;
-  height: auto;
+  height: 5.2rem;
 }
 
 .bonus {

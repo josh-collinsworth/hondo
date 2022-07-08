@@ -75,53 +75,47 @@ onMount(() => {
 </script>
 
 
-<section>
-  <!-- For debugging -->
-  <!-- <input type="text" bind:value={$codeWord} /> -->
-
-
-  <div class="game-container">
-    <InfoBar />
-    {#if $isLoading}
-      <Loader />
-    {:else}
-      <ul id="game-board" class="guess-container" tabindex="-1">
-        {#each $currentGuesses as guess, row (guess)}
-          <li
-            class="guess"
-            aria-label={guess}
-            aria-hidden={!stringContainsLetter(guess)}
-          >
-            <GuessContent guess={guess} previousGuess={$previousGuesses[row]}/>
-          </li>
-        {/each}
-        <li 
-          class="guess current-guess"
+<div class="game-container">
+  <InfoBar />
+  {#if $isLoading}
+    <Loader />
+  {:else}
+    <ul id="game-board" class="guess-container" tabindex="-1">
+      {#each $currentGuesses as guess, row (guess)}
+        <li
+          class="guess"
+          aria-label={guess}
+          aria-hidden={!stringContainsLetter(guess)}
         >
-          {#each {length: 5} as _, col (col)}
-            <div class="current-guess-box">
-              {#key $previousGuesses}
-                {#if $currentGuess[col]}
-                  <div class="current-guess-letter">
-                    {$currentGuess[col]}
-                 </div>
-                {/if}
-                <div class="previous-guess-letter" aria-hidden="true">
-                  {#if $currentGuesses[$currentGuesses.length - 1] && $currentGuesses[$currentGuesses.length - 1][col]}
-                    {$currentGuesses[$currentGuesses.length - 1][col]}
-                  {/if}
-                </div>
-              {/key}
-            </div>
-          {/each}
+          <GuessContent guess={guess} previousGuess={$previousGuesses[row]}/>
         </li>
-      </ul>
-    {/if}
+      {/each}
+      <li 
+        class="guess current-guess"
+      >
+        {#each {length: 5} as _, col (col)}
+          <div class="current-guess-box">
+            {#key $previousGuesses}
+              {#if $currentGuess[col]}
+                <div class="current-guess-letter">
+                  {$currentGuess[col]}
+                </div>
+              {/if}
+              <div class="previous-guess-letter" aria-hidden="true">
+                {#if $currentGuesses[$currentGuesses.length - 1] && $currentGuesses[$currentGuesses.length - 1][col]}
+                  {$currentGuesses[$currentGuesses.length - 1][col]}
+                {/if}
+              </div>
+            {/key}
+          </div>
+        {/each}
+      </li>
+    </ul>
+  {/if}
 
-    <AccessibleStatus />
+  <AccessibleStatus />
 
-    <div class="bottom-container">
-      <Keyboard />
-    </div>
+  <div class="bottom-container">
+    <Keyboard />
   </div>
-</section>
+</div>

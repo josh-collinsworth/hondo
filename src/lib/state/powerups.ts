@@ -1,4 +1,4 @@
-import { GUESS_COST, GUESS_BENEFIT, SCORE_PER_CODE_WORD, SHUFFLE_COST } from '$lib/js/constants'
+import { GUESS_COST, GUESS_BENEFIT, SCORE_PER_CODE_WORD, SHUFFLE_COST, LIFELINE_COST } from '$lib/js/constants'
 import type { SvelteComponent } from 'svelte'
 import { derived, readable, writable, get } from 'svelte/store'
 import 'svelte'
@@ -9,6 +9,7 @@ export type PowerupEffects = {
   score?: number
   streak?: boolean
   shuffleCost?: number
+  lifelineCost?: number
 }
 
 export type PowerupUnlock = {
@@ -35,6 +36,7 @@ const defaultEffects: PowerupEffects = {
   score: 0,
   streak: true,
   shuffleCost: SHUFFLE_COST,
+  lifelineCost: LIFELINE_COST,
 }
 
 export const powerups = readable<Powerup[]>([
@@ -145,4 +147,9 @@ export const isStreakAllowed = derived(
 export const adjustedShuffleCost = derived(
   selectedPowerupKey,
   $selectedPowerupKey => getCurrentPowerup($selectedPowerupKey).effects.shuffleCost
+)
+
+export const adjustedLifelineCost = derived(
+  selectedPowerupKey,
+  $selectedPowerupKey => getCurrentPowerup($selectedPowerupKey).effects.lifelineCost
 )

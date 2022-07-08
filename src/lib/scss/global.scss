@@ -47,6 +47,11 @@ html {
 
 main {
   transition: all 0.24s cubic-bezier(0.86, 0, 0.07, 1);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: space-between;
+  align-content: space-between;
+  justify-content: center;
 
   &.blurry {
     opacity: 0.3;
@@ -71,9 +76,16 @@ h1 {
   width: 100%;
   max-width: 100%;
   position: relative;
-  // overflow-x: hidden;
   min-height: 100vh;
   min-height: 100dvh;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: stretch;
+  justify-content: center;
+}
+
+.transition {
+  height: 100%;
 }
 
 .container {
