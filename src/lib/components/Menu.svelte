@@ -21,8 +21,8 @@ export let currentPage: string
 let navMenu: HTMLElement
 
 const handleReturnToGame = (): void => {
-  if (currentPage !== '/game') {
-    goto('/game')
+  if (currentPage !== '/') {
+    goto('/')
   }
   toggleMenuOpen()
 }
@@ -60,15 +60,7 @@ isMenuOpen.subscribe(async (isOpen) => {
     <nav tabindex="-1" bind:this={navMenu}>
       <ul class="menu__links" aria-labelledby="menu-heading">
         <li>
-          <a href="/" on:click={toggleMenuOpen}>
-            <span aria-hidden="true">
-              <BackBlock />
-            </span>
-            Main menu
-          </a>
-        </li>
-        <li>
-          <a href="/tutorial/1" on:click={toggleMenuOpen}>
+          <a href="/how-to-play" on:click={toggleMenuOpen}>
             <span aria-hidden="true">
               <HBlock />
             </span>
@@ -95,7 +87,7 @@ isMenuOpen.subscribe(async (isOpen) => {
     </nav>
     <div class="display-flex button-bar menu__buttons">
       <div class="button-bar__logo display-flex center-content">
-        <a href="/game" on:click|preventDefault={handleReturnToGame} class="display-flex center-content">
+        <a href="/" on:click|preventDefault={handleReturnToGame} class="display-flex center-content">
           <Logo />
         </a>
       </div>

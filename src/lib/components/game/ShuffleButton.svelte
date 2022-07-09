@@ -2,7 +2,8 @@
 import { shownModal } from '$lib/state/global'
 import { maxRemainingAttempts } from '$lib/state/game'
 import ShuffleConfirmationModal from '../modals/ShuffleConfirmationModal.svelte'
-import LightningBolt from '../icon/LightningBolt.svelte';
+import LightningBolt from '../icon/LightningBolt.svelte'
+import ShuffleIcon from '../icon/ShuffleIcon.svelte'
 
 const confirmShuffle = (): void => {
   $shownModal = ShuffleConfirmationModal
@@ -14,6 +15,7 @@ const confirmShuffle = (): void => {
   disabled={$maxRemainingAttempts <= 1}
   class="info-button shuffle-button"
 >
-  <LightningBolt />
+  <!-- <LightningBolt /> -->
+  <ShuffleIcon />
   <div class="sr">Shuffle board</div>
 </button>

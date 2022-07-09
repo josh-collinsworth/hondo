@@ -17,6 +17,18 @@ button,
   &.confirm {
     background: var(--primary);
     border-color: var(--primary);
+
+    &[disabled] {
+      background: var(--lightestGray);
+      border-color: var(--lightestGray);
+      color: var(--lighterGray);
+
+      .dark & {
+        background: var(--lightestAccent);
+        border-color: var(--lightestAccent);
+        color: var(--lighterAccent);
+      }
+    }
   }
 
   &.secondary {

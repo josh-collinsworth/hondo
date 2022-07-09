@@ -1,20 +1,20 @@
 <script lang="ts">
-import { SHUFFLE_COST } from '$lib/js/constants';
-import { shuffleGuesses, closeModal } from '$lib/state/mutations'
+import { SKIP_COST } from '$lib/js/constants';
+import { skipCodeWord, closeModal } from '$lib/state/mutations'
 import { remainingAttempts } from '$lib/state/game'
 
-import ShuffleIcon from '../icon/ShuffleIcon.svelte'
+import SkipIcon from '../icon/SkipIcon.svelte'
 
 let cancelButton: HTMLButtonElement
 
 const listenForEnter = (e: KeyboardEvent): void => {
-  if (e.key === 'Enter' && e.target != cancelButton && $remainingAttempts > SHUFFLE_COST) {
-    shuffleAndClose()
+  if (e.key === 'Enter' && e.target != cancelButton && $remainingAttempts > SKIP_COST) {
+    skipAndClose()
   }
 }
 
-const shuffleAndClose = (): void => {
-  shuffleGuesses()
+const skipAndClose = (): void => {
+  skipCodeWord()
   closeModal()
 }
 </script>
@@ -24,18 +24,18 @@ const shuffleAndClose = (): void => {
 
 
 <h2 class="display-flex align-center">
-  Shuffle
-  <span class="info-button shuffle-button" aria-hidden="true">
-    <ShuffleIcon />
+  Skip
+  <span class="info-button skip-button" aria-hidden="true">
+    <SkipIcon />
   </span>
 </h2>
 
-<p>Replaces all words on the board with new, random words.</p>
+<p>Skips the current code word and randomly selects a new one.</p>
 <p>
   <b>Cost</b>: 
-  <span class="sr">{SHUFFLE_COST}</span>
+  <span class="sr">{SKIP_COST}</span>
   <span class="energy-bar" aria-hidden="true">
-    <span class="energy-cell" /><span class="energy-cell" />
+    <span class="energy-cell" />
   </span>
 </p>
 
@@ -43,8 +43,8 @@ const shuffleAndClose = (): void => {
   <button on:click={closeModal} bind:this={cancelButton}>
     Cancel
   </button>
-  <button class="confirm" on:click={shuffleAndClose} disabled={SHUFFLE_COST >= $remainingAttempts}>
-    Shuffle now
+  <button class="confirm" on:click={skipAndClose} disabled={SKIP_COST >= $remainingAttempts}>
+    Skip now
   </button>
 </div>
 

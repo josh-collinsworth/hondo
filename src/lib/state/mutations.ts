@@ -22,6 +22,8 @@ import {
   LONGEST_STREAK_STORAGE_KEY,
   SCORE_TICK_DURATION,
   STARTING_GUESSES,
+  SHUFFLE_COST,
+  SKIP_COST,
 } from '../js/constants'
 
 import { isValidGuess, loadFromLocalStorage, saveToLocalStorage } from '../js/helpers'
@@ -31,13 +33,13 @@ import { dev } from '$app/env'
 import { goto } from '$app/navigation'
 import { SvelteComponent, tick } from 'svelte'
 import { get } from 'svelte/store'
-import { adjustedGuessBenefit, adjustedGuessCost, adjustedScorePerCodeWord, adjustedShuffleCost, adjustedLifelineCost, isStreakAllowed } from './powerups'
+import { adjustedGuessBenefit, adjustedGuessCost, adjustedScorePerCodeWord, isStreakAllowed } from './powerups'
 
 
 export const startNewGame = (): void => {
   saveToLocalStorage(GAME_DATA_STORAGE_KEY, null)
   setDefaultGameState()
-  goto('/game')
+  goto('/')
 }
 
 export const getRandomCodeWord = (): string => {
@@ -219,13 +221,13 @@ export const shuffleGuesses = (): void => {
 
   previousGuesses.set(get(currentGuesses))
   currentGuesses.set(newGuesses)
-  remainingAttempts.set(get(remainingAttempts) - get(adjustedShuffleCost))
+  remainingAttempts.set(get(remainingAttempts) - SHUFFLE_COST)
   saveGameData()
 }
 
-export const useLifeline = (): void => {
+export const skipCodeWord = (): void => {
   setNewRandomCodeWord()
-  remainingAttempts.set(get(remainingAttempts) - get(adjustedLifelineCost))
+  remainingAttempts.set(get(remainingAttempts) - SKIP_COST)
   saveGameData()
 }
 

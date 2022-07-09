@@ -1,11 +1,12 @@
 <script lang="ts">  
-  import ExampleGuess from '$lib/components/game/examples/ExampleGuess.svelte'
-  import ExamplePowerBar from '$lib/components/game/examples/ExamplePowerBar.svelte'
-  import Arrow from '$lib/components/icon/Arrow.svelte'
-  import Logo from '$lib/components/icon/Logo.svelte'
-  import Shuffle from '$lib/components/icon/ShuffleIcon.svelte'
-  import MenuButton from '$lib/components/MenuButton.svelte'
-  import { SHUFFLE_COST } from '$lib/js/constants'
+import ExampleGuess from '$lib/components/game/examples/ExampleGuess.svelte'
+import ExamplePowerBarWide from '$lib/components/game/examples/ExamplePowerBarWide.svelte'
+import Arrow from '$lib/components/icon/Arrow.svelte'
+import ShuffleIcon from '$lib/components/icon/ShuffleIcon.svelte'
+import Shuffle from '$lib/components/icon/ShuffleIcon.svelte'
+import SkipIcon from '$lib/components/icon/SkipIcon.svelte'
+import MenuButton from '$lib/components/MenuButton.svelte'
+import { SHUFFLE_COST, SKIP_COST } from '$lib/js/constants'
 </script>
 
 
@@ -18,12 +19,10 @@
 <div class="directions">
   <div class="directions__container">
     <MenuButton />
-    <div style="width: 12rem;">
-      <Logo />
-    </div>
+
     <h1>How to play</h1>
 
-    <h2>Guess all the code words you&nbsp;can</h2>
+    <h2>Hondo is a word guessing game.</h2>
     
     <div class="width-max-content" style="margin: 2rem 0 0.5rem">
       <ExampleGuess codeWord="xrxxx" guess="ready" />
@@ -42,9 +41,9 @@
     </p>
 
     
-    <h2>When you guess one, the game continues with a new one</h2>
+    <h2>When you get a code word, play continues with a new&nbsp;one.</h2>
     
-    <p><em>However</em>, your five most recent guesses stay on the board as clues.</p>
+    <p><em>However</em>, the five most recent guesses stay on the board as clues.</p>
           
     <div class="example-diagram">
       <div>
@@ -67,32 +66,23 @@
     </div>
 
 
-    <h2>Watch your score &amp; life gauge</h2>
-    <p>Every incorrect guess drains one life…</p>
+    <h2>Watch your energy gauge</h2>
+    <p>Every guess costs one bar, but a correct guess <em>replenishes</em> one bar instead.</p>
 
     <div class="example-diagram">
-      <ExamplePowerBar remainingAttempts={10} />
+      <ExamplePowerBarWide remainingAttempts={10} />
       <Arrow direction="down" />
       <ExampleGuess codeWord="xxxxr" guess="wrong" />
       <Arrow direction="down" />
-      <ExamplePowerBar remainingAttempts={9} />
-    </div>
-      
-    <p>…but a correct guess gives you a point, and <em>replenishes</em> one life instead.</p>
-    
-    <div class="example-diagram">
-      <ExamplePowerBar remainingAttempts={9} />
+      <ExamplePowerBarWide remainingAttempts={9} />
       <Arrow direction="down" />
       <ExampleGuess codeWord="right" guess="right" />
       <Arrow direction="down" />
-      <ExamplePowerBar remainingAttempts={10} score={1} />
+      <ExamplePowerBarWide remainingAttempts={10} score={1} />
     </div>
 
 
-    <h2>Special rules to know</h2>
-
-
-    <h3>Streak bonus</h3>
+    <h2>Scoring</h2>
 
     <p>You get a bonus point for every consecutive successful guess after the first.</p>
 
@@ -120,16 +110,21 @@
     </div>
 
 
-    <h3 class="display-flex" style="align-items: center;">
-      Need help? Try shuffling
-    </h3>
+    <h2 class="display-flex" style="align-items: center;">
+      <span class="shuffle-button info-button" style="margin-right: 1rem">
+        <ShuffleIcon />
+      </span>
+      Shuffle
+    </h2>
 
     <p>
-      Hit the <strong>shuffle button</strong> any time to replace the board with five random new guesses!
+      Hit <strong>shuffle</strong> any time to replace the board with five new random guesses.
     </p>
+    
+    <p>Costs {(SHUFFLE_COST / 10)} energy.</p>
 
     <div class="example-diagram">
-      <ExamplePowerBar remainingAttempts={10} />
+      <ExamplePowerBarWide remainingAttempts={10} />
       <div>
         <ExampleGuess codeWord="boxer" guess="clang" />
         <ExampleGuess codeWord="boxer" guess="chimp" />
@@ -142,7 +137,7 @@
         <Shuffle />
       </span>
       <Arrow direction="down" />
-      <ExamplePowerBar remainingAttempts={10 - SHUFFLE_COST} />
+      <ExamplePowerBarWide remainingAttempts={10 - (SHUFFLE_COST / 10)} />
       <div>
         <ExampleGuess codeWord="boxer" guess="brown" />
         <ExampleGuess codeWord="boxer" guess="oxide" />
@@ -152,9 +147,17 @@
       </div>
     </div>
 
-    <p><strong>Shuffling is a key strategy</strong>; it helps replace unhelpful guesses, <strong>and</strong> keeps bonus streaks alive!</p>
 
-    <p>However, <strong>shuffling costs {SHUFFLE_COST} life</strong>! Use shuffles wisely.</p>
+    <h2 class="display-flex" style="align-items: center;">
+      <span class="info-button skip-button" style="margin-right: 1rem">
+        <SkipIcon />
+      </span>
+      Skip
+    </h2>
+
+    <p>Use <b>skip</b> to get a new code word.</p>
+    
+    <p>Costs {SKIP_COST / 10} energy.</p>
 
 
     <h2>The goal</h2>
@@ -175,23 +178,34 @@
   
     <ul>
       <li><strong>Look at the keyboard</strong>. It shows which letters aren't currently on the board, which can be a big hint.</li>
-      <li><strong>Use shuffles strategically</strong>. They can get you out of a jam, and can also keep streaks alive for bonus points.</li>
+      <li><strong>Use shuffles and skips strategically</strong>. They can get you out of a jam, and can also keep streaks alive for extra bonus points.</li>
       <li>If you can, try to keep common letters on the board at all times, especially vowels.
       </li>
       <li><strong>Be patient</strong>; haste is costly. Getting a high score requires logic, strategy, and luck.</li>
     </ul>
 
-    <a href="/game" class="back-link">Back to game</a>
+    <a href="/" class="back-link">Back to game</a>
   </div>
 </div>
 
 
 <style lang="scss">
 h1 {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  align-items: baseline;
+  margin-top: 0;
+}
+
+h2 {
+  font-size: 1.375rem;
+  margin: 5rem 0 1rem;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+h3 {
+  margin-top: 3rem;
+  font-size: 1.3rem;
 }
 
 .directions {
@@ -202,7 +216,7 @@ h1 {
 .directions__container {
   width: 28rem;
   max-width: 100%;
-  margin: 1rem auto;
+  margin: 0 auto 1rem;
 }
 
 ul, ol {
@@ -243,20 +257,6 @@ ol {
   padding-left: 1.5rem;
 }
 
-h2 {
-  font-size: 1.6rem;
-  margin: 5rem 0 1rem;
-
-  &:first-child {
-    margin-top: 0;
-  }
-}
-
-h3 {
-  margin-top: 3rem;
-  font-size: 1.3rem;
-}
-
 .example-diagram {
   display: grid;
   width: 100%;
@@ -291,10 +291,9 @@ hr {
 }
 
 .example-score {
-  position: absolute;
-  right: -2em;
   font-size: 1.5rem;
-  font-weight: var(--fontWeightBold);
+  margin-left: 1rem;
+  font-weight: var(--fontWeightSemiBold);
 }
 
 .directions :global(.menu-button) {

@@ -2,7 +2,7 @@
   width: 100%;
   max-width: 32rem;
   margin: 0 auto;
-  padding: 1rem 1rem 3px;
+  padding: 1rem 1rem 5px;
   min-height: 100%;
   display: flex;
   flex-direction: column;
@@ -314,6 +314,10 @@
   }
 }
 
+.skip-button {
+  padding: 6px;
+}
+
 .score {
   overflow: hidden;
   font-weight: var(--fontWeightNormal);
@@ -322,7 +326,6 @@
   justify-content: center;
   box-shadow: 0 0 0 2px var(--paper);
   overflow: hidden;
-  // border: 0;
   background: var(--paper);
   color: var(--darkBlue);
   width: var(--scoreWidth);
@@ -344,7 +347,7 @@
     width: min-content;
     padding: 0;
     text-align: center;
-    font-size: 2rem;
+    font-size: 2.2rem;
     height: 1em;
     line-height: 1em;
   }

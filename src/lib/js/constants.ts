@@ -7,7 +7,7 @@ export const SCORE_PER_CODE_WORD = 1
 
 export const STARTING_GUESSES = 100
 export const SHUFFLE_COST = 20
-export const LIFELINE_COST = 10
+export const SKIP_COST = 10
 export const GUESS_COST = 10
 export const GUESS_BENEFIT = 10
 export const TOTAL_TUTORIAL_PAGES = 4

@@ -1,143 +1,121 @@
 <script lang="ts">
-import { GAME_DATA_STORAGE_KEY } from '$lib/js/constants'
-import { loadFromLocalStorage } from '$lib/js/helpers'
-import { startNewGame } from '$lib/state/mutations'
-import { totalGamesPlayed } from '$lib/state/getters'
-import { onMount } from 'svelte'
-import { goto } from '$app/navigation'
-import Logo from '$lib/components/icon/Logo.svelte'
+import {
+  currentGuesses,
+  currentGuess,
+  gameIsOver,
+  remainingAttempts,
+  codeWord,
+  runningScore,
+  maxRemainingAttempts,
+  usedAttempts,
+  streak,
+  previousGuesses,
+} from '$lib/state/game'
+import { shownModal, isLoading, hasViewedTutorial } from '$lib/state/global'
+import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES, POWERUPS_STORAGE_KEY } from '$lib/js/constants';
+import { loadFromLocalStorage, saveToLocalStorage, stringContainsLetter } from '$lib/js/helpers'
+import { setDefaultGameState } from '$lib/state/mutations'
+
+import GuessContent from '$lib/components/game/GuessContent.svelte'
+import Keyboard from '$lib/components/game/Keyboard.svelte'
+import InfoBar from '$lib/components/game/InfoBar.svelte'
 import Loader from '$lib/components/game/Loader.svelte'
-import PlayBlock from '$lib/components/icon/blocks/PlayBlock.svelte'
-import StatsBlock from '$lib/components/icon/blocks/StatsBlock.svelte'
-import HBlock from '$lib/components/icon/blocks/HBlock.svelte'
-import QuestionBlock from '$lib/components/icon/blocks/QuestionBlock.svelte'
-import DarkModeToggle from '$lib/components/DarkModeToggle.svelte'
+import AccessibleStatus from '$lib/components/game/AccessibleStatus.svelte'
+import TutorialIntro from '$lib/components/modals/TutorialIntro.svelte'
 
-let localIsLoading = true
-let savedGame = false
-
-$: gameLocation = (savedGame || !$totalGamesPlayed) ? '/game' : '/powerups'
-$: buttonText = savedGame ? 'Continue playing' : 'New game'
-
-const abandonGame = (): void => {
-  const confirmation = confirm('Start a new game? This will delete any game currently in progress.')
-  if (!confirmation)  return
-  startNewGame()
-  goto('/game')
-}
+import { dev } from '$app/env'
+import { onMount } from 'svelte'
+import { is_client } from 'svelte/internal'
+import { selectedPowerupKey } from '$lib/state/powerups';
 
 onMount(() => {
-  const savedGameData = loadFromLocalStorage(GAME_DATA_STORAGE_KEY)
+  try {
+    const gameData = loadFromLocalStorage(GAME_DATA_STORAGE_KEY)
+    const powerups = loadFromLocalStorage(POWERUPS_STORAGE_KEY)
 
-  if (savedGameData) {
-    savedGame = true
+    if (powerups && powerups.static) {
+      $selectedPowerupKey = powerups.static
+    }
+      
+    if (gameData) {
+      // Avoids a loading error with states that didn't save this. Can be removed later.
+      if (!gameData.currentGuesses || !gameData.previousGuesses) {
+        alert(`Sorry, your in-progress game data is outdated and will need to be cleared. Proceeding now.`)
+        saveToLocalStorage(GAME_DATA_STORAGE_KEY, null)
+        return
+      }
+      let attemptsCap = gameData.maxRemainingAttempts ? gameData.maxRemainingAttempts : STARTING_GUESSES
+      let loadedStreak = gameData.streak || 0
+      
+      $codeWord = window.atob(gameData.codeWord)
+      $maxRemainingAttempts = attemptsCap
+      $currentGuesses = gameData.currentGuesses
+      $previousGuesses = gameData.previousGuesses
+      $remainingAttempts = gameData.remainingAttempts
+      $runningScore = gameData.runningScore
+      $gameIsOver = gameData.gameIsOver
+      $usedAttempts = gameData.usedAttempts
+      $streak = loadedStreak
+    } else {
+      setDefaultGameState(is_client && dev)
+    }
+  } 
+  catch(e) {
+    alert(`Sorry, something went wrong loading your previous game data. Please try again, or start a new game from the menu.`)
+  } 
+  finally {
+    $isLoading = false
+
+    const hasPlayed = loadFromLocalStorage('skipTutorial')
+    if (!hasPlayed && ! $hasViewedTutorial) {
+      $shownModal = TutorialIntro
+    }
   }
-
-  localIsLoading = false
 })
 </script>
 
-<div class="container">
-  {#if localIsLoading}
+
+<div class="game-container">
+  <InfoBar />
+  {#if $isLoading}
     <Loader />
   {:else}
-    <div class="menu-button">
-      <DarkModeToggle />
-    </div>
-
-    <div class="logo">
-      <Logo />
-    </div>
-    <p class="small-print">A game in 100 words or fewer.</p>
-
-
-    <nav>
-      <ul class="main-nav__links" aria-labelledby="menu-heading">
-        <li>
-          <a href="{gameLocation}">
-            <span class="link__icon" aria-hidden="true">
-              <PlayBlock />
-            </span>
-            {buttonText}
-          </a>
+    <ul id="game-board" class="guess-container" tabindex="-1">
+      {#each $currentGuesses as guess, row (guess)}
+        <li
+          class="guess"
+          aria-label={guess}
+          aria-hidden={!stringContainsLetter(guess)}
+        >
+          <GuessContent guess={guess} previousGuess={$previousGuesses[row]}/>
         </li>
-        <li>
-          <a href="/tutorial/1">
-            <span class="link__icon" aria-hidden="true">
-              <HBlock />
-            </span>
-            How to play
-          </a>
-        </li>
-        <li>
-          <a href="/stats">
-            <span class="link__icon" aria-hidden="true">
-              <StatsBlock />
-            </span>
-            Stats
-          </a>
-        </li>
-        <li>
-          <a href="/faq">
-            <span class="link__icon" aria-hidden="true">
-              <QuestionBlock />
-            </span>
-            FAQ
-          </a>
-        </li>
-      </ul>
-    </nav>
+      {/each}
+      <li 
+        class="guess current-guess"
+      >
+        {#each {length: 5} as _, col (col)}
+          <div class="current-guess-box">
+            {#key $previousGuesses}
+              {#if $currentGuess[col]}
+                <div class="current-guess-letter">
+                  {$currentGuess[col]}
+                </div>
+              {/if}
+              <div class="previous-guess-letter" aria-hidden="true">
+                {#if $currentGuesses[$currentGuesses.length - 1] && $currentGuesses[$currentGuesses.length - 1][col]}
+                  {$currentGuesses[$currentGuesses.length - 1][col]}
+                {/if}
+              </div>
+            {/key}
+          </div>
+        {/each}
+      </li>
+    </ul>
   {/if}
+
+  <AccessibleStatus />
+
+  <div class="bottom-container">
+    <Keyboard />
+  </div>
 </div>
-
-
-<style lang="scss">
-.container {
-  min-height: 100vh;
-  justify-content: start;
-
-  .menu-button {
-    position: fixed;
-    top: 24px;
-    right: 24px;
-    width: max-content;
-    background: var(--paper);
-  }
-
-  .logo {
-    display: flex;
-    height: 2.75rem;
-    max-width: max-content;
-  }
-}
-
-.main-nav__links {
-  margin-top: 4rem;
-  padding-left: 0;
-  list-style-type: none;
-
-  li {
-    margin-bottom: 1em;
-    height: 1.75em;
-    display: flex;
-    align-items: center;
-    font-size: 1.2rem;
-    width: max-content;
-
-    .link__icon {
-      width: 1.5em;
-      margin-right: 0.75em;
-      height: inherit;
-      line-height: 1;
-    }
-
-    a {
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      color: inherit;
-      height: inherit;
-    }
-  }
-}
-</style>

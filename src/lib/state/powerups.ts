@@ -1,4 +1,4 @@
-import { GUESS_COST, GUESS_BENEFIT, SCORE_PER_CODE_WORD, SHUFFLE_COST, LIFELINE_COST } from '$lib/js/constants'
+import { GUESS_COST, GUESS_BENEFIT, SCORE_PER_CODE_WORD, SHUFFLE_COST, SKIP_COST } from '$lib/js/constants'
 import type { SvelteComponent } from 'svelte'
 import { derived, readable, writable, get } from 'svelte/store'
 import 'svelte'
@@ -36,7 +36,7 @@ const defaultEffects: PowerupEffects = {
   score: 0,
   streak: true,
   shuffleCost: SHUFFLE_COST,
-  lifelineCost: LIFELINE_COST,
+  lifelineCost: SKIP_COST,
 }
 
 export const powerups = readable<Powerup[]>([
