@@ -28,6 +28,7 @@ const toggleMenuOpen = (): void => {
     position: fixed;
     top: 24px;
     right: 24px;
+    z-index: 2;
 
     .menu-button {
       background: var(--paper);

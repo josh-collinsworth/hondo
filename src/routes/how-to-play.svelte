@@ -1,4 +1,5 @@
 <script lang="ts">  
+import BonusDisplay from '$lib/components/game/BonusDisplay.svelte'
 import ExampleGuess from '$lib/components/game/examples/ExampleGuess.svelte'
 import ExamplePowerBarWide from '$lib/components/game/examples/ExamplePowerBarWide.svelte'
 import Arrow from '$lib/components/icon/Arrow.svelte'
@@ -18,7 +19,7 @@ import { SHUFFLE_COST, SKIP_COST } from '$lib/js/constants'
 
 <div class="directions">
   <div class="directions__container">
-    <MenuButton />
+    <MenuButton floating={true} />
 
     <h1>How to play</h1>
 
@@ -43,7 +44,7 @@ import { SHUFFLE_COST, SKIP_COST } from '$lib/js/constants'
     
     <h2>When you get a code word, play continues with a new&nbsp;one.</h2>
     
-    <p><em>However</em>, the five most recent guesses stay on the board as clues.</p>
+    <p><em>However</em>, the last five guesses stay on the board as clues.</p>
           
     <div class="example-diagram">
       <div>
@@ -78,34 +79,30 @@ import { SHUFFLE_COST, SKIP_COST } from '$lib/js/constants'
       <Arrow direction="down" />
       <ExampleGuess codeWord="right" guess="right" />
       <Arrow direction="down" />
-      <ExamplePowerBarWide remainingAttempts={10} score={1} />
+      <ExamplePowerBarWide remainingAttempts={10} />
     </div>
 
 
     <h2>Scoring</h2>
 
-    <p>You get a bonus point for every consecutive successful guess after the first.</p>
+    <p>Every correct guess scores one point.</p>
+    
+    <p>Consecutive correct guesses score bonus&nbsp;points.</p>
 
     <div class="example-diagram">
-      <div class="display-flex center-content position-relative width-max-content margin-auto">
+      <div class="display-flex center-content position-relative width-max-content margin-auto bonus-demo">
         <ExampleGuess codeWord="store" guess="store" />
-        <div class="example-score">
-          +1
-        </div>
+        <BonusDisplay bonusOverride={1} />
       </div>
       <Arrow direction="down" />
-      <div class="display-flex center-content position-relative width-max-content margin-auto">
+      <div class="display-flex center-content position-relative width-max-content margin-auto bonus-demo">
         <ExampleGuess codeWord="other" guess="other" />
-        <div class="example-score">
-          +2
-        </div>
+        <BonusDisplay bonusOverride={2} />
       </div>
       <Arrow direction="down" />
-      <div class="display-flex center-content position-relative width-max-content margin-auto">
+      <div class="display-flex center-content position-relative width-max-content margin-auto bonus-demo">
         <ExampleGuess codeWord="their" guess="their" />
-        <div class="example-score">
-          +3
-        </div>
+        <BonusDisplay bonusOverride={3} />
       </div>
     </div>
 
@@ -203,11 +200,6 @@ h2 {
   }
 }
 
-h3 {
-  margin-top: 3rem;
-  font-size: 1.3rem;
-}
-
 .directions {
   padding: 1rem 1rem 3rem;
   font-size: 1rem;
@@ -267,10 +259,6 @@ ol {
   padding: 2rem 1.5rem;
   border: 2px solid var(--lighterAccent);
   border-radius: 0.5rem;
-
-  + p {
-    margin-top: 2rem;
-  }
 }
 
 hr {
@@ -290,10 +278,8 @@ hr {
   color: var(--darkBlue);
 }
 
-.example-score {
-  font-size: 1.5rem;
-  margin-left: 1rem;
-  font-weight: var(--fontWeightSemiBold);
+.bonus-demo {
+  gap: 1rem;
 }
 
 .directions :global(.menu-button) {

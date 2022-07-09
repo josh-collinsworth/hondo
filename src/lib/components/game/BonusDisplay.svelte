@@ -1,8 +1,10 @@
-<script>
+<script lang="ts">
 import { SCORE_TICK_DURATION } from '$lib/js/constants'
 import { streak } from '$lib/state/game'
 import { fly } from 'svelte/transition'
 import { backIn, backOut } from 'svelte/easing'
+
+export let bonusOverride: number|null = null
 </script>
 
 
@@ -14,8 +16,8 @@ import { backIn, backOut } from 'svelte/easing'
         out:fly={{ y: -36, duration: SCORE_TICK_DURATION, opacity: 1, easing: backIn }}
         in:fly={{ y: 36, duration: SCORE_TICK_DURATION, opacity: 1, easing: backOut, delay: SCORE_TICK_DURATION }}
       >
-      {$streak}
-    </div>
+        {bonusOverride ? bonusOverride : $streak}
+      </div>
     {/key}
   </div>
 </div>
@@ -51,7 +53,7 @@ import { backIn, backOut } from 'svelte/easing'
     width: 1rem;
     background: var(--paper);
     line-height: 1rem;
-    left: -0.3rem;
+    left: -14%;
     top: calc(50% - 0.5rem);
     z-index: 200;
   }
