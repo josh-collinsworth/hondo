@@ -11,7 +11,7 @@ const dismissForever = (): void => {
 
 <h2>Welcome to Hondo!</h2>
 
-<p>Would you like a quick tutorial?</p>
+<p>Would you like to learn how to play?</p>
 
 
 <div class="button-bar">
@@ -21,7 +21,7 @@ const dismissForever = (): void => {
   <button on:click={dismissForever}>
     Never
   </button>
-  <a class="button confirm" href="/tutorial/1" on:click={closeModal}>
+  <a class="button confirm" href="/how-to-play" on:click={closeModal}>
     Sure!
   </a>
 </div>
