@@ -15,6 +15,7 @@ import { fly, fade } from 'svelte/transition'
 import { quintIn, quintOut } from 'svelte/easing'
 import { goto } from '$app/navigation'
 import { is_client } from 'svelte/internal';
+import PlayBlock from './icon/blocks/PlayBlock.svelte';
 
 export let currentPage: string
 
@@ -59,6 +60,14 @@ isMenuOpen.subscribe(async (isOpen) => {
   >
     <nav tabindex="-1" bind:this={navMenu}>
       <ul class="menu__links" aria-labelledby="menu-heading">
+        <li>
+          <a href="/" on:click={toggleMenuOpen}>
+            <span aria-hidden="true">
+              <PlayBlock />
+            </span>
+            Back to game
+          </a>
+        </li>
         <li>
           <a href="/how-to-play" on:click={toggleMenuOpen}>
             <span aria-hidden="true">

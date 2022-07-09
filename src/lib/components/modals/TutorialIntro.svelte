@@ -1,9 +1,15 @@
 <script lang="ts">
 import { saveToLocalStorage } from '$lib/js/helpers'
+import { hasViewedTutorial } from '$lib/state/global';
 import { closeModal } from '$lib/state/mutations'
 
 const dismissForever = (): void => {
   saveToLocalStorage('skipTutorial', true)
+  closeModal()
+}
+
+const dismissForThisSession = (): void => {
+  $hasViewedTutorial = true
   closeModal()
 }
 </script>
@@ -13,7 +19,6 @@ const dismissForever = (): void => {
 
 <p>Would you like to learn how to play?</p>
 
-
 <div class="button-bar">
   <button on:click={closeModal}>
     Not now
@@ -21,7 +26,7 @@ const dismissForever = (): void => {
   <button on:click={dismissForever}>
     Never
   </button>
-  <a class="button confirm" href="/how-to-play" on:click={closeModal}>
+  <a class="button confirm" href="/how-to-play" on:click={dismissForThisSession}>
     Sure!
   </a>
 </div>

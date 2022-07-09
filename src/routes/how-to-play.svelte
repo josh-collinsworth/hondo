@@ -175,8 +175,18 @@ import { SHUFFLE_COST, SKIP_COST } from '$lib/js/constants'
   
     <ul>
       <li><strong>Look at the keyboard</strong>. It shows which letters aren't currently on the board, which can be a big hint.</li>
+      <li>Try to keep as many different letters as possible on the board at all times (especially all the vowels).
+      </li>
       <li><strong>Use shuffles and skips strategically</strong>. They can get you out of a jam, and can also keep streaks alive for extra bonus points.</li>
-      <li>If you can, try to keep common letters on the board at all times, especially vowels.
+      <li><strong>Know when to use which ability:</strong>
+        <ul>
+          <li>
+            <strong>Shuffles</strong> work best to clear lots of similar guesses off the board and start fresh.
+          </li>
+          <li>
+            <strong>Skips</strong> help when you think it might take lots of guesses to get the current word. (For example: "_A_ES" could be several different words).
+          </li>
+        </ul>
       </li>
       <li><strong>Be patient</strong>; haste is costly. Getting a high score requires logic, strategy, and luck.</li>
     </ul>
