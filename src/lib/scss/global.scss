@@ -52,6 +52,7 @@ main {
   align-items: space-between;
   align-content: space-between;
   justify-content: center;
+  width: 100%;
 
   &.blurry {
     opacity: 0.3;
@@ -86,6 +87,7 @@ h1 {
 
 .transition {
   height: 100%;
+  width: 100%;
 }
 
 .container {
