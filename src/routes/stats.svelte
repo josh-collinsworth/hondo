@@ -1,6 +1,6 @@
 <script lang="ts">
 import { LONGEST_STREAK_STORAGE_KEY } from '$lib/js/constants'
-import { totalGamesPlayed, totalPointsScored, highScore, fastestHondo, totalGuessesUsed } from '$lib/state/getters'
+import { totalGamesPlayed, totalPointsScored, highScore, fastestHondo, totalGuessesUsed, totalBonusPointsScored } from '$lib/state/getters'
 import { gameHistory } from '$lib/state/game'
 import { loadFromLocalStorage, floatFormatter } from '$lib/js/helpers'
 import Loader from '$lib/components/game/Loader.svelte'
@@ -14,7 +14,7 @@ let longestStreak: number
 
 $: averageScore = floatFormatter.format($totalPointsScored / $totalGamesPlayed)
 $: averageGuesses = floatFormatter.format($totalGuessesUsed / $totalGamesPlayed)
- 
+$: bonusPointPercentage = floatFormatter.format(100 / $totalPointsScored * $totalBonusPointsScored)
 
 onMount(() => {
   const loadedLongestStreak = loadFromLocalStorage(LONGEST_STREAK_STORAGE_KEY)
@@ -50,7 +50,7 @@ onMount(() => {
 
 
 <div class="stats display-flex center-content">
-  <MenuButton />
+  <MenuButton floating={true} />
   <h1>Game stats</h1>
 
   {#if localIsLoading}
@@ -58,70 +58,82 @@ onMount(() => {
   {:else if $totalGamesPlayed}
     <ul class="no-bullets">
       <li>
-        <h2>Highest score</h2>
-        <p>{$highScore}</p>
+        <b>Highest score</b>
+        {$highScore}
       </li>
       <li>
-        <h2>Fastest Hondo</h2>
+        <b>Fastest Hondo</b>
           {#if $fastestHondo}
-        <p>{$fastestHondo} attempts</p>
+        {$fastestHondo} turns
         {:else}
-          <p>You haven't scored a Hondo yet. Keep&nbsp;trying!</p>
+          NA
         {/if}
       </li>
       <li>
-        <h2>Longest streak</h2>
-        <p>{longestStreak}</p>
+        <b>Longest streak</b>
+        {longestStreak}
       </li>
       <li>
-        <h2>Total points scored</h2>
-        <p>{$totalPointsScored}</p>
+        <b>Total points scored</b>
+        {floatFormatter.format($totalPointsScored)}
       </li>
       <li>
-        <h2>Average score</h2>
-        <p>{averageScore} in {averageGuesses} guesses</p>
+        <b>Bonus points scored</b>
+        {floatFormatter.format($totalBonusPointsScored)}
       </li>
       <li>
-        <h2>Median score</h2>
+        <b>Bonus point percentage</b>
+        {bonusPointPercentage}%
+      </li>
+      <li>
+        <b>Average score</b>
+        {averageScore} in {averageGuesses} turns
+      </li>
+      <li>
+        <b>Median score</b>
         {#if medianScore && medianGuesses}
-          <p>{medianScore} in {medianGuesses} guesses</p>
+          {medianScore} in {medianGuesses} turns
         {:else}
-          <p>Not enough data yet</p>
+          Not enough data yet
         {/if}
       </li>
     </ul>
   {:else}
-    <h2>You don't have any stats yet.</h2>
+    <b>You don't have any stats yet.</b>
 
-    <p>Finish at least one game of Hondo, then check back.</p>
+    Finish at least one game of Hondo, then check back.
   {/if}
 </div>
 
 
 <style lang="scss">
 .stats {
-  padding: 2rem;
+  padding: 24px;
 
   > * {
     width: 100%;
   }
 
   h1 {
+    text-align: left;
     margin-top: 0;
   }
 
-  h2 {
-    margin: 3rem auto 0;
-    font-size: 1rem;
-    border-bottom: 1px solid currentColor;
-    max-width: max-content;
-    text-align: center;
+  p {
+    margin: 0;
   }
 
-  :global(.menu-button) {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--lightAccent);
+    margin: 0;
+
+    b {
+      font-weight: var(--fontWeightSemiBold);
+    }
   }
 }
 </style>

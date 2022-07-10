@@ -16,7 +16,9 @@ export let bonusOverride: number|null = null
         out:fly={{ y: -36, duration: SCORE_TICK_DURATION, opacity: 1, easing: backIn }}
         in:fly={{ y: 36, duration: SCORE_TICK_DURATION, opacity: 1, easing: backOut, delay: SCORE_TICK_DURATION }}
       >
-        {bonusOverride ? bonusOverride : $streak}
+        <span class="plus">
+          +
+        </span>{bonusOverride ? bonusOverride : $streak}
       </div>
     {/key}
   </div>
@@ -25,15 +27,17 @@ export let bonusOverride: number|null = null
 
 <style lang="scss">
 .bonus {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   grid-template-columns: 100%;
-  grid-template-rows: 100%;
   align-items: center;
+  align-content: center;
   line-height: 1;
+  border: 0;
 
   .bonus-wrapper {
     width: 100%;
-    height: 100%;
+    height: 1.25em;
     overflow: hidden;
   }
 
@@ -44,18 +48,11 @@ export let bonusOverride: number|null = null
     text-align: center;
   }
 
-  &::after {
-    content: '+';
+  .plus {
+    display: block;
+    margin-left: -0.25em;
+    font-size: 0.875em;
     font-weight: var(--fontWeightSemiBold);
-    font-size: 0.875rem;
-    position: absolute;
-    height: 1rem;
-    width: 1rem;
-    background: var(--paper);
-    line-height: 1rem;
-    left: -14%;
-    top: calc(50% - 0.5rem);
-    z-index: 200;
   }
 }
 </style>

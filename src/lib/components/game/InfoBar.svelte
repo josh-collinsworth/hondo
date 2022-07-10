@@ -16,17 +16,17 @@ import BonusDisplay from './BonusDisplay.svelte';
   <Toast />
 
   <!-- First row -->
-  <!-- <span class="tiny">Shuffle</span>
+  <span class="tiny">Shuffle</span>
   <span class="tiny">Skip</span>
   <span class="tiny">Score</span>
   <span class="tiny">Bonus</span>
-  <span class="tiny">Menu</span> -->
+  <span class="tiny">Menu</span>
 
   <ShuffleButton />
   <SkipButton />
   <ScoreDisplay />
-  <!-- <PowerBar /> -->
   <BonusDisplay />
+  <!-- <PowerBar /> -->
   <MenuButton />
   <PowerBarWide />
 </div>
@@ -39,17 +39,17 @@ import BonusDisplay from './BonusDisplay.svelte';
   grid-template-columns: var(--buttonSize) var(--buttonSize) 1fr var(--buttonSize) var(--buttonSize);
   align-items: center;
   justify-items: center;
-  gap: 8px 16px;
+  gap: 8px 20px;
   margin-bottom: 1rem;
   position: relative;
   z-index: 5;
-  height: 5.2rem;
   height: 4rem;
+  height: 5.2rem;
 }
 
-// .tiny {
-//   font-size: 10px;
-//   text-transform: uppercase;
-//   line-height: 1;
-// }
+.tiny {
+  font-size: 10px;
+  text-transform: uppercase;
+  line-height: 1;
+}
 </style>

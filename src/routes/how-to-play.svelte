@@ -198,7 +198,7 @@ import { SHUFFLE_COST, SKIP_COST } from '$lib/js/constants'
 
 <style lang="scss">
 h1 {
-  margin-top: 0;
+  margin-top: 8px;
 }
 
 h2 {
@@ -290,11 +290,5 @@ hr {
 
 .bonus-demo {
   gap: 1rem;
-}
-
-.directions :global(.menu-button) {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
 }
 </style>

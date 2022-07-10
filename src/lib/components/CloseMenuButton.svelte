@@ -13,7 +13,5 @@ import { toggleMenuOpen } from '$lib/state/mutations'
 <style lang="scss">
 .info-button {
   padding: 0;
-  color: var(--ink);
-  border-color: currentColor;
 }
 </style>

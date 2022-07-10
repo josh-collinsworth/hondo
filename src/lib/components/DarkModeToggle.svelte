@@ -23,11 +23,10 @@ onMount(() => {
 .info-button {
   padding: 0;
   overflow: hidden;
-  border-color: var(--ink);
   align-items: flex-start;
 
   :global(svg) {
-    stroke: var(--ink);
+    stroke: currentColor;
     stroke-width: 0.65em;
   }
 

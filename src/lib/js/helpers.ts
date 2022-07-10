@@ -36,5 +36,5 @@ export const randomIntegerInRange = (min: number, max: number): number => {
 
 export const floatFormatter = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 0,
-  maximumFractionDigits: 2,
+  maximumFractionDigits: 1,
 });

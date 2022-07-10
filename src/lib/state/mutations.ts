@@ -13,6 +13,7 @@ import {
   pointsScoredForLastGuess,
   previousGuesses,
   gameHistory,
+  bonusPointsScored,
 } from './game'
 import { shownModal, toast, isMenuOpen } from './global'
 import { isDarkMode } from './user'
@@ -24,6 +25,8 @@ import {
   STARTING_GUESSES,
   SHUFFLE_COST,
   SKIP_COST,
+  GUESS_COST,
+  GUESS_BENEFIT,
 } from '../js/constants'
 
 import { isValidGuess, loadFromLocalStorage, saveToLocalStorage } from '../js/helpers'
@@ -31,14 +34,12 @@ import { codeWords } from '../js/codeWords'
 
 import { dev } from '$app/env'
 import { goto } from '$app/navigation'
-import { SvelteComponent, tick } from 'svelte'
+import { tick } from 'svelte'
 import { get } from 'svelte/store'
-import { adjustedGuessBenefit, adjustedGuessCost, adjustedScorePerCodeWord, isStreakAllowed } from './powerups'
-
 
 export const startNewGame = (): void => {
   saveToLocalStorage(GAME_DATA_STORAGE_KEY, null)
-  setDefaultGameState()
+  setDefaultGameState(dev)
   goto('/')
 }
 
@@ -120,7 +121,7 @@ export const setNewScores = (): void => {
   if (get(currentGuess) === get(codeWord)) {
     handleCorrectGuess()
   } else {
-    incrementRemainingAttempts(-get(adjustedGuessCost))
+    incrementRemainingAttempts(-GUESS_COST)
     setStreak(0)
   }
   // Update the count of total used guesses
@@ -130,7 +131,7 @@ export const setNewScores = (): void => {
   currentGuess.set('')
 
   // Alert the player if this is their last guess
-  if (get(remainingAttempts) && get(remainingAttempts) <= get(adjustedGuessCost)) {
+  if (get(remainingAttempts) && get(remainingAttempts) <= GUESS_COST) {
     setToast({
       message: 'Last guess!',
       type: 'warning',
@@ -149,7 +150,6 @@ export const handleEndgame = (): void => {
   localStorage.removeItem(GAME_DATA_STORAGE_KEY)
 }
 
-
 export const closeModal = (): void => {
   shownModal.set(null)
 }
@@ -161,7 +161,7 @@ export const registerHighScore = (): void => {
   previousHighScores = previousHighScores.filter(item => typeof item !== 'number')
 
   const dataToSave = [
-    ...previousHighScores, [get(runningScore), get(usedAttempts)]
+    ...previousHighScores, [get(runningScore), get(usedAttempts), get(bonusPointsScored)]
   ]
 
   saveToLocalStorage(GAME_HISTORY_STORAGE_KEY, dataToSave)
@@ -169,11 +169,12 @@ export const registerHighScore = (): void => {
 }
 
 export const handleCorrectGuess = (): void => {
-  const streakPoints = get(isStreakAllowed) ? get(streak) : 0
-  const tally = get(adjustedScorePerCodeWord) + streakPoints
+  const streakPoints = get(streak)
+  const tally = 1 + streakPoints
   incrementRunningScore(tally)
   pointsScoredForLastGuess.set(tally)
-  incrementRemainingAttempts(get(adjustedGuessBenefit))
+  bonusPointsScored.set(streakPoints)
+  incrementRemainingAttempts(GUESS_BENEFIT)
   incrementStreak(1)
   discoveredCodeWord.set(get(codeWord))
   saveGameData()
@@ -195,6 +196,7 @@ export const saveGameData = (): void => {
     maxRemainingAttempts: get(maxRemainingAttempts),
     usedAttempts: get(usedAttempts),
     streak: get(streak),
+    bonusPointsScored: get(bonusPointsScored),
   })
   const longestStreak = loadFromLocalStorage(LONGEST_STREAK_STORAGE_KEY) || 0
   if (get(pointsScoredForLastGuess) > longestStreak) {

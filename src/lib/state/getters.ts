@@ -48,3 +48,8 @@ export const fastestHondo = derived(
     return null
   }
 )
+
+export const totalBonusPointsScored = derived(
+  gameHistory,
+  $gameHistory => $gameHistory.reduce((total, current) => total + current[2] || 0, 0)
+)

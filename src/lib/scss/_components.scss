@@ -9,7 +9,12 @@
   align-content: space-between;
   align-items: space-between;
   justify-content: space-between;
-  font-size: 8vmin;
+  font-size: 7vmin;
+
+  @media (min-height: 46rem) {
+    font-size: 8vmin;
+    padding-bottom: 1rem;
+  }
 
   @media (min-width: 32rem) {
     font-size: 2.4rem;
@@ -42,7 +47,7 @@
 .current-guess {
   background: transparent;
 
-  @media (min-height: 42rem) {
+  @media (min-height: 46rem) {
     margin-bottom: 1rem;
   }
 }
@@ -165,7 +170,6 @@
 }
 
 .power-bar-container {
-  font-size: 4vw;
   width: 100%;
   display: flex;
   align-items: center;
@@ -294,28 +298,11 @@
 
   line-height: 1;
   padding: 0;
-  border: 2px solid var(--darkBlue);
   transition: var(--transition);
-
-  .arrow-top {
-    fill: var(--darkBlue);
-
-    .dark & {
-      fill: var(--orange);
-    }
-  }
-  
-  .arrow-bottom {
-    fill: var(--secondary);
-
-    .dark & {
-      fill: var(--lightBlue);
-    }
-  }
 }
 
 .skip-button {
-  padding: 6px;
+  padding: 8px;
 }
 
 .score {

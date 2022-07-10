@@ -15,9 +15,9 @@ import Modal from '$lib/components/modals/Modal.svelte'
 import Menu from '$lib/components/Menu.svelte'
 import Logo from '$lib/components/icon/Logo.svelte'
 import { fly } from 'svelte/transition'
-import { goto } from '$app/navigation';
 import { onMount } from 'svelte';
-import { retrieveGameHistory } from '$lib/state/getters';
+import { retrieveGameHistory } from '$lib/state/getters'
+import GameOverModal from '$lib/components/modals/GameOverModal.svelte'
 
 export let path: string
 
@@ -30,7 +30,7 @@ $: if ($gameIsOver) {
     setToast({ message: 'Too bad!', type: 'warning' })
   )
   setTimeout(() => {
-    goto('/game-over')
+    $shownModal = GameOverModal
   }, 1500)
 }
 

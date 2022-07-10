@@ -35,7 +35,7 @@ $: if ($toast.message) {
   z-index: 6;
   color: var(--white);
   border-radius: 0.5rem;
-  top: calc(50vh - 1rem);
+  top: 5.75rem;
   left: 0;
   width: 100%;
 

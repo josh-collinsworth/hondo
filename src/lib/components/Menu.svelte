@@ -149,7 +149,7 @@ isMenuOpen.subscribe(async (isOpen) => {
     width: calc(100% - 48px);
 
     .button-bar__logo {
-      width: 12rem;
+      width: 10rem;
     }
 
     .button-bar__buttons {

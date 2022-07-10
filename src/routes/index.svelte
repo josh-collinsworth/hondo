@@ -10,6 +10,7 @@ import {
   usedAttempts,
   streak,
   previousGuesses,
+bonusPointsScored,
 } from '$lib/state/game'
 import { shownModal, isLoading, hasViewedTutorial } from '$lib/state/global'
 import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES, POWERUPS_STORAGE_KEY } from '$lib/js/constants';
@@ -22,6 +23,7 @@ import InfoBar from '$lib/components/game/InfoBar.svelte'
 import Loader from '$lib/components/game/Loader.svelte'
 import AccessibleStatus from '$lib/components/game/AccessibleStatus.svelte'
 import TutorialIntro from '$lib/components/modals/TutorialIntro.svelte'
+import PWAPrompt from '$lib/components/PWAPrompt.svelte'
 
 import { dev } from '$app/env'
 import { onMount } from 'svelte'
@@ -56,6 +58,7 @@ onMount(() => {
       $gameIsOver = gameData.gameIsOver
       $usedAttempts = gameData.usedAttempts
       $streak = loadedStreak
+      $bonusPointsScored = gameData.bonusPointsScored || 0
     } else {
       setDefaultGameState(is_client && dev)
     }
@@ -76,6 +79,7 @@ onMount(() => {
 
 
 <div class="game-container">
+  <PWAPrompt />
   <InfoBar />
   {#if $isLoading}
     <Loader />
