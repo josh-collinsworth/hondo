@@ -1,0 +1,1 @@
+<svg width="100%" height="100%" viewBox="0 0 30 30" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-miterlimit:5;"><path d="M21.985,15l-11.995,5.987l-0,-11.974l11.995,5.987Z" style="fill:none;stroke:currentColor;stroke-width:2px;"/></svg>

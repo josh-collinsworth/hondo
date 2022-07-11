@@ -1,12 +1,11 @@
 <script lang="ts">
-import { currentGuess, codeWord, discoveredCodeWord, currentGuesses, gameIsOver } from '$lib/state/game'
+import { currentGuess, codeWord, currentGuesses, gameIsOver } from '$lib/state/game'
 import { handleNewGuess } from '$lib/state/mutations'
 import { isSingleLetter } from '$lib/js/helpers'
 import { browser } from '$app/env'
 
-import Arrow from '../icon/Arrow.svelte'
-import Checkmark from '../icon/Checkmark.svelte'
-import SkipIcon from '../icon/SkipIcon.svelte';
+import SkipIcon from '../icon/SkipIcon.svelte'
+import PlayIcon from '../icon/PlayIcon.svelte'
 
 const keys = [
   ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -72,14 +71,12 @@ const handlePress = async (key: string): Promise<void> => {
             {key}
           {:else if isDeleteKey(key)}
             <span aria-hidden="true">
-              <SkipIcon />
+              <SkipIcon flipped={true} />
             </span>
             <span class="sr">Delete</span>
           {:else if isEnterKey(key)}
             <span aria-hidden="true">
-              <svg viewBox="0 0 30 30">
-                <path d="M21.985,15l-11.995,5.987l-0,-11.974l11.995,5.987Z" style="fill:none;stroke:currentColor;stroke-width:2px;"/>
-              </svg>
+              <PlayIcon />
             </span>
             <span class="sr">Enter</span>
           {/if}
@@ -129,7 +126,7 @@ const handlePress = async (key: string): Promise<void> => {
     margin: 0;
     padding: 0;
     touch-action: manipulation;
-    transition: background .6s cubic-bezier(0.645, 0.045, 0.355, 1), color .6s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: background .3s cubic-bezier(0.645, 0.045, 0.355, 1), color .6s cubic-bezier(0.645, 0.045, 0.355, 1);
     color: var(--ink);
     line-height: 1;
 
@@ -154,11 +151,7 @@ const handlePress = async (key: string): Promise<void> => {
     }
 
     &[data-key="-"] :global(svg) {
-      transform: rotate(180deg);
       max-width: 1.25rem;
-    }
-    
-    &[data-key="-"]:disabled :global(svg) {
       fill: currentColor;
     }
     

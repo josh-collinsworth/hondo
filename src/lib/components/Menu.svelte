@@ -6,7 +6,6 @@ import DarkModeToggle from './DarkModeToggle.svelte'
 import CloseMenuButton from './CloseMenuButton.svelte'
 import QuestionBlock from './icon/blocks/QuestionBlock.svelte'
 import StatsBlock from './icon/blocks/StatsBlock.svelte'
-import BackBlock from './icon/blocks/BackBlock.svelte'
 import HBlock from './icon/blocks/HBlock.svelte'
 import Logo from './icon/Logo.svelte'
 
@@ -16,9 +15,11 @@ import { quintIn, quintOut } from 'svelte/easing'
 import { goto } from '$app/navigation'
 import { is_client } from 'svelte/internal';
 import PlayBlock from './icon/blocks/PlayBlock.svelte';
+import BackBlock from './icon/blocks/BackBlock.svelte'
 
 export let currentPage: string
 
+let iconColor = 'var(--tertiary)'
 let navMenu: HTMLElement
 
 const handleReturnToGame = (): void => {
@@ -49,63 +50,64 @@ isMenuOpen.subscribe(async (isOpen) => {
 {#if $isMenuOpen}
   <div
     class="menu-background"
-    on:click={toggleMenuOpen}
+    on:click|self={toggleMenuOpen}
     in:fade={{ duration: 240, easing: quintOut }}
     out:fade={{ duration: 240, easing: quintIn }}
-  />
-  <aside
-    class="menu"
-    class:open={$isMenuOpen}
-    out:fly={{ x: 80, duration: 200, easing: quintIn }}
   >
-    <nav tabindex="-1" bind:this={navMenu}>
-      <ul class="menu__links" aria-labelledby="menu-heading">
-        <li>
-          <a href="/" on:click={toggleMenuOpen}>
-            <span aria-hidden="true">
-              <PlayBlock />
-            </span>
-            Back to game
+    <aside
+      class="menu"
+      class:open={$isMenuOpen}
+      out:fly={{ x: 80, duration: 200, easing: quintIn }}
+    >
+      <nav tabindex="-1" bind:this={navMenu}>
+        <ul class="menu__links" aria-labelledby="menu-heading">
+          <li>
+            <a href="/" on:click={toggleMenuOpen}>
+              <span aria-hidden="true">
+                <PlayBlock {iconColor} />
+              </span>
+              Back to game
+            </a>
+          </li>
+          <li>
+            <a href="/how-to-play" on:click={toggleMenuOpen}>
+              <span aria-hidden="true">
+                <HBlock {iconColor} />
+              </span>
+              How to play
+            </a>
+          </li>
+          <li>
+            <a href="/stats" on:click={toggleMenuOpen}>
+              <span aria-hidden="true">
+                <StatsBlock {iconColor} />
+              </span>
+              Stats
+            </a>
+          </li>
+          <li>
+            <a href="/faq" on:click={toggleMenuOpen}>
+              <span aria-hidden="true">
+                <QuestionBlock {iconColor} />
+              </span>
+              FAQ
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="display-flex button-bar menu__buttons">
+        <div class="button-bar__logo display-flex center-content">
+          <a href="/" on:click|preventDefault={handleReturnToGame} class="display-flex center-content">
+            <Logo />
           </a>
-        </li>
-        <li>
-          <a href="/how-to-play" on:click={toggleMenuOpen}>
-            <span aria-hidden="true">
-              <HBlock />
-            </span>
-            How to play
-          </a>
-        </li>
-        <li>
-          <a href="/stats" on:click={toggleMenuOpen}>
-            <span aria-hidden="true">
-              <StatsBlock />
-            </span>
-            Stats
-          </a>
-        </li>
-        <li>
-          <a href="/faq" on:click={toggleMenuOpen}>
-            <span aria-hidden="true">
-              <QuestionBlock />
-            </span>
-            FAQ
-          </a>
-        </li>
-      </ul>
-    </nav>
-    <div class="display-flex button-bar menu__buttons">
-      <div class="button-bar__logo display-flex center-content">
-        <a href="/" on:click|preventDefault={handleReturnToGame} class="display-flex center-content">
-          <Logo />
-        </a>
+        </div>
+        <div class="button-bar__buttons display-flex center-content">
+          <DarkModeToggle />
+          <CloseMenuButton />
+        </div>
       </div>
-      <div class="button-bar__buttons display-flex center-content">
-        <DarkModeToggle />
-        <CloseMenuButton />
-      </div>
-    </div>
-  </aside>
+    </aside>
+  </div>
 {/if}
 
 
@@ -123,9 +125,7 @@ isMenuOpen.subscribe(async (isOpen) => {
 }
 
 .menu {
-  position: fixed;
-  top: 0;
-  right: 0;
+  position: relative;
   width: 100%;
   max-width: 28rem;
   min-height: 100vh;
@@ -135,6 +135,7 @@ isMenuOpen.subscribe(async (isOpen) => {
   background: transparent;
   color: var(--ink);
   z-index: 10;
+  margin: 0 auto;
 
   :global(*:focus-within) {
     outline-color: var(--lightBlue);
@@ -158,7 +159,7 @@ isMenuOpen.subscribe(async (isOpen) => {
   }
 
   .menu__links {
-    margin-top: 6rem;
+    margin-top: 8rem;
     padding-left: 0;
     list-style-type: none;
 

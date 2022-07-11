@@ -76,8 +76,16 @@ onMount(() => {
         {$totalShufflesUsed}
       </li>
       <li>
+        <b>Avg. shuffles per game</b>
+        {floatFormatter.format($totalShufflesUsed / $totalGamesPlayed)}
+      </li>
+      <li>
         <b>Skips used</b>
         {$totalSkipsUsed}
+      </li>
+      <li>
+        <b>Avg. skips per game</b>
+        {floatFormatter.format($totalSkipsUsed / $totalGamesPlayed)}
       </li>
       <li>
         <b>Total Hondos</b>
@@ -118,7 +126,7 @@ onMount(() => {
 
   <div class="button-bar">
     <button on:click={clearData} class="warning">
-      Erase all my game data
+      Erase all game data
     </button>
     
     <a href="/" class="button">Back to game</a>
@@ -130,7 +138,7 @@ onMount(() => {
 .stats {
   padding: 24px;
   width: 100%;
-  max-width: 36rem;
+  max-width: 30rem;
   margin: 0 auto;
   text-align: left;
 
