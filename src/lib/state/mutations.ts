@@ -260,4 +260,5 @@ export const setDefaultGameState = (isDev: boolean): void => {
   maxRemainingAttempts.set(STARTING_GUESSES)
   streak.set(0)
   pointsScoredForLastGuess.set(0)
+  bonusPointsScored.set(0)
 }
