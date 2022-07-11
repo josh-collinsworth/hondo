@@ -25,7 +25,7 @@ $: if ($discoveredCodeWord) {
       </h2>
       <p>
         {#if $pointsScoredForLastGuess > 1 && $isStreakAllowed}
-          <strong>Streak bonus!</strong>
+          <strong>Streak bonus</strong>
         {/if}
         +{$pointsScoredForLastGuess}
       </p>
@@ -77,7 +77,7 @@ $: if ($discoveredCodeWord) {
   h2 {
     font-size: 2.6rem;
     text-transform: uppercase;
-    font-weight: var(--fontWeightBold);
+    font-weight: var(--fontWeightNormal);
     width: 100%;
     text-align: center;
     margin: 0;
@@ -85,11 +85,16 @@ $: if ($discoveredCodeWord) {
   }
 
   p {
-    font-size: 1.5rem;
+    font-size: 0.875rem;
     margin: 1rem 0 0;
     width: 100%;
     text-align: center;
     animation: slide_left 1.9s cubic-bezier(0.23, 1, 0.320, 1) forwards;
+
+    strong {
+      font-weight: var(--fontWeightSemiBold);
+      text-transform: uppercase;
+    }
   }
 
   @keyframes burst_right {
