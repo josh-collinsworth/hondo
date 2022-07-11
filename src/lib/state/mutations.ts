@@ -173,7 +173,7 @@ export const handleCorrectGuess = (): void => {
   const tally = 1 + streakPoints
   incrementRunningScore(tally)
   pointsScoredForLastGuess.set(tally)
-  bonusPointsScored.set(streakPoints)
+  bonusPointsScored.set(get(bonusPointsScored) + streakPoints)
   incrementRemainingAttempts(GUESS_BENEFIT)
   incrementStreak(1)
   discoveredCodeWord.set(get(codeWord))
