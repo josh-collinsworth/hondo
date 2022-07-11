@@ -126,7 +126,7 @@ const handlePress = async (key: string): Promise<void> => {
     margin: 0;
     padding: 0;
     touch-action: manipulation;
-    transition: background .3s cubic-bezier(0.645, 0.045, 0.355, 1), color .6s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: background .6s cubic-bezier(0.645, 0.045, 0.355, 1), color .6s cubic-bezier(0.645, 0.045, 0.355, 1);
     color: var(--ink);
     line-height: 1;
 
@@ -140,6 +140,7 @@ const handlePress = async (key: string): Promise<void> => {
       font-size: 0.9rem;
       padding: 0 0.5ch;
       color: var(--ink);
+      transition: color .15s;
 
       &:disabled {
         color: var(--lightAccent);
@@ -151,13 +152,12 @@ const handlePress = async (key: string): Promise<void> => {
     }
 
     &[data-key="-"] :global(svg) {
-      max-width: 1.25rem;
+      width: 1.25rem;
       fill: currentColor;
     }
     
     &[data-key="+"] :global(svg) {
       width: 1.75rem;
-      margin: 0 auto;
     }
     
     + button {
