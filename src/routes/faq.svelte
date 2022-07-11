@@ -64,6 +64,11 @@ import MenuButton from '$lib/components/MenuButton.svelte'
     <p>While I recognize some games might require some mechanism like this, I don't want that, for myself, or for my players. There's no reason all players can't be included by default in the case of a game like Hondo. Therefore, "exact" letters are always underlined in Hondo, so that even if a player can't distinguish between the colors at all, they can always tell which type of mark is which.</p>
 
 
+    <h2>You know it should be "100 words or FEWER," right?</h2>
+
+    <p>Yes. "Less" sounds better.</p>
+
+
     <h2>So…my data?</h2>
 
     <p>Stored only in your browser's local storage. Never sent anywhere. Not accessible to anyone else. Contains zero information about anything but the game itself.</p>
