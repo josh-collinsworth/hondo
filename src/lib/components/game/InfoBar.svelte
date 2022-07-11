@@ -39,12 +39,20 @@ import BonusDisplay from './BonusDisplay.svelte';
   grid-template-columns: var(--buttonSize) var(--buttonSize) 1fr var(--buttonSize) var(--buttonSize);
   align-items: center;
   justify-items: center;
-  gap: 8px 20px;
+  gap: 8px 8px;
   margin-bottom: 1rem;
   position: relative;
   z-index: 5;
   height: 4rem;
   height: 5.2rem;
+
+  @media (min-width: 22rem) {
+    gap: 8px 16px;
+  }
+
+  @media (min-width: 24rem) {
+    gap: 8px 24px;
+  }
 }
 
 .tiny {

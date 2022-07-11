@@ -5,6 +5,9 @@ import { derived } from 'svelte/store'
 
 import type { PlayedGame } from '$lib/js/types'
 
+
+// See types.ts for an explanation of how game history data is stored and retrieved.
+
 export const retrieveGameHistory = (): PlayedGame[] => {
   return loadFromLocalStorage(GAME_HISTORY_STORAGE_KEY)
 }
@@ -39,6 +42,11 @@ export const totalHondos = derived(
   $hondos => $hondos.length
 )
 
+export const perfectHondos = derived(
+  hondos,
+  $hondos => $hondos.filter(game => game[1] === 14).length
+)
+
 export const fastestHondo = derived(
   hondos,
   $hondos => {
@@ -52,4 +60,14 @@ export const fastestHondo = derived(
 export const totalBonusPointsScored = derived(
   gameHistory,
   $gameHistory => $gameHistory.reduce((total, current) => total + current[2] || 0, 0)
+)
+
+export const totalShufflesUsed = derived(
+  gameHistory,
+  $gameHistory => $gameHistory.reduce((total, current) => total + current[3] || 0, 0)
+)
+
+export const totalSkipsUsed = derived(
+  gameHistory,
+  $gameHistory => $gameHistory.reduce((total, current) => total + current[4] || 0, 0)
 )

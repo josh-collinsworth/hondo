@@ -1,7 +1,7 @@
 <script lang="ts">
 import { runningScore, codeWord, usedAttempts, bonusPointsScored } from '$lib/state/game'
 import { shownModal } from '$lib/state/global'
-import { startNewGame } from '$lib/state/mutations'
+import { closeModal, startNewGame } from '$lib/state/mutations'
 
 const handleStartNewGame = (): void => {
   startNewGame()
@@ -25,6 +25,9 @@ const handleStartNewGame = (): void => {
   </ul>
 
   <div class="button-bar">
+    <a href="/stats" class="button" on:click={closeModal}>
+      Stats
+    </a>
     <button on:click={handleStartNewGame} class="button confirm">
       Play again!
     </button>

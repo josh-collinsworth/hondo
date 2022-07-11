@@ -100,7 +100,7 @@ h1 {
 a {
   color: var(--darkBlue);
 
-  .dark-mode & {
+  .dark & {
     color: var(--lightBlue);
   }
 }

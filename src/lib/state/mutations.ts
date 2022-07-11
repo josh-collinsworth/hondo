@@ -14,6 +14,8 @@ import {
   previousGuesses,
   gameHistory,
   bonusPointsScored,
+  shufflesUsed,
+  skipsUsed,
 } from './game'
 import { shownModal, toast, isMenuOpen } from './global'
 import { isDarkMode } from './user'
@@ -161,7 +163,7 @@ export const registerHighScore = (): void => {
   previousHighScores = previousHighScores.filter(item => typeof item !== 'number')
 
   const dataToSave = [
-    ...previousHighScores, [get(runningScore), get(usedAttempts), get(bonusPointsScored)]
+    ...previousHighScores, [get(runningScore), get(usedAttempts), get(bonusPointsScored), get(shufflesUsed), get(skipsUsed)]
   ]
 
   saveToLocalStorage(GAME_HISTORY_STORAGE_KEY, dataToSave)
@@ -197,6 +199,8 @@ export const saveGameData = (): void => {
     usedAttempts: get(usedAttempts),
     streak: get(streak),
     bonusPointsScored: get(bonusPointsScored),
+    shufflesUsed: get(shufflesUsed),
+    skipsUsed: get(skipsUsed),
   })
   const longestStreak = loadFromLocalStorage(LONGEST_STREAK_STORAGE_KEY) || 0
   if (get(pointsScoredForLastGuess) > longestStreak) {
@@ -224,12 +228,14 @@ export const shuffleGuesses = (): void => {
   previousGuesses.set(get(currentGuesses))
   currentGuesses.set(newGuesses)
   remainingAttempts.set(get(remainingAttempts) - SHUFFLE_COST)
+  shufflesUsed.set(get(shufflesUsed) + 1)
   saveGameData()
 }
 
 export const skipCodeWord = (): void => {
   setNewRandomCodeWord()
   remainingAttempts.set(get(remainingAttempts) - SKIP_COST)
+  skipsUsed.set(get(skipsUsed) + 1)
   saveGameData()
 }
 
@@ -261,4 +267,6 @@ export const setDefaultGameState = (isDev: boolean): void => {
   streak.set(0)
   pointsScoredForLastGuess.set(0)
   bonusPointsScored.set(0)
+  shufflesUsed.set(0)
+  skipsUsed.set(0)
 }

@@ -11,6 +11,8 @@ import {
   streak,
   previousGuesses,
 bonusPointsScored,
+shufflesUsed,
+skipsUsed,
 } from '$lib/state/game'
 import { shownModal, isLoading, hasViewedTutorial } from '$lib/state/global'
 import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES, POWERUPS_STORAGE_KEY } from '$lib/js/constants';
@@ -59,6 +61,8 @@ onMount(() => {
       $usedAttempts = gameData.usedAttempts
       $streak = loadedStreak
       $bonusPointsScored = gameData.bonusPointsScored || 0
+      $shufflesUsed = gameData.shufflesUsed || 0
+      $skipsUsed = gameData.skipsUsed || 0
     } else {
       setDefaultGameState(is_client && dev)
     }

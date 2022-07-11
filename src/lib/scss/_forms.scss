@@ -35,6 +35,11 @@ button,
     background: var(--secondary);
     border-color: var(--secondary);
   }
+
+  &.warning {
+    background: var(--red);
+    border-color: var(--red);
+  }
 }
 
 fieldset {

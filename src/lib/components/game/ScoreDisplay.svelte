@@ -14,7 +14,6 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
   role="status"
   aria-live="polite"
   aria-label={`Score: ` + $runningScore}
-  style="overflow: {$runningScore < 100 ? 'hidden' : 'visible'};"
 >
   <div class="score-container" aria-hidden="true">
     {#each scoreDigits as digit, i}

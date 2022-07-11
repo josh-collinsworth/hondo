@@ -48,4 +48,11 @@
 .no-bullets {
   list-style-type: none;
   padding-left: 0;
+
+  li {
+    list-style-type: none;
+    &::marker {
+      content: none;
+    }
+  }
 }

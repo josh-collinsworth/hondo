@@ -4,9 +4,11 @@ import { cubicOut } from 'svelte/easing'
 import { fly } from 'svelte/transition'
 
 const defaultTransition = { y: 16, easing: cubicOut, duration: 300 }
+let toastTimeout: any // TODO: gotta be a better type here but I'm not sure what.
 
 $: if ($toast.message) {
-  setTimeout(() => {
+  clearTimeout(toastTimeout)
+  toastTimeout = setTimeout(() => {
     $toast = { ...$toast, message: '' }
   }, 3000)
 }

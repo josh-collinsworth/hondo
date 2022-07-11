@@ -11,5 +11,7 @@ export type ToastMessage = {
  * [0]: Points scored 
  * [1]: Guesses used
  * [2]: Bonus points scored
+ * [3]: Shuffles used
+ * [4]: Skips used
  */
-export type PlayedGame = [number, number, number]
+export type PlayedGame = [number, number, number, number, number]

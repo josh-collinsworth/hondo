@@ -1,48 +1,29 @@
 <script lang="ts">
-import { LONGEST_STREAK_STORAGE_KEY } from '$lib/js/constants'
-import { totalGamesPlayed, totalPointsScored, highScore, fastestHondo, totalGuessesUsed, totalBonusPointsScored } from '$lib/state/getters'
-import { gameHistory } from '$lib/state/game'
+import { GAME_HISTORY_STORAGE_KEY, LONGEST_STREAK_STORAGE_KEY } from '$lib/js/constants'
+import { totalGamesPlayed, totalPointsScored, highScore, fastestHondo, totalGuessesUsed, totalBonusPointsScored, totalHondos, totalShufflesUsed, totalSkipsUsed, perfectHondos } from '$lib/state/getters'
 import { loadFromLocalStorage, floatFormatter } from '$lib/js/helpers'
 import Loader from '$lib/components/game/Loader.svelte'
 import MenuButton from '$lib/components/MenuButton.svelte'
 import { onMount } from 'svelte'
 
 let localIsLoading = true
-let medianScore: number
-let medianGuesses: number
 let longestStreak: number
 
 $: averageScore = floatFormatter.format($totalPointsScored / $totalGamesPlayed)
 $: averageGuesses = floatFormatter.format($totalGuessesUsed / $totalGamesPlayed)
 $: bonusPointPercentage = floatFormatter.format(100 / $totalPointsScored * $totalBonusPointsScored)
 
+const clearData = (): void => {
+  const confirmation = confirm(`This will permanently delete all your Hondo game history.\n\nAre you sure?`)
+
+  if (!confirmation) return
+  localStorage.removeItem(GAME_HISTORY_STORAGE_KEY)
+  window.location.reload()
+}
+
 onMount(() => {
   const loadedLongestStreak = loadFromLocalStorage(LONGEST_STREAK_STORAGE_KEY)
   longestStreak = loadedLongestStreak || 0
-
-  let medianScoreTally = $gameHistory.map(score => score[0]).sort((a, b) => a - b)
-  let medianGuessesTally = $gameHistory.map(score => score[1]).sort((a, b) => a - b)
-  
-  while (medianScoreTally.length > 1) {
-    if (medianScoreTally.length === 2) {
-      medianScoreTally.pop()
-    }
-    else {
-      medianScoreTally.pop()
-      medianScoreTally.shift()
-    }
-  }
-  while (medianGuessesTally.length > 1) {
-    if (medianGuessesTally.length === 2) {
-      medianGuessesTally.pop()
-    }
-    else {
-      medianGuessesTally.pop()
-      medianGuessesTally.shift()
-    }
-  }
-  medianScore = medianScoreTally[0]
-  medianGuesses= medianGuessesTally[0]
 
   localIsLoading = false
 })
@@ -58,24 +39,20 @@ onMount(() => {
   {:else if $totalGamesPlayed}
     <ul class="no-bullets">
       <li>
+        <b>Games played</b>
+        {$totalGamesPlayed}
+      </li>
+      <li>
         <b>Highest score</b>
         {$highScore}
       </li>
       <li>
-        <b>Fastest Hondo</b>
-          {#if $fastestHondo}
-        {$fastestHondo} turns
-        {:else}
-          NA
-        {/if}
+        <b>Total points scored</b>
+        {floatFormatter.format($totalPointsScored)}
       </li>
       <li>
         <b>Longest streak</b>
         {longestStreak}
-      </li>
-      <li>
-        <b>Total points scored</b>
-        {floatFormatter.format($totalPointsScored)}
       </li>
       <li>
         <b>Bonus points scored</b>
@@ -87,15 +64,47 @@ onMount(() => {
       </li>
       <li>
         <b>Average score</b>
-        {averageScore} in {averageGuesses} turns
+        {averageScore}
       </li>
       <li>
-        <b>Median score</b>
-        {#if medianScore && medianGuesses}
-          {medianScore} in {medianGuesses} turns
+        <b>Average game length</b>
+        {averageGuesses} turns
+      </li>
+      <li>
+        <b>Shuffles used</b>
+        {$totalShufflesUsed}
+      </li>
+      <li>
+        <b>Skips used</b>
+        {$totalSkipsUsed}
+      </li>
+      <li>
+        <b>Total Hondos</b>
+        {#if $totalHondos}
+          {$totalHondos}
         {:else}
-          Not enough data yet
+          NA
         {/if}
+      </li>
+      <li>
+        <b>Fastest Hondo</b>
+        {#if $fastestHondo}
+          {$fastestHondo} turns
+        {:else}
+          NA
+        {/if}
+      </li>
+      <li>
+        <b>Hondo percentage</b>
+        {#if $totalHondos}
+        {floatFormatter.format(100 / $totalGamesPlayed * $totalHondos)}%
+        {:else}
+        NA
+        {/if}
+      </li>
+      <li>
+        <b>Perfect games</b>
+        {$perfectHondos || 0}
       </li>
     </ul>
   {:else}
@@ -103,24 +112,34 @@ onMount(() => {
 
     Finish at least one game of Hondo, then check back.
   {/if}
+
+  <div class="button-bar">
+    <button on:click={clearData} class="warning">
+      Erase all my game data
+    </button>
+    
+    <a href="/" class="button">Back to game</a>
+  </div>
 </div>
 
 
 <style lang="scss">
 .stats {
   padding: 24px;
-
-  > * {
-    width: 100%;
-  }
+  width: 100%;
+  max-width: 36rem;
+  margin: 0 auto;
 
   h1 {
     text-align: left;
     margin-top: 0;
+    font-weight: var(--fontWeightNormal);
+    text-transform: uppercase;
   }
 
-  p {
-    margin: 0;
+  h1,
+  ul {
+    width: 100%;
   }
 
   li {
@@ -130,10 +149,19 @@ onMount(() => {
     padding: 1rem 0;
     border-bottom: 1px solid var(--lightAccent);
     margin: 0;
+    font-weight: var(--fontWeightNormal);
 
     b {
       font-weight: var(--fontWeightSemiBold);
     }
+  }
+
+  .button-bar {
+    margin-top: 4rem;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: space-between;
+    width: 100%;
   }
 }
 </style>

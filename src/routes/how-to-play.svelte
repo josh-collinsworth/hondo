@@ -41,10 +41,14 @@ import { SHUFFLE_COST, SKIP_COST } from '$lib/js/constants'
       The code word ends with <strong>T</strong>.
     </p>
 
-    
+    <br />
+
+    <p><i>(Uncolored letters in are not in the code&nbsp;word.)</i></p>
+
+
     <h2>When you get a code word, play continues with a new&nbsp;one.</h2>
     
-    <p><em>However</em>, the last five guesses stay on the board as clues.</p>
+    <p>The last five guesses stay on the board as clues.</p>
           
     <div class="example-diagram">
       <div>
@@ -68,7 +72,9 @@ import { SHUFFLE_COST, SKIP_COST } from '$lib/js/constants'
 
 
     <h2>Watch your energy gauge</h2>
-    <p>Every guess costs one bar, but a correct guess <em>replenishes</em> one bar instead.</p>
+    <p>Every guess drains one bar, but a correct guess <em>replenishes</em> one bar instead.</p>
+
+    <p>The game ends if your energy runs out.</p>
 
     <div class="example-diagram">
       <ExamplePowerBarWide remainingAttempts={10} />
@@ -107,67 +113,39 @@ import { SHUFFLE_COST, SKIP_COST } from '$lib/js/constants'
     </div>
 
 
-    <h2 class="display-flex" style="align-items: center;">
-      <span class="shuffle-button info-button" style="margin-right: 1rem">
-        <ShuffleIcon />
-      </span>
-      Shuffle
-    </h2>
-
-    <p>
-      Hit <strong>shuffle</strong> any time to replace the board with five new random guesses.
-    </p>
-    
-    <p>Costs {(SHUFFLE_COST / 10)} energy.</p>
-
-    <div class="example-diagram">
-      <ExamplePowerBarWide remainingAttempts={10} />
-      <div>
-        <ExampleGuess codeWord="boxer" guess="clang" />
-        <ExampleGuess codeWord="boxer" guess="chimp" />
-        <ExampleGuess codeWord="boxer" guess="chomp" />
-        <ExampleGuess codeWord="boxer" guess="flaws" />
-        <ExampleGuess codeWord="boxer" guess="flaky" />
-      </div>
-      <Arrow direction="down" />
-      <span aria-hidden="true" class="info-button shuffle-button" style="margin: auto;">
-        <Shuffle />
-      </span>
-      <Arrow direction="down" />
-      <ExamplePowerBarWide remainingAttempts={10 - (SHUFFLE_COST / 10)} />
-      <div>
-        <ExampleGuess codeWord="boxer" guess="brown" />
-        <ExampleGuess codeWord="boxer" guess="oxide" />
-        <ExampleGuess codeWord="boxer" guess="regal" />
-        <ExampleGuess codeWord="boxer" guess="epoxy" />
-        <ExampleGuess codeWord="boxer" guess="flown" />
-      </div>
-    </div>
-
-
-    <h2 class="display-flex" style="align-items: center;">
-      <span class="info-button skip-button" style="margin-right: 1rem">
-        <SkipIcon />
-      </span>
-      Skip
-    </h2>
-
-    <p>Use <b>skip</b> to get a new code word.</p>
-    
-    <p>Costs {SKIP_COST / 10} energy.</p>
-
-
     <h2>The goal</h2>
-    <p><strong>Get your score as high as possible, as fast as possible.</strong></p>
-    <p>The game ends when either:</p>
-    <ol>
+    <p>Score 100 points (a Hondo) as fast as possible.</p>
+
+
+    <h2>Abilities</h2>
+
+    <p>There are two special abilities you can play by using&nbsp;energy.</p>
+
+    <ul class="no-bullets">
       <li>
-        Your life gauge is empty; or
+        <h3 class="display-flex" style="align-items: center;">
+          <span class="shuffle-button info-button" style="margin-right: 1rem">
+            <ShuffleIcon />
+          </span>
+          Shuffle
+        </h3>
+    
+        <p>Hit <strong>shuffle</strong> any time to replace the board with five new random guesses. Costs {(SHUFFLE_COST / 10)} energy.</p>
       </li>
       <li>
-        You've scored a Hondo (100).
+        <h3 class="display-flex" style="align-items: center;">
+          <span class="info-button skip-button" style="margin-right: 1rem">
+            <SkipIcon />
+          </span>
+          Skip
+        </h3>
+    
+        <p>Use <b>skip</b> to get a new code word. Costs {SKIP_COST / 10} energy.</p>
       </li>
-    </ol>
+    </ul>
+
+    <p>Using an ability does not count as a guess, and does not interrupt streaks.</p>
+
 
     <hr>
 
@@ -178,15 +156,7 @@ import { SHUFFLE_COST, SKIP_COST } from '$lib/js/constants'
       <li>Try to keep as many different letters as possible on the board at all times (especially all the vowels).
       </li>
       <li><strong>Use shuffles and skips strategically</strong>. They can get you out of a jam, and can also keep streaks alive for extra bonus points.</li>
-      <li><strong>Know when to use which ability:</strong>
-        <ul>
-          <li>
-            <strong>Shuffles</strong> work best to clear lots of similar guesses off the board and start fresh.
-          </li>
-          <li>
-            <strong>Skips</strong> help when you think it might take lots of guesses to get the current word. (For example: "_A_ES" could be several different words).
-          </li>
-        </ul>
+      <li><strong>Know when to use which ability.</strong> Shuffles and skips come in handy in different situations.
       </li>
       <li><strong>Be patient</strong>; haste is costly. Getting a high score requires logic, strategy, and luck.</li>
     </ul>
@@ -253,6 +223,22 @@ p {
 
 ul {
   padding-left: 1rem;
+
+  &.no-bullets {
+    padding: 0;
+
+    h3 {
+      margin-bottom: 0rem;
+    }
+
+    li + li {
+      margin-top: 2rem;
+    }
+
+    p {
+      padding-left: 3.5rem;
+    }
+  }
 }
 
 ol {
@@ -285,7 +271,6 @@ hr {
   font-size: 1rem;
   margin-top: 2rem;
   display: inline-block;
-  color: var(--darkBlue);
 }
 
 .bonus-demo {
