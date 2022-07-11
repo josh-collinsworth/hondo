@@ -6,6 +6,7 @@ import { browser } from '$app/env'
 
 import Arrow from '../icon/Arrow.svelte'
 import Checkmark from '../icon/Checkmark.svelte'
+import SkipIcon from '../icon/SkipIcon.svelte';
 
 const keys = [
   ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -71,12 +72,14 @@ const handlePress = async (key: string): Promise<void> => {
             {key}
           {:else if isDeleteKey(key)}
             <span aria-hidden="true">
-              <Arrow />
+              <SkipIcon />
             </span>
             <span class="sr">Delete</span>
           {:else if isEnterKey(key)}
             <span aria-hidden="true">
-              <Checkmark />
+              <svg viewBox="0 0 30 30">
+                <path d="M21.985,15l-11.995,5.987l-0,-11.974l11.995,5.987Z" style="fill:none;stroke:currentColor;stroke-width:2px;"/>
+              </svg>
             </span>
             <span class="sr">Enter</span>
           {/if}
@@ -139,12 +142,31 @@ const handlePress = async (key: string): Promise<void> => {
       flex: 1 1 5ch;
       font-size: 0.9rem;
       padding: 0 0.5ch;
+      color: var(--ink);
+
+      &:disabled {
+        color: var(--lightAccent);
+      }
 
       @media (min-width: 26rem) {
         font-size: 1.1rem;
       }
     }
 
+    &[data-key="-"] :global(svg) {
+      transform: rotate(180deg);
+      max-width: 1.25rem;
+    }
+    
+    &[data-key="-"]:disabled :global(svg) {
+      fill: currentColor;
+    }
+    
+    &[data-key="+"] :global(svg) {
+      width: 1.75rem;
+      margin: 0 auto;
+    }
+    
     + button {
       margin-left: 5px;
     }
@@ -161,14 +183,6 @@ const handlePress = async (key: string): Promise<void> => {
       background: var(--secondary);
       opacity: 1;
     }
-  }
-
-  :global(button svg) {
-    stroke: var(--ink);
-  }
-
-  :global(button[disabled] svg) {
-    stroke: var(--lightAccent);
   }
 }
 </style>
