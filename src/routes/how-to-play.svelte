@@ -241,10 +241,6 @@ ul {
   }
 }
 
-ol {
-  padding-left: 1.5rem;
-}
-
 .example-diagram {
   display: grid;
   width: 100%;

@@ -1,5 +1,5 @@
 <script lang="ts">
-import { GAME_HISTORY_STORAGE_KEY, LONGEST_STREAK_STORAGE_KEY } from '$lib/js/constants'
+import { GAME_DATA_STORAGE_KEY, GAME_HISTORY_STORAGE_KEY, LONGEST_STREAK_STORAGE_KEY } from '$lib/js/constants'
 import { totalGamesPlayed, totalPointsScored, highScore, fastestHondo, totalGuessesUsed, totalBonusPointsScored, totalHondos, totalShufflesUsed, totalSkipsUsed, perfectHondos } from '$lib/state/getters'
 import { loadFromLocalStorage, floatFormatter } from '$lib/js/helpers'
 import Loader from '$lib/components/game/Loader.svelte'
@@ -14,10 +14,11 @@ $: averageGuesses = floatFormatter.format($totalGuessesUsed / $totalGamesPlayed)
 $: bonusPointPercentage = floatFormatter.format(100 / $totalPointsScored * $totalBonusPointsScored)
 
 const clearData = (): void => {
-  const confirmation = confirm(`This will permanently delete all your Hondo game history.\n\nAre you sure?`)
+  const confirmation = confirm(`This will permanently delete all your Hondo game history, and any game in progress.\n\nAre you sure?`)
 
   if (!confirmation) return
   localStorage.removeItem(GAME_HISTORY_STORAGE_KEY)
+  localStorage.removeItem(GAME_DATA_STORAGE_KEY)
   window.location.reload()
 }
 
@@ -108,9 +109,11 @@ onMount(() => {
       </li>
     </ul>
   {:else}
-    <b>You don't have any stats yet.</b>
+    <p>
+      <b>You don't have any stats yet.</b>
+    </p>
 
-    Finish at least one game of Hondo, then check back.
+    <p>Finish at least one game of Hondo, then check back.</p>
   {/if}
 
   <div class="button-bar">
@@ -129,6 +132,7 @@ onMount(() => {
   width: 100%;
   max-width: 36rem;
   margin: 0 auto;
+  text-align: left;
 
   h1 {
     text-align: left;
@@ -136,9 +140,8 @@ onMount(() => {
     font-weight: var(--fontWeightNormal);
     text-transform: uppercase;
   }
-
-  h1,
-  ul {
+  
+  > * {
     width: 100%;
   }
 

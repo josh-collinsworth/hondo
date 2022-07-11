@@ -16,8 +16,12 @@ const handleStartNewGame = (): void => {
   <ul>
     {#if $runningScore < 100}
       <li>You lost on <b>{$codeWord.toUpperCase()}</b></li>
+    {:else if $usedAttempts === 14}
+      <li><strong>AMAZING!</strong> A PERFECT GAME! 🎉💯🎉</li>
+    {:else if $usedAttempts < 14}
+      <li><strong>Ok, you clearly cheated.</strong></li>
     {:else}
-      <li><strong>Congrats!</strong> You scored a Hondo!</li>
+      <li><strong>Congrats!</strong> You scored a Hondo! 💯</li>
     {/if}
     
     <li>You used <b>{$usedAttempts} turns</b> total.</li>
@@ -51,10 +55,6 @@ const handleStartNewGame = (): void => {
   footer {
     font-size: 0.9rem;
     margin-top: 2rem;
-
-    a {
-      color: var(--darkBlue);
-    }
   }
 }
 </style>

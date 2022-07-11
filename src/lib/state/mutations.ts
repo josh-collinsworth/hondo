@@ -102,10 +102,16 @@ export const incrementRunningScore = (adjustment: number): void => {
   for (let i = 0; i < scoreDifferential; i++) {
     timer += SCORE_TICK_DURATION
     setTimeout(() => {
-      runningScore.set(Math.min(get(runningScore) + 1, 100))
-      if (get(runningScore) >= 100) {
-        handleEndgame()
-        return
+      // Don't trigger any of this unless we aren't at 100 points yet
+      if (get(runningScore) < 100) {
+        runningScore.set(Math.min(get(runningScore) + 1, 100))
+        if (i > 0) {
+          bonusPointsScored.set(get(bonusPointsScored) + 1)
+        }
+        if (get(runningScore) === 100) {
+          handleEndgame()
+          return
+        }
       }
     }, timer)
   }
@@ -175,7 +181,6 @@ export const handleCorrectGuess = (): void => {
   const tally = 1 + streakPoints
   incrementRunningScore(tally)
   pointsScoredForLastGuess.set(tally)
-  bonusPointsScored.set(get(bonusPointsScored) + streakPoints)
   incrementRemainingAttempts(GUESS_BENEFIT)
   incrementStreak(1)
   discoveredCodeWord.set(get(codeWord))
