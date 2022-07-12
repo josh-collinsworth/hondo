@@ -14,7 +14,6 @@ const confirmSkip = (): void => {
   disabled={$maxRemainingAttempts <= 1}
   class="info-button skip-button"
 >
-  <!-- <LightningBolt /> -->
   <SkipIcon />
-  <div class="sr">Shuffle board</div>
+  <div class="sr">Skip current code word</div>
 </button>

@@ -98,7 +98,8 @@ isMenuOpen.subscribe(async (isOpen) => {
       <div class="display-flex button-bar menu__buttons">
         <div class="button-bar__logo display-flex center-content">
           <a href="/" on:click|preventDefault={handleReturnToGame} class="display-flex center-content">
-            <Logo />
+            <span aria-hidden="true"><Logo /></span>
+            <span class="sr">Hondo logo - return to game</span>
           </a>
         </div>
         <div class="button-bar__buttons display-flex center-content">

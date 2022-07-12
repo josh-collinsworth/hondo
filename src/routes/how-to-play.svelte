@@ -1,7 +1,7 @@
 <script lang="ts">  
 import BonusDisplay from '$lib/components/game/BonusDisplay.svelte'
 import ExampleGuess from '$lib/components/game/examples/ExampleGuess.svelte'
-import ExamplePowerBarWide from '$lib/components/game/examples/ExamplePowerBarWide.svelte'
+import ExamplePowerBar from '$lib/components/game/examples/ExamplePowerBar.svelte'
 import Arrow from '$lib/components/icon/Arrow.svelte'
 import ShuffleIcon from '$lib/components/icon/ShuffleIcon.svelte'
 import Shuffle from '$lib/components/icon/ShuffleIcon.svelte'
@@ -77,15 +77,15 @@ import { SHUFFLE_COST, SKIP_COST } from '$lib/js/constants'
     <p>The game ends if your energy runs out.</p>
 
     <div class="example-diagram">
-      <ExamplePowerBarWide remainingAttempts={10} />
+      <ExamplePowerBar remainingAttempts={10} />
       <Arrow direction="down" />
       <ExampleGuess codeWord="xxxxr" guess="wrong" />
       <Arrow direction="down" />
-      <ExamplePowerBarWide remainingAttempts={9} />
+      <ExamplePowerBar remainingAttempts={9} />
       <Arrow direction="down" />
       <ExampleGuess codeWord="right" guess="right" />
       <Arrow direction="down" />
-      <ExamplePowerBarWide remainingAttempts={10} />
+      <ExamplePowerBar remainingAttempts={10} />
     </div>
 
 
@@ -191,7 +191,7 @@ h2 {
   margin: 0 auto 1rem;
 }
 
-ul, ol {
+ul {
   margin: 2rem 0;
 }
 

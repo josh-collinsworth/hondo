@@ -170,6 +170,8 @@
 }
 
 .power-bar-container {
+  --powerBarHeight: 0.875rem;
+
   width: 100%;
   display: flex;
   align-items: center;
@@ -178,8 +180,10 @@
   border-radius: 2rem;
   height:var(--powerBarHeight);
   border: 2px solid var(--darkBlue);
-  padding: 0;
   will-change: transform;
+  grid-column: 1 / -1;
+  padding: 2px;
+  margin-top: 2px;
 
   .dark & {
     --darkBlue: var(--lightBlue);
@@ -187,26 +191,12 @@
     border-color: var(--mediumBlue);
   }
 
-  &.wide {
-    --powerBarHeight: 0.875rem;
-
-    grid-column: 1 / -1;
-    padding: 2px;
-    margin-top: 2px;
-
-    .power-bar {
-      display: flex;
-      margin: 0;
-    }
-  }
-
   .power-bar {
     width: 100%;
-    display: grid;
-    grid-template-columns: var(--scoreWidth) 1fr; 
+    display: flex;
     border: 0;
     border-radius: inherit;
-    margin: 4px;
+    margin: 0;
     height: 100%;
     align-items: center;
     overflow: hidden;
@@ -263,7 +253,7 @@
   }
 }
 
-.example-power-bar.wide {
+.example-power-bar {
   margin: auto;
   max-width: 18rem;
 }

@@ -27,7 +27,7 @@ onMount(() => {
 
   :global(svg) {
     stroke: currentColor;
-    stroke-width: 0.65em;
+    stroke-width: 10px;
   }
 
   .light-dark-icon {

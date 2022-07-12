@@ -1,40 +1,14 @@
 <script lang="ts">
-import { remainingAttempts, maxRemainingAttempts, runningScore } from '$lib/state/game'
-import { SCORE_TICK_DURATION, STARTING_GUESSES } from '$lib/js/constants'
-import { fly } from 'svelte/transition'
-import { backIn, backOut } from 'svelte/easing'
-
-let scoreDigits: string[]
-$: scoreDigits = String($runningScore).padStart(3).split('')
+import { remainingAttempts, maxRemainingAttempts } from '$lib/state/game'
+import { STARTING_GUESSES } from '$lib/js/constants'
 </script>
 
 <div
   class="power-bar-container"
-  aria-label={`${$remainingAttempts} of ${$maxRemainingAttempts} attempts left.`}
+  aria-label={`${$remainingAttempts / 10} of ${$maxRemainingAttempts / 10} attempts left.`}
   role="status" aria-live="polite"
 >
   <div class="power-bar">
-    <div
-      class="score"
-      role="status"
-      aria-live="polite"
-      aria-label={`Score: ` + $runningScore}
-      style="overflow: {$runningScore < 100 ? 'hidden' : 'visible'};"
-    >
-      <div class="score-container" aria-hidden="true">
-        {#each scoreDigits as digit, i}
-          {#key digit}
-            <div
-              class="score-digit digit-{i + 1}"
-              out:fly={{ y: -36, duration: SCORE_TICK_DURATION, opacity: 1, easing: backIn }}
-              in:fly={{ y: 36, duration: SCORE_TICK_DURATION, opacity: 1, easing: backOut, delay: SCORE_TICK_DURATION / 2 }}
-            >
-              {digit}
-            </div>
-          {/key}
-        {/each}
-      </div>
-    </div>
     <div
       class="power-bar__fill"
       style="
@@ -42,5 +16,10 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
         background-size: {( STARTING_GUESSES / $remainingAttempts) * 100}%;
       "
     />
+    <div class="power-bar__grid">
+      {#each { length: 10 } as _, i}
+        <div class="power-bar__grid-box" />
+      {/each}
+    </div>
   </div>
 </div>

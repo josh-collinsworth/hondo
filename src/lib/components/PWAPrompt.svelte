@@ -33,16 +33,16 @@ const installPWA = () => {
 
 
 {#if isShown}
-  <div class="pwa-prompt" transition:fly={{ y: 80 }}>
-    <p>Install Hondo?</p>
+  <div class="pwa-prompt" transition:fly={{ y: -100 }}>
+    <p>Add Hondo to your home screen?</p>
 
     <div class="button-bar">
       <button on:click={dismissPrompt}>
-        Dismiss
+        Nah
       </button>
       
       <button class="confirm" on:click={installPWA}>
-        Install
+        Install!
       </button>
     </div>
   </div>
@@ -53,15 +53,16 @@ const installPWA = () => {
 .pwa-prompt {
   position: fixed;
   left: 0;
-  bottom: 0;
-  padding: 1rem;
+  top: 0;
+  padding: 1.5rem 1rem;
   width: 100vw;
-  background: var(--darkBlue);
-  color: var(--offwhite);
+  background: var(--paper);
+  border-bottom: 2px solid var(--darkBlue);
   font-size: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 8;
 
   .button-bar {
     margin: 0;

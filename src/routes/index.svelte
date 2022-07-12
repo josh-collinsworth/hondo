@@ -47,6 +47,26 @@ import type { LoadOutput } from '@sveltejs/kit'
 
 export let skipTutorial: boolean
 
+const speakLetters = (enteredGuess: string): string => {
+  let remainingLetters = $codeWord
+  let exactLetters = 0
+  let partialLetters = 0
+
+  enteredGuess.split('').forEach((letter, i) => {
+    if (letter === $codeWord[i]) {
+      remainingLetters = remainingLetters.replace(letter, '')
+      exactLetters++
+    }
+  })
+  enteredGuess.split('').forEach((letter) => {
+    if (remainingLetters.includes(letter)) {
+      remainingLetters = remainingLetters.replace(letter, '')
+      partialLetters++
+    }
+  })
+  return `: ${exactLetters} in position, ${partialLetters} out of position`
+}
+
 onMount(() => {
   try {
     const gameData = loadFromLocalStorage(GAME_DATA_STORAGE_KEY)
@@ -83,7 +103,7 @@ onMount(() => {
     }
   } 
   catch(e) {
-    alert(`Sorry, something went wrong loading your previous game data. Please try again, or start a new game from the menu.`)
+    alert(`Sorry, something went wrong loading your previous game data. Please refresh. If that doesn't help, you can reset your data from the stats page.`)
   } 
   finally {
     $isLoading = false
@@ -107,7 +127,7 @@ onMount(() => {
       {#each $currentGuesses as guess, row (guess)}
         <li
           class="guess"
-          aria-label={guess}
+          aria-label={guess + speakLetters(guess)}
           aria-hidden={!stringContainsLetter(guess)}
         >
           <GuessContent guess={guess} previousGuess={$previousGuesses[row]}/>

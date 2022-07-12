@@ -5,10 +5,13 @@ import { fly } from 'svelte/transition'
 import { backIn, backOut } from 'svelte/easing'
 
 export let bonusOverride: number|null = null
+
+let bonusToShow: number
+$: bonusToShow = bonusOverride ? bonusOverride : $streak
 </script>
 
 
-<div class="info-button bonus" style="font-weight: normal;">
+<div class="info-button bonus" aria-label="Current bonus: {bonusToShow}">
   <div class="bonus-wrapper display-flex center-content">
     {#key $streak}
       <div
@@ -18,7 +21,7 @@ export let bonusOverride: number|null = null
       >
         <span class="plus">
           +
-        </span>{bonusOverride ? bonusOverride : $streak}
+        </span>{bonusToShow}
       </div>
     {/key}
   </div>
@@ -46,6 +49,7 @@ export let bonusOverride: number|null = null
     height: 0;
     line-height: 0;
     text-align: center;
+    font-weight: var(--fontWeightNormal);
   }
 
   .plus {

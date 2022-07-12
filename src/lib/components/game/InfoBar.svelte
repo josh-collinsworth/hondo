@@ -4,7 +4,7 @@ import SkipButton from './SkipButton.svelte'
 import Toast from '../Toast.svelte'
 import StatusBurst from './StatusBurst.svelte'
 import MenuButton from '../MenuButton.svelte'
-import PowerBarWide from './PowerBarWide.svelte'
+import PowerBar from './PowerBar.svelte'
 import ScoreDisplay from './ScoreDisplay.svelte'
 
 import BonusDisplay from './BonusDisplay.svelte';
@@ -12,26 +12,26 @@ import BonusDisplay from './BonusDisplay.svelte';
 
 
 <div class="info-bar">
+  <!-- Hidden stuff -->
   <StatusBurst />
   <Toast />
 
   <!-- First row -->
-  <span class="tiny">Shuffle</span>
-  <span class="tiny">Skip</span>
-  <span class="tiny">Score</span>
-  <span class="tiny">Bonus</span>
-  <span class="tiny">Menu</span>
+  <span class="tiny" aria-hidden="true">Shuffle</span>
+  <span class="tiny" aria-hidden="true">Skip</span>
+  <span class="tiny" aria-hidden="true">Score</span>
+  <span class="tiny" aria-hidden="true">Bonus</span>
+  <span class="tiny" aria-hidden="true">Menu</span>
 
+  <!-- Main row -->
   <ShuffleButton />
   <SkipButton />
   <ScoreDisplay />
   <BonusDisplay />
-  <!-- <PowerBar /> -->
   <MenuButton />
-  <PowerBarWide />
+  <PowerBar />
 </div>
-<!-- For debugging -->
-<!-- <button on:click={() => runningScore.set($runningScore + 1)}>+1</button> -->
+
 
 <style lang="scss">
 .info-bar {
