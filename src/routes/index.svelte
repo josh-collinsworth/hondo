@@ -1,15 +1,3 @@
-<script context="module" lang="ts">
-export const load = ({ url }): LoadOutput => {
-  const skipTutorial = url.searchParams.get('skip_tutorial') !== null
-  return {
-    status: 200,
-    props: {
-      skipTutorial
-    }
-  }
-}
-</script>
-
 <script lang="ts">
 import {
   currentGuesses,
@@ -42,15 +30,11 @@ import PWAPrompt from '$lib/components/PWAPrompt.svelte'
 import { dev } from '$app/env'
 import { onMount } from 'svelte'
 import { is_client } from 'svelte/internal'
-import type { LoadOutput } from '@sveltejs/kit'
-
-export let skipTutorial: boolean
 
 const speakLetters = (enteredGuess: string): string => {
   let remainingLetters = $codeWord
   let exactLetters = 0
   let partialLetters = 0
-
   enteredGuess.split('').forEach((letter, i) => {
     if (letter === $codeWord[i]) {
       remainingLetters = remainingLetters.replace(letter, '')
@@ -67,8 +51,12 @@ const speakLetters = (enteredGuess: string): string => {
 }
 
 onMount(() => {
+  let params = new URLSearchParams(document.location.search)
+  let skipTutorial = params.get('skip_tutorial') !== null
+
   try {
     const gameData = loadFromLocalStorage(GAME_DATA_STORAGE_KEY)
+
       
     if (gameData) {
       // Avoids a loading error with states that didn't save this. Can be removed later.
