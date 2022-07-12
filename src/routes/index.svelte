@@ -1,3 +1,15 @@
+<script context="module" lang="ts">
+export const load = ({ url }): LoadOutput => {
+  const skipTutorial = url.searchParams.get('skip_tutorial') !== null
+  return {
+    status: 200,
+    props: {
+      skipTutorial
+    }
+  }
+}
+</script>
+
 <script lang="ts">
 import {
   currentGuesses,
@@ -10,9 +22,9 @@ import {
   usedAttempts,
   streak,
   previousGuesses,
-bonusPointsScored,
-shufflesUsed,
-skipsUsed,
+  bonusPointsScored,
+  shufflesUsed,
+  skipsUsed,
 } from '$lib/state/game'
 import { shownModal, isLoading, hasViewedTutorial } from '$lib/state/global'
 import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES, POWERUPS_STORAGE_KEY } from '$lib/js/constants';
@@ -30,7 +42,10 @@ import PWAPrompt from '$lib/components/PWAPrompt.svelte'
 import { dev } from '$app/env'
 import { onMount } from 'svelte'
 import { is_client } from 'svelte/internal'
-import { selectedPowerupKey } from '$lib/state/powerups';
+import { selectedPowerupKey } from '$lib/state/powerups'
+import type { LoadOutput } from '@sveltejs/kit'
+
+export let skipTutorial: boolean
 
 onMount(() => {
   try {
@@ -74,7 +89,7 @@ onMount(() => {
     $isLoading = false
 
     const hasPlayed = loadFromLocalStorage('skipTutorial')
-    if (!hasPlayed && ! $hasViewedTutorial) {
+    if (!hasPlayed && !$hasViewedTutorial && !skipTutorial) {
       $shownModal = TutorialIntro
     }
   }
