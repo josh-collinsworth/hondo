@@ -1,5 +1,5 @@
 {
-  "background_color": "#f7f8fa",
+  "background_color": "#fefff6",
   "description": "A game in 100 words or less. Use logic, strategy, and luck to guess back-to-back code words and race to 100 points.",
   "dir": "ltr",
   "display": "fullscreen",
@@ -8,7 +8,7 @@
   "scope": "/",
   "short_name": "Hondo",
   "start_url": "/",
-  "theme_color": "#7ba7bc",
+  "theme_color": "#c5b1d6",
   "icons": [
     {
       "src": "android-chrome-76x76.png",
