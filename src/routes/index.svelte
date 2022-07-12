@@ -27,7 +27,7 @@ import {
   skipsUsed,
 } from '$lib/state/game'
 import { shownModal, isLoading, hasViewedTutorial } from '$lib/state/global'
-import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES, POWERUPS_STORAGE_KEY } from '$lib/js/constants';
+import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES } from '$lib/js/constants'
 import { loadFromLocalStorage, saveToLocalStorage, stringContainsLetter } from '$lib/js/helpers'
 import { setDefaultGameState } from '$lib/state/mutations'
 
@@ -42,7 +42,6 @@ import PWAPrompt from '$lib/components/PWAPrompt.svelte'
 import { dev } from '$app/env'
 import { onMount } from 'svelte'
 import { is_client } from 'svelte/internal'
-import { selectedPowerupKey } from '$lib/state/powerups'
 import type { LoadOutput } from '@sveltejs/kit'
 
 export let skipTutorial: boolean
@@ -70,11 +69,6 @@ const speakLetters = (enteredGuess: string): string => {
 onMount(() => {
   try {
     const gameData = loadFromLocalStorage(GAME_DATA_STORAGE_KEY)
-    const powerups = loadFromLocalStorage(POWERUPS_STORAGE_KEY)
-
-    if (powerups && powerups.static) {
-      $selectedPowerupKey = powerups.static
-    }
       
     if (gameData) {
       // Avoids a loading error with states that didn't save this. Can be removed later.

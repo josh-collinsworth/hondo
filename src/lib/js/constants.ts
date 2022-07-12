@@ -1,7 +1,6 @@
 export const GAME_HISTORY_STORAGE_KEY = 'previousHighScores'
 export const GAME_DATA_STORAGE_KEY = 'gameData'
 export const LONGEST_STREAK_STORAGE_KEY = 'longestStreak'
-export const POWERUPS_STORAGE_KEY = 'powerups'
 export const SCORE_TICK_DURATION = 220
 export const SCORE_PER_CODE_WORD = 1
 
