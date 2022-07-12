@@ -1,6 +1,6 @@
 <script lang="ts">
 import { saveToLocalStorage } from '$lib/js/helpers'
-import { hasViewedTutorial } from '$lib/state/global';
+import { hasViewedTutorial } from '$lib/state/global'
 import { closeModal } from '$lib/state/mutations'
 
 const dismissForever = (): void => {

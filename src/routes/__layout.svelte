@@ -9,13 +9,13 @@ export const load = async ({ url }): Promise<LoadOutput> => ({props: { path: <st
 import '$lib/scss/global.scss'
 import { gameHistory, gameIsOver, runningScore } from '$lib/state/game'
 import { isMenuOpen, shownModal } from '$lib/state/global'
-import { setToast } from '$lib/state/mutations';
+import { setToast } from '$lib/state/mutations'
 import SkipToContentLink from '$lib/components/SkipToContentLink.svelte'
 import Modal from '$lib/components/modals/Modal.svelte'
 import Menu from '$lib/components/Menu.svelte'
 import Logo from '$lib/components/icon/Logo.svelte'
 import { fly } from 'svelte/transition'
-import { onMount } from 'svelte';
+import { onMount } from 'svelte'
 import { retrieveGameHistory } from '$lib/state/getters'
 import GameOverModal from '$lib/components/modals/GameOverModal.svelte'
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-import { SKIP_COST } from '$lib/js/constants';
+import { SKIP_COST } from '$lib/js/constants'
 import { skipCodeWord, closeModal } from '$lib/state/mutations'
 import { remainingAttempts } from '$lib/state/game'
 

@@ -7,7 +7,7 @@ import MenuButton from '../MenuButton.svelte'
 import PowerBar from './PowerBar.svelte'
 import ScoreDisplay from './ScoreDisplay.svelte'
 
-import BonusDisplay from './BonusDisplay.svelte';
+import BonusDisplay from './BonusDisplay.svelte'
 </script>
 
 

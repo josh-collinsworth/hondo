@@ -1,5 +1,5 @@
 <script lang="ts">
-import { SHUFFLE_COST } from '$lib/js/constants';
+import { SHUFFLE_COST } from '$lib/js/constants'
 import { shuffleGuesses, closeModal } from '$lib/state/mutations'
 import { remainingAttempts } from '$lib/state/game'
 

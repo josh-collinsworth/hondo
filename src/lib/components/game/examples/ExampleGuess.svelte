@@ -57,7 +57,7 @@ $: highlightArray = [...guess].map((letter, i) => {
   }
 
   .guess-box__slider {
-    animation: none !important;
+    animation: none !important
   }
 }
 </style>

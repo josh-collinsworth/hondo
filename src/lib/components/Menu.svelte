@@ -13,8 +13,8 @@ import { tick } from 'svelte'
 import { fly, fade } from 'svelte/transition'
 import { quintIn, quintOut } from 'svelte/easing'
 import { goto } from '$app/navigation'
-import { is_client } from 'svelte/internal';
-import PlayBlock from './icon/blocks/PlayBlock.svelte';
+import { is_client } from 'svelte/internal'
+import PlayBlock from './icon/blocks/PlayBlock.svelte'
 import BackBlock from './icon/blocks/BackBlock.svelte'
 
 export let currentPage: string
