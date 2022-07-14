@@ -56,9 +56,9 @@ onMount(() => {
 
   try {
     const gameData = loadFromLocalStorage(GAME_DATA_STORAGE_KEY)
-
+    console.log(gameData)
       
-    if (gameData) {
+    if (gameData && !$gameIsOver) {
       // Avoids a loading error with states that didn't save this. Can be removed later.
       if (!gameData.currentGuesses || !gameData.previousGuesses) {
         alert(`Sorry, your in-progress game data is outdated and will need to be cleared. Proceeding now.`)

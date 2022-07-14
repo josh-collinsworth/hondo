@@ -45,11 +45,18 @@ const handleStartNewGame = (): void => {
 
 <style lang="scss">
 .game-over-modal {
+  h2 {
+    margin-bottom: 2rem;
+  }
 
   ul {
     margin-top: 0;
     list-style-type: none;
     padding: 0;
+
+    li + li {
+      margin-top: 0.5rem;
+    }
   }
 
   footer {
