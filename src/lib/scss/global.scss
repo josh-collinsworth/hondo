@@ -100,7 +100,7 @@ h1 {
 a {
   color: var(--darkBlue);
 
-  .dark & {
+  .dark &:not(.button) {
     color: var(--lightBlue);
   }
 }
