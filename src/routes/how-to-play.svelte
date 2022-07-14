@@ -43,7 +43,7 @@ import { SHUFFLE_COST, SKIP_COST } from '$lib/js/constants'
 
     <br />
 
-    <p><i>(Uncolored letters in are not in the code&nbsp;word.)</i></p>
+    <p><i>(Uncolored letters are not in the code&nbsp;word.)</i></p>
 
 
     <h2>When you get a code word, play continues with a new&nbsp;one.</h2>
