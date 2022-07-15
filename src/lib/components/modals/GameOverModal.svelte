@@ -17,11 +17,11 @@ const handleStartNewGame = (): void => {
     {#if $runningScore < 100}
       <li>You lost on <b>{$codeWord.toUpperCase()}</b></li>
     {:else if $usedAttempts === 14}
-      <li><strong>AMAZING!</strong> A PERFECT GAME! 🎉💯🎉</li>
+      <li><strong>AMAZING!</strong> A PERFECT GAME! <span aria-hidden="true">🎉💯🎉</span></li>
     {:else if $usedAttempts < 14}
       <li><strong>Ok, you clearly cheated.</strong></li>
     {:else}
-      <li><strong>Congrats!</strong> You scored a Hondo! 💯</li>
+      <li><strong>Congrats!</strong> You scored a Hondo! <span aria-hidden="true">💯</span></li>
     {/if}
     
     <li>You used <b>{$usedAttempts} turns</b> total.</li>
@@ -38,7 +38,12 @@ const handleStartNewGame = (): void => {
   </div>
     
   <footer>
-    <a href="https://ko-fi.com/collinsworth">Buy me a coffee if you're enjoying this game</a>
+    <a href="https://ko-fi.com/collinsworth">
+      <img src="/ko-fi.png" alt="">
+      <span class="">
+        Support me on Ko-Fi
+      </span>
+    </a>
   </footer>
 </div>
 
@@ -46,11 +51,11 @@ const handleStartNewGame = (): void => {
 <style lang="scss">
 .game-over-modal {
   h2 {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
   }
 
   ul {
-    margin-top: 0;
+    margin: 0 0 3rem;
     list-style-type: none;
     padding: 0;
 
@@ -60,8 +65,20 @@ const handleStartNewGame = (): void => {
   }
 
   footer {
-    font-size: 0.9rem;
     margin-top: 2rem;
+    margin-bottom: -1rem;
+    font-size: 0.875rem;
+
+    a {
+      display: flex;
+      align-items: center;
+    }
+
+    img {
+      max-width: 2rem;
+      margin-right: 0.5em;
+      margin-left: -0.375em;
+    }
   }
 }
 </style>

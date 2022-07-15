@@ -33,10 +33,11 @@ import MenuButton from '$lib/components/MenuButton.svelte'
     <p>That said, with the use of shuffles, skips, and good strategy, I think any player fluent in English should be able to enjoy the game on their own individual level.</p>
 
 
-    <h2>Are plurals included? Non-US spellings? Proper nouns?</h2>
-    <p>There are <em>some</em> four-letter plurals included (e.g., “books”), but the number is purposely low. The possibility of a plural makes things more interesting, but limiting the number keeps “s” from being artificially common.</p>
+    <h2>Are plurals included as code words? Non-US words/spellings? Proper nouns?</h2>
+    <p>There are <em>some</em> four-letter plurals included as code words (e.g., “books”), but the number is purposely low. The possibility of a plural makes things more interesting, but limiting the number keeps “s” from being artificially common.</p>
     <p>Where there is a discrepancy between UK or Canadian spelling, Hondo uses American English. (For example: you might get “liter” as a code word, but not “litre.”)</p>
     <p>Some proper nouns are legal as guesses, but none are included as potential code words.</p>
+    <p>Just about all code words are English, but a few non-English words commonly used by English are present. (For example, “adieu.”)</p>
 
 
     <h2>Why is it called Hondo?</h2>
@@ -70,7 +71,8 @@ import MenuButton from '$lib/components/MenuButton.svelte'
     
     <h2>I found a bug, what should I do?</h2>
     <p>Try my <a href="https://joshcollinsworth.com/contact?from_page=hondo_faq">contact form here</a> (thanks in advance)!</p>
-    
+
+
     <h2>Why aren’t you trying to make money on this?</h2>
     <p>You can <a href="https://ko-fi.com/collinsworth">buy me a coffee</a> or something if you want to, but I’m not interested in dealing with advertising, subscriptions, user data, or anything else like that.</p>
     <p>Making a profit was never my goal with this project. I built Hondo just for my own enjoyment (and hopefully, yours). Have fun.
