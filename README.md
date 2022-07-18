@@ -1,38 +1,21 @@
-# create-svelte
+# Hondo
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+_A game in 100 words or less._
 
-## Creating a project
+Hondo is a word-guessing game where the more words you guess in a row, the more points you get. The goal is to get to score a Hondo (100 points) in as few turns as possible. 
 
-If you're seeing this, you've probably already done this step. Congrats!
+Watch out, though: every guess costs energy, and if you run out, the game is over. Restore energy by guessing correctly.
 
-```bash
-# create a new project in the current directory
-npm init svelte
+To help out, you have access to Shuffles and Skips to alter the game and tilt the odds in your favor. But use them wisely; they both cost precious energy.
 
-# create a new project in my-app
-npm init svelte my-app
-```
 
-## Developing
+## The code
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Hondo is made using SvelteKit. To run Hondo locally, download or clone this repo, and run:
 
 ```bash
+npm i
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+There are definitely bits of the code that could be better (especially the TypeScript parts) but I've tried to keep it fairly well organized and consistent.
