@@ -9,6 +9,7 @@ import StatsBlock from './icon/blocks/StatsBlock.svelte'
 import HBlock from './icon/blocks/HBlock.svelte'
 import Logo from './icon/Logo.svelte'
 import PlayBlock from './icon/blocks/PlayBlock.svelte'
+import { version } from '../../../package.json'
 
 import { tick } from 'svelte'
 import { fly, fade } from 'svelte/transition'
@@ -108,7 +109,7 @@ isMenuOpen.subscribe(async (isOpen) => {
           <CloseMenuButton />
         </div>
       </div>
-      <span class="hondo-version">v{__APP_VERSION__}</span>
+      <span class="hondo-version">v{version}</span>
     </aside>
   </div>
 {/if}

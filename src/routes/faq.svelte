@@ -29,7 +29,7 @@ import MenuButton from '$lib/components/MenuButton.svelte'
 
 
     <h2>How hard is Hondo?</h2>
-    <p>Players will likely find Hondo about as easy to play as Wordle, but a bit more difficult to excel at. Hondo is longer, more complex, and the code words can sometimes be more advanced than you'd be likely to find in a game like Wordle. (I tried to avoid any <em>extremely</em> obscure words, however.)</p>
+    <p>Players will likely find Hondo about as easy to play as Wordle, but a bit more difficult to excel at. Hondo is longer, more complex, and the code words can sometimes be more advanced than you’d be likely to find in a game like Wordle. (I tried to avoid any <em>extremely</em> obscure words, however.)</p>
     <p>That said, with the use of shuffles, skips, and good strategy, I think any player fluent in English should be able to enjoy the game on their own individual level.</p>
 
 
@@ -47,8 +47,8 @@ import MenuButton from '$lib/components/MenuButton.svelte'
 
 
     <h2>How do bonus points work?</h2>
-    <p>Every correct guess gives you one point, plus a point for every correct guess you've gotten in a row beyond the first. The "bonus" display at the top shows how many bonus points you'll get (beyond that first point) for guessing the current code word correctly on your next attempt.</p>
-    <p>Example: your first correct guess gives you one point. If your next guess is correct, you get one, plus one bonus point. A third in a row would be one point, plus two bonus points, and so on.</p>
+    <p>The “bonus” display at the top shows how many extra points you’ll get (beyond the first) for correctly guessing the current code word with your next attempt. It goes up by one every time you correctly guess the code word, and resets to zero on an incorrect guess.</p>
+    <p>A simpler way to think of it might be: you get a point for every correct guess in a row.</p>
 
     <h2>What is a “perfect game?”</h2>
     <p>While very difficult to pull off, it is possible to score 100 points in just 14 turns.</p>

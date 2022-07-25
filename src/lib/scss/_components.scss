@@ -153,7 +153,7 @@
 .current-guess-letter,
 .previous-guess-letter {
   grid-area: 1 / 1 / 2 / 2;
-  will-change: transform;
+  will-change: contents, transform;
 }
 
 .current-guess-letter {
