@@ -8,14 +8,13 @@ import QuestionBlock from './icon/blocks/QuestionBlock.svelte'
 import StatsBlock from './icon/blocks/StatsBlock.svelte'
 import HBlock from './icon/blocks/HBlock.svelte'
 import Logo from './icon/Logo.svelte'
+import PlayBlock from './icon/blocks/PlayBlock.svelte'
 
 import { tick } from 'svelte'
 import { fly, fade } from 'svelte/transition'
 import { quintIn, quintOut } from 'svelte/easing'
 import { goto } from '$app/navigation'
 import { is_client } from 'svelte/internal'
-import PlayBlock from './icon/blocks/PlayBlock.svelte'
-import BackBlock from './icon/blocks/BackBlock.svelte'
 
 export let currentPage: string
 
@@ -98,7 +97,9 @@ isMenuOpen.subscribe(async (isOpen) => {
       <div class="display-flex button-bar menu__buttons">
         <div class="button-bar__logo display-flex center-content">
           <a href="/" on:click|preventDefault={handleReturnToGame} class="display-flex center-content">
-            <span aria-hidden="true"><Logo /></span>
+            <span aria-hidden="true" class="line-height-0">
+              <Logo />
+            </span>
             <span class="sr">Hondo logo - return to game</span>
           </a>
         </div>
@@ -107,6 +108,7 @@ isMenuOpen.subscribe(async (isOpen) => {
           <CloseMenuButton />
         </div>
       </div>
+      <span class="hondo-version">v{__APP_VERSION__}</span>
     </aside>
   </div>
 {/if}
@@ -206,5 +208,12 @@ isMenuOpen.subscribe(async (isOpen) => {
     animation: zoom_in_left 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
     opacity: 0;
   }
+}
+
+.hondo-version {
+  font-size: 12px;
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
 }
 </style>

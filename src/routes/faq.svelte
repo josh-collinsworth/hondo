@@ -46,6 +46,10 @@ import MenuButton from '$lib/components/MenuButton.svelte'
     <p>When I came up with the idea of stopping the game at 100, the name “Hondo” (meaning “100” in gamer slang) jumped out at me, and it just felt right.</p>
 
 
+    <h2>How do bonus points work?</h2>
+    <p>Every correct guess gives you one point, plus a point for every correct guess you've gotten in a row beyond the first. The "bonus" display at the top shows how many bonus points you'll get (beyond that first point) for guessing the current code word correctly on your next attempt.</p>
+    <p>Example: your first correct guess gives you one point. If your next guess is correct, you get one, plus one bonus point. A third in a row would be one point, plus two bonus points, and so on.</p>
+
     <h2>What is a “perfect game?”</h2>
     <p>While very difficult to pull off, it is possible to score 100 points in just 14 turns.</p>
     <p>This is considered a perfect game because it requires 14 consecutive correct guesses, without a single miss.</p>

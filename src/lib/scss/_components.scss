@@ -64,7 +64,7 @@
   position: relative;
   height: var(--boxSize);
   background: transparent;
-  will-change: transform;
+  will-change: contents, transform;
 
   &::after {
     content: '';
@@ -84,6 +84,7 @@
     grid-template-columns: 100%;
     grid-template-rows: repeat(2, var(--boxSize));
     transform: translateY(0%);
+    will-change: transform;
   }
 
   .guess-letter {
@@ -152,6 +153,7 @@
 .current-guess-letter,
 .previous-guess-letter {
   grid-area: 1 / 1 / 2 / 2;
+  will-change: transform;
 }
 
 .current-guess-letter {

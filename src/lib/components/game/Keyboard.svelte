@@ -65,17 +65,18 @@ const handlePress = async (key: string): Promise<void> => {
           data-key={key}
           class:used={lettersOnTheBoard.includes(key)}
           class:included={lettersOnTheBoard.includes(key) && $codeWord.includes(key)}
+          class="display-flex center-content"
           disabled={disableKeyboard || (isEnterKey(key) && disableEnterKey) || (isDeleteKey(key) && disableDeleteKey)}
         >
           {#if isSingleLetter(key)}
             {key}
           {:else if isDeleteKey(key)}
-            <span aria-hidden="true">
+            <span aria-hidden="true" class="line-height-0">
               <SkipIcon flipped={true} />
             </span>
             <span class="sr">Delete</span>
           {:else if isEnterKey(key)}
-            <span aria-hidden="true">
+            <span aria-hidden="true" class="line-height-0">
               <PlayIcon />
             </span>
             <span class="sr">Enter</span>
