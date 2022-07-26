@@ -334,6 +334,7 @@
     font-size: 2.2rem;
     height: 1em;
     line-height: 1em;
+    will-change: contents;
   }
 
   .score-digit {
@@ -342,6 +343,7 @@
     text-align: center;
     grid-row: 1 / 2;
     height: 100%;
+    will-change: transform;
   
     &.digit-1 {
       grid-column: 1 / 2;

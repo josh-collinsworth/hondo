@@ -126,6 +126,7 @@ isMenuOpen.subscribe(async (isOpen) => {
   width: 100vw;
   background: rgba(var(--paperRGB), 0.9);
   z-index: 10;
+  will-change: opacity;
 }
 
 .menu {
@@ -140,6 +141,7 @@ isMenuOpen.subscribe(async (isOpen) => {
   color: var(--ink);
   z-index: 10;
   margin: 0 auto;
+  will-change: transform, opacity;
 
   :global(*:focus-within) {
     outline-color: var(--lightBlue);
@@ -168,6 +170,7 @@ isMenuOpen.subscribe(async (isOpen) => {
     list-style-type: none;
 
     li {
+      will-change: transform;
       animation: zoom_in_left 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
       opacity: 0;
 
@@ -207,6 +210,7 @@ isMenuOpen.subscribe(async (isOpen) => {
 
   .menu__buttons {
     animation: zoom_in_left 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    will-change: transform;
     opacity: 0;
   }
 }
