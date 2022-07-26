@@ -56,7 +56,6 @@ onMount(() => {
 
   try {
     const gameData = loadFromLocalStorage(GAME_DATA_STORAGE_KEY)
-    console.log(gameData)
       
     if (gameData && !$gameIsOver) {
       // Avoids a loading error with states that didn't save this. Can be removed later.
