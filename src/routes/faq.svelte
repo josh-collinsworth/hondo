@@ -70,11 +70,11 @@ import MenuButton from '$lib/components/MenuButton.svelte'
     
     
     <h2>Who made this and why?</h2>
-    <p>Hi, I’m <a href="https://joshcollinsworth.com">Josh Collinsworth</a>. I’m a front-end software engineer. I love making things and playing games. I designed and built this game, including all the design and icons.</p>
+    <p>Hi, I’m <a href="https://joshcollinsworth.com">Josh Collinsworth</a>. I’m a front-end software engineer. I love making things and playing games. I designed and built this game, including all the design and icons. You can <a href="/contact">contact me here</a>.</p>
     
     
     <h2>I found a bug, what should I do?</h2>
-    <p>Try my <a href="https://joshcollinsworth.com/contact?from_page=hondo_faq">contact form here</a> (thanks in advance)!</p>
+    <p>Try my <a href="/contact">contact form here</a> (thanks in advance)!</p>
 
 
     <h2>Why aren’t you trying to make money on this?</h2>
