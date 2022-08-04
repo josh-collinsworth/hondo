@@ -104,6 +104,8 @@ import MenuButton from "$lib/components/MenuButton.svelte"
     <h3>Thanks for your message!</h3>
 
     <p>I'll follow up by email soon.</p>
+
+    <a href="/">Back to game</a>
   {/if}
 </div>
 
