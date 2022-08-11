@@ -3,6 +3,8 @@ import { runningScore, codeWord, usedAttempts, bonusPointsScored } from '$lib/st
 import { shownModal } from '$lib/state/global'
 import { closeModal, startNewGame } from '$lib/state/mutations'
 
+const lostWord = $codeWord.toUpperCase()
+
 const handleStartNewGame = (): void => {
   startNewGame()
   $shownModal = null
@@ -15,7 +17,7 @@ const handleStartNewGame = (): void => {
 
   <ul>
     {#if $runningScore < 100}
-      <li>You lost on <b>{$codeWord.toUpperCase()}</b></li>
+      <li>You lost on <b>{lostWord}</b></li>
     {:else if $usedAttempts === 14}
       <li><strong>AMAZING!</strong> A PERFECT GAME! <span aria-hidden="true">🎉💯🎉</span></li>
     {:else if $usedAttempts < 14}

@@ -139,16 +139,20 @@ export const setNewScores = (): void => {
   currentGuess.set('')
 
   // Alert the player if this is their last guess
+  warnIfFinalGuess()
+
+  // Check for game over state
+  if (get(remainingAttempts) <= 0 || get(runningScore) >= 100) {
+    handleEndgame()
+  }
+}
+
+export const warnIfFinalGuess = (): void => {
   if (get(remainingAttempts) && get(remainingAttempts) <= GUESS_COST) {
     setToast({
       message: 'Last guess!',
       type: 'warning',
     })
-  }
-
-  // Check for game over state
-  if (get(remainingAttempts) <= 0 || get(runningScore) >= 100) {
-    handleEndgame()
   }
 }
 
@@ -234,6 +238,7 @@ export const shuffleGuesses = (): void => {
   currentGuesses.set(newGuesses)
   remainingAttempts.set(get(remainingAttempts) - SHUFFLE_COST)
   shufflesUsed.set(get(shufflesUsed) + 1)
+  warnIfFinalGuess()
   saveGameData()
 }
 
@@ -241,6 +246,7 @@ export const skipCodeWord = (): void => {
   setNewRandomCodeWord()
   remainingAttempts.set(get(remainingAttempts) - SKIP_COST)
   skipsUsed.set(get(skipsUsed) + 1)
+  warnIfFinalGuess()
   saveGameData()
 }
 
