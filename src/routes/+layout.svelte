@@ -1,11 +1,5 @@
-<script context="module" lang="ts">
-import type { LoadOutput } from '@sveltejs/kit'
-
-export const load = async ({ url }): Promise<LoadOutput> => ({props: { path: <string>url.pathname }})
-</script>
-
-
 <script lang="ts">
+import type { PageData } from '@sveltejs/kit/types/internal'
 import '$lib/scss/global.scss'
 import { gameHistory, gameIsOver, runningScore } from '$lib/state/game'
 import { isMenuOpen, shownModal } from '$lib/state/global'
@@ -19,7 +13,8 @@ import { onMount } from 'svelte'
 import { retrieveGameHistory } from '$lib/state/getters'
 import GameOverModal from '$lib/components/modals/GameOverModal.svelte'
 
-export let path: string
+export let data: PageData
+$: ({ path } = data)
 
 $: isInert = $shownModal || $isMenuOpen || null
 

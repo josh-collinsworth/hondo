@@ -2,13 +2,18 @@
 import { runningScore, codeWord, usedAttempts, bonusPointsScored } from '$lib/state/game'
 import { shownModal } from '$lib/state/global'
 import { closeModal, startNewGame } from '$lib/state/mutations'
+import { onMount } from 'svelte'
 
-const lostWord = $codeWord.toUpperCase()
+let lostWord: string = ''
 
 const handleStartNewGame = (): void => {
   startNewGame()
   $shownModal = null
 }
+
+onMount(() => {
+  lostWord = $codeWord.toUpperCase()
+})
 </script>
 
 
