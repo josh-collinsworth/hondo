@@ -19,7 +19,7 @@ $: if ($toast.message) {
   <div
     class="toast center-content display-flex {$toast.type}"
     in:fly={{ ...defaultTransition }}
-    out:fly={{ ...defaultTransition, y: -16}}
+    out:fly={{ ...defaultTransition, y: -16 }}
   >
     <div class="toast-message">
       {$toast.message}

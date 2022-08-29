@@ -243,10 +243,21 @@ export const shuffleGuesses = (): void => {
 }
 
 export const skipCodeWord = (): void => {
+  setToast({
+    message: `Skipped: ${get(codeWord).toUpperCase()}`,
+    type: 'success',
+  })
   setNewRandomCodeWord()
   remainingAttempts.set(get(remainingAttempts) - SKIP_COST)
   skipsUsed.set(get(skipsUsed) + 1)
-  warnIfFinalGuess()
+
+  let timeout = 0
+  if (get(remainingAttempts) && get(remainingAttempts) <= GUESS_COST) {
+    timeout = 3500
+  }
+  setTimeout(() => {
+    warnIfFinalGuess()
+  }, timeout)
   saveGameData()
 }
 
