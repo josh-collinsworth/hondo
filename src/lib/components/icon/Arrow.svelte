@@ -6,23 +6,23 @@ export let direction: string = 'left'
 
 <style lang="scss">
 svg {
-  width: 1.5rem;
-  height: auto;
-  stroke-width: 5px;
-  stroke: var(--darkBlue);
-  display: block;
-  margin: 0 auto;
+	width: 1.5rem;
+	height: auto;
+	stroke-width: 5px;
+	stroke: var(--darkBlue);
+	display: block;
+	margin: 0 auto;
 
-  &.down {
-    transform: rotate(90deg);
-  }
+	&.down {
+		transform: rotate(90deg);
+	}
 
-  &.right {
-    transform: rotate(180deg);
-  }
+	&.right {
+		transform: rotate(180deg);
+	}
 
-  &.down {
-    transform: rotate(-90deg);
-  }
+	&.down {
+		transform: rotate(-90deg);
+	}
 }
 </style>

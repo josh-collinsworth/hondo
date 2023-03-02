@@ -4,13 +4,13 @@ import { hasViewedTutorial } from '$lib/state/global'
 import { closeModal } from '$lib/state/mutations'
 
 const dismissForever = (): void => {
-  saveToLocalStorage('skipTutorial', true)
-  closeModal()
+	saveToLocalStorage('skipTutorial', true)
+	closeModal()
 }
 
 const dismissForThisSession = (): void => {
-  $hasViewedTutorial = true
-  closeModal()
+	$hasViewedTutorial = true
+	closeModal()
 }
 </script>
 
@@ -20,13 +20,13 @@ const dismissForThisSession = (): void => {
 <p>Would you like to learn how to play?</p>
 
 <div class="button-bar">
-  <button on:click={closeModal}>
-    Not now
-  </button>
-  <button on:click={dismissForever}>
-    Never
-  </button>
-  <a class="button confirm" href="/how-to-play" on:click={dismissForThisSession}>
-    Sure!
-  </a>
+	<button on:click={closeModal}>
+		Not now
+	</button>
+	<button on:click={dismissForever}>
+		Never
+	</button>
+	<a class="button confirm" href="/how-to-play" on:click={dismissForThisSession}>
+		Sure!
+	</a>
 </div>

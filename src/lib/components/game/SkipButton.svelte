@@ -5,15 +5,15 @@ import SkipConfirmationModal from '../modals/SkipConfirmationModal.svelte'
 import SkipIcon from '../icon/SkipIcon.svelte'
 
 const confirmSkip = (): void => {
-  $shownModal = SkipConfirmationModal
+	$shownModal = SkipConfirmationModal
 }
 </script>
 
 <button
-  on:click={confirmSkip}
-  disabled={$maxRemainingAttempts <= 1}
-  class="info-button skip-button"
+	on:click={confirmSkip}
+	disabled={$maxRemainingAttempts <= 1}
+	class="info-button skip-button"
 >
-  <SkipIcon />
-  <div class="sr">Skip current code word</div>
+	<SkipIcon />
+	<div class="sr">Skip current code word</div>
 </button>

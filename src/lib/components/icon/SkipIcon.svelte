@@ -8,6 +8,6 @@ export let flipped: boolean = false
 
 <style>
 .flipped {
-  transform: rotateY(180deg);
+	transform: rotateY(180deg);
 }
 </style>

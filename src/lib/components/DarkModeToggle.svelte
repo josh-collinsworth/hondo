@@ -5,40 +5,40 @@ import LightDarkIcon from './icon/LightDarkIcon.svelte'
 import { onMount } from 'svelte'
 
 onMount(() => {
-  if (document.documentElement.classList.contains('dark')) {
-    $isDarkMode = true
-  }
+	if (document.documentElement.classList.contains('dark')) {
+		$isDarkMode = true
+	}
 })
 </script>
 
 <button on:click={toggleDarkMode} class="info-button" aria-pressed={$isDarkMode}>
-  <div class="light-dark-icon" aria-hidden="true">
-    <LightDarkIcon />
-  </div>
-  <span class="sr">Toggle dark mode</span>
+	<div class="light-dark-icon" aria-hidden="true">
+		<LightDarkIcon />
+	</div>
+	<span class="sr">Toggle dark mode</span>
 </button>
 
 
 <style lang="scss">
 .info-button {
-  padding: 0;
-  overflow: hidden;
-  align-items: flex-start;
+	padding: 0;
+	overflow: hidden;
+	align-items: flex-start;
 
-  :global(svg) {
-    stroke: currentColor;
-    stroke-width: 10px;
-  }
+	:global(svg) {
+		stroke: currentColor;
+		stroke-width: 10px;
+	}
 
-  .light-dark-icon {
-    transform: translateY(0);
-    width: 100%;
-    height: 200%;
-    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  }
+	.light-dark-icon {
+		transform: translateY(0);
+		width: 100%;
+		height: 200%;
+		transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+	}
 
-  &[aria-pressed=true] .light-dark-icon {
-    transform: translateY(-50%);
-  }
+	&[aria-pressed=true] .light-dark-icon {
+		transform: translateY(-50%);
+	}
 }
 </style>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let iconColor: string = 'currentColor'
+	export let iconColor: string = 'currentColor'
 </script>
 
 <svg width="100%" height="100%" viewBox="0 0 30 30" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><path d="M6.576,14.25l-2.841,-0l-0,14.065l22.53,-0l0,-14.065l-2.841,0l0,-4.141c0,-4.649 -3.775,-8.424 -8.424,-8.424c-4.649,0 -8.424,3.775 -8.424,8.424l-0,4.141Zm8.438,3.149c1.221,0.007 2.21,1.001 2.21,2.223c-0,0.79 -0.412,1.483 -1.033,1.878l1.033,3.555l-4.448,0l1.033,-3.555c-0.621,-0.395 -1.033,-1.088 -1.033,-1.878c0,-1.222 0.989,-2.216 2.21,-2.223l0.028,-0Zm6.356,-3.149l-12.74,0l0,-4.141c0,-3.515 2.854,-6.37 6.37,-6.37c3.516,0 6.37,2.855 6.37,6.37l-0,4.141Z" style="fill:{iconColor};"/></svg>

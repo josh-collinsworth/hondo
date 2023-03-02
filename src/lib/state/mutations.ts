@@ -34,7 +34,7 @@ import {
 import { isValidGuess, loadFromLocalStorage, saveToLocalStorage } from '../js/helpers'
 import { codeWords } from '../js/codeWords'
 
-import { dev } from '$app/env'
+import { dev } from '$app/environment'
 import { goto } from '$app/navigation'
 import { tick } from 'svelte'
 import { get } from 'svelte/store'

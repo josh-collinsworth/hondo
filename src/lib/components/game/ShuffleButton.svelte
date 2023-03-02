@@ -5,15 +5,15 @@ import ShuffleConfirmationModal from '../modals/ShuffleConfirmationModal.svelte'
 import ShuffleIcon from '../icon/ShuffleIcon.svelte'
 
 const confirmShuffle = (): void => {
-  $shownModal = ShuffleConfirmationModal
+	$shownModal = ShuffleConfirmationModal
 }
 </script>
 
 <button
-  on:click={confirmShuffle}
-  disabled={$maxRemainingAttempts <= 1}
-  class="info-button shuffle-button"
+	on:click={confirmShuffle}
+	disabled={$maxRemainingAttempts <= 1}
+	class="info-button shuffle-button"
 >
-  <ShuffleIcon />
-  <div class="sr">Shuffle board</div>
+	<ShuffleIcon />
+	<div class="sr">Shuffle board</div>
 </button>

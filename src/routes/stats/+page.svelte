@@ -14,165 +14,169 @@ $: averageGuesses = floatFormatter.format($totalGuessesUsed / $totalGamesPlayed)
 $: bonusPointPercentage = floatFormatter.format(100 / $totalPointsScored * $totalBonusPointsScored)
 
 const clearData = (): void => {
-  const confirmation = confirm(`This will permanently delete all your Hondo game history, and any game in progress.\n\nAre you sure?`)
+	const confirmation = confirm(`This will permanently delete all your Hondo game history, and any game in progress.\n\nAre you sure?`)
 
-  if (!confirmation) return
-  localStorage.removeItem(GAME_HISTORY_STORAGE_KEY)
-  localStorage.removeItem(GAME_DATA_STORAGE_KEY)
-  window.location.reload()
+	if (!confirmation) return
+	localStorage.removeItem(GAME_HISTORY_STORAGE_KEY)
+	localStorage.removeItem(GAME_DATA_STORAGE_KEY)
+	window.location.reload()
 }
 
 onMount(() => {
-  const loadedLongestStreak = loadFromLocalStorage(LONGEST_STREAK_STORAGE_KEY)
-  longestStreak = loadedLongestStreak || 0
+	const loadedLongestStreak = loadFromLocalStorage(LONGEST_STREAK_STORAGE_KEY)
+	longestStreak = loadedLongestStreak || 0
 
-  localIsLoading = false
+	localIsLoading = false
 })
 </script>
 
 
 <div class="stats display-flex center-content">
-  <MenuButton floating={true} />
-  <h1>Game stats</h1>
+	<MenuButton floating={true} />
+	<h1>Game stats</h1>
 
-  {#if localIsLoading}
-    <Loader />
-  {:else if $totalGamesPlayed}
-    <ul class="no-bullets">
-      <li>
-        <b>Games played</b>
-        {$totalGamesPlayed}
-      </li>
-      <li>
-        <b>Highest score</b>
-        {$highScore}
-      </li>
-      <li>
-        <b>Total points scored</b>
-        {floatFormatter.format($totalPointsScored)}
-      </li>
-      <li>
-        <b>Longest streak</b>
-        {longestStreak}
-      </li>
-      <li>
-        <b>Bonus points scored</b>
-        {floatFormatter.format($totalBonusPointsScored)}
-      </li>
-      <li>
-        <b>Bonus point percentage</b>
-        {bonusPointPercentage}%
-      </li>
-      <li>
-        <b>Average score</b>
-        {averageScore}
-      </li>
-      <li>
-        <b>Average game length</b>
-        {averageGuesses} turns
-      </li>
-      <li>
-        <b>Shuffles used</b>
-        {$totalShufflesUsed}
-      </li>
-      <li>
-        <b>Avg. shuffles per game</b>
-        {floatFormatter.format($totalShufflesUsed / $totalGamesPlayed)}
-      </li>
-      <li>
-        <b>Skips used</b>
-        {$totalSkipsUsed}
-      </li>
-      <li>
-        <b>Avg. skips per game</b>
-        {floatFormatter.format($totalSkipsUsed / $totalGamesPlayed)}
-      </li>
-      <li>
-        <b>Total Hondos</b>
-        {#if $totalHondos}
-          {$totalHondos}
-        {:else}
-          NA
-        {/if}
-      </li>
-      <li>
-        <b>Fastest Hondo</b>
-        {#if $fastestHondo}
-          {$fastestHondo} turns
-        {:else}
-          NA
-        {/if}
-      </li>
-      <li>
-        <b>Hondo percentage</b>
-        {#if $totalHondos}
-        {floatFormatter.format(100 / $totalGamesPlayed * $totalHondos)}%
-        {:else}
-        NA
-        {/if}
-      </li>
-      <li>
-        <b>Perfect games</b>
-        {$perfectHondos || 0}
-      </li>
-    </ul>
-  {:else}
-    <p>
-      <b>You don't have any stats yet.</b>
-    </p>
+	{#if localIsLoading}
+		<Loader />
+	{:else if $totalGamesPlayed}
+		<ul class="no-bullets">
+			<li>
+				<b>Games played</b>
+				{$totalGamesPlayed}
+			</li>
+			<li>
+				<b>Highest score</b>
+				{$highScore}
+			</li>
+			<li>
+				<b>Total points scored</b>
+				{floatFormatter.format($totalPointsScored)}
+			</li>
+			<li>
+				<b>Longest streak</b>
+				{longestStreak}
+			</li>
+			<li>
+				<b>Bonus points scored</b>
+				{floatFormatter.format($totalBonusPointsScored)}
+			</li>
+			<li>
+				<b>Bonus point percentage</b>
+				{bonusPointPercentage}%
+			</li>
+			<li>
+				<b>Average score</b>
+				{averageScore}
+			</li>
+			<li>
+				<b>Average game length</b>
+				{averageGuesses} turns
+			</li>
+			<li>
+				<b>Shuffles used</b>
+				{$totalShufflesUsed}
+			</li>
+			<li>
+				<b>Avg. shuffles per game</b>
+				{floatFormatter.format($totalShufflesUsed / $totalGamesPlayed)}
+			</li>
+			<li>
+				<b>Skips used</b>
+				{$totalSkipsUsed}
+			</li>
+			<li>
+				<b>Avg. skips per game</b>
+				{floatFormatter.format($totalSkipsUsed / $totalGamesPlayed)}
+			</li>
+			<li>
+				<b>Total Hondos</b>
+				{#if $totalHondos}
+					{$totalHondos}
+				{:else}
+					NA
+				{/if}
+			</li>
+			<li>
+				<b>Fastest Hondo</b>
+				{#if $fastestHondo}
+					{$fastestHondo} turns
+				{:else}
+					NA
+				{/if}
+			</li>
+			<li>
+				<b>Hondo percentage</b>
+				{#if $totalHondos}
+					{floatFormatter.format(100 / $totalGamesPlayed * $totalHondos)}%
+				{:else}
+				NA
+				{/if}
+			</li>
+			<li>
+				<b>Perfect games</b>
+				{$perfectHondos || 0}
+			</li>
+			<li>
+				<b>Perfect game percentage</b>
+				{floatFormatter.format(100 / $totalGamesPlayed * $perfectHondos)}%
+			</li>
+		</ul>
+	{:else}
+		<p>
+			<b>You don't have any stats yet.</b>
+		</p>
 
-    <p>Finish at least one game of Hondo, then check back.</p>
-  {/if}
+		<p>Finish at least one game of Hondo, then check back.</p>
+	{/if}
 
-  <div class="button-bar">
-    <button on:click={clearData} class="warning">
-      Erase all game data
-    </button>
-    
-    <a href="/" class="button">Back to game</a>
-  </div>
+	<div class="button-bar">
+		<button on:click={clearData} class="warning">
+			Erase all game data
+		</button>
+		
+		<a href="/" class="button">Back to game</a>
+	</div>
 </div>
 
 
 <style lang="scss">
 .stats {
-  padding: 24px;
-  width: 100%;
-  max-width: 30rem;
-  margin: 0 auto;
-  text-align: left;
+	padding: 24px;
+	width: 100%;
+	max-width: 30rem;
+	margin: 0 auto;
+	text-align: left;
 
-  h1 {
-    text-align: left;
-    margin-top: 0;
-    font-weight: var(--fontWeightNormal);
-    text-transform: uppercase;
-  }
-  
-  > * {
-    width: 100%;
-  }
+	h1 {
+		text-align: left;
+		margin-top: 0;
+		font-weight: var(--fontWeightNormal);
+		text-transform: uppercase;
+	}
+	
+	> * {
+		width: 100%;
+	}
 
-  li {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding: 1rem 0;
-    border-bottom: 1px solid var(--lightAccent);
-    margin: 0;
-    font-weight: var(--fontWeightNormal);
+	li {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		padding: 1rem 0;
+		border-bottom: 1px solid var(--lightAccent);
+		margin: 0;
+		font-weight: var(--fontWeightNormal);
 
-    b {
-      font-weight: var(--fontWeightSemiBold);
-    }
-  }
+		b {
+			font-weight: var(--fontWeightSemiBold);
+		}
+	}
 
-  .button-bar {
-    margin-top: 4rem;
-    flex-wrap: wrap;
-    gap: 2rem;
-    justify-content: space-between;
-    width: 100%;
-  }
+	.button-bar {
+		margin-top: 4rem;
+		flex-wrap: wrap;
+		gap: 2rem;
+		justify-content: space-between;
+		width: 100%;
+	}
 }
 </style>
