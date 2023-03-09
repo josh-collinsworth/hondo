@@ -152,12 +152,16 @@ import { SHUFFLE_COST, SKIP_COST } from '$lib/js/constants'
 		<h2>Hints and tips</h2>
 	
 		<ul>
-			<li><strong>Keep an eye on the keyboard</strong>. It shows which letters aren't currently on the board, which can be a big hint.</li>
-			<li><strong>Guess using common letters first.</strong></li>
-			<li>As much as possible, keep the words on the board varied. Use skips and shuffles to avoid putting too many similar words on the board.</li>
-			<li><strong>Use shuffles and skips strategically</strong>. They can get you out of a jam, and can also keep streaks alive for extra bonus points.</li>
-			<li><strong>Know when to use which ability.</strong> Shuffles work best when you need more info from the board; skips are better when the code word is ambiguous.</li>
-			<li>Don't forget to consider the possibility of repeated letters in the code word.</li>
+			<li><strong>Guess words with common letters first</strong>.</li>
+			<li><strong>Keep an eye on the keyboard</strong>. Highlighted keys are discovered; darkened keys are not in the code word.</li>
+			<li><strong>Shuffles and skips are key</strong>. They can get you out of a jam, or extend streaks for bonus points.
+			<ul>
+				<li><strong>Shuffle</strong> when you need more info;</li>
+				<li><strong>Skip</strong> when you're close to the code word, but there are too many possibilities to guess confidently.</li>
+			</ul>
+			</li>
+			<li>Remember letters in the code word might repeat.</li>
+			<li>There's a way to “cheat” and peek back at the board from before your last move…</li>
 			<li><strong>Be patient</strong>; haste is costly. Getting a high score requires logic, strategy, and luck.</li>
 		</ul>
 

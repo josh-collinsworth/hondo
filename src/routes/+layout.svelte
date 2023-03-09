@@ -2,7 +2,7 @@
 import type { PageData } from '@sveltejs/kit/types/internal'
 import '$lib/scss/global.scss'
 import { gameHistory, gameIsOver, runningScore } from '$lib/state/game'
-import { isMenuOpen, shownModal } from '$lib/state/global'
+import { isMenuOpen, isScoring, shownModal } from '$lib/state/global'
 import { setToast } from '$lib/state/mutations'
 import SkipToContentLink from '$lib/components/SkipToContentLink.svelte'
 import Modal from '$lib/components/modals/Modal.svelte'
@@ -29,11 +29,20 @@ $: if ($gameIsOver) {
 	}, 1500)
 }
 
+const handleInterruptedScoring = (e) => {
+	console.log('isScoring', $isScoring)
+	if ($isScoring) {
+		e.returnValue = `Warning! Leaving the page now may corrupt your data. Please try again.`
+	}
+}
+
 onMount(() => {
 	$gameHistory = retrieveGameHistory() || []
 })
 </script>
 
+
+<svelte:window on:beforeunload={handleInterruptedScoring} />
 
 <div class="layout">
 	{#if path === '/'}
