@@ -7,6 +7,11 @@ export let flipped: boolean = false
 
 
 <style>
+svg,
+svg * {
+	touch-action: manipulation;
+}
+
 .flipped {
 	transform: rotateY(180deg);
 }

@@ -84,6 +84,10 @@ h1 {
   justify-content: center;
 }
 
+div {
+	touch-action: manipulation;
+}
+
 .transition {
   height: 100%;
   width: 100%;

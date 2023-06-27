@@ -93,6 +93,7 @@ const handlePress = async (key: string): Promise<void> => {
 	grid-template-rows: repeat(3, 3.5rem);
 	margin: 0 calc(-1rem + 5px);
 	height: 100%;
+	touch-action: manipulation;
 
 	@media (min-height: 44rem) {
 		grid-template-rows: repeat(3, 4rem);

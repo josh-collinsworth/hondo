@@ -1,8 +1,9 @@
 {
   "name": "hondo",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "scripts": {
     "dev": "vite dev --port 3000",
+    "host": "vite dev --port 3333 --host",
     "build": "vite build",
     "package": "svelte-kit package",
     "preview": "vite preview",

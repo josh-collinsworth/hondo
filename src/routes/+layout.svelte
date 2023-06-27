@@ -3,6 +3,7 @@ import type { PageData } from '@sveltejs/kit/types/internal'
 import '$lib/scss/global.scss'
 import { gameHistory, gameIsOver, runningScore } from '$lib/state/game'
 import { isMenuOpen, isScoring, shownModal } from '$lib/state/global'
+import { isDarkMode } from '$lib/state/user'
 import { setToast } from '$lib/state/mutations'
 import SkipToContentLink from '$lib/components/SkipToContentLink.svelte'
 import Modal from '$lib/components/modals/Modal.svelte'
@@ -43,6 +44,9 @@ onMount(() => {
 
 
 <svelte:window on:beforeunload={handleInterruptedScoring} />
+<svelte:head>
+	<meta name="theme-color" content={$isDarkMode ? '#160d27' : '#fefff6'} >
+</svelte:head>
 
 <div class="layout">
 	{#if path === '/'}
