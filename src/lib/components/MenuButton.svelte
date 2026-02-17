@@ -1,11 +1,11 @@
 <script lang="ts">
-import { isMenuOpen } from '$lib/state/global'
+	import { isMenuOpen } from '$lib/state/global';
 
-let { floating = false }: { floating?: boolean } = $props()
+	let { floating = false }: { floating?: boolean } = $props();
 
-const toggleMenuOpen = (): void => {
-	$isMenuOpen = !$isMenuOpen
-}
+	const toggleMenuOpen = (): void => {
+		$isMenuOpen = !$isMenuOpen;
+	};
 </script>
 
 <div class:floating class="menu-button-wrapper">
@@ -19,47 +19,46 @@ const toggleMenuOpen = (): void => {
 	</button>
 </div>
 
-
 <style lang="scss">
-.menu-button-wrapper {
-	max-width: max-content;
-	height: auto;
+	.menu-button-wrapper {
+		max-width: max-content;
+		height: auto;
 
-	&.floating {
-		position: fixed;
-		top: 24px;
-		right: 24px;
-		z-index: 2;
+		&.floating {
+			position: fixed;
+			top: 24px;
+			right: 24px;
+			z-index: 2;
 
-		.menu-button {
-			background: var(--paper);
+			.menu-button {
+				background: var(--paper);
+			}
 		}
 	}
-}
 
-.menu-button {
-	padding: 0;
-}
+	.menu-button {
+		padding: 0;
+	}
 
-.hamburger {
-	width: 1.25rem;
-	height: auto;
-	flex-wrap: wrap;
+	.hamburger {
+		width: 1.25rem;
+		height: auto;
+		flex-wrap: wrap;
 
-	.hamburger__bar {
-		content: '';
-		width: 100%;
-		height: 0;
-		border-bottom: 2px solid var(--darkBlue);
-		display: block;
+		.hamburger__bar {
+			content: '';
+			width: 100%;
+			height: 0;
+			border-bottom: 2px solid var(--darkBlue);
+			display: block;
 
-		+ .hamburger__bar {
-			margin-top: 3px;
-		}
+			+ .hamburger__bar {
+				margin-top: 3px;
+			}
 
-		.dark & {
-			border-color: var(--lightBlue);
+			:global(.dark) & {
+				border-color: var(--lightBlue);
+			}
 		}
 	}
-}
 </style>
