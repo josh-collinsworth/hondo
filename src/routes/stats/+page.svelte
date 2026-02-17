@@ -6,12 +6,12 @@ import Loader from '$lib/components/game/Loader.svelte'
 import MenuButton from '$lib/components/MenuButton.svelte'
 import { onMount } from 'svelte'
 
-let localIsLoading = true
-let longestStreak: number
+let localIsLoading = $state(true)
+let longestStreak: number = $state(0)
 
-$: averageScore = floatFormatter.format($totalPointsScored / $totalGamesPlayed)
-$: averageGuesses = floatFormatter.format($totalGuessesUsed / $totalGamesPlayed)
-$: bonusPointPercentage = floatFormatter.format(100 / $totalPointsScored * $totalBonusPointsScored)
+let averageScore = $derived(floatFormatter.format($totalPointsScored / $totalGamesPlayed))
+let averageGuesses = $derived(floatFormatter.format($totalGuessesUsed / $totalGamesPlayed))
+let bonusPointPercentage = $derived(floatFormatter.format(100 / $totalPointsScored * $totalBonusPointsScored))
 
 const clearData = (): void => {
 	const confirmation = confirm(`This will permanently delete all your Hondo game history, and any game in progress.\n\nAre you sure?`)
@@ -129,10 +129,10 @@ onMount(() => {
 	{/if}
 
 	<div class="button-bar">
-		<button on:click={clearData} class="warning">
+		<button onclick={clearData} class="warning">
 			Erase all game data
 		</button>
-		
+
 		<a href="/" class="button">Back to game</a>
 	</div>
 </div>
@@ -152,7 +152,7 @@ onMount(() => {
 		font-weight: var(--fontWeightNormal);
 		text-transform: uppercase;
 	}
-	
+
 	> * {
 		width: 100%;
 	}

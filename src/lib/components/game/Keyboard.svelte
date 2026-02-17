@@ -13,11 +13,11 @@ const keys = [
 	['+', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '-'],
 ]
 
-$: lettersOnTheBoard = Array.from(new Set($currentGuesses.flatMap(word => [...word])))
-$: disableEnterKey = $currentGuess.length < 5
-$: disableDeleteKey = !$currentGuess.length
-$: disableKeyboard = $gameIsOver
-$: vibrationEnabled = browser && window.navigator && window.navigator.vibrate
+let lettersOnTheBoard = $derived(Array.from(new Set($currentGuesses.flatMap(word => [...word]))))
+let disableEnterKey = $derived($currentGuess.length < 5)
+let disableDeleteKey = $derived(!$currentGuess.length)
+let disableKeyboard = $derived($gameIsOver)
+let vibrationEnabled = $derived(browser && window.navigator && window.navigator.vibrate)
 
 const handleKeyUp = (e: KeyboardEvent): void => {
 	if (!e.key || disableKeyboard) return
@@ -53,15 +53,15 @@ const handlePress = async (key: string): Promise<void> => {
 </script>
 
 
-<svelte:window on:keyup={handleKeyUp} />
+<svelte:window onkeyup={handleKeyUp} />
 
 
 <div class="keyboard">
 	{#each keys as row}
 		<div class="row">
 			{#each row as key}
-				<button 
-					on:click={() => handlePress(key)}
+				<button
+					onclick={() => handlePress(key)}
 					data-key={key}
 					class:used={lettersOnTheBoard.includes(key)}
 					class:included={lettersOnTheBoard.includes(key) && $codeWord.includes(key)}
@@ -157,11 +157,11 @@ const handlePress = async (key: string): Promise<void> => {
 			width: 1.25rem;
 			fill: currentColor;
 		}
-		
+
 		&[data-key="+"] :global(svg) {
 			width: 1.75rem;
 		}
-		
+
 		+ button {
 			margin-left: 5px;
 		}

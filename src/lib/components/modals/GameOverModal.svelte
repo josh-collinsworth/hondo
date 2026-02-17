@@ -4,7 +4,7 @@ import { shownModal } from '$lib/state/global'
 import { closeModal, startNewGame } from '$lib/state/mutations'
 import { onMount } from 'svelte'
 
-let lostWord: string = ''
+let lostWord = ''
 
 const handleStartNewGame = (): void => {
 	startNewGame()
@@ -30,20 +30,20 @@ onMount(() => {
 		{:else}
 			<li><strong>Congrats!</strong> You scored a Hondo! <span aria-hidden="true">💯</span></li>
 		{/if}
-		
+
 		<li>You used <b>{$usedAttempts} turns</b> total.</li>
 		<li><b>{$bonusPointsScored}</b> of your <b>{$runningScore}</b> points were bonus points.</li>
 	</ul>
 
 	<div class="button-bar">
-		<a href="/stats" class="button" on:click={closeModal}>
+		<a href="/stats" class="button" onclick={closeModal}>
 			Stats
 		</a>
-		<button on:click={handleStartNewGame} class="button confirm">
+		<button onclick={handleStartNewGame} class="button confirm">
 			Play again!
 		</button>
 	</div>
-		
+
 	<footer>
 		<a href="https://ko-fi.com/collinsworth">
 			<img src="/ko-fi.png" alt="">

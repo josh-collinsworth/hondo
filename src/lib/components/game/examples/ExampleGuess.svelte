@@ -1,26 +1,24 @@
 <script lang="ts">
-export let guess: string
-export let codeWord: string
+let { guess, codeWord }: { guess: string, codeWord: string } = $props()
 
 // All this logic is copied directly from the GuessContent modal. Seemed easier to copy than to make the modal work for both purposes, with all the animation and such in the real one.
-let remainingLetters: string[] = []
-$: if (codeWord) remainingLetters = [...codeWord]
-
-let highlightArray: string[]
-$: highlightArray = [...guess].map((letter, i) => {
-	if ([...codeWord][i] === letter) {
-		remainingLetters.splice(remainingLetters.findIndex(i => i === letter), 1)
-		return 'exact'
-	} 
-	return letter
-}).map((letter, i) => {
-	if (letter === 'exact') {
+let highlightArray: string[] = $derived.by(() => {
+	const remaining = [...codeWord]
+	return [...guess].map((letter, i) => {
+		if ([...codeWord][i] === letter) {
+			remaining.splice(remaining.findIndex(l => l === letter), 1)
+			return 'exact'
+		}
 		return letter
-	} else if (remainingLetters.includes(letter) && letter) {
-		remainingLetters.splice(remainingLetters.findIndex(i => i === letter), 1)
-		return 'partial'
-	}
-	return ''
+	}).map((letter) => {
+		if (letter === 'exact') {
+			return letter
+		} else if (remaining.includes(letter) && letter) {
+			remaining.splice(remaining.findIndex(l => l === letter), 1)
+			return 'partial'
+		}
+		return ''
+	})
 })
 </script>
 

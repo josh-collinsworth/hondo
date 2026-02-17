@@ -2,8 +2,8 @@
 import { onMount } from 'svelte'
 import { fly } from 'svelte/transition'
 
-let isShown = false
-let installEvent: Event
+let isShown = $state(false)
+let installEvent: any
 
 onMount(() => {
 	window.addEventListener('beforeinstallprompt', (e) => {
@@ -19,7 +19,7 @@ const dismissPrompt = () => {
 
 const installPWA = () => {
 	installEvent.prompt()
-	installEvent.userChoice.then((choice) => {
+	installEvent.userChoice.then((choice: { outcome: string }) => {
 		dismissPrompt() // Hide the prompt once the user's clicked
 		if (choice.outcome === 'accepted') {
 			// Do something additional if the user chose to install
@@ -37,11 +37,11 @@ const installPWA = () => {
 		<p>Add Hondo to your home screen?</p>
 
 		<div class="button-bar">
-			<button on:click={dismissPrompt}>
+			<button onclick={dismissPrompt}>
 				Nah
 			</button>
-			
-			<button class="confirm" on:click={installPWA}>
+
+			<button class="confirm" onclick={installPWA}>
 				Install!
 			</button>
 		</div>

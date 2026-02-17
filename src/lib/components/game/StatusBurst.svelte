@@ -2,19 +2,21 @@
 import { pointsScoredForLastGuess, discoveredCodeWord } from '$lib/state/game'
 import { fade } from 'svelte/transition'
 
-let codeWordToShow: string = ''
+let codeWordToShow: string = $state('')
 
-$: if ($discoveredCodeWord) {
-	codeWordToShow = $discoveredCodeWord
-	setTimeout(() => {
-		codeWordToShow = ''
-	}, 1500)
-}
+$effect(() => {
+	if ($discoveredCodeWord) {
+		codeWordToShow = $discoveredCodeWord
+		setTimeout(() => {
+			codeWordToShow = ''
+		}, 1500)
+	}
+})
 </script>
 
 
 {#if codeWordToShow}
-	<div 
+	<div
 		class="status-burst display-flex"
 		transition:fade={{ duration: 300 }}
 	>
@@ -116,7 +118,7 @@ $: if ($discoveredCodeWord) {
 		75% { transform: translateX(0); opacity: 1 }
 		100% { transform: translateX(3rem); opacity: 0 }
 	}
-	
+
 	@keyframes slide_left {
 		0% { transform: translateX(3rem) }
 		20% { transform: translateX(0) }

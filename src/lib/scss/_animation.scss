@@ -1,45 +1,49 @@
 @keyframes pop_out {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(-2.05em);
-  }
+	from {
+		transform: translateY(0);
+	}
+	to {
+		transform: translateY(-2.05em);
+	}
 }
 
 @keyframes pop_in {
-  0% {
-    transform: translateY(0.15em);
-  }
-  40% {
-    transform: translateY(0.25em);
-  }
-  100% {
-    transform: translateY(0em);
-  }
+	0% {
+		transform: translateY(0.15em);
+	}
+	40% {
+		transform: translateY(0.25em);
+	}
+	100% {
+		transform: translateY(0em);
+	}
 }
 
 @keyframes slide_up {
-  from {
-    transform: translateY(0%);
-  }
-  to {
-    transform: translateY(-50%);
-  }
+	from {
+		transform: translateY(0%);
+	}
+	to {
+		transform: translateY(-50%);
+	}
 }
 
 @keyframes zoom_in_left {
-  from {
-    transform: translateX(5em);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0em);
-    opacity: 1;
-  }
+	from {
+		transform: translateX(5em);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0em);
+		opacity: 1;
+	}
 }
 
 @keyframes pulse {
-  from { opacity: 0; }
-  to { opacity: 1; }
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
 }

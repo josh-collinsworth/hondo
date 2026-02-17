@@ -4,7 +4,7 @@ const focusMain = (): void => {
 }
 </script>
 
-<a href="#game-board" id="skip-to-content-link" on:click={focusMain}>
+<a href="#game-board" id="skip-to-content-link" onclick={focusMain}>
 	Skip to board
 </a>
 

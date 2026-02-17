@@ -20,7 +20,7 @@ const shuffleAndClose = (): void => {
 </script>
 
 
-<svelte:window on:keydown={listenForEnter} />
+<svelte:window onkeydown={listenForEnter} />
 
 
 <h2 class="display-flex align-center">
@@ -32,18 +32,18 @@ const shuffleAndClose = (): void => {
 
 <p>Replaces all words on the board with new, random words.</p>
 <p>
-	<b>Cost</b>: 
+	<b>Cost</b>:
 	<span class="sr">{SHUFFLE_COST}</span>
 	<span class="energy-bar" aria-hidden="true">
-		<span class="energy-cell" /><span class="energy-cell" />
+		<span class="energy-cell"></span><span class="energy-cell"></span>
 	</span>
 </p>
 
 <div class="button-bar">
-	<button on:click={closeModal} bind:this={cancelButton}>
+	<button onclick={closeModal} bind:this={cancelButton}>
 		Cancel
 	</button>
-	<button class="confirm" on:click={shuffleAndClose} disabled={SHUFFLE_COST >= $remainingAttempts}>
+	<button class="confirm" onclick={shuffleAndClose} disabled={SHUFFLE_COST >= $remainingAttempts}>
 		Shuffle now
 	</button>
 </div>

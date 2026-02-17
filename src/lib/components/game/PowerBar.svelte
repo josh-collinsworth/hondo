@@ -15,10 +15,10 @@ import { STARTING_GUESSES } from '$lib/js/constants'
 				transform: scaleX({ $remainingAttempts / STARTING_GUESSES });
 				background-size: {( STARTING_GUESSES / $remainingAttempts) * 100}%;
 			"
-		/>
+		></div>
 		<div class="power-bar__grid">
 			{#each { length: 10 } as _, i}
-				<div class="power-bar__grid-box" />
+				<div class="power-bar__grid-box"></div>
 			{/each}
 		</div>
 	</div>

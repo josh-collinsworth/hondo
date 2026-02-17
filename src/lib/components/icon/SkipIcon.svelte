@@ -1,5 +1,5 @@
 <script lang="ts">
-export let flipped: boolean = false
+let { flipped = false }: { flipped?: boolean } = $props()
 </script>
 
 

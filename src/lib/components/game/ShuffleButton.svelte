@@ -10,7 +10,7 @@ const confirmShuffle = (): void => {
 </script>
 
 <button
-	on:click={confirmShuffle}
+	onclick={confirmShuffle}
 	disabled={$maxRemainingAttempts <= 1}
 	class="info-button shuffle-button"
 >

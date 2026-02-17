@@ -1,5 +1,5 @@
 <script lang="ts">
-import type { PageData } from '@sveltejs/kit/types/internal'
+import type { LayoutData } from './$types'
 import '$lib/scss/global.scss'
 import { gameHistory, gameIsOver, runningScore } from '$lib/state/game'
 import { isMenuOpen, isScoring, shownModal } from '$lib/state/global'
@@ -13,25 +13,27 @@ import { fly } from 'svelte/transition'
 import { onMount } from 'svelte'
 import { retrieveGameHistory } from '$lib/state/getters'
 import GameOverModal from '$lib/components/modals/GameOverModal.svelte'
+import type { Snippet } from 'svelte'
 
-export let data: PageData
-$: ({ path } = data)
+let { data, children }: { data: LayoutData, children: Snippet } = $props()
+let path = $derived(data.path)
 
-$: isInert = $shownModal || $isMenuOpen || null
+let isInert = $derived(!!$shownModal || $isMenuOpen || null)
 
-$: if ($gameIsOver) {
-	if ($runningScore >= 100) {
-		setToast({ message: 'Congratulations!', type: 'success' })
-	} else (
-		setToast({ message: 'Too bad!', type: 'warning' })
-	)
-	setTimeout(() => {
-		$shownModal = GameOverModal
-	}, 1500)
-}
+$effect(() => {
+	if ($gameIsOver) {
+		if ($runningScore >= 100) {
+			setToast({ message: 'Congratulations!', type: 'success' })
+		} else {
+			setToast({ message: 'Too bad!', type: 'warning' })
+		}
+		setTimeout(() => {
+			$shownModal = GameOverModal
+		}, 1500)
+	}
+})
 
-const handleInterruptedScoring = (e) => {
-	console.log('isScoring', $isScoring)
+const handleInterruptedScoring = (e: BeforeUnloadEvent) => {
 	if ($isScoring) {
 		e.returnValue = `Warning! Leaving the page now may corrupt your data. Please try again.`
 	}
@@ -43,7 +45,7 @@ onMount(() => {
 </script>
 
 
-<svelte:window on:beforeunload={handleInterruptedScoring} />
+<svelte:window onbeforeunload={handleInterruptedScoring} />
 <svelte:head>
 	<meta name="theme-color" content={$isDarkMode ? '#160d27' : '#fefff6'} >
 </svelte:head>
@@ -52,17 +54,18 @@ onMount(() => {
 	{#if path === '/'}
 		<SkipToContentLink />
 	{/if}
-	
+
 	{#if $shownModal}
+		{@const ModalContent = $shownModal}
 		<Modal>
-			<svelte:component this={$shownModal} />
+			<ModalContent />
 		</Modal>
 	{/if}
-	
+
 	<main inert={isInert} class:blurry={isInert} id="#main" tabindex="-1">
 		{#key path}
 			<div class="transition" in:fly={{ delay: 420, duration: 360, y: 8 }} out:fly={{ duration: 360, y: -8 }}>
-				<slot />
+				{@render children()}
 			</div>
 		{/key}
 	</main>

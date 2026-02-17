@@ -11,7 +11,7 @@ onMount(() => {
 })
 </script>
 
-<button on:click={toggleDarkMode} class="info-button" aria-pressed={$isDarkMode}>
+<button onclick={toggleDarkMode} class="info-button" aria-pressed={$isDarkMode}>
 	<div class="light-dark-icon" aria-hidden="true">
 		<LightDarkIcon />
 	</div>

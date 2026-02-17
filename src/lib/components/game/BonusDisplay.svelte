@@ -4,10 +4,9 @@ import { streak } from '$lib/state/game'
 import { fly } from 'svelte/transition'
 import { backIn, backOut } from 'svelte/easing'
 
-export let bonusOverride: number|null = null
+let { bonusOverride = null }: { bonusOverride?: number | null } = $props()
 
-let bonusToShow: number
-$: bonusToShow = bonusOverride ? bonusOverride : $streak
+let bonusToShow: number = $derived(bonusOverride ? bonusOverride : $streak)
 </script>
 
 

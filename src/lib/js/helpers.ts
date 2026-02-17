@@ -1,40 +1,40 @@
-import { legalGuesses } from './legalGuesses'
+import { legalGuesses } from './legalGuesses';
 
-export const alphabetAsString = 'abcdefghijklmnopqrstuvwxyz'
-export const alphabetAsArray: string[] = [...alphabetAsString]
+export const alphabetAsString = 'abcdefghijklmnopqrstuvwxyz';
+export const alphabetAsArray: string[] = [...alphabetAsString];
 
 export const isSingleLetter = (str: string): boolean => {
-  return alphabetAsArray.includes(str.toLowerCase())
-}
+	return alphabetAsArray.includes(str.toLowerCase());
+};
 
 export const stringContainsLetter = (str: string): boolean => {
-  str = str.toLowerCase()
-  return Boolean(str.match(/[abcdefghijklmnopqrstuvwxyz]/))
-}
+	str = str.toLowerCase();
+	return Boolean(str.match(/[abcdefghijklmnopqrstuvwxyz]/));
+};
 
 export const saveToLocalStorage = (key: string, data: any): void => {
-  localStorage.setItem(key, JSON.stringify(data))
-}
+	localStorage.setItem(key, JSON.stringify(data));
+};
 
 export const loadFromLocalStorage = (key: string): any => {
-  const item = localStorage.getItem(key)
-  if (item) {
-    return JSON.parse(localStorage.getItem(key))
-  }
-  return null
-}
+	const item = localStorage.getItem(key);
+	if (item) {
+		return JSON.parse(item);
+	}
+	return null;
+};
 
 export const isValidGuess = (guess: string): boolean => {
-  return guess.length === 5 && legalGuesses.includes(guess.toLowerCase())
-}
+	return guess.length === 5 && legalGuesses.includes(guess.toLowerCase());
+};
 
 export const randomIntegerInRange = (min: number, max: number): number => {
-  min = Math.ceil(min)
-  max = Math.floor(max)
-  return Math.floor(Math.random() * (max - min + 1)) + min
-}
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min + 1)) + min;
+};
 
 export const floatFormatter = new Intl.NumberFormat('en-US', {
-  minimumFractionDigits: 0,
-  maximumFractionDigits: 2,
+	minimumFractionDigits: 0,
+	maximumFractionDigits: 2
 });

@@ -15,12 +15,12 @@ import { tick } from 'svelte'
 import { fly, fade } from 'svelte/transition'
 import { quintIn, quintOut } from 'svelte/easing'
 import { goto } from '$app/navigation'
-import { is_client } from 'svelte/internal'
+import { browser } from '$app/environment'
 
-export let currentPage: string
+let { currentPage }: { currentPage: string } = $props()
 
 let iconColor = 'var(--tertiary)'
-let navMenu: HTMLElement
+let navMenu: HTMLElement = $state() as HTMLElement
 
 const handleReturnToGame = (): void => {
 	if (currentPage !== '/') {
@@ -35,8 +35,14 @@ const listenForClose = (e: KeyboardEvent): void => {
 	}
 }
 
+const handleBackgroundClick = (e: MouseEvent): void => {
+	if (e.target === e.currentTarget) {
+		toggleMenuOpen()
+	}
+}
+
 isMenuOpen.subscribe(async (isOpen) => {
-	if (isOpen && is_client) {
+	if (isOpen && browser) {
 		await tick()
 		navMenu?.focus()
 	}
@@ -44,13 +50,14 @@ isMenuOpen.subscribe(async (isOpen) => {
 </script>
 
 
-<svelte:window on:keyup={listenForClose} />
+<svelte:window onkeyup={listenForClose} />
 
 
 {#if $isMenuOpen}
+	<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
 	<div
 		class="menu-background"
-		on:click|self={toggleMenuOpen}
+		onclick={handleBackgroundClick}
 		in:fade={{ duration: 240, easing: quintOut }}
 		out:fade={{ duration: 240, easing: quintIn }}
 	>
@@ -62,7 +69,7 @@ isMenuOpen.subscribe(async (isOpen) => {
 			<nav tabindex="-1" bind:this={navMenu}>
 				<ul class="menu__links" aria-labelledby="menu-heading">
 					<li>
-						<a href="/" on:click={toggleMenuOpen}>
+						<a href="/" onclick={toggleMenuOpen}>
 							<span aria-hidden="true">
 								<PlayBlock {iconColor} />
 							</span>
@@ -70,7 +77,7 @@ isMenuOpen.subscribe(async (isOpen) => {
 						</a>
 					</li>
 					<li>
-						<a href="/how-to-play" on:click={toggleMenuOpen}>
+						<a href="/how-to-play" onclick={toggleMenuOpen}>
 							<span aria-hidden="true">
 								<HBlock {iconColor} />
 							</span>
@@ -78,7 +85,7 @@ isMenuOpen.subscribe(async (isOpen) => {
 						</a>
 					</li>
 					<li>
-						<a href="/stats" on:click={toggleMenuOpen}>
+						<a href="/stats" onclick={toggleMenuOpen}>
 							<span aria-hidden="true">
 								<StatsBlock {iconColor} />
 							</span>
@@ -86,7 +93,7 @@ isMenuOpen.subscribe(async (isOpen) => {
 						</a>
 					</li>
 					<li>
-						<a href="/faq" on:click={toggleMenuOpen}>
+						<a href="/faq" onclick={toggleMenuOpen}>
 							<span aria-hidden="true">
 								<QuestionBlock {iconColor} />
 							</span>
@@ -97,7 +104,7 @@ isMenuOpen.subscribe(async (isOpen) => {
 			</nav>
 			<div class="display-flex button-bar menu__buttons">
 				<div class="button-bar__logo display-flex center-content">
-					<a href="/" on:click|preventDefault={handleReturnToGame} class="display-flex center-content">
+					<a href="/" onclick={(e) => { e.preventDefault(); handleReturnToGame() }} class="display-flex center-content">
 						<span aria-hidden="true" class="line-height-0">
 							<Logo />
 						</span>
@@ -178,7 +185,7 @@ isMenuOpen.subscribe(async (isOpen) => {
 				&:nth-of-type(#{$i}) {
 					animation-delay: $i * 0.07s;
 				}
-			} 
+			}
 
 			a {
 				text-decoration: none;

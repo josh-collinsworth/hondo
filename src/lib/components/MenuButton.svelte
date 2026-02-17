@@ -1,7 +1,7 @@
 <script lang="ts">
 import { isMenuOpen } from '$lib/state/global'
 
-export let floating: boolean = false
+let { floating = false }: { floating?: boolean } = $props()
 
 const toggleMenuOpen = (): void => {
 	$isMenuOpen = !$isMenuOpen
@@ -9,7 +9,7 @@ const toggleMenuOpen = (): void => {
 </script>
 
 <div class:floating class="menu-button-wrapper">
-	<button class="info-button menu-button" on:click={toggleMenuOpen}>
+	<button class="info-button menu-button" onclick={toggleMenuOpen}>
 		<span class="sr">Toggle nav menu</span>
 		<div class="hamburger display-flex align-center">
 			<div class="hamburger__bar"></div>

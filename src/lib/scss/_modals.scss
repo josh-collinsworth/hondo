@@ -1,30 +1,30 @@
 #modal-background {
-  width: 100vw;
-  min-height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 10;
-  background: rgba(var(--inkRGB), 0.9);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	width: 100vw;
+	min-height: 100vh;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 10;
+	background: rgba(var(--inkRGB), 0.9);
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 #modal-card {
-  border: 2px solid var(--lightAccent);
-  border-radius: 0.5rem;
-  background: rgba(var(--paperRGB), 0.9);
-  width: 100%;
-  max-width: 30rem;
-  margin: 1rem;
-  padding: 1.5rem;
+	border: 2px solid var(--lightAccent);
+	border-radius: 0.5rem;
+	background: rgba(var(--paperRGB), 0.9);
+	width: 100%;
+	max-width: 30rem;
+	margin: 1rem;
+	padding: 1.5rem;
 
-  @media (min-width: 32rem) {
-    padding: 2rem;
-  }
+	@media (min-width: 32rem) {
+		padding: 2rem;
+	}
 
-  h2 {
-    margin-top: 0;
-  }
+	h2 {
+		margin-top: 0;
+	}
 }

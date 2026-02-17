@@ -4,8 +4,7 @@ import { SCORE_TICK_DURATION } from '$lib/js/constants'
 import { fly } from 'svelte/transition'
 import { backIn, backOut } from 'svelte/easing'
 
-let scoreDigits: string[]
-$: scoreDigits = String($runningScore).padStart(3).split('')
+let scoreDigits: string[] = $derived(String($runningScore).padStart(3).split(''))
 </script>
 
 
@@ -29,4 +28,3 @@ $: scoreDigits = String($runningScore).padStart(3).split('')
 		{/each}
 	</div>
 </div>
-

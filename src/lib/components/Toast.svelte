@@ -6,12 +6,14 @@ import { fly } from 'svelte/transition'
 const defaultTransition = { y: 16, easing: cubicOut, duration: 300 }
 let toastTimeout: any // TODO: gotta be a better type here but I'm not sure what.
 
-$: if ($toast.message) {
-	clearTimeout(toastTimeout)
-	toastTimeout = setTimeout(() => {
-		$toast = { ...$toast, message: '' }
-	}, 3000)
-}
+$effect(() => {
+	if ($toast.message) {
+		clearTimeout(toastTimeout)
+		toastTimeout = setTimeout(() => {
+			$toast = { ...$toast, message: '' }
+		}, 3000)
+	}
+})
 </script>
 
 

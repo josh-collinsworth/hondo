@@ -20,7 +20,7 @@ const skipAndClose = (): void => {
 </script>
 
 
-<svelte:window on:keydown={listenForEnter} />
+<svelte:window onkeydown={listenForEnter} />
 
 
 <h2 class="display-flex align-center">
@@ -32,18 +32,18 @@ const skipAndClose = (): void => {
 
 <p>Skips the current code word and randomly selects a new one.</p>
 <p>
-	<b>Cost</b>: 
+	<b>Cost</b>:
 	<span class="sr">{SKIP_COST}</span>
 	<span class="energy-bar" aria-hidden="true">
-		<span class="energy-cell" />
+		<span class="energy-cell"></span>
 	</span>
 </p>
 
 <div class="button-bar">
-	<button on:click={closeModal} bind:this={cancelButton}>
+	<button onclick={closeModal} bind:this={cancelButton}>
 		Cancel
 	</button>
-	<button class="confirm" on:click={skipAndClose} disabled={SKIP_COST >= $remainingAttempts}>
+	<button class="confirm" onclick={skipAndClose} disabled={SKIP_COST >= $remainingAttempts}>
 		Skip now
 	</button>
 </div>

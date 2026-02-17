@@ -1,6 +1,5 @@
 <script lang="ts">
-export let remainingAttempts: number = 10
-export let startingGuesses: number = 10
+let { remainingAttempts = 10, startingGuesses = 10 }: { remainingAttempts?: number, startingGuesses?: number } = $props()
 </script>
 
 <div class="power-bar-container example-power-bar">
@@ -11,10 +10,10 @@ export let startingGuesses: number = 10
 				transform: scaleX({ remainingAttempts / startingGuesses });
 				background-size: {( startingGuesses / remainingAttempts) * 100}%;
 			"
-		/>
+		></div>
 		<div class="power-bar__grid">
 			{#each { length: 10 } as _, i}
-				<div class="power-bar__grid-box" />
+				<div class="power-bar__grid-box"></div>
 			{/each}
 		</div>
 	</div>

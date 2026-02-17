@@ -20,13 +20,13 @@ const dismissForThisSession = (): void => {
 <p>Would you like to learn how to play?</p>
 
 <div class="button-bar">
-	<button on:click={closeModal}>
+	<button onclick={closeModal}>
 		Not now
 	</button>
-	<button on:click={dismissForever}>
+	<button onclick={dismissForever}>
 		Never
 	</button>
-	<a class="button confirm" href="/how-to-play" on:click={dismissForThisSession}>
+	<a class="button confirm" href="/how-to-play" onclick={dismissForThisSession}>
 		Sure!
 	</a>
 </div>

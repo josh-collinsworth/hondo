@@ -1,58 +1,58 @@
-:root { 
-  --black: #160d27;
-  --lightestGray: #efefec;
-  --lighterGray: #d3d3cb;
-  --mediumGray: #42463a;
-  --darkGray: #FFF;
-  --darkerGray: #363930;
-  --offwhite: #fefff6;
-  --white: #FFFFFF;
-  --orange: #f78c28;
-  --red: #ca4206;
-  --lightestBlue: #ede8ea;
-  --lighterBlue: #e5d8e3;
-  --lightBlue: #c5b1d6;
-  --mediumBlue: #8c64ae;
-  --darkBlue: #4a2c81;
-  --darkerBlue: #160d27;
+:root {
+	--black: #160d27;
+	--lightestGray: #efefec;
+	--lighterGray: #d3d3cb;
+	--mediumGray: #42463a;
+	--darkGray: #fff;
+	--darkerGray: #363930;
+	--offwhite: #fefff6;
+	--white: #ffffff;
+	--orange: #f78c28;
+	--red: #ca4206;
+	--lightestBlue: #ede8ea;
+	--lighterBlue: #e5d8e3;
+	--lightBlue: #c5b1d6;
+	--mediumBlue: #8c64ae;
+	--darkBlue: #4a2c81;
+	--darkerBlue: #160d27;
 
-  --paper: var(--offwhite);
-  --ink: var(--black);
-  --paperRGB: 254, 255, 246;
-  --inkRGB: 22, 13, 39;
+	--paper: var(--offwhite);
+	--ink: var(--black);
+	--paperRGB: 254, 255, 246;
+	--inkRGB: 22, 13, 39;
 
-  --primary: var(--orange);
-  --secondary: var(--lightBlue);
-  --tertiary: var(--darkBlue);
+	--primary: var(--orange);
+	--secondary: var(--lightBlue);
+	--tertiary: var(--darkBlue);
 
-  --lightestAccent: var(--lightestGray);
-  --lighterAccent: var(--lighterGray);
-  --mediumAccent: var(--mediumGray);
-  --darkAccent: var(--darkGray);
-  
-  --scoreWidth: 2.75em;
-  --powerBarHeight: 2rem;
-  --buttonSize: 2.5rem;
-  
-  --fontWeightNormal: 500;
-  --lightAccent: var(--lighterBlue);
-  --fontWeightSemiBold: 600;
-  --fontWeightBold: 700;
+	--lightestAccent: var(--lightestGray);
+	--lighterAccent: var(--lighterGray);
+	--mediumAccent: var(--mediumGray);
+	--darkAccent: var(--darkGray);
 
-  &.dark {
-    --ink: var(--offwhite);
-    --paper: var(--black);
+	--scoreWidth: 2.75em;
+	--powerBarHeight: 2rem;
+	--buttonSize: 2.5rem;
 
-    --secondary: var(--mediumBlue);
-    --tertiary: var(--lightBlue);
+	--fontWeightNormal: 500;
+	--lightAccent: var(--lighterBlue);
+	--fontWeightSemiBold: 600;
+	--fontWeightBold: 700;
 
-    --lightestAccent: var(--black);
-    --lighterAccent: var(--darkerGray);
-    --lighterAccent: #341f5a;
-    --lightAccent: var(--darkBlue);
-    --mediumAccent: #3f256e;
-    --darkAccent: var(--lighterGray);
-    
-    --paperRGB: 22, 13, 39; // #f7f8fa
-  }
+	&.dark {
+		--ink: var(--offwhite);
+		--paper: var(--black);
+
+		--secondary: var(--mediumBlue);
+		--tertiary: var(--lightBlue);
+
+		--lightestAccent: var(--black);
+		--lighterAccent: var(--darkerGray);
+		--lighterAccent: #341f5a;
+		--lightAccent: var(--darkBlue);
+		--mediumAccent: #3f256e;
+		--darkAccent: var(--lighterGray);
+
+		--paperRGB: 22, 13, 39; // #f7f8fa
+	}
 }

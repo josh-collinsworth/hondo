@@ -1,14 +1,20 @@
-import { sveltekit } from '@sveltejs/kit/vite'
+import { sveltekit } from '@sveltejs/kit/vite';
+import { defineConfig } from 'vite';
 
-/** @type {import('vite').UserConfig} */
-const config = {
-  plugins: [sveltekit()],
-  
-  server: {
-    fs: {
-      allow: ['.']
-    }
-  }
-};
+export default defineConfig({
+	plugins: [sveltekit()],
 
-export default config
+	server: {
+		fs: {
+			allow: ['.']
+		}
+	},
+
+	css: {
+		preprocessorOptions: {
+			scss: {
+				silenceDeprecations: ['legacy-js-api']
+			}
+		}
+	}
+});

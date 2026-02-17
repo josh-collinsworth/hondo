@@ -10,7 +10,7 @@ const confirmSkip = (): void => {
 </script>
 
 <button
-	on:click={confirmSkip}
+	onclick={confirmSkip}
 	disabled={$maxRemainingAttempts <= 1}
 	class="info-button skip-button"
 >

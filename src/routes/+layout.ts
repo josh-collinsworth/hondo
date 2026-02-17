@@ -1,5 +1,5 @@
-import type { PageServerLoad } from './$types'
+import type { LayoutLoad } from './$types';
 
-export const prerender = true
+export const prerender = true;
 
-export const load = async ({ url }: { url: any}): PageServerLoad => ({ path: <string>url.pathname })
+export const load: LayoutLoad = async ({ url }) => ({ path: url.pathname });

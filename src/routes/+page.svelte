@@ -27,9 +27,8 @@ import AccessibleStatus from '$lib/components/game/AccessibleStatus.svelte'
 import TutorialIntro from '$lib/components/modals/TutorialIntro.svelte'
 import PWAPrompt from '$lib/components/PWAPrompt.svelte'
 
-import { dev } from '$app/environment'
+import { browser, dev } from '$app/environment'
 import { onMount } from 'svelte'
-import { is_client } from 'svelte/internal'
 
 const speakLetters = (enteredGuess: string): string => {
 	let remainingLetters = $codeWord
@@ -56,7 +55,7 @@ onMount(() => {
 
 	try {
 		const gameData = loadFromLocalStorage(GAME_DATA_STORAGE_KEY)
-			
+
 		if (gameData && !$gameIsOver) {
 			// Avoids a loading error with states that didn't save this. Can be removed later.
 			if (!gameData.currentGuesses || !gameData.previousGuesses) {
@@ -66,7 +65,7 @@ onMount(() => {
 			}
 			let attemptsCap = gameData.maxRemainingAttempts ? gameData.maxRemainingAttempts : STARTING_GUESSES
 			let loadedStreak = gameData.streak || 0
-			
+
 			$codeWord = window.atob(gameData.codeWord)
 			$maxRemainingAttempts = attemptsCap
 			$currentGuesses = gameData.currentGuesses
@@ -80,12 +79,12 @@ onMount(() => {
 			$shufflesUsed = gameData.shufflesUsed || 0
 			$skipsUsed = gameData.skipsUsed || 0
 		} else {
-			setDefaultGameState(is_client && dev)
+			setDefaultGameState(browser && dev)
 		}
-	} 
+	}
 	catch(e) {
 		alert(`Sorry, something went wrong loading your previous game data. Please refresh. If that doesn't help, you can reset your data from the stats page.`)
-	} 
+	}
 	finally {
 		$isLoading = false
 
@@ -114,7 +113,7 @@ onMount(() => {
 					<GuessContent guess={guess} previousGuess={$previousGuesses[row]}/>
 				</li>
 			{/each}
-			<li 
+			<li
 				class="guess current-guess"
 			>
 				{#each {length: 5} as _, col (col)}

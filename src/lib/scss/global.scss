@@ -5,83 +5,90 @@
 @use 'modals';
 @use 'animation';
 
-*, *::before, *::after {
-  box-sizing: border-box;
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
 }
 
-*:focus-visible{
-  outline: 2px solid var(--darkBlue);
+*:focus-visible {
+	outline: 2px solid var(--darkBlue);
 }
 
 body {
-  margin: 0;
-  background: var(--paper);
-  color: var(--ink);
-  line-height: 1.4;
-  font-family: 'Ridley Grotesk', sans-serif;
-  font-weight: var(--fontWeightNormal);
+	margin: 0;
+	background: var(--paper);
+	color: var(--ink);
+	line-height: 1.4;
+	font-family: 'Ridley Grotesk', sans-serif;
+	font-weight: var(--fontWeightNormal);
 }
 
 body,
 html {
-  overflow-y: overlay;
-  ::-webkit-scrollbar {
-    width: 0.5rem;
-    height: 0.5rem;
-  }
-  
-  ::-webkit-scrollbar,
-  ::-webkit-scrollbar-track {
-    /* the "track" of the bar - great for customizing "background" colors */
-    background: rgba(255,255,255,0);
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    /* the actual draggable element, the star of the show! */
-    background: var(--darkBlue);
-    border-radius: 4rem;
-  }
+	overflow-y: overlay;
+	::-webkit-scrollbar {
+		width: 0.5rem;
+		height: 0.5rem;
+	}
+
+	::-webkit-scrollbar,
+	::-webkit-scrollbar-track {
+		/* the "track" of the bar - great for customizing "background" colors */
+		background: rgba(255, 255, 255, 0);
+	}
+
+	::-webkit-scrollbar-thumb {
+		/* the actual draggable element, the star of the show! */
+		background: var(--darkBlue);
+		border-radius: 4rem;
+	}
 }
 
 main {
-  transition: all 0.24s cubic-bezier(0.86, 0, 0.07, 1);
-  display: flex;
-  flex-wrap: wrap;
-  align-items: space-between;
-  align-content: space-between;
-  justify-content: center;
-  width: 100%;
+	transition: all 0.24s cubic-bezier(0.86, 0, 0.07, 1);
+	display: flex;
+	flex-wrap: wrap;
+	align-items: space-between;
+	align-content: space-between;
+	justify-content: center;
+	width: 100%;
 
-  &.blurry {
-    opacity: 0.3;
-  }
+	&.blurry {
+		opacity: 0.3;
+	}
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-weight: var(--fontWeightSemiBold);
-  line-height: 1.2;
-  margin: 3rem 0 1rem;
-  
-  &:first-child {
-    margin-top: 0;
-  }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: var(--fontWeightSemiBold);
+	line-height: 1.2;
+	margin: 3rem 0 1rem;
+
+	&:first-child {
+		margin-top: 0;
+	}
 }
 
 h1 {
-  font-weight: var(--fontWeightNormal);
-  text-transform: uppercase;
+	font-weight: var(--fontWeightNormal);
+	text-transform: uppercase;
 }
 
 .layout {
-  width: 100%;
-  max-width: 100%;
-  position: relative;
-  min-height: 100vh;
-  min-height: 100dvh;
-  display: flex;
-  flex-wrap: wrap;
-  align-content: stretch;
-  justify-content: center;
+	width: 100%;
+	max-width: 100%;
+	position: relative;
+	min-height: 100vh;
+	min-height: 100dvh;
+	display: flex;
+	flex-wrap: wrap;
+	align-content: stretch;
+	justify-content: center;
 }
 
 div {
@@ -89,27 +96,27 @@ div {
 }
 
 .transition {
-  height: 100%;
-  width: 100%;
+	height: 100%;
+	width: 100%;
 }
 
 .container {
-  padding: 24px;
-  max-width: 28rem;
-  width: 100%;
-  margin: auto;
+	padding: 24px;
+	max-width: 28rem;
+	width: 100%;
+	margin: auto;
 }
 
 a {
-  color: var(--darkBlue);
+	color: var(--darkBlue);
 
-  .dark &:not(.button) {
-    color: var(--lightBlue);
-  }
+	.dark &:not(.button) {
+		color: var(--lightBlue);
+	}
 }
 
 .button-bar {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 2rem;
+	display: flex;
+	justify-content: space-between;
+	margin-top: 2rem;
 }

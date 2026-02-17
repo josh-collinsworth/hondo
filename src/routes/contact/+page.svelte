@@ -2,16 +2,16 @@
 import MenuButton from "$lib/components/MenuButton.svelte"
 
 
-	let isSubmitted = false
-	let showError = false
+	let isSubmitted = $state(false)
+	let showError = $state(false)
 
-	let formData = {
+	let formData = $state({
 		name: '',
 		email: '',
 		message: ''
-	}
+	})
 
-	const encode = (data: object): string => {
+	const encode = (data: Record<string, string>): string => {
 		return Object.keys(data)
 			.map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
 			.join('&')
@@ -24,13 +24,13 @@ import MenuButton from "$lib/components/MenuButton.svelte"
 			showError = true
 			return
 		}
-		
+
 		const target = e.target as HTMLFormElement
 		fetch('/', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 				body: encode({
-					'form-name': target.getAttribute('name'),
+					'form-name': target.getAttribute('name') || '',
 					...formData,
 				}),
 			})
@@ -59,7 +59,7 @@ import MenuButton from "$lib/components/MenuButton.svelte"
 			id="contact-form"
 			name="contact"
 			method="post"
-			on:submit|preventDefault={handleSubmit}
+			onsubmit={(e) => { e.preventDefault(); handleSubmit(e) }}
 			action="/success/"
 			data-netlify="true"
 			data-netlify-honeypot="bot-field"
@@ -67,7 +67,7 @@ import MenuButton from "$lib/components/MenuButton.svelte"
 			<input type="hidden" name="form-name" value="contact" />
 			<p hidden>
 				<label>
-					Don’t fill this out: <input name="bot-field" />
+					Don't fill this out: <input name="bot-field" />
 				</label>
 			</p>
 			<div class="sender-info">
@@ -117,7 +117,7 @@ import MenuButton from "$lib/components/MenuButton.svelte"
 	#contact-form {
 		width: 100%;
 		margin-top: 4rem;
-		
+
 		label {
 			font-weight: var(--fontWeightSemiBold);
 		}

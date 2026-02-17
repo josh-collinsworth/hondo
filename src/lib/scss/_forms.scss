@@ -1,49 +1,50 @@
-button, input {
-  font: inherit;
+button,
+input {
+	font: inherit;
 }
 
 button,
 .button {
-  padding: 0.5rem 1rem;
-  display: inline-block;
-  border: 2px solid var(--lightAccent);
-  border-radius: 0.5rem;
-  background: var(--lightestAccent);
-  color: var(--ink);
-  font-weight: var(--fontWeightSemiBold);
-  text-decoration: none;
-  touch-action: manipulation;
+	padding: 0.5rem 1rem;
+	display: inline-block;
+	border: 2px solid var(--lightAccent);
+	border-radius: 0.5rem;
+	background: var(--lightestAccent);
+	color: var(--ink);
+	font-weight: var(--fontWeightSemiBold);
+	text-decoration: none;
+	touch-action: manipulation;
 
-  &.confirm {
-    background: var(--primary);
-    border-color: var(--primary);
+	&.confirm {
+		background: var(--primary);
+		border-color: var(--primary);
 
-    &[disabled] {
-      background: var(--lightestGray);
-      border-color: var(--lightestGray);
-      color: var(--lighterGray);
+		&[disabled] {
+			background: var(--lightestGray);
+			border-color: var(--lightestGray);
+			color: var(--lighterGray);
 
-      .dark & {
-        background: var(--lightestAccent);
-        border-color: var(--lightestAccent);
-        color: var(--lighterAccent);
-      }
-    }
-  }
+			.dark & {
+				background: var(--lightestAccent);
+				border-color: var(--lightestAccent);
+				color: var(--lighterAccent);
+			}
+		}
+	}
 
-  &.secondary {
-    background: var(--secondary);
-    border-color: var(--secondary);
-  }
+	&.secondary {
+		background: var(--secondary);
+		border-color: var(--secondary);
+	}
 
-  &.warning {
-    background: var(--red);
-    border-color: var(--red);
-    color: var(--offwhite);
-  }
+	&.warning {
+		background: var(--red);
+		border-color: var(--red);
+		color: var(--offwhite);
+	}
 }
 
 fieldset {
-  border: 1px solid var(--lightAccent);
-  padding: 1rem;
+	border: 1px solid var(--lightAccent);
+	padding: 1rem;
 }

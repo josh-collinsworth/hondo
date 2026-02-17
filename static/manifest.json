@@ -1,45 +1,45 @@
 {
-  "background_color": "#fefff6",
-  "description": "A game in 100 words or less. Use logic, strategy, and luck to guess back-to-back code words and race to 100 points.",
-  "dir": "ltr",
-  "display": "fullscreen",
-  "name": "Hondo",
-  "orientation": "portrait",
-  "scope": "/",
-  "short_name": "Hondo",
-  "start_url": "/",
-  "theme_color": "#4a2c81",
-  "icons": [
-    {
-      "src": "android-chrome-76x76.png",
-      "sizes": "76x76",
-      "type": "image/png"
-    },
-    {
-      "src": "android-chrome-120x120.png",
-      "sizes": "120x120",
-      "type": "image/png"
-    },
-    {
-      "src": "android-chrome-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "256x256.png",
-      "type": "image/png",
-      "sizes": "256x256"
-    },
-    {
-      "src": "maskable.png",
-      "type": "image/png",
-      "sizes": "512x512",
-      "purpose": "maskable"
-    },
-    {
-      "src": "/icon.svg",
-      "type": "image/svg+xml",
-      "sizes": "512x512"
-    }
-  ]
+	"background_color": "#fefff6",
+	"description": "A game in 100 words or less. Use logic, strategy, and luck to guess back-to-back code words and race to 100 points.",
+	"dir": "ltr",
+	"display": "fullscreen",
+	"name": "Hondo",
+	"orientation": "portrait",
+	"scope": "/",
+	"short_name": "Hondo",
+	"start_url": "/",
+	"theme_color": "#4a2c81",
+	"icons": [
+		{
+			"src": "android-chrome-76x76.png",
+			"sizes": "76x76",
+			"type": "image/png"
+		},
+		{
+			"src": "android-chrome-120x120.png",
+			"sizes": "120x120",
+			"type": "image/png"
+		},
+		{
+			"src": "android-chrome-192x192.png",
+			"sizes": "192x192",
+			"type": "image/png"
+		},
+		{
+			"src": "256x256.png",
+			"type": "image/png",
+			"sizes": "256x256"
+		},
+		{
+			"src": "maskable.png",
+			"type": "image/png",
+			"sizes": "512x512",
+			"purpose": "maskable"
+		},
+		{
+			"src": "/icon.svg",
+			"type": "image/svg+xml",
+			"sizes": "512x512"
+		}
+	]
 }

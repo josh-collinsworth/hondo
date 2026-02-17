@@ -1,62 +1,62 @@
 .display-flex {
-  display: flex;
+	display: flex;
 }
 
 .align-center {
-  align-items: center;
+	align-items: center;
 }
 
 .width-max-content {
-  width: max-content;
+	width: max-content;
 }
 
 .position-relative {
-  position: relative;
+	position: relative;
 }
 
 .width-max-content {
-  width: max-content;
+	width: max-content;
 }
 
 .margin-auto {
-  margin-left: auto;
-  margin-right: auto;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .sr {
-  position: absolute;
-  left: -100vw;
-  opacity: 0;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  border: 0;
+	position: absolute;
+	left: -100vw;
+	opacity: 0;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	border: 0;
 }
 
 .small-print {
-  font-size: 0.875rem;
+	font-size: 0.875rem;
 }
 
 .center-content {
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  align-content: center;
-  text-align: center;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
+	text-align: center;
 }
 
 .line-height-0 {
-  line-height: 0;
+	line-height: 0;
 }
 
 .no-bullets {
-  list-style-type: none;
-  padding-left: 0;
+	list-style-type: none;
+	padding-left: 0;
 
-  li {
-    list-style-type: none;
-    &::marker {
-      content: none;
-    }
-  }
+	li {
+		list-style-type: none;
+		&::marker {
+			content: none;
+		}
+	}
 }

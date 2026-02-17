@@ -1,14 +1,12 @@
 [
-  {
-    "relation": [
-      "delegate_permission/common.handle_all_urls"
-    ],
-    "target": {
-      "namespace": "android_app",
-      "package_name": "com.playhondo.www.twa",
-      "sha256_cert_fingerprints": [
-        "0F:32:56:E2:7D:53:61:4A:7F:EC:62:41:1B:92:8F:8E:49:3C:71:BA:32:11:98:32:04:51:5F:8B:56:91:76:EC"
-      ]
-    }
-  }
+	{
+		"relation": ["delegate_permission/common.handle_all_urls"],
+		"target": {
+			"namespace": "android_app",
+			"package_name": "com.playhondo.www.twa",
+			"sha256_cert_fingerprints": [
+				"0F:32:56:E2:7D:53:61:4A:7F:EC:62:41:1B:92:8F:8E:49:3C:71:BA:32:11:98:32:04:51:5F:8B:56:91:76:EC"
+			]
+		}
+	}
 ]

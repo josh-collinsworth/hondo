@@ -88,7 +88,7 @@
 
 		<h2>Why aren’t you trying to make money on this?</h2>
 		<p>You can <a href="https://ko-fi.com/collinsworth">buy me a coffee</a> or something if you want to, but I’m not interested in dealing with advertising, subscriptions, user data, or anything else like that.</p>
-		<p>Making a profit was never my goal with this project. I built Hondo just for my own enjoyment (and hopefully, yours). Have fun.
+		<p>Making a profit was never my goal with this project. I built Hondo just for my own enjoyment (and hopefully, yours). Have fun.</p>
 
 
 		<h2>You know the tagline should say “100 words or FEWER,” right?</h2>

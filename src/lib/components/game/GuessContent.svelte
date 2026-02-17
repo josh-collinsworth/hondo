@@ -1,50 +1,45 @@
 <script lang="ts">
 import { currentGuesses, codeWord } from '$lib/state/game'
 
-export let guess: string
-export let previousGuess: string = ''
-
-let remainingCurrentGuessLetters: string[] = []
-let remainingPreviousGuessLetters: string[] = []
-
-$: if ($codeWord) {
-	remainingCurrentGuessLetters = [...$codeWord]
-	remainingPreviousGuessLetters = [...$codeWord]
-}
+let { guess, previousGuess = '' }: { guess: string, previousGuess?: string } = $props()
 
 // TODO: this is SOOO tedious and probably really bad, but also, it lets me get both letters in and highlight both for smooth transitions, so…not really sure how else to do it better, other than maybe just figuring out a little less verbose way to do the logic. Kinda sucks to run this 60 times every guess.
-let highlightArray: string[]
-$: highlightArray = [...guess].map((letter, i) => {
-	if ([...$codeWord][i] === letter) {
-		remainingCurrentGuessLetters.splice(remainingCurrentGuessLetters.findIndex(i => i === letter), 1)
-		return 'exact'
-	} 
-	return letter
-}).map((letter, i) => {
-	if (letter === 'exact') {
+let highlightArray: string[] = $derived.by(() => {
+	const remaining = [...$codeWord]
+	return [...guess].map((letter, i) => {
+		if ([...$codeWord][i] === letter) {
+			remaining.splice(remaining.findIndex(l => l === letter), 1)
+			return 'exact'
+		}
 		return letter
-	} else if (remainingCurrentGuessLetters.includes(letter) && letter) {
-		remainingCurrentGuessLetters.splice(remainingCurrentGuessLetters.findIndex(i => i === letter), 1)
-		return 'partial'
-	}
-	return ''
+	}).map((letter) => {
+		if (letter === 'exact') {
+			return letter
+		} else if (remaining.includes(letter) && letter) {
+			remaining.splice(remaining.findIndex(l => l === letter), 1)
+			return 'partial'
+		}
+		return ''
+	})
 })
 
-let previousHighlightArray: string[]
-$: previousHighlightArray = [...previousGuess].map((letter, i) => {
+let previousHighlightArray: string[] = $derived.by(() => {
+	const remaining = [...$codeWord]
+	return [...previousGuess].map((letter, i) => {
 		if ([...$codeWord][i] === letter) {
-			remainingPreviousGuessLetters.splice(remainingPreviousGuessLetters.findIndex(i => i === letter), 1)
-		return 'exact'
-	} 
-	return letter
-}).map((letter, i) => {
-	if (letter === 'exact') {
+			remaining.splice(remaining.findIndex(l => l === letter), 1)
+			return 'exact'
+		}
 		return letter
-	} else if (remainingPreviousGuessLetters.includes(letter) && letter) {
-		remainingPreviousGuessLetters.splice(remainingPreviousGuessLetters.findIndex(i => i === letter), 1)
-		return 'partial'
-	}
-	return ''
+	}).map((letter) => {
+		if (letter === 'exact') {
+			return letter
+		} else if (remaining.includes(letter) && letter) {
+			remaining.splice(remaining.findIndex(l => l === letter), 1)
+			return 'partial'
+		}
+		return ''
+	})
 })
 </script>
 
