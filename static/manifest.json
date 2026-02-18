@@ -9,6 +9,22 @@
 	"short_name": "Hondo",
 	"start_url": "/",
 	"theme_color": "#4a2c81",
+	  "screenshots": [{
+    "src": "store-feature-image.png",
+    "sizes": "1024x500",
+    "type": "image/png"
+  }, {
+    "src": "screenshot-1.png",
+    "sizes": "1080x2340",
+    "type": "image/png"
+  }, {
+    "src": "screenshot-2.png",
+    "sizes": "1620x2160",
+    "type": "image/png"
+  }],
+  "categories": ["games"],
+  "lang": "en-US",
+  "id": "com.playhondo.www.twa",
 	"icons": [
 		{
 			"src": "android-chrome-76x76.png",
@@ -34,7 +50,7 @@
 			"src": "maskable.png",
 			"type": "image/png",
 			"sizes": "512x512",
-			"purpose": "maskable"
+			"purpose": "any maskable"
 		},
 		{
 			"src": "/icon.svg",
