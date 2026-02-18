@@ -69,6 +69,16 @@
 			are present. (For example, “adieu.”)
 		</p>
 
+		<h2 id="age">Is Hondo appropriate for all ages?</h2>
+		<p>
+			<b>Yes</b>, with the caveat that it is intended for players who can read and understand
+			English.
+		</p>
+		<p>
+			In addition, while no potentially objectionable or obscene words will ever be used as a code
+			word, there's nothing stopping players from entering such words as guesses.
+		</p>
+
 		<h2>Why is it called Hondo?</h2>
 		<p>
 			This is a bit of a chicken-and-egg answer, but: as I was experimenting with game mechanics, I
