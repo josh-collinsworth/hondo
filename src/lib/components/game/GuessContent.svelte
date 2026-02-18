@@ -1,46 +1,12 @@
 <script lang="ts">
 import { currentGuesses, codeWord } from '$lib/state/game'
+import { getHighlightArray } from '$lib/js/helpers'
 
 let { guess, previousGuess = '' }: { guess: string, previousGuess?: string } = $props()
 
-// TODO: this is SOOO tedious and probably really bad, but also, it lets me get both letters in and highlight both for smooth transitions, so…not really sure how else to do it better, other than maybe just figuring out a little less verbose way to do the logic. Kinda sucks to run this 60 times every guess.
-let highlightArray: string[] = $derived.by(() => {
-	const remaining = [...$codeWord]
-	return [...guess].map((letter, i) => {
-		if ([...$codeWord][i] === letter) {
-			remaining.splice(remaining.findIndex(l => l === letter), 1)
-			return 'exact'
-		}
-		return letter
-	}).map((letter) => {
-		if (letter === 'exact') {
-			return letter
-		} else if (remaining.includes(letter) && letter) {
-			remaining.splice(remaining.findIndex(l => l === letter), 1)
-			return 'partial'
-		}
-		return ''
-	})
-})
+let highlightArray: string[] = $derived(getHighlightArray(guess, $codeWord))
 
-let previousHighlightArray: string[] = $derived.by(() => {
-	const remaining = [...$codeWord]
-	return [...previousGuess].map((letter, i) => {
-		if ([...$codeWord][i] === letter) {
-			remaining.splice(remaining.findIndex(l => l === letter), 1)
-			return 'exact'
-		}
-		return letter
-	}).map((letter) => {
-		if (letter === 'exact') {
-			return letter
-		} else if (remaining.includes(letter) && letter) {
-			remaining.splice(remaining.findIndex(l => l === letter), 1)
-			return 'partial'
-		}
-		return ''
-	})
-})
+let previousHighlightArray: string[] = $derived(getHighlightArray(previousGuess, $codeWord))
 </script>
 
 

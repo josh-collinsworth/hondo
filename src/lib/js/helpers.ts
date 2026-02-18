@@ -38,3 +38,30 @@ export const floatFormatter = new Intl.NumberFormat('en-US', {
 	minimumFractionDigits: 0,
 	maximumFractionDigits: 2
 });
+
+export const getHighlightArray = (guess: string, codeWord: string): string[] => {
+	const remaining = [...codeWord];
+	return [...guess]
+		.map((letter, i) => {
+			if ([...codeWord][i] === letter) {
+				remaining.splice(
+					remaining.findIndex((l) => l === letter),
+					1
+				);
+				return 'exact';
+			}
+			return letter;
+		})
+		.map((letter) => {
+			if (letter === 'exact') {
+				return letter;
+			} else if (remaining.includes(letter) && letter) {
+				remaining.splice(
+					remaining.findIndex((l) => l === letter),
+					1
+				);
+				return 'partial';
+			}
+			return '';
+		});
+};
