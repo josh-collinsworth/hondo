@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
@@ -15,7 +15,10 @@
 			content="Use logic, strategy, and luck to guess back-to-back code words and race to 100 points!"
 		/>
 		<meta name="author" content="Josh Collinsworth" />
-		<meta name="keywords" content="game, word game, wordle-like, five-letter words" />
+		<meta
+			name="keywords"
+			content="game, word game, wordle-like, five-letter words"
+		/>
 		<link rel="manifest" href="/manifest.json" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content="Hondo - a game in 100 words or less" />
@@ -23,7 +26,10 @@
 			name="twitter:description"
 			content="Use logic, strategy, and luck to guess back-to-back code words and race to 100 points!"
 		/>
-		<meta name="twitter:image" content="https://playhondo.com/share-image.png" />
+		<meta
+			name="twitter:image"
+			content="https://playhondo.com/share-image.png"
+		/>
 		<meta property="og:image" content="https://playhondo.com/share-image.png" />
 		<meta property="og:title" content="Hondo - a game in 100 words or less." />
 		<meta property="og:type" content="website" />
@@ -40,32 +46,32 @@
 
 		<style>
 			@font-face {
-				font-family: 'Ridley Grotesk';
-				src: url('/fonts/subsetted/ridleygrotesk-medium-webfont.woff2');
+				font-family: "Ridley Grotesk";
+				src: url("/fonts/subsetted/ridleygrotesk-medium-webfont.woff2");
 				font-weight: 500;
 				font-style: normal;
 				font-display: swap;
 			}
 
 			@font-face {
-				font-family: 'Ridley Grotesk';
-				src: url('/fonts/subsetted/ridleygrotesk-mediumitalic-webfont.woff2');
+				font-family: "Ridley Grotesk";
+				src: url("/fonts/subsetted/ridleygrotesk-mediumitalic-webfont.woff2");
 				font-weight: 500;
 				font-style: italic;
 				font-display: swap;
 			}
 
 			@font-face {
-				font-family: 'Ridley Grotesk';
-				src: url('/fonts/subsetted/ridleygrotesk-semibold-webfont.woff2');
+				font-family: "Ridley Grotesk";
+				src: url("/fonts/subsetted/ridleygrotesk-semibold-webfont.woff2");
 				font-weight: 600;
 				font-style: normal;
 				font-display: swap;
 			}
 
 			@font-face {
-				font-family: 'Ridley Grotesk';
-				src: url('/fonts/subsetted/ridleygrotesk-bold-webfont.woff2');
+				font-family: "Ridley Grotesk";
+				src: url("/fonts/subsetted/ridleygrotesk-bold-webfont.woff2");
 				font-weight: 700;
 				font-style: normal;
 				font-display: swap;
@@ -75,22 +81,38 @@
 		<script>
 			// On page load or when changing themes, best to add inline in `head` to avoid FOUC
 			if (
-				('theme' in localStorage && JSON.parse(localStorage.theme) === 'dark') ||
-				(!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+				("theme" in localStorage &&
+					JSON.parse(localStorage.theme) === "dark") ||
+				(!("theme" in localStorage) &&
+					window.matchMedia("(prefers-color-scheme: dark)").matches)
 			) {
-				document.documentElement.classList.add('dark');
+				document.documentElement.classList.add("dark");
 			}
 		</script>
 		%sveltekit.head%
-		<script defer data-domain="playhondo.com" src="https://plausible.io/js/plausible.js"></script>
+		<script
+			defer
+			data-domain="playhondo.com"
+			src="https://plausible.io/js/plausible.js"
+		></script>
 		<script type="module">
-			import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
-			const el = document.createElement('pwa-update');
+			import "https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate";
+			const el = document.createElement("pwa-update");
 			document.body.appendChild(el);
+		</script>
+		<script>
+			if (typeof navigator.serviceWorker !== "undefined") {
+				navigator.serviceWorker.register("pwabuilder-sw.js");
+			}
 		</script>
 	</head>
 	<body>
 		<div>%sveltekit.body%</div>
-		<a rel="me" class="sr" style="opacity: 0" href="https://hachyderm.io/@collinsworth">Mastodon</a>
+		<a
+			rel="me"
+			class="sr"
+			style="opacity: 0"
+			href="https://hachyderm.io/@collinsworth"
+		>Mastodon</a>
 	</body>
 </html>
