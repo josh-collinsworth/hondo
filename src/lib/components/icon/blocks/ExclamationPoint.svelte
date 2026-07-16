@@ -1,9 +1,5 @@
 <script lang="ts">
 	let { iconColor = 'currentColor' }: { iconColor?: string } = $props();
-
-	if (!iconColor) {
-		iconColor = 'currentColor';
-	}
 </script>
 
 <svg
