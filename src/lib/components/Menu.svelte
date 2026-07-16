@@ -79,9 +79,21 @@
 							<span aria-hidden="true">
 								<PlayBlock {iconColor} />
 							</span>
-							Back to game
+							{$previousGuesses.every((guess) => guess === '') && currentPage !== '/'
+								? 'Play now'
+								: 'Back to game'}
 						</a>
 					</li>
+					{#if $previousGuesses.some((guess) => guess !== '')}
+						<li>
+							<button onclick={confirmAbandon}>
+								<span aria-hidden="true">
+									<ExclamationBlock {iconColor} />
+								</span>
+								Abandon current game
+							</button>
+						</li>
+					{/if}
 					<li>
 						<a href="/how-to-play" onclick={toggleMenuOpen}>
 							<span aria-hidden="true">
@@ -106,16 +118,6 @@
 							FAQ
 						</a>
 					</li>
-					{#if currentPage === '/' && $previousGuesses.length > 0}
-						<li>
-							<button onclick={confirmAbandon}>
-								<span aria-hidden="true">
-									<ExclamationBlock {iconColor} />
-								</span>
-								Abandon current game
-							</button>
-						</li>
-					{/if}
 				</ul>
 			</nav>
 			<div class="display-flex button-bar menu__buttons">
@@ -160,7 +162,7 @@
 	.menu {
 		position: relative;
 		width: 100%;
-		max-width: 28rem;
+		max-width: 32rem;
 		min-height: 100vh;
 		min-height: 100dvh;
 		padding: 24px;

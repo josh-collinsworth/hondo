@@ -1,101 +1,96 @@
 <script lang="ts">
-import {
-	currentGuesses,
-	currentGuess,
-	gameIsOver,
-	remainingAttempts,
-	codeWord,
-	runningScore,
-	maxRemainingAttempts,
-	usedAttempts,
-	streak,
-	previousGuesses,
-	bonusPointsScored,
-	shufflesUsed,
-	skipsUsed,
-} from '$lib/state/game'
-import { shownModal, isLoading, hasViewedTutorial } from '$lib/state/global'
-import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES } from '$lib/js/constants'
-import { loadFromLocalStorage, saveToLocalStorage, stringContainsLetter } from '$lib/js/helpers'
-import { setDefaultGameState } from '$lib/state/mutations'
+	import {
+		currentGuesses,
+		currentGuess,
+		gameIsOver,
+		remainingAttempts,
+		codeWord,
+		runningScore,
+		maxRemainingAttempts,
+		usedAttempts,
+		streak,
+		previousGuesses,
+		bonusPointsScored,
+		shufflesUsed,
+		skipsUsed
+	} from '$lib/state/game';
+	import { shownModal, isLoading, hasViewedTutorial } from '$lib/state/global';
+	import { GAME_DATA_STORAGE_KEY, STARTING_GUESSES } from '$lib/js/constants';
+	import { loadFromLocalStorage, saveToLocalStorage, stringContainsLetter } from '$lib/js/helpers';
+	import { setDefaultGameState } from '$lib/state/mutations';
 
-import GuessContent from '$lib/components/game/GuessContent.svelte'
-import Keyboard from '$lib/components/game/Keyboard.svelte'
-import InfoBar from '$lib/components/game/InfoBar.svelte'
-import Loader from '$lib/components/game/Loader.svelte'
-import AccessibleStatus from '$lib/components/game/AccessibleStatus.svelte'
-import TutorialIntro from '$lib/components/modals/TutorialIntro.svelte'
-import PWAPrompt from '$lib/components/PWAPrompt.svelte'
+	import GuessContent from '$lib/components/game/GuessContent.svelte';
+	import Keyboard from '$lib/components/game/Keyboard.svelte';
+	import InfoBar from '$lib/components/game/InfoBar.svelte';
+	import Loader from '$lib/components/game/Loader.svelte';
+	import AccessibleStatus from '$lib/components/game/AccessibleStatus.svelte';
+	import TutorialIntro from '$lib/components/modals/TutorialIntro.svelte';
+	import PWAPrompt from '$lib/components/PWAPrompt.svelte';
 
-import { browser, dev } from '$app/environment'
-import { onMount } from 'svelte'
+	import { browser, dev } from '$app/environment';
+	import { onMount } from 'svelte';
 
-const speakLetters = (enteredGuess: string): string => {
-	let remainingLetters = $codeWord
-	let exactLetters = 0
-	let partialLetters = 0
-	enteredGuess.split('').forEach((letter, i) => {
-		if (letter === $codeWord[i]) {
-			remainingLetters = remainingLetters.replace(letter, '')
-			exactLetters++
-		}
-	})
-	enteredGuess.split('').forEach((letter) => {
-		if (remainingLetters.includes(letter)) {
-			remainingLetters = remainingLetters.replace(letter, '')
-			partialLetters++
-		}
-	})
-	return `: ${exactLetters} in position, ${partialLetters} out of position`
-}
-
-onMount(() => {
-	let params = new URLSearchParams(document.location.search)
-	let skipTutorial = params.get('skip_tutorial') !== null
-
-	try {
-		const gameData = loadFromLocalStorage(GAME_DATA_STORAGE_KEY)
-
-		if (gameData && !$gameIsOver) {
-			// Avoids a loading error with states that didn't save this. Can be removed later.
-			if (!gameData.currentGuesses || !gameData.previousGuesses) {
-				alert(`Sorry, your in-progress game data is outdated and will need to be cleared. Proceeding now.`)
-				saveToLocalStorage(GAME_DATA_STORAGE_KEY, null)
-				return
+	const speakLetters = (enteredGuess: string): string => {
+		let remainingLetters = $codeWord;
+		let exactLetters = 0;
+		let partialLetters = 0;
+		enteredGuess.split('').forEach((letter, i) => {
+			if (letter === $codeWord[i]) {
+				remainingLetters = remainingLetters.replace(letter, '');
+				exactLetters++;
 			}
-			let attemptsCap = gameData.maxRemainingAttempts ? gameData.maxRemainingAttempts : STARTING_GUESSES
-			let loadedStreak = gameData.streak || 0
+		});
+		enteredGuess.split('').forEach((letter) => {
+			if (remainingLetters.includes(letter)) {
+				remainingLetters = remainingLetters.replace(letter, '');
+				partialLetters++;
+			}
+		});
+		return `: ${exactLetters} in position, ${partialLetters} out of position`;
+	};
 
-			$codeWord = window.atob(gameData.codeWord)
-			$maxRemainingAttempts = attemptsCap
-			$currentGuesses = gameData.currentGuesses
-			$previousGuesses = gameData.previousGuesses
-			$remainingAttempts = gameData.remainingAttempts
-			$runningScore = gameData.runningScore
-			$gameIsOver = gameData.gameIsOver
-			$usedAttempts = gameData.usedAttempts
-			$streak = loadedStreak
-			$bonusPointsScored = gameData.bonusPointsScored || 0
-			$shufflesUsed = gameData.shufflesUsed || 0
-			$skipsUsed = gameData.skipsUsed || 0
-		} else {
-			setDefaultGameState(browser && dev)
-		}
-	}
-	catch(e) {
-		alert(`Sorry, something went wrong loading your previous game data. Please refresh. If that doesn't help, you can reset your data from the stats page.`)
-	}
-	finally {
-		$isLoading = false
+	onMount(() => {
+		let params = new URLSearchParams(document.location.search);
+		let skipTutorial = params.get('skip_tutorial') !== null;
 
-		const hasPlayed = loadFromLocalStorage('skipTutorial')
-		if (!hasPlayed && !$hasViewedTutorial && !skipTutorial) {
-			$shownModal = TutorialIntro
+		try {
+			const gameData = loadFromLocalStorage(GAME_DATA_STORAGE_KEY);
+
+			if (gameData && !$gameIsOver) {
+				let attemptsCap = gameData.maxRemainingAttempts
+					? gameData.maxRemainingAttempts
+					: STARTING_GUESSES;
+				let loadedStreak = gameData.streak || 0;
+
+				$codeWord = window.atob(gameData.codeWord);
+				$maxRemainingAttempts = attemptsCap;
+				$currentGuesses = gameData.currentGuesses;
+				$previousGuesses = gameData.previousGuesses;
+				$remainingAttempts = gameData.remainingAttempts;
+				$runningScore = gameData.runningScore;
+				$gameIsOver = gameData.gameIsOver;
+				$usedAttempts = gameData.usedAttempts;
+				$streak = loadedStreak;
+				$bonusPointsScored = gameData.bonusPointsScored || 0;
+				$shufflesUsed = gameData.shufflesUsed || 0;
+				$skipsUsed = gameData.skipsUsed || 0;
+			} else {
+				setDefaultGameState(browser && dev);
+			}
+		} catch (e) {
+			alert(
+				`Sorry, something went wrong loading your previous game data. Please refresh. If that doesn't help, you can reset your data from the stats page.`
+			);
+		} finally {
+			$isLoading = false;
+
+			const hasPlayed = loadFromLocalStorage('skipTutorial');
+			if (!hasPlayed && !$hasViewedTutorial && !skipTutorial) {
+				$shownModal = TutorialIntro;
+			}
 		}
-	}
-})
+	});
 </script>
-
 
 <div class="game-container">
 	<PWAPrompt />
@@ -110,13 +105,11 @@ onMount(() => {
 					aria-label={guess + speakLetters(guess)}
 					aria-hidden={!stringContainsLetter(guess)}
 				>
-					<GuessContent guess={guess} previousGuess={$previousGuesses[row]}/>
+					<GuessContent {guess} previousGuess={$previousGuesses[row]} />
 				</li>
 			{/each}
-			<li
-				class="guess current-guess"
-			>
-				{#each {length: 5} as _, col (col)}
+			<li class="guess current-guess">
+				{#each { length: 5 } as _, col (col)}
 					<div class="current-guess-box">
 						{#key $previousGuesses}
 							{#if $currentGuess[col]}

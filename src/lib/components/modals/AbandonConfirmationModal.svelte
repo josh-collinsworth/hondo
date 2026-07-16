@@ -28,9 +28,9 @@
 <svelte:window onkeydown={listenForEnter} />
 
 <h2 class="display-flex align-center">
-	Abandon
-	<span class="info-button skip-button" aria-hidden="true">
-		<ExclamationPoint />
+	<div style="color: var(--red);">Abandon game?</div>
+	<span class="info-button skip-button danger-button" aria-hidden="true">
+		<ExclamationPoint iconColor="var(--red)" />
 	</span>
 </h2>
 
