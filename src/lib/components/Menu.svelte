@@ -1,57 +1,63 @@
 <script lang="ts">
-import { isMenuOpen } from '$lib/state/global'
-import { toggleMenuOpen } from '$lib/state/mutations'
+	import { isMenuOpen, shownModal } from '$lib/state/global';
+	import AbandonConfirmationModal from './modals/AbandonConfirmationModal.svelte';
+	import { toggleMenuOpen } from '$lib/state/mutations';
 
-import DarkModeToggle from './DarkModeToggle.svelte'
-import CloseMenuButton from './CloseMenuButton.svelte'
-import QuestionBlock from './icon/blocks/QuestionBlock.svelte'
-import StatsBlock from './icon/blocks/StatsBlock.svelte'
-import HBlock from './icon/blocks/HBlock.svelte'
-import Logo from './icon/Logo.svelte'
-import PlayBlock from './icon/blocks/PlayBlock.svelte'
-import { version } from '../../../package.json'
+	import DarkModeToggle from './DarkModeToggle.svelte';
+	import CloseMenuButton from './CloseMenuButton.svelte';
+	import QuestionBlock from './icon/blocks/QuestionBlock.svelte';
+	import StatsBlock from './icon/blocks/StatsBlock.svelte';
+	import HBlock from './icon/blocks/HBlock.svelte';
+	import Logo from './icon/Logo.svelte';
+	import PlayBlock from './icon/blocks/PlayBlock.svelte';
+	import { version } from '../../../package.json';
 
-import { tick } from 'svelte'
-import { fly, fade } from 'svelte/transition'
-import { quintIn, quintOut } from 'svelte/easing'
-import { goto } from '$app/navigation'
-import { browser } from '$app/environment'
+	import { tick } from 'svelte';
+	import { fly, fade } from 'svelte/transition';
+	import { quintIn, quintOut } from 'svelte/easing';
+	import { goto } from '$app/navigation';
+	import { browser } from '$app/environment';
+	import ExclamationBlock from './icon/blocks/ExclamationBlock.svelte';
+	import { previousGuesses } from '$lib/state/game';
 
-let { currentPage }: { currentPage: string } = $props()
+	let { currentPage }: { currentPage: string } = $props();
 
-let iconColor = 'var(--tertiary)'
-let navMenu: HTMLElement = $state() as HTMLElement
+	let iconColor = 'var(--tertiary)';
+	let navMenu: HTMLElement = $state() as HTMLElement;
 
-const handleReturnToGame = (): void => {
-	if (currentPage !== '/') {
-		goto('/')
-	}
-	toggleMenuOpen()
-}
+	const handleReturnToGame = (): void => {
+		if (currentPage !== '/') {
+			goto('/');
+		}
+		toggleMenuOpen();
+	};
 
-const listenForClose = (e: KeyboardEvent): void => {
-	if (e.key === 'Escape' && $isMenuOpen) {
-		toggleMenuOpen()
-	}
-}
+	const listenForClose = (e: KeyboardEvent): void => {
+		if (e.key === 'Escape' && $isMenuOpen) {
+			toggleMenuOpen();
+		}
+	};
 
-const handleBackgroundClick = (e: MouseEvent): void => {
-	if (e.target === e.currentTarget) {
-		toggleMenuOpen()
-	}
-}
+	const handleBackgroundClick = (e: MouseEvent): void => {
+		if (e.target === e.currentTarget) {
+			toggleMenuOpen();
+		}
+	};
 
-isMenuOpen.subscribe(async (isOpen) => {
-	if (isOpen && browser) {
-		await tick()
-		navMenu?.focus()
-	}
-})
+	isMenuOpen.subscribe(async (isOpen) => {
+		if (isOpen && browser) {
+			await tick();
+			navMenu?.focus();
+		}
+	});
+
+	const confirmAbandon = (): void => {
+		toggleMenuOpen();
+		$shownModal = AbandonConfirmationModal;
+	};
 </script>
 
-
 <svelte:window onkeyup={listenForClose} />
-
 
 {#if $isMenuOpen}
 	<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
@@ -73,9 +79,21 @@ isMenuOpen.subscribe(async (isOpen) => {
 							<span aria-hidden="true">
 								<PlayBlock {iconColor} />
 							</span>
-							Back to game
+							{$previousGuesses.every((guess) => guess === '') && currentPage !== '/'
+								? 'Play now'
+								: 'Back to game'}
 						</a>
 					</li>
+					{#if $previousGuesses.some((guess) => guess !== '')}
+						<li>
+							<button onclick={confirmAbandon}>
+								<span aria-hidden="true">
+									<ExclamationBlock {iconColor} />
+								</span>
+								Abandon current game
+							</button>
+						</li>
+					{/if}
 					<li>
 						<a href="/how-to-play" onclick={toggleMenuOpen}>
 							<span aria-hidden="true">
@@ -104,7 +122,14 @@ isMenuOpen.subscribe(async (isOpen) => {
 			</nav>
 			<div class="display-flex button-bar menu__buttons">
 				<div class="button-bar__logo display-flex center-content">
-					<a href="/" onclick={(e) => { e.preventDefault(); handleReturnToGame() }} class="display-flex center-content">
+					<a
+						href="/"
+						onclick={(e) => {
+							e.preventDefault();
+							handleReturnToGame();
+						}}
+						class="display-flex center-content"
+					>
 						<span aria-hidden="true" class="line-height-0">
 							<Logo />
 						</span>
@@ -121,111 +146,118 @@ isMenuOpen.subscribe(async (isOpen) => {
 	</div>
 {/if}
 
-
-
 <style lang="scss">
-.menu-background {
-	position: fixed;
-	top: 0;
-	left: 0;
-	min-height: 100vh;
-	min-height: 100dvh;
-	width: 100vw;
-	background: rgba(var(--paperRGB), 0.9);
-	z-index: 10;
-	will-change: opacity;
-}
-
-.menu {
-	position: relative;
-	width: 100%;
-	max-width: 28rem;
-	min-height: 100vh;
-	min-height: 100dvh;
-	padding: 24px;
-	transition: transform 0.3s cubic-bezier(0.23, 1, 0.320, 1);
-	background: transparent;
-	color: var(--ink);
-	z-index: 10;
-	margin: 0 auto;
-	will-change: transform, opacity;
-
-	:global(*:focus-within) {
-		outline-color: var(--lightBlue);
+	.menu-background {
+		position: fixed;
+		top: 0;
+		left: 0;
+		min-height: 100vh;
+		min-height: 100dvh;
+		width: 100vw;
+		background: rgba(var(--paperRGB), 0.9);
+		z-index: 10;
+		will-change: opacity;
 	}
 
-	.button-bar {
-		position: absolute;
-		top: 24px;
-		right: 24px;
-		gap: 1rem;
-		justify-content: space-between;
-		width: calc(100% - 48px);
+	.menu {
+		position: relative;
+		width: 100%;
+		max-width: 32rem;
+		min-height: 100vh;
+		min-height: 100dvh;
+		padding: 24px;
+		transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+		background: transparent;
+		color: var(--ink);
+		z-index: 10;
+		margin: 0 auto;
+		will-change: transform, opacity;
 
-		.button-bar__logo {
-			width: 10rem;
+		:global(*:focus-within) {
+			outline-color: var(--lightBlue);
 		}
 
-		.button-bar__buttons {
-			gap: 0.5rem;
-		}
-	}
+		.button-bar {
+			position: absolute;
+			top: 24px;
+			right: 24px;
+			gap: 1rem;
+			justify-content: space-between;
+			width: calc(100% - 48px);
 
-	.menu__links {
-		margin-top: 8rem;
-		padding-left: 0;
-		list-style-type: none;
+			.button-bar__logo {
+				width: 10rem;
+			}
+
+			.button-bar__buttons {
+				gap: 0.5rem;
+			}
+		}
+
+		.menu__links {
+			margin-top: 8rem;
+			padding-left: 0;
+			list-style-type: none;
+
+			li {
+				will-change: transform;
+				animation: zoom_in_left 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+				opacity: 0;
+
+				@for $i from 1 through 5 {
+					&:nth-of-type(#{$i}) {
+						animation-delay: $i * 0.07s;
+					}
+				}
+
+				a,
+				button {
+					text-decoration: none;
+					display: flex;
+					align-items: center;
+
+					span {
+						width: 1.5em;
+						margin-right: 0.75em;
+						height: 100%;
+						line-height: 1;
+					}
+				}
+
+				button {
+					border: none;
+					padding: 0;
+					background: transparent;
+					font-weight: inherit;
+				}
+			}
+		}
 
 		li {
-			will-change: transform;
+			margin-bottom: 1.5em;
+		}
+
+		a,
+		button {
+			color: inherit;
+			font-size: 1.2rem;
+		}
+
+		.button-bar {
+			margin-top: 0;
+		}
+
+		.menu__buttons {
 			animation: zoom_in_left 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+			will-change: transform;
 			opacity: 0;
-
-			@for $i from 1 through 5 {
-				&:nth-of-type(#{$i}) {
-					animation-delay: $i * 0.07s;
-				}
-			}
-
-			a {
-				text-decoration: none;
-				display: flex;
-				align-items: center;
-
-				span {
-					width: 1.5em;
-					margin-right: 0.75em;
-					height: 100%;
-					line-height: 1;
-				}
-			}
 		}
 	}
 
-	li {
-		margin-bottom: 1.5em;
+	.hondo-version {
+		font-size: 12px;
+		position: absolute;
+		bottom: 1rem;
+		left: 1rem;
 	}
-
-	a {
-		color: inherit;
-		font-size: 1.2rem;
-	}
-
-	.button-bar {
-		margin-top: 0;
-	}
-
-	.menu__buttons {
-		animation: zoom_in_left 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
-		will-change: transform;
-		opacity: 0;
-	}
-}
-
-.hondo-version {
-	font-size: 12px;
-	position: absolute;
-	bottom: 1rem;
-	left: 1rem;
-}
 </style>

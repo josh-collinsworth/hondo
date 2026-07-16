@@ -298,8 +298,13 @@
 	transition: var(--transition);
 }
 
-.skip-button {
+.skip-button,
+.danger-button {
 	padding: 8px;
+}
+
+.danger-button {
+	border-color: var(--red);
 }
 
 .score {

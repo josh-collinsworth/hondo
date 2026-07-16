@@ -1,38 +1,39 @@
-import type { ToastMessage } from '../js/types';
+import GameOverModal from '$lib/components/modals/GameOverModal.svelte';
 import {
-	codeWord,
-	currentGuesses,
-	currentGuess,
-	gameIsOver,
-	runningScore,
-	remainingAttempts,
-	usedAttempts,
-	maxRemainingAttempts,
-	discoveredCodeWord,
-	streak,
-	pointsScoredForLastGuess,
-	previousGuesses,
-	gameHistory,
-	bonusPointsScored,
-	shufflesUsed,
-	skipsUsed
-} from './game';
-import { shownModal, toast, isMenuOpen, isScoring } from './global';
-import { isDarkMode } from './user';
-import {
-	GAME_HISTORY_STORAGE_KEY,
 	GAME_DATA_STORAGE_KEY,
+	GAME_HISTORY_STORAGE_KEY,
+	GUESS_BENEFIT,
+	GUESS_COST,
 	LONGEST_STREAK_STORAGE_KEY,
 	SCORE_TICK_DURATION,
-	STARTING_GUESSES,
 	SHUFFLE_COST,
 	SKIP_COST,
-	GUESS_COST,
-	GUESS_BENEFIT
+	STARTING_GUESSES
 } from '../js/constants';
+import type { ToastMessage } from '../js/types';
+import {
+	bonusPointsScored,
+	codeWord,
+	currentGuess,
+	currentGuesses,
+	discoveredCodeWord,
+	gameHistory,
+	gameIsOver,
+	maxRemainingAttempts,
+	pointsScoredForLastGuess,
+	previousGuesses,
+	remainingAttempts,
+	runningScore,
+	shufflesUsed,
+	skipsUsed,
+	streak,
+	usedAttempts
+} from './game';
+import { isMenuOpen, isScoring, shownModal, toast } from './global';
+import { isDarkMode } from './user';
 
-import { isValidGuess, loadFromLocalStorage, saveToLocalStorage } from '../js/helpers';
 import { codeWords } from '../js/codeWords';
+import { isValidGuess, loadFromLocalStorage, saveToLocalStorage } from '../js/helpers';
 
 import { dev } from '$app/environment';
 import { goto } from '$app/navigation';
@@ -175,6 +176,14 @@ export const handleEndgame = (): void => {
 	gameIsOver.set(true);
 	registerHighScore();
 	localStorage.removeItem(GAME_DATA_STORAGE_KEY);
+	if (get(runningScore) >= 100) {
+		setToast({ message: 'Congratulations!', type: 'success' });
+	} else {
+		setToast({ message: 'Too bad!', type: 'warning' });
+	}
+	setTimeout(() => {
+		shownModal.set(GameOverModal);
+	}, 1500);
 };
 
 export const closeModal = (): void => {
