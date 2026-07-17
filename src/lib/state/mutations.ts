@@ -1,5 +1,6 @@
 import GameOverModal from '$lib/components/modals/GameOverModal.svelte';
 import {
+	ABANDONED_GAMES_STORAGE_KEY,
 	GAME_DATA_STORAGE_KEY,
 	GAME_HISTORY_STORAGE_KEY,
 	GUESS_BENEFIT,
@@ -40,7 +41,7 @@ import { goto } from '$app/navigation';
 import { tick } from 'svelte';
 import { get } from 'svelte/store';
 
-export const startNewGame = (): void => {
+export const startNewGame = () => {
 	saveToLocalStorage(GAME_DATA_STORAGE_KEY, null);
 	setDefaultGameState(dev);
 	goto('/');
@@ -50,7 +51,7 @@ export const getRandomCodeWord = (): string => {
 	return codeWords[Math.floor(Math.random() * codeWords.length)];
 };
 
-export const setNewRandomCodeWord = (log = false): void => {
+export const setNewRandomCodeWord = (log = false) => {
 	const newWord: string = getRandomCodeWord();
 	if (newWord !== get(codeWord) && !get(currentGuesses).includes(newWord)) {
 		codeWord.set(newWord);
@@ -62,7 +63,7 @@ export const setNewRandomCodeWord = (log = false): void => {
 	setNewRandomCodeWord(log);
 };
 
-export const handleNewGuess = (): void => {
+export const handleNewGuess = () => {
 	if (isValidGuess(get(currentGuess))) {
 		if (!get(currentGuesses).includes(get(currentGuess))) {
 			previousGuesses.set([...get(currentGuesses)]);
@@ -92,7 +93,7 @@ export const handleNewGuess = (): void => {
 	}
 };
 
-export const incrementRemainingAttempts = (adjustment: number): void => {
+export const incrementRemainingAttempts = (adjustment: number) => {
 	const adjustedRemainingAttempts = get(remainingAttempts) + adjustment;
 	if (adjustedRemainingAttempts > get(maxRemainingAttempts)) {
 		remainingAttempts.set(get(maxRemainingAttempts));
@@ -101,7 +102,7 @@ export const incrementRemainingAttempts = (adjustment: number): void => {
 	remainingAttempts.set(adjustedRemainingAttempts);
 };
 
-export const incrementRunningScore = (adjustment: number): void => {
+export const incrementRunningScore = (adjustment: number) => {
 	isScoring.set(true);
 	const adjustedRunningScore = get(runningScore) + adjustment;
 	const scoreDifferential = Math.abs(adjustedRunningScore - get(runningScore));
@@ -133,15 +134,15 @@ export const incrementRunningScore = (adjustment: number): void => {
 	); // Extra time helps make sure the new word is selected
 };
 
-export const incrementStreak = (adjustment: number): void => {
+export const incrementStreak = (adjustment: number) => {
 	streak.set(get(streak) + adjustment);
 };
 
-export const setStreak = (value: number): void => {
+export const setStreak = (value: number) => {
 	streak.set(value);
 };
 
-export const setNewScores = (): void => {
+export const setNewScores = () => {
 	if (get(currentGuess) === get(codeWord)) {
 		handleCorrectGuess();
 	} else {
@@ -163,7 +164,7 @@ export const setNewScores = (): void => {
 	}
 };
 
-export const warnIfFinalGuess = (): void => {
+export const warnIfFinalGuess = () => {
 	if (get(remainingAttempts) && get(remainingAttempts) <= GUESS_COST) {
 		setToast({
 			message: 'Last guess!',
@@ -172,9 +173,9 @@ export const warnIfFinalGuess = (): void => {
 	}
 };
 
-export const handleEndgame = (): void => {
+export const handleEndgame = ({ abandoned = false }: { abandoned?: boolean }) => {
 	gameIsOver.set(true);
-	registerHighScore();
+	registerHighScore({ abandoned });
 	localStorage.removeItem(GAME_DATA_STORAGE_KEY);
 	if (get(runningScore) >= 100) {
 		setToast({ message: 'Congratulations!', type: 'success' });
@@ -186,11 +187,11 @@ export const handleEndgame = (): void => {
 	}, 1500);
 };
 
-export const closeModal = (): void => {
+export const closeModal = () => {
 	shownModal.set(null);
 };
 
-export const registerHighScore = (): void => {
+export const registerHighScore = ({ abandoned = false }: { abandoned?: boolean }) => {
 	let previousHighScores = loadFromLocalStorage(GAME_HISTORY_STORAGE_KEY) || [];
 
 	// Just some cleanup from prerelease data saving. Can be removed later.
@@ -208,10 +209,14 @@ export const registerHighScore = (): void => {
 	];
 
 	saveToLocalStorage(GAME_HISTORY_STORAGE_KEY, dataToSave);
+	if (abandoned) {
+		const previouslyAbandonedGames = loadFromLocalStorage(ABANDONED_GAMES_STORAGE_KEY) || 0;
+		saveToLocalStorage(ABANDONED_GAMES_STORAGE_KEY, previouslyAbandonedGames + 1);
+	}
 	gameHistory.set(dataToSave);
 };
 
-export const handleCorrectGuess = (): void => {
+export const handleCorrectGuess = () => {
 	const streakPoints = get(streak);
 	const tally = 1 + streakPoints;
 	incrementRunningScore(tally);
@@ -227,7 +232,7 @@ export const handleCorrectGuess = (): void => {
 	}, 1200);
 };
 
-export const saveGameData = (): void => {
+export const saveGameData = () => {
 	saveToLocalStorage(GAME_DATA_STORAGE_KEY, {
 		codeWord: window.btoa(get(codeWord)),
 		currentGuesses: get(currentGuesses),
@@ -257,7 +262,7 @@ export const setToast = async (
 	toast.set({ message, type });
 };
 
-export const shuffleGuesses = (): void => {
+export const shuffleGuesses = () => {
 	let newGuesses: string[] = [];
 
 	while (newGuesses.length < 5) {
@@ -275,7 +280,7 @@ export const shuffleGuesses = (): void => {
 	saveGameData();
 };
 
-export const skipCodeWord = (): void => {
+export const skipCodeWord = () => {
 	setToast({
 		message: `Skipped: ${get(codeWord).toUpperCase()}`,
 		type: 'success'
@@ -294,11 +299,11 @@ export const skipCodeWord = (): void => {
 	saveGameData();
 };
 
-export const toggleMenuOpen = (): void => {
+export const toggleMenuOpen = () => {
 	isMenuOpen.set(!get(isMenuOpen));
 };
 
-export const toggleDarkMode = (): void => {
+export const toggleDarkMode = () => {
 	isDarkMode.set(!get(isDarkMode));
 	if (get(isDarkMode)) {
 		document.documentElement.classList.add('dark');
@@ -308,7 +313,7 @@ export const toggleDarkMode = (): void => {
 	saveToLocalStorage('theme', get(isDarkMode) ? 'dark' : 'light');
 };
 
-export const setDefaultGameState = (isDev: boolean): void => {
+export const setDefaultGameState = (isDev: boolean) => {
 	setNewRandomCodeWord(isDev);
 	currentGuess.set('');
 	currentGuesses.set(['', ' ', '	', '	 ', '		']);

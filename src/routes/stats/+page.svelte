@@ -1,35 +1,57 @@
 <script lang="ts">
-import { GAME_DATA_STORAGE_KEY, GAME_HISTORY_STORAGE_KEY, LONGEST_STREAK_STORAGE_KEY } from '$lib/js/constants'
-import { totalGamesPlayed, totalPointsScored, highScore, fastestHondo, totalGuessesUsed, totalBonusPointsScored, totalHondos, totalShufflesUsed, totalSkipsUsed, perfectHondos } from '$lib/state/getters'
-import { loadFromLocalStorage, floatFormatter } from '$lib/js/helpers'
-import Loader from '$lib/components/game/Loader.svelte'
-import MenuButton from '$lib/components/MenuButton.svelte'
-import { onMount } from 'svelte'
+	import {
+		ABANDONED_GAMES_STORAGE_KEY,
+		GAME_DATA_STORAGE_KEY,
+		GAME_HISTORY_STORAGE_KEY,
+		LONGEST_STREAK_STORAGE_KEY
+	} from '$lib/js/constants';
+	import {
+		totalGamesPlayed,
+		totalPointsScored,
+		highScore,
+		fastestHondo,
+		totalGuessesUsed,
+		totalBonusPointsScored,
+		totalHondos,
+		totalShufflesUsed,
+		totalSkipsUsed,
+		perfectHondos
+	} from '$lib/state/getters';
+	import { loadFromLocalStorage, floatFormatter } from '$lib/js/helpers';
+	import Loader from '$lib/components/game/Loader.svelte';
+	import MenuButton from '$lib/components/MenuButton.svelte';
+	import { onMount } from 'svelte';
 
-let localIsLoading = $state(true)
-let longestStreak: number = $state(0)
+	let localIsLoading = $state(true);
+	let longestStreak = $state<number>(0);
+	let abandonedGames = $state<number>(0);
 
-let averageScore = $derived(floatFormatter.format($totalPointsScored / $totalGamesPlayed))
-let averageGuesses = $derived(floatFormatter.format($totalGuessesUsed / $totalGamesPlayed))
-let bonusPointPercentage = $derived(floatFormatter.format(100 / $totalPointsScored * $totalBonusPointsScored))
+	let averageScore = $derived(floatFormatter.format($totalPointsScored / $totalGamesPlayed));
+	let averageGuesses = $derived(floatFormatter.format($totalGuessesUsed / $totalGamesPlayed));
+	let bonusPointPercentage = $derived(
+		floatFormatter.format((100 / $totalPointsScored) * $totalBonusPointsScored)
+	);
 
-const clearData = (): void => {
-	const confirmation = confirm(`This will permanently delete all your Hondo game history, and any game in progress.\n\nAre you sure?`)
+	const clearData = (): void => {
+		const confirmation = confirm(
+			`This will permanently delete all your Hondo game history, and any game in progress.\n\nAre you sure?`
+		);
 
-	if (!confirmation) return
-	localStorage.removeItem(GAME_HISTORY_STORAGE_KEY)
-	localStorage.removeItem(GAME_DATA_STORAGE_KEY)
-	window.location.reload()
-}
+		if (!confirmation) return;
+		localStorage.removeItem(GAME_HISTORY_STORAGE_KEY);
+		localStorage.removeItem(GAME_DATA_STORAGE_KEY);
+		window.location.reload();
+	};
 
-onMount(() => {
-	const loadedLongestStreak = loadFromLocalStorage(LONGEST_STREAK_STORAGE_KEY)
-	longestStreak = loadedLongestStreak || 0
+	onMount(() => {
+		const loadedLongestStreak = loadFromLocalStorage(LONGEST_STREAK_STORAGE_KEY);
+		const loadedAbandonedGames = loadFromLocalStorage(ABANDONED_GAMES_STORAGE_KEY);
+		longestStreak = loadedLongestStreak || 0;
+		abandonedGames = loadedAbandonedGames || 0;
 
-	localIsLoading = false
-})
+		localIsLoading = false;
+	});
 </script>
-
 
 <div class="stats display-flex center-content">
 	<MenuButton floating={true} />
@@ -106,9 +128,9 @@ onMount(() => {
 			<li>
 				<b>Hondo percentage</b>
 				{#if $totalHondos}
-					{floatFormatter.format(100 / $totalGamesPlayed * $totalHondos)}%
+					{floatFormatter.format((100 / $totalGamesPlayed) * $totalHondos)}%
 				{:else}
-				NA
+					NA
 				{/if}
 			</li>
 			<li>
@@ -117,7 +139,11 @@ onMount(() => {
 			</li>
 			<li>
 				<b>Perfect game percentage</b>
-				{floatFormatter.format(100 / $totalGamesPlayed * $perfectHondos)}%
+				{floatFormatter.format((100 / $totalGamesPlayed) * $perfectHondos)}%
+			</li>
+			<li>
+				<b>Abandoned games</b>
+				{abandonedGames}
 			</li>
 		</ul>
 	{:else}
@@ -129,54 +155,51 @@ onMount(() => {
 	{/if}
 
 	<div class="button-bar">
-		<button onclick={clearData} class="warning">
-			Erase all game data
-		</button>
+		<button onclick={clearData} class="warning"> Erase all game data </button>
 
 		<a href="/" class="button">Back to game</a>
 	</div>
 </div>
 
-
 <style lang="scss">
-.stats {
-	padding: 24px;
-	width: 100%;
-	max-width: 30rem;
-	margin: 0 auto;
-	text-align: left;
-
-	h1 {
-		text-align: left;
-		margin-top: 0;
-		font-weight: var(--fontWeightNormal);
-		text-transform: uppercase;
-	}
-
-	> * {
+	.stats {
+		padding: 24px;
 		width: 100%;
-	}
+		max-width: 30rem;
+		margin: 0 auto;
+		text-align: left;
 
-	li {
-		display: flex;
-		justify-content: space-between;
-		align-items: baseline;
-		padding: 1rem 0;
-		border-bottom: 1px solid var(--lightAccent);
-		margin: 0;
-		font-weight: var(--fontWeightNormal);
+		h1 {
+			text-align: left;
+			margin-top: 0;
+			font-weight: var(--fontWeightNormal);
+			text-transform: uppercase;
+		}
 
-		b {
-			font-weight: var(--fontWeightSemiBold);
+		> * {
+			width: 100%;
+		}
+
+		li {
+			display: flex;
+			justify-content: space-between;
+			align-items: baseline;
+			padding: 1rem 0;
+			border-bottom: 1px solid var(--lightAccent);
+			margin: 0;
+			font-weight: var(--fontWeightNormal);
+
+			b {
+				font-weight: var(--fontWeightSemiBold);
+			}
+		}
+
+		.button-bar {
+			margin-top: 4rem;
+			flex-wrap: wrap;
+			gap: 2rem;
+			justify-content: space-between;
+			width: 100%;
 		}
 	}
-
-	.button-bar {
-		margin-top: 4rem;
-		flex-wrap: wrap;
-		gap: 2rem;
-		justify-content: space-between;
-		width: 100%;
-	}
-}
 </style>

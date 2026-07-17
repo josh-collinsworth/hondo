@@ -20,7 +20,7 @@
 
 	const abandonGame = (): void => {
 		/* TODO: there are stats that may need to be handled when a game is abandoned. e.g., should average game length include skipped games? */
-		handleEndgame();
+		handleEndgame({ abandoned: true });
 		closeModal();
 	};
 </script>

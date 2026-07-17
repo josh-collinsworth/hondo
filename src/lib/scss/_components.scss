@@ -42,6 +42,10 @@
 	justify-content: center;
 	height: var(--boxSize);
 	background: var(--paper);
+
+	@media (min-width: 32rem) and (min-height: 64rem) {
+		--boxSize: 2.42em;
+	}
 }
 
 .current-guess {
@@ -305,6 +309,10 @@
 
 .danger-button {
 	border-color: var(--red);
+
+	.dark & {
+		border-color: var(--red);
+	}
 }
 
 .score {
